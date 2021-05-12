@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/05/12 16:48:45 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/05/12 17:04:46 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int main()
 	// t.pop_front()
 	std::cout << t.size() << std::endl;	
 	t.print();
-	t.emplace_front("X1");
+	// t.emplace_front("X1");
 	std::cout << t.size() << std::endl;	
 	t.print();
 

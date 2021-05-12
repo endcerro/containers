@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/05/12 16:48:05 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/05/12 17:04:36 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,10 +116,6 @@ namespace ft
  				delete tmp;
 				_s--;				
 			}
-			void emplace_front(T t)
-			{
-				push_front(t);
-			}
 			void pop_back(void)
 			{
 				Node *tmp = _t;
@@ -129,17 +125,18 @@ namespace ft
 					_t->n = 0;
 				}
 				delete tmp;
-				_s--;				
+				_s--;
 			}
 			bool empty() const 	
 			{
 				return (_s > 0 ? true : false);
-			};
+			}
 			const size_t size() const
 			{	
 				return _s;
-			};
+			}
 			size_t max_size() 	{			};
+			//TO DEL
 			void print()
 			{
 				Node *curr = _h;

@@ -5,14 +5,10 @@ operator=		TODO
 
 
 Iterators : yes but how tho
-begin			TODO	: 	Return iterator to beginning (public member function )
+begin			TODO	: Return iterator to beginning (public member function )
 end				TODO	: Return iterator to end (public member function )
 rbegin			TODO	: Return reverse iterator to reverse beginning (public member function )
 rend			TODO	: Return reverse iterator to reverse end (public member function )
-cbegin			TODO	: Return const_iterator to beginning (public member function )
-cend			TODO	: Return const_iterator to end (public member function )
-crbegin			TODO	: Return const_reverse_iterator to reverse beginning (public member function )
-crend			TODO	: Return const_reverse_iterator to reverse end (public member function )
 
 Capacity:
 empty			DONEv1	: Test whether container is empty (public member function )
@@ -25,13 +21,10 @@ back			DONEv1	: Access last element (public member function )
 
 Modifiers:
 assign			TODO	: Assign new content to container (public member function )
-emplace_front	DONEv1	: Construct and insert element at beginning (public member function )
 push_front		DONEv1	: Insert element at beginning (public member function )
 pop_front		DONEv1	: Delete first element (public member function )
-emplace_back	DONEv1	: Construct and insert element at the end (public member function )
 push_back		DONEv1	: Add element at the end (public member function )
 pop_back		DONEv1	: Delete last element (public member function )
-emplace			TODO	: Construct and insert element (public member function )
 insert			TODO	: Insert elements (public member function )
 erase			TODO	: Erase elements (public member function )
 swap			TODO	: Swap content (public member function )
