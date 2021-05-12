@@ -34,12 +34,12 @@ $(OBJD)		:
 				@mkdir $(OBJD)
 
 $(OBJD)/%.o	:	$(DIRSRC)/%.cpp
-				$(CC) -I./$(INCLUDE) -I./$(SUB_MAKE) $(CFLAGS) -o $@ -c $<
+				$(CC) -I./$(INCLUDE) $(CFLAGS) -o $@ -c $<
 
 all			:	$(NAME)
 
 clean		:
-				$(RM) $(OBJ)
+				$(RM) $(OBJS)
 
 fclean		:	clean
 				$(RM) $(NAME)
