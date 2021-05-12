@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/05/12 17:04:36 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/05/12 17:16:17 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,25 +39,16 @@ namespace ft
 			size_t _s;
 
 	 	public :
-	 		ft_list() : _s(0), _h(0), _t(0)
-	 		{
-	 			// std::cout << "CONSTRUCTOR CALL" << std::endl;
-	 		};
+	 		ft_list() : _h(0), _t(0),  _s(0)
+	 		{				};
 			~ft_list()
-			{
-				// std::cout << "DESTRUCTOR CALL" << std::endl;
-				Node *curr = _h;
-				Node *next = 0;
-				while (curr != 0)
-				{
-					next = curr->n;
-					delete (curr);
-					curr = next;
-				}
-			};
+			{	clear();	};
 
-
-	 		ft_list& operator=(const ft_list &base){	 		};
+	 		ft_list& operator=(const ft_list &base)
+	 		{
+	 			clear();
+	 			
+	 		};
 			void push_back (const T& val)
 			{
 				if (_t == 0)
@@ -78,14 +69,6 @@ namespace ft
 				if (_h == 0)
 					_h = _t;
 				_s++;
-			}
-			T front(void) const
-			{
-				return _h->d;
-			}
-			T back(void) const
-			{
-				return _t->d;
 			}
 			void push_front (const T& val)
 			{
@@ -108,6 +91,15 @@ namespace ft
 					_t = _h;
 				_s++;
 			}	
+			T front(void) const
+			{
+				return _h->d;
+			}
+			T back(void) const
+			{
+				return _t->d;
+			}
+	
 			void pop_front(void)
 			{
 				Node *tmp = _h;
@@ -127,11 +119,24 @@ namespace ft
 				delete tmp;
 				_s--;
 			}
+			void clear(void)
+			{
+				Node *curr = _h;
+				Node *next;
+				while (curr)
+				{
+					next = curr->n;
+					delete curr;
+					curr = next;
+				}
+				_h = _t = 0;
+				_s = 0;
+			}
 			bool empty() const 	
 			{
 				return (_s > 0 ? true : false);
 			}
-			const size_t size() const
+			size_t size() const
 			{	
 				return _s;
 			}

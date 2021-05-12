@@ -29,7 +29,7 @@ insert			TODO	: Insert elements (public member function )
 erase			TODO	: Erase elements (public member function )
 swap			TODO	: Swap content (public member function )
 resize			TODO	: Change size (public member function )
-clear			TODO	: Clear content (public member function )
+clear			DONEv1	: Clear content (public member function )
 
 Operations:
 splice			TODO	: Transfer elements from list to list (public member function )
