@@ -5,10 +5,10 @@ operator=		TODO
 
 
 Iterators : yes but how tho
-begin			TODO	: Return iterator to beginning (public member function )
-end				TODO	: Return iterator to end (public member function )
-rbegin			TODO	: Return reverse iterator to reverse beginning (public member function )
-rend			TODO	: Return reverse iterator to reverse end (public member function )
+begin			DONEv1	: Return iterator to beginning (public member function )
+end				DONEv1	: Return iterator to end (public member function )
+rbegin			DONEv1	: Return reverse iterator to reverse beginning (public member function )
+rend			DONEv1	: Return reverse iterator to reverse end (public member function )
 
 Capacity:
 empty			DONEv1	: Test whether container is empty (public member function )
