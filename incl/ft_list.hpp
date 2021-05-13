@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/05/13 17:57:40 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/05/13 18:21:41 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ namespace ft
 						_ptr = _ptr->p;
 						return i;
 					}
-					self_type operator++() //i++
+					self_type operator++() //++i
 					{ 
 						_ptr = _ptr->p; 
 						return *this;
@@ -131,29 +131,35 @@ namespace ft
 			};
 
 
-			iterator begin()
+			iterator begin() const
 			{
 				return iterator(_h);
 			}
 
-			iterator end()
+			iterator end() const
 			{
 				return iterator(_t->n);
 			}
 
-			reverse_iterator rbegin()
+			reverse_iterator rbegin() const
 			{
 				return reverse_iterator(_t);
 			}
 
-			reverse_iterator rend()
+			reverse_iterator rend() const
 			{
 				return reverse_iterator(_h->p);
 			}
 
-			ft_list& operator=(const ft_list &base)
+			ft_list& operator=(const ft_list &b)
 			{
 				clear();
+				for(ft::ft_list<T>::iterator i = b.begin(); i != b.end(); i++)
+    			{
+ 		    	   push_back(*i);
+    			}
+				_s = b._s;
+				return *this;
 				//need to copy also;
 			};
 			void push_back (const T& val)
@@ -161,17 +167,15 @@ namespace ft
 				if (_t == 0)
 				{
 					_t = new Node;
-					
 					//THIS NEEDS TO USE ALLOCATORS IT SEEMS
 					_t->d = new T(val);
-					
-
 					_t->n = 0;
 					_t->p = 0;
 				}
 				else
 				{
 					_t->n = new Node;
+					//THIS NEEDS TO USE ALLOCATORS IT SEEMS
 					_t->n->d = new T(val);
 					_t->n->n = 0;
 					_t->n->p = _t;
@@ -186,13 +190,15 @@ namespace ft
 				if (_h == 0)
 				{
 					_h = new Node;
+					//THIS NEEDS TO USE ALLOCATORS IT SEEMS
 					_h->d = new T(val);
 					_h->n = 0;
 					_h->p = 0;
 				}
 				else
 				{
-					Node *tmp = new Node; 
+					Node *tmp = new Node;
+					//THIS NEEDS TO USE ALLOCATORS IT SEEMS
 					tmp->d = new T(val);
 					tmp->n = _h;
 					tmp->p = 0;
@@ -210,7 +216,25 @@ namespace ft
 			{
 				return _t->d;
 			}
-	
+			void assign(size_t n, const T &val)
+			{
+				clear();
+				for (size_t i = 0; i < n; i++)
+				{
+					push_back(val);
+				}
+			}
+			//Use enable_if
+			// template <class InputIterator>
+			// void assign(InputIterator s, InputIterator e)
+			// {
+			// 	clear();
+			// 	while (s != e)
+			// 	{
+			// 		push_back(*s);
+			// 		++s;
+			// 	}
+			// }
 			void pop_front(void)
 			{
 				Node *tmp = _h;
