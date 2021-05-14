@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/05/14 14:31:30 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/05/14 15:04:27 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ namespace ft
 			ft_list (size_t n, const T& val) { assign(n, val); }
 
 			~ft_list()
-			{	clear();	};
+			{ clear(); };
 
 			/* OVERLOADS */
 
@@ -79,21 +79,13 @@ namespace ft
 						return *this;
 					}
 					reference operator*() 
-					{
-						return *(_ptr->d); 
-					}
+					{ return *(_ptr->d); }
 					pointer operator->() 
-					{ 
-						return _ptr->d;
-					}
+					{ return _ptr->d; }
 					bool operator==(const self_type& rhs)
-					{ 
-						return _ptr == rhs._ptr; 
-					}
+					{ return _ptr == rhs._ptr; }
 					bool operator!=(const self_type& rhs) 
-					{ 
-						return _ptr != rhs._ptr; 
-					}
+					{ return _ptr != rhs._ptr; }
 				private :
 					Node<T> *_ptr;
 			};
@@ -252,30 +244,35 @@ namespace ft
 				_h = _t = 0;
 				_s = 0;
 			}
+			//Seems good but watch out for allocators
+			void swap(ft_list &base)
+			{
+				ft::Node<T> *oh = _h;
+				ft::Node<T> *ot = _t;
+				size_t os = _s;
+
+				_h = base._h;
+				_t = base._t;
+				_s = base._s;
+
+				base._h = oh;
+				base._t = ot;
+				base._s = os;
+
+			}
 			bool empty(void) const 	{ return (_s > 0 ? true : false); }
 			size_t size(void) const { return _s; }
-			size_t max_size(void) 	{			};
+			size_t max_size(void) 	{ return 0;	 };
 			
-			//TO DEL
-			void print(void)
+			template <class IT>
+			void print(IT s, IT e)
 			{
-				for (iterator a = begin(); a != end(); a++)
+				while (s != e)
 				{
-					// next = curr->n;
-					std::cout << *a << std::endl;
-					// curr = next;
+					std::cout << *s << std::endl;
+					++s;
 				}
 			};
-			void rprint(void)
-			{
-				for (reverse_iterator a = rbegin(); a != rend(); a++)
-				{
-					// next = curr->n;
-					std::cout << *a << std::endl;
-					// curr = next;
-				}
-			};
-			
 			void assign(size_t n, const T &val)
 			{
 				clear();
@@ -283,8 +280,6 @@ namespace ft
 					push_back(val);
 				_s = n;
 			}
-
-			//C++98 !COMPLIANT
 			template <class InputIterator>
 			void assign(typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type s, InputIterator e)
 			{
