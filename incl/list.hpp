@@ -1,15 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_list.hpp                                        :+:      :+:    :+:   */
+/*   list.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/05/14 15:06:03 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/05/14 15:31:50 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 //http://www.cplusplus.com/reference/list/list/
 
 #ifndef FT_LIST
@@ -23,7 +22,7 @@ namespace ft
 {	
 
 	template <class T>
-	class ft_list
+	class list
 	{
 		private :
 			Node<T> *_h;
@@ -32,21 +31,21 @@ namespace ft
 
 		public :
 			/* CONSTRUCTORS N DESTRUCTORS */
-			ft_list() : _h(0), _t(0),  _s(0) {};
+			list() : _h(0), _t(0),  _s(0) {};
 			
-			ft_list(const ft_list &f) { *this = f; };
+			list(const list &f) { *this = f; };
 
 			template<class InputIterator>
-			ft_list(InputIterator s, InputIterator e) { assign(s,e); }
+			list(InputIterator s, InputIterator e) { assign(s,e); }
 
-			ft_list (size_t n, const T& val) { assign(n, val); }
+			list (size_t n, const T& val) { assign(n, val); }
 
-			~ft_list()
+			~list()
 			{ clear(); };
 
 			/* OVERLOADS */
 
-			ft_list& operator=(const ft_list &b)
+			list& operator=(const list &b)
 			{
 				assign(b.begin(), b.end());
 				_s = b._s;
@@ -58,7 +57,7 @@ namespace ft
 			//Use friends
 			class iterator
 			{
-				friend class ft_list<T>;
+				friend class list<T>;
 				public :
 					typedef iterator self_type;
 					typedef T value_type;
@@ -92,7 +91,7 @@ namespace ft
 			//may use friends
 			class reverse_iterator //: virtual public iterator
 			{
-				friend class ft_list<T>;
+				friend class list<T>;
 				public :
 					typedef reverse_iterator self_type;
 					typedef T value_type;
@@ -244,12 +243,12 @@ namespace ft
 				_h = _t = 0;
 				_s = 0;
 			}
-			iterator insert (iterator position, const T& val)
-			{
-				
-			}
+			// iterator insert (iterator position, const T& val)
+			// {
+
+			// }
 			//Seems good but watch out for allocators
-			void swap(ft_list &base)
+			void swap(list &base)
 			{
 				ft::Node<T> *oh = _h;
 				ft::Node<T> *ot = _t;
