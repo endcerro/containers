@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/05/14 15:04:27 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/05/14 15:06:03 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,6 +243,10 @@ namespace ft
 				}
 				_h = _t = 0;
 				_s = 0;
+			}
+			iterator insert (iterator position, const T& val)
+			{
+				
 			}
 			//Seems good but watch out for allocators
 			void swap(ft_list &base)
