@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/05/14 15:04:10 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/05/14 15:13:46 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,38 +23,38 @@ int main()
 {
 	// i++
 	// ++i
-	ft::ft_list<int> t;
-	t.push_back(1);
-	t.push_back(2);
-	t.push_back(3);
-	t.push_back(4);
+	// ft::ft_list<int> t;
+	// t.push_back(1);
+	// t.push_back(2);
+	// t.push_back(3);
+	// t.push_back(4);
 
-	ft::ft_list<int> u;
-	u.push_back(5);
-	u.push_back(6);
-	u.push_back(7);
-	u.push_back(8);
-	// ft::ft_list<int> u(t);
-	// u.print();
-	// ft::ft_list<int> v = t;
-	// t.print();
-	// ft::ft_list<int>::reverse_iterator rev = t.rbegin();
-	// ++rev;
-	// ++rev;	
+	// ft::ft_list<int> u;
+	// u.push_back(5);
+	// u.push_back(6);
+	// u.push_back(7);
+	// u.push_back(8);
+	// // ft::ft_list<int> u(t);
+	// // u.print();
+	// // ft::ft_list<int> v = t;
+	// // t.print();
+	// // ft::ft_list<int>::reverse_iterator rev = t.rbegin();
+	// // ++rev;
+	// // ++rev;	
 	
-	// ++rev;
-	// t.erase(rev);
-	std::cout << "T B4--------------------------------\n";
-	t.print(t.begin(), t.end());
-	std::cout << "U B4--------------------------------\n";
-	u.print(u.begin(), u.end());
+	// // ++rev;
+	// // t.erase(rev);
+	// std::cout << "T B4--------------------------------\n";
+	// t.print(t.begin(), t.end());
+	// std::cout << "U B4--------------------------------\n";
+	// u.print(u.begin(), u.end());
 	
-	t.swap(u);
+	// t.swap(u);
 
-	std::cout << "T AF--------------------------------\n";
-	t.print(t.begin(), t.end());
-	std::cout << "U AF--------------------------------\n";
-	u.print(u.begin(), u.end());
+	// std::cout << "T AF--------------------------------\n";
+	// t.print(t.begin(), t.end());
+	// std::cout << "U AF--------------------------------\n";
+	// u.print(u.begin(), u.end());
 
 	// t.print(t.rbegin(), t.rend());
 	// t.rprint();
