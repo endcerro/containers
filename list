@@ -20,7 +20,7 @@ front			DONEv1	: Access first element (public member function )
 back			DONEv1	: Access last element (public member function )
 
 Modifiers:
-assign			TODO	: Assign new content to container (public member function )
+assign			DONEv1	: Assign new content to container (public member function )
 push_front		DONEv1	: Insert element at beginning (public member function )
 pop_front		DONEv1	: Delete first element (public member function )
 push_back		DONEv1	: Add element at the end (public member function )

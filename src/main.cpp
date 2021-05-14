@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/05/13 18:21:57 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/05/14 08:32:36 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int main()
 	// c.a = 4;
 	// c.b = 5;
 	t.push_back(420);
+	t.push_back(41);
+	t.push_back(667);
 	t.push_back(69420);
 	// v.push_back(420);
 	// v.push_back(69);
@@ -51,7 +53,7 @@ int main()
 
 	// std::cout << t.back() << std::endl;
 	// ft::ft_list<int>::iterator i = t.begin();
-	std::cout << "Forwad iterator" << std::endl;
+	// std::cout << "Forwad iterator" << std::endl;
 	// for(ft::ft_list<int>::iterator i = t.begin(); i != t.end(); i++)
  //    {
  //        std::cout << *i << "\n"; //<< i->b << "\n";
@@ -73,13 +75,19 @@ int main()
 
 
 	ft::ft_list<int> s;
-	s.push_back(1);
-	s.push_back(2);
-	s.assign(42, 69);
-	for(ft::ft_list<int>::iterator i = s.begin(); i != s.end(); i++)
-    {
-        std::cout << *i << "\n"; //<< i->b << "\n";
-    }
+	// s.push_back(1);
+	// s.push_back(2);
+	s.assign(t.begin(), t.end());
+	s.print();
+	s.assign(10, 420);
+	std::cout << "\n";
+	s.print();
+	// s.assign(1, 2);
+	// s.print();
+	// for(ft::ft_list<int>::iterator i = s.begin(); i != s.end(); i++)
+ //    {
+ //        std::cout << *i << "\n"; //<< i->b << "\n";
+ //    }
 
 	return 0;
 }

@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/05/13 18:21:41 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/05/14 08:40:55 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #ifndef FT_LIST
 #define FT_LIST
 
+#include "tools.hpp"
 #include <iostream>
 
 
@@ -23,17 +24,9 @@ namespace ft
 	template <class T>
 	class ft_list
 	{
-
-		struct Node
-		{
-			T		*d;
-			Node	*n;
-			Node	*p;
-		};
-
 		private :
-			Node *_h;
-			Node *_t;
+			Node<T> *_h;
+			Node<T> *_t;
 			size_t _s;
 
 		public :
@@ -54,7 +47,7 @@ namespace ft
 					typedef int difference_type;
 					// iterator(pointer ptr) : _ptr(ptr) 
 					// { }
-					iterator(Node *ptr) : _ptr(ptr) 
+					iterator(Node<T> *ptr) : _ptr(ptr) 
 					{ }
 					self_type operator++(int) //i++
 					{
@@ -84,7 +77,7 @@ namespace ft
 						return _ptr != rhs._ptr; 
 					}
 				private :
-					Node *_ptr;
+					Node<T> *_ptr;
 			};
 
 			class reverse_iterator
@@ -97,7 +90,7 @@ namespace ft
 					// typedef std::forward_iterator_tag iterator_category;
 					typedef int difference_type;
 
-					reverse_iterator(Node *ptr) : _ptr(ptr) 
+					reverse_iterator(Node<T> *ptr) : _ptr(ptr) 
 					{ }
 					self_type operator++(int) //i++
 					{
@@ -127,7 +120,7 @@ namespace ft
 						return _ptr != rhs._ptr; 
 					}
 				private :
-					Node *_ptr;
+					Node<T> *_ptr;
 			};
 
 
@@ -154,7 +147,7 @@ namespace ft
 			ft_list& operator=(const ft_list &b)
 			{
 				clear();
-				for(ft::ft_list<T>::iterator i = b.begin(); i != b.end(); i++)
+				for(ft_list<T>::iterator i = b.begin(); i != b.end(); i++)
     			{
  		    	   push_back(*i);
     			}
@@ -166,7 +159,7 @@ namespace ft
 			{
 				if (_t == 0)
 				{
-					_t = new Node;
+					_t = new Node<T>;
 					//THIS NEEDS TO USE ALLOCATORS IT SEEMS
 					_t->d = new T(val);
 					_t->n = 0;
@@ -174,7 +167,7 @@ namespace ft
 				}
 				else
 				{
-					_t->n = new Node;
+					_t->n = new Node<T>;
 					//THIS NEEDS TO USE ALLOCATORS IT SEEMS
 					_t->n->d = new T(val);
 					_t->n->n = 0;
@@ -189,7 +182,7 @@ namespace ft
 			{
 				if (_h == 0)
 				{
-					_h = new Node;
+					_h = new Node<T>;
 					//THIS NEEDS TO USE ALLOCATORS IT SEEMS
 					_h->d = new T(val);
 					_h->n = 0;
@@ -197,7 +190,7 @@ namespace ft
 				}
 				else
 				{
-					Node *tmp = new Node;
+					Node<T> *tmp = new Node<T>;
 					//THIS NEEDS TO USE ALLOCATORS IT SEEMS
 					tmp->d = new T(val);
 					tmp->n = _h;
@@ -216,6 +209,10 @@ namespace ft
 			{
 				return _t->d;
 			}
+
+			
+			// enable_if<1 == 1, int>::type x = 1;
+		    // template <typename std::enable_if<std::is_integral<T>::value>::type>//NN == 2 || NN == 0>>
 			void assign(size_t n, const T &val)
 			{
 				clear();
@@ -224,20 +221,41 @@ namespace ft
 					push_back(val);
 				}
 			}
+
+			// template <class, class = void>
+			// struct is_integral { static const bool value = false; };
+
+			// template <>
+			// struct is_integral<bool> { static const bool value = true; };
+			
+			// template <>
+			// struct is_integral<wchar_t> { static const bool value = true; };
+
+			// template <>
+			// struct is_integral<short> { static const bool value = true; };
+			
+			// template <>
+			// struct is_integral<int> { static const bool value = true; };
+
+			// template <>
+			// struct is_integral<long> { static const bool value = true; };
+
+			// template <>
+			// struct is_integral<long long> { static const bool value = true; };
 			//Use enable_if
-			// template <class InputIterator>
-			// void assign(InputIterator s, InputIterator e)
-			// {
-			// 	clear();
-			// 	while (s != e)
-			// 	{
-			// 		push_back(*s);
-			// 		++s;
-			// 	}
-			// }
+			template <class InputIterator, class = typename ft::enable_if<!std::is_integral<InputIterator>::value>::type>
+			void assign(InputIterator s, InputIterator e)//, typename enable_if<!std::is_integral<InputIterator>::value>::type * = 0)
+			{
+				clear();
+				while (s != e)
+				{
+					push_back(*s);
+					++s;
+				}
+			}
 			void pop_front(void)
 			{
-				Node *tmp = _h;
+				Node<T> *tmp = _h;
 				if (_h)	
 					_h = _h->n;
 				delete tmp;
@@ -245,7 +263,7 @@ namespace ft
 			}
 			void pop_back(void)
 			{
-				Node *tmp = _t;
+				Node<T>	 *tmp = _t;
 				if (_t)
 				{
 					_t = _t->p;
@@ -256,8 +274,8 @@ namespace ft
 			}
 			void clear(void)
 			{
-				Node *curr = _h;
-				Node *next;
+				Node<T> *curr = _h;
+				Node<T> *next;
 				while (curr)
 				{
 					next = curr->n;
@@ -280,8 +298,8 @@ namespace ft
 			//TO DEL
 			void print()
 			{
-				Node *curr = _h;
-				Node *next = 0;
+				Node<T> *curr = _h;
+				Node<T> *next = 0;
 				while (curr != 0)
 				{
 					next = curr->n;

@@ -21,7 +21,7 @@ SRC			=	main.cpp
 OBJ			=	$(SRC:.cpp=.o)
 OBJS		=	$(OBJ:%=$(OBJD)/%)
 
-CFLAGS		=	-g3 -fsanitize=address -std=c++98 #-Wall -Wextra -Werror 
+CFLAGS		=	-g3 -fsanitize=address  -Wall -Wextra -std=c++98#-Werror 
 
 CC			=	clang++
 RM			=	rm -f
