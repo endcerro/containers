@@ -6,11 +6,11 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/05/14 10:02:07 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/05/14 14:24:25 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_list.hpp"
+#include "../incl/ft_list.hpp"
 #include <list>
 
 // struct test
@@ -30,14 +30,25 @@ int main()
 	// test c;
 	// c.a = 4;
 	// c.b = 5;
-	t.push_back(420);
-	t.push_back(41);
-	t.push_back(667);
-	t.push_back(69420);
+	t.push_back(1);
+	t.push_back(2);
+	t.push_back(3);
+	t.push_back(4);
 
-	ft::ft_list<int> u(t);
+	// ft::ft_list<int> u(t);
 	// u.print();
-	ft::ft_list<int> v = t;
+	// ft::ft_list<int> v = t;
+	// t.print();
+	ft::ft_list<int>::reverse_iterator rev = t.rbegin();
+	++rev;
+	++rev;	
+	
+	// ++rev;
+	t.erase(rev);
+	t.print();
+	std::cout << "--------------------------------\n";
+	t.rprint();
+	// t.erase(t.end());
 	// v.print();
 	// v.push_back(420);
 	// v.push_back(69);
@@ -77,14 +88,14 @@ int main()
 	// y.push_back(69420);
 	// y.push_back(777);
 
-	ft::ft_list<int> s;
-	// s.push_back(1);
-	// s.push_back(2);
-	s.assign(t.begin(), t.end());
+	// ft::ft_list<int> s;
+	// // s.push_back(1);
+	// // s.push_back(2);
+	// s.assign(t.begin(), t.end());
+	// // s.print();
+	// s.assign(10, 420);
 	// s.print();
-	s.assign(10, 420);
-	s.print();
-	// std::cout << t.front() <<"\n";
+	// // std::cout << t.front() <<"\n";
 	// std::cout << t.back() <<"\n";
 	// s.print();
 	// s.assign(1, 2);

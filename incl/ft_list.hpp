@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/05/14 10:38:59 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/05/14 14:24:08 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@
 
 //IMPLEMENT ALLOCATORS
 namespace ft
-{
+{	
+
 	template <class T>
 	class ft_list
 	{
@@ -52,10 +53,13 @@ namespace ft
 				return *this;
 			};
 			
+			friend class iterator;
 			/* MEMBER FUNS */
+			//Use friends
 			class iterator
 			{
-				public:
+				friend class ft_list<T>;
+				public :
 					typedef iterator self_type;
 					typedef T value_type;
 					typedef T& reference;
@@ -78,7 +82,7 @@ namespace ft
 						return *this;
 					}
 					reference operator*() 
-					{ 
+					{
 						return *(_ptr->d); 
 					}
 					pointer operator->() 
@@ -96,9 +100,10 @@ namespace ft
 				private :
 					Node<T> *_ptr;
 			};
-
+			//may use friends
 			class reverse_iterator : virtual public iterator
 			{
+				friend class ft_list<T>;
 				public :
 					typedef reverse_iterator self_type;
 					typedef T value_type;
@@ -107,17 +112,19 @@ namespace ft
 					// typedef std::forward_iterator_tag iterator_category;
 					typedef int difference_type;
 
-					reverse_iterator(Node<T> *ptr) : _ptr(ptr) 
+					reverse_iterator(Node<T> *ptr) : iterator(ptr), _ptr(ptr) 
 					{ }
 					reverse_iterator operator++(int) //i++
 					{
+						// std::cout << "PHASE 1" << std::endl;
 						reverse_iterator i = *this; 
 						_ptr = _ptr->p;
 						return i;
 					}
 					reverse_iterator operator++() //++i
 					{ 
-						_ptr = _ptr->p; 
+						// std::cout << "PHASE 2" << std::endl;
+						_ptr = _ptr->p;
 						return *this;
 					}
 					reference operator*() 
@@ -143,17 +150,35 @@ namespace ft
 				/* ITERATORS N SHIT 
 			NEED TO ADD CONST ITERATORS N STUFF*/
 
-		
+				// friend iterator;		
 
 			iterator begin() const { return iterator(_h); }
 			iterator end() const { return iterator(_t->n); }
 			reverse_iterator rbegin() const { return reverse_iterator(_t); }
 			reverse_iterator rend() const {	return reverse_iterator(_h->p); }
 
-			void erase(iterator pos)
+			template<class IT>
+			IT erase(IT pos)
 			{
-				// delete ;
-
+				Node<T> *curr = pos._ptr;
+				if (curr->p)
+				{
+					curr->p->n = curr->n;
+					if (curr->n)
+						curr->n->p = curr->p;
+				}
+				else
+				{
+					_h = curr->n;
+					if (curr->n)
+						curr->n->p = 0;
+				}
+				if (curr == _t)
+					_t = curr->p;
+				IT ret = ++pos;
+				delete curr->d;
+				delete curr;
+				return ret;
 			}
 
 			void push_back (const T& val)
@@ -242,13 +267,20 @@ namespace ft
 			//TO DEL
 			void print(void)
 			{
-				Node<T> *curr = _h;
-				Node<T> *next = 0;
-				while (curr != 0)
+				for (iterator a = begin(); a != end(); a++)
 				{
-					next = curr->n;
-					std::cout << *(curr->d) << std::endl;
-					curr = next;
+					// next = curr->n;
+					std::cout << *a << std::endl;
+					// curr = next;
+				}
+			};
+			void rprint(void)
+			{
+				for (reverse_iterator a = rbegin(); a != rend(); a++)
+				{
+					// next = curr->n;
+					std::cout << *a << std::endl;
+					// curr = next;
 				}
 			};
 			
@@ -261,8 +293,8 @@ namespace ft
 			}
 
 			//C++98 !COMPLIANT
-			template <class InputIterator, class = typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type>
-			void assign(InputIterator s, InputIterator e)
+			template <class InputIterator>
+			void assign(typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type s, InputIterator e)
 			{
 				size_t i = 0;
 				clear();
