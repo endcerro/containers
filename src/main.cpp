@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/05/14 08:32:36 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/05/14 08:50:43 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int main()
 	// i++
 	// ++i
 	ft::ft_list<int> t;
-	ft::ft_list<int> v;
 	// test a;
 	// a.a = 2;
 	// a.b = 3;
@@ -74,14 +73,14 @@ int main()
 	// y.push_back(777);
 
 
-	ft::ft_list<int> s;
 	// s.push_back(1);
 	// s.push_back(2);
-	s.assign(t.begin(), t.end());
-	s.print();
-	s.assign(10, 420);
-	std::cout << "\n";
-	s.print();
+	// s.assign(t.begin(), t.end());
+	// s.print();
+	// s.assign(10, 420);
+	std::cout << t.front() <<"\n";
+	std::cout << t.back() <<"\n";
+	// s.print();
 	// s.assign(1, 2);
 	// s.print();
 	// for(ft::ft_list<int>::iterator i = s.begin(); i != s.end(); i++)

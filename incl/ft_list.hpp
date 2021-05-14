@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/05/14 08:40:55 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/05/14 08:50:30 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,12 +148,9 @@ namespace ft
 			{
 				clear();
 				for(ft_list<T>::iterator i = b.begin(); i != b.end(); i++)
-    			{
  		    	   push_back(*i);
-    			}
 				_s = b._s;
 				return *this;
-				//need to copy also;
 			};
 			void push_back (const T& val)
 			{
@@ -203,11 +200,11 @@ namespace ft
 			}	
 			T front(void) const
 			{
-				return _h->d;
+				return *(_h->d);
 			}
 			T back(void) const
 			{
-				return _t->d;
+				return *(_t->d);
 			}
 
 			
