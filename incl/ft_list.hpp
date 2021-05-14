@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/05/14 14:29:03 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/05/14 14:31:30 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,6 @@ namespace ft
 					typedef T& reference;
 					typedef T* pointer;
 					// typedef std::forward_iterator_tag iterator_category;
-					typedef int difference_type;
-					// iterator(pointer ptr) : _ptr(ptr) 
-					// { }
 					iterator(Node<T> *ptr) : _ptr(ptr) 
 					{ }
 					self_type operator++(int) //i++
@@ -109,21 +106,16 @@ namespace ft
 					typedef T value_type;
 					typedef T& reference;
 					typedef T* pointer;
-					// typedef std::forward_iterator_tag iterator_category;
-					typedef int difference_type;
-
 					reverse_iterator(Node<T> *ptr) : _ptr(ptr) 
 					{ }
 					reverse_iterator operator++(int) //i++
 					{
-						// std::cout << "PHASE 1" << std::endl;
 						reverse_iterator i = *this; 
 						_ptr = _ptr->p;
 						return i;
 					}
 					reverse_iterator operator++() //++i
 					{ 
-						// std::cout << "PHASE 2" << std::endl;
 						_ptr = _ptr->p;
 						return *this;
 					}
