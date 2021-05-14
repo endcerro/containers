@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/05/14 14:24:08 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/05/14 14:29:03 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ namespace ft
 					Node<T> *_ptr;
 			};
 			//may use friends
-			class reverse_iterator : virtual public iterator
+			class reverse_iterator //: virtual public iterator
 			{
 				friend class ft_list<T>;
 				public :
@@ -112,7 +112,7 @@ namespace ft
 					// typedef std::forward_iterator_tag iterator_category;
 					typedef int difference_type;
 
-					reverse_iterator(Node<T> *ptr) : iterator(ptr), _ptr(ptr) 
+					reverse_iterator(Node<T> *ptr) : _ptr(ptr) 
 					{ }
 					reverse_iterator operator++(int) //i++
 					{
