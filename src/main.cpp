@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/05/14 08:50:43 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/05/14 10:02:07 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,19 @@ int main()
 	t.push_back(41);
 	t.push_back(667);
 	t.push_back(69420);
+
+	ft::ft_list<int> u(t);
+	// u.print();
+	ft::ft_list<int> v = t;
+	// v.print();
 	// v.push_back(420);
 	// v.push_back(69);
 	// t.push_front(800);
-	// // t.print();
-	// // std::cout << t.size() << std::endl;
-	// // std::cout << t.front() << std::endl;
-	// // std::cout << t.back() << std::endl;
-	// // t.pop_front()
+	// // // t.print();
+	// std::cout << t.size() << std::endl;
+	// std::cout << t.front() << std::endl;
+	// std::cout << t.back() << std::endl;
+	// // // t.pop_front()
 	// std::cout << t.size() << std::endl;	
 	// t.print();
 	// // t.emplace_front("X1");
@@ -72,14 +77,15 @@ int main()
 	// y.push_back(69420);
 	// y.push_back(777);
 
-
+	ft::ft_list<int> s;
 	// s.push_back(1);
 	// s.push_back(2);
-	// s.assign(t.begin(), t.end());
+	s.assign(t.begin(), t.end());
 	// s.print();
-	// s.assign(10, 420);
-	std::cout << t.front() <<"\n";
-	std::cout << t.back() <<"\n";
+	s.assign(10, 420);
+	s.print();
+	// std::cout << t.front() <<"\n";
+	// std::cout << t.back() <<"\n";
 	// s.print();
 	// s.assign(1, 2);
 	// s.print();

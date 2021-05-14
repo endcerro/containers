@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/05/14 08:50:30 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/05/14 10:38:59 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include "tools.hpp"
 #include <iostream>
 
-
+//IMPLEMENT ALLOCATORS
 namespace ft
 {
 	template <class T>
@@ -30,12 +30,29 @@ namespace ft
 			size_t _s;
 
 		public :
-			ft_list() : _h(0), _t(0),  _s(0)
-			{				};
+			/* CONSTRUCTORS N DESTRUCTORS */
+			ft_list() : _h(0), _t(0),  _s(0) {};
+			
+			ft_list(const ft_list &f) { *this = f; };
+
+			template<class InputIterator>
+			ft_list(InputIterator s, InputIterator e) { assign(s,e); }
+
+			ft_list (size_t n, const T& val) { assign(n, val); }
+
 			~ft_list()
 			{	clear();	};
 
-			//Maybe think about const
+			/* OVERLOADS */
+
+			ft_list& operator=(const ft_list &b)
+			{
+				assign(b.begin(), b.end());
+				_s = b._s;
+				return *this;
+			};
+			
+			/* MEMBER FUNS */
 			class iterator
 			{
 				public:
@@ -80,9 +97,9 @@ namespace ft
 					Node<T> *_ptr;
 			};
 
-			class reverse_iterator
+			class reverse_iterator : virtual public iterator
 			{
-				public:
+				public :
 					typedef reverse_iterator self_type;
 					typedef T value_type;
 					typedef T& reference;
@@ -92,13 +109,13 @@ namespace ft
 
 					reverse_iterator(Node<T> *ptr) : _ptr(ptr) 
 					{ }
-					self_type operator++(int) //i++
+					reverse_iterator operator++(int) //i++
 					{
-						self_type i = *this; 
+						reverse_iterator i = *this; 
 						_ptr = _ptr->p;
 						return i;
 					}
-					self_type operator++() //++i
+					reverse_iterator operator++() //++i
 					{ 
 						_ptr = _ptr->p; 
 						return *this;
@@ -111,11 +128,11 @@ namespace ft
 					{ 
 						return _ptr->d;
 					}
-					bool operator==(const self_type& rhs)
+					bool operator==(const reverse_iterator& rhs)
 					{ 
 						return _ptr == rhs._ptr; 
 					}
-					bool operator!=(const self_type& rhs) 
+					bool operator!=(const reverse_iterator& rhs) 
 					{ 
 						return _ptr != rhs._ptr; 
 					}
@@ -123,49 +140,34 @@ namespace ft
 					Node<T> *_ptr;
 			};
 
+				/* ITERATORS N SHIT 
+			NEED TO ADD CONST ITERATORS N STUFF*/
 
-			iterator begin() const
+		
+
+			iterator begin() const { return iterator(_h); }
+			iterator end() const { return iterator(_t->n); }
+			reverse_iterator rbegin() const { return reverse_iterator(_t); }
+			reverse_iterator rend() const {	return reverse_iterator(_h->p); }
+
+			void erase(iterator pos)
 			{
-				return iterator(_h);
+				// delete ;
+
 			}
 
-			iterator end() const
-			{
-				return iterator(_t->n);
-			}
-
-			reverse_iterator rbegin() const
-			{
-				return reverse_iterator(_t);
-			}
-
-			reverse_iterator rend() const
-			{
-				return reverse_iterator(_h->p);
-			}
-
-			ft_list& operator=(const ft_list &b)
-			{
-				clear();
-				for(ft_list<T>::iterator i = b.begin(); i != b.end(); i++)
- 		    	   push_back(*i);
-				_s = b._s;
-				return *this;
-			};
 			void push_back (const T& val)
 			{
+				//THIS NEEDS TO USE ALLOCATORS IT SEEMS
 				if (_t == 0)
 				{
 					_t = new Node<T>;
-					//THIS NEEDS TO USE ALLOCATORS IT SEEMS
 					_t->d = new T(val);
-					_t->n = 0;
-					_t->p = 0;
+					_t->n = _t->p = 0;
 				}
 				else
 				{
 					_t->n = new Node<T>;
-					//THIS NEEDS TO USE ALLOCATORS IT SEEMS
 					_t->n->d = new T(val);
 					_t->n->n = 0;
 					_t->n->p = _t;
@@ -173,22 +175,20 @@ namespace ft
 				}
 				if (_h == 0)
 					_h = _t;
-				_s++;
+				++_s;
 			}
 			void push_front (const T& val)
 			{
+				//THIS NEEDS TO USE ALLOCATORS IT SEEMS
 				if (_h == 0)
 				{
 					_h = new Node<T>;
-					//THIS NEEDS TO USE ALLOCATORS IT SEEMS
 					_h->d = new T(val);
-					_h->n = 0;
-					_h->p = 0;
+					_h->n = _h->p = 0;
 				}
 				else
 				{
 					Node<T> *tmp = new Node<T>;
-					//THIS NEEDS TO USE ALLOCATORS IT SEEMS
 					tmp->d = new T(val);
 					tmp->n = _h;
 					tmp->p = 0;
@@ -197,66 +197,18 @@ namespace ft
 				if (_t == 0)
 					_t = _h;
 				_s++;
-			}	
-			T front(void) const
-			{
-				return *(_h->d);
-			}
-			T back(void) const
-			{
-				return *(_t->d);
 			}
 
-			
-			// enable_if<1 == 1, int>::type x = 1;
-		    // template <typename std::enable_if<std::is_integral<T>::value>::type>//NN == 2 || NN == 0>>
-			void assign(size_t n, const T &val)
-			{
-				clear();
-				for (size_t i = 0; i < n; i++)
-				{
-					push_back(val);
-				}
-			}
+			T& front(void) const	{ return *(_h->d); }
+			T& back(void) const		{ return *(_t->d); }
 
-			// template <class, class = void>
-			// struct is_integral { static const bool value = false; };
-
-			// template <>
-			// struct is_integral<bool> { static const bool value = true; };
-			
-			// template <>
-			// struct is_integral<wchar_t> { static const bool value = true; };
-
-			// template <>
-			// struct is_integral<short> { static const bool value = true; };
-			
-			// template <>
-			// struct is_integral<int> { static const bool value = true; };
-
-			// template <>
-			// struct is_integral<long> { static const bool value = true; };
-
-			// template <>
-			// struct is_integral<long long> { static const bool value = true; };
-			//Use enable_if
-			template <class InputIterator, class = typename ft::enable_if<!std::is_integral<InputIterator>::value>::type>
-			void assign(InputIterator s, InputIterator e)//, typename enable_if<!std::is_integral<InputIterator>::value>::type * = 0)
-			{
-				clear();
-				while (s != e)
-				{
-					push_back(*s);
-					++s;
-				}
-			}
 			void pop_front(void)
 			{
 				Node<T> *tmp = _h;
 				if (_h)	
 					_h = _h->n;
 				delete tmp;
-				_s--;				
+				_s--;
 			}
 			void pop_back(void)
 			{
@@ -283,17 +235,12 @@ namespace ft
 				_h = _t = 0;
 				_s = 0;
 			}
-			bool empty() const 	
-			{
-				return (_s > 0 ? true : false);
-			}
-			size_t size() const
-			{	
-				return _s;
-			}
-			size_t max_size() 	{			};
+			bool empty(void) const 	{ return (_s > 0 ? true : false); }
+			size_t size(void) const { return _s; }
+			size_t max_size(void) 	{			};
+			
 			//TO DEL
-			void print()
+			void print(void)
 			{
 				Node<T> *curr = _h;
 				Node<T> *next = 0;
@@ -304,6 +251,27 @@ namespace ft
 					curr = next;
 				}
 			};
+			
+			void assign(size_t n, const T &val)
+			{
+				clear();
+				for (size_t i = 0; i < n; i++)
+					push_back(val);
+				_s = n;
+			}
+
+			//C++98 !COMPLIANT
+			template <class InputIterator, class = typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type>
+			void assign(InputIterator s, InputIterator e)
+			{
+				size_t i = 0;
+				clear();
+				while (s != e && ++i)
+					push_back(*(s++));
+				_s = i;
+			}
+
+
 	};
 }
 #endif
