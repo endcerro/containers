@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/05/15 18:23:36 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/05/15 18:28:29 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ int main()
 	// li++; ti++;
 	// ti++;
 	std::list<int> test = l;
-	t.insert(ti, l.begin(), l.end());
+	test.insert(test.begin(), l.begin(), l.end());
+	test.insert(ti, l.begin(), l.end());
 
 	// li = l.erase(li, li2);
 	// ti = t.erase(++ti);
@@ -65,7 +66,7 @@ int main()
 	// std::cout << "TI :" << *ti << "\n";
 	// std::cout << "li :" << *li << "\n";
 	
-	for(ft::list<int>::iterator i = t.begin(); i != t.end(); i++)
+	for(std::list<int>::iterator i = test.begin(); i != test.end(); i++)
 	{
 		std::cout << *i << "|";
 	}
