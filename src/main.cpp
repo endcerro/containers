@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/05/14 15:31:26 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/05/15 16:54:19 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,79 @@
 int main()
 {
 	// i++
+	std::cout << "------------------------------------------" << std::endl;
 	// ++i
-	// ft::ft_list<int> t;
-	// t.push_back(1);
-	// t.push_back(2);
-	// t.push_back(3);
-	// t.push_back(4);
+	ft::list<int> t ;
+	std::list<int> l;
+	for(int i = 0; i < 10; i++)
+	{
+		l.push_back(i);
+		t.push_back(i);
+	}
+	
 
-	// ft::ft_list<int> u;
+	ft::list<int>::iterator ti = t.begin();
+	std::list<int>::iterator li = l.begin();
+	
+
+	ft::list<int>::iterator ti2 = t.begin();
+	std::list<int>::iterator li2 = l.begin();
+
+
+	// ti2++;
+	// ti2++;
+	// ti2++;
+	// ti++;		
+	// ti2++;
+	
+	ti2++; li2++;
+	ti2++; li2++;
+	ti2++; li2++;
+	ti2++; li2++;
+
+	li++; ti++;
+
+	ti = t.erase(ti, ti2);
+	li = l.erase(li, li2);
+	// ti = t.erase(++ti);
+	// li = l.erase(++li);
+	std::cout << "TI :" << *ti << "\n";
+	std::cout << "li :" << *li << "\n";
+	
+	for(ft::list<int>::iterator i = t.begin(); i != t.end(); i++)
+	{
+		std::cout << *i << "|";
+	}
+	std::cout << std::endl;
+	for(std::list<int>::iterator i = l.begin(); i != l.end(); i++)
+	{
+		std::cout << *i << "|";//<< std::endl;
+	}
+	std::cout << std::endl;
+
+	// ft::list<int>::iterator e = t.end();
+	// // t.print(t.begin(), t.end());
+	// while (s != e)
+	// {
+	// 	std::cout << *s << std::endl;
+	// 	++s;
+	// }
+	// std::list<int> u;
+	
 	// u.push_back(5);
 	// u.push_back(6);
 	// u.push_back(7);
 	// u.push_back(8);
-	// // ft::ft_list<int> u(t);
+	// std::list<int>::iterator ui = u.begin();
+	
+	// u.erase(ui);
+
+
+	// std::cout << "UI :" << *ui << "\n";
+	
+	
+
+	// // ft::ft_list<int> (t);
 	// // u.print();
 	// // ft::ft_list<int> v = t;
 	// // t.print();

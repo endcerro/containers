@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/05/14 15:31:50 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/05/15 16:54:38 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //http://www.cplusplus.com/reference/list/list/
@@ -66,6 +66,7 @@ namespace ft
 					// typedef std::forward_iterator_tag iterator_category;
 					iterator(Node<T> *ptr) : _ptr(ptr) 
 					{ }
+					iterator() : _ptr(0) {};
 					self_type operator++(int) //i++
 					{
 						iterator i = *this; 
@@ -97,6 +98,7 @@ namespace ft
 					typedef T value_type;
 					typedef T& reference;
 					typedef T* pointer;
+					reverse_iterator() : _ptr(0) {};
 					reverse_iterator(Node<T> *ptr) : _ptr(ptr) 
 					{ }
 					reverse_iterator operator++(int) //i++
@@ -136,7 +138,11 @@ namespace ft
 				// friend iterator;		
 
 			iterator begin() const { return iterator(_h); }
-			iterator end() const { return iterator(_t->n); }
+			iterator end() const { 
+				// std::cout << "NO CRASH YET : "<< _t << std::endl;
+				// iterator t =  
+				return (iterator(_t->n)); 
+			}
 			reverse_iterator rbegin() const { return reverse_iterator(_t); }
 			reverse_iterator rend() const {	return reverse_iterator(_h->p); }
 
@@ -158,9 +164,18 @@ namespace ft
 				}
 				if (curr == _t)
 					_t = curr->p;
-				IT ret = ++pos;
+				IT ret(curr->n);
 				delete curr->d;
 				delete curr;
+				return ret;
+			}
+
+			template<class IT>
+			IT erase(IT start,IT end)
+			{
+				IT ret = start;
+				while (start != end)
+					ret = erase(start++);
 				return ret;
 			}
 
