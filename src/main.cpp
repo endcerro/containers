@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/05/15 16:54:19 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/05/15 18:23:36 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,30 +47,34 @@ int main()
 	// ti++;		
 	// ti2++;
 	
-	ti2++; li2++;
-	ti2++; li2++;
-	ti2++; li2++;
-	ti2++; li2++;
+	// ti2++; li2++;
+	// ti2++; li2++;
+	// ti2++; li2++;
+	// ti2++; li2++;
 
-	li++; ti++;
+	// li++; ti++;
+	// ti++;
+	std::list<int> test = l;
+	t.insert(ti, l.begin(), l.end());
 
-	ti = t.erase(ti, ti2);
-	li = l.erase(li, li2);
+	// li = l.erase(li, li2);
 	// ti = t.erase(++ti);
 	// li = l.erase(++li);
-	std::cout << "TI :" << *ti << "\n";
-	std::cout << "li :" << *li << "\n";
+	t.print(t.begin(), t.end());
+
+	// std::cout << "TI :" << *ti << "\n";
+	// std::cout << "li :" << *li << "\n";
 	
 	for(ft::list<int>::iterator i = t.begin(); i != t.end(); i++)
 	{
 		std::cout << *i << "|";
 	}
-	std::cout << std::endl;
-	for(std::list<int>::iterator i = l.begin(); i != l.end(); i++)
-	{
-		std::cout << *i << "|";//<< std::endl;
-	}
-	std::cout << std::endl;
+	// std::cout << std::endl;
+	// for(std::list<int>::iterator i = l.begin(); i != l.end(); i++)
+	// {
+	// 	std::cout << *i << "|";//<< std::endl;
+	// }
+	// std::cout << std::endl;
 
 	// ft::list<int>::iterator e = t.end();
 	// // t.print(t.begin(), t.end());

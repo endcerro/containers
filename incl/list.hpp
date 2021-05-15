@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/05/15 16:56:30 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/05/15 18:15:26 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //http://www.cplusplus.com/reference/list/list/
@@ -76,6 +76,17 @@ namespace ft
 					self_type operator++() //i++
 					{ 
 						_ptr = _ptr->n; 
+						return *this;
+					}
+					self_type operator--(int) //i++
+					{
+						iterator i = *this; 
+						_ptr = _ptr->p;
+						return i;
+					}
+					self_type operator--() //i++
+					{ 
+						_ptr = _ptr->p; 
 						return *this;
 					}
 					reference operator*() 
@@ -258,10 +269,46 @@ namespace ft
 				_h = _t = 0;
 				_s = 0;
 			}
-			// iterator insert (iterator position, const T& val)
-			// {
 
-			// }
+			template<class IT>
+			IT insert (IT p, const T& val)
+			{
+				ft::Node<T> *new_elem = new Node<T>;
+				ft::Node<T> *pos_elem = p._ptr;
+
+				new_elem->d = new T(val);
+				new_elem->n = pos_elem;
+				new_elem->p = pos_elem->p;
+				
+				if (pos_elem->p)
+					pos_elem->p->n = new_elem;
+				else
+					_h = new_elem;
+
+				iterator ret(new_elem);
+				return ret;
+			}
+
+			template<class IT>
+			void insert (IT position, size_t n, const T& val)
+			{
+				for (size_t i = 0; i < n; i++)
+				{
+					position = insert(position, val);
+				}
+			}
+			
+			template <class InputIterator, class IT>
+    		void insert (IT position, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type first, InputIterator last)
+    		{
+    			while (first != last)
+    			{
+    				position = insert(position, *first);
+    				// position++;
+    				++first;
+    			}
+    		}
+
 			//Seems good but watch out for allocators
 			void swap(list &base)
 			{
