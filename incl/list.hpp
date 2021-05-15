@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/05/15 16:54:38 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/05/15 16:56:30 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //http://www.cplusplus.com/reference/list/list/
@@ -158,8 +158,8 @@ namespace ft
 				}
 				else
 				{
-					_h = curr->n;
-					if (curr->n)
+					// _h = curr->n;
+					if ((_h = curr->n))
 						curr->n->p = 0;
 				}
 				if (curr == _t)
