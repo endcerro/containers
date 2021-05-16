@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/05/15 18:15:26 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/05/16 15:45:09 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //http://www.cplusplus.com/reference/list/list/
@@ -274,8 +274,31 @@ namespace ft
 			IT insert (IT p, const T& val)
 			{
 				ft::Node<T> *new_elem = new Node<T>;
-				ft::Node<T> *pos_elem = p._ptr;
+				ft::Node<T> *pos_elem;
+				new_elem->d = new T(val);
 
+				// if (p == begin() && p == 0)
+				// {
+				// 	std::cout << "edge case" << std::endl;
+				// 	return 0;
+				// }
+				if (_h == 0)
+				{
+					_h = new_elem;
+					_t = new_elem;
+					new_elem->n = 0;
+					new_elem->p = 0;
+					iterator test(new_elem);
+					return test;
+						// std::cout << "also edge case" << std::endl;	
+				}
+				pos_elem = p._ptr;	
+				
+				// if (p == 0)
+				// {
+				// 	std::cout << "heeeey" << std::endl;
+
+				// }
 				new_elem->d = new T(val);
 				new_elem->n = pos_elem;
 				new_elem->p = pos_elem->p;
@@ -303,8 +326,18 @@ namespace ft
     		{
     			while (first != last)
     			{
+    				if (position != 0)
+ 		   				std::cout << "B4 insert " << *position << std::endl;
+		 			else
+    					std::cout << "B4 is 0 " << std::endl;
     				position = insert(position, *first);
-    				// position++;
+    				if (position != 0)
+ 		   				std::cout << "AF insert " << *position << std::endl;
+    				else
+    					std::cout << "AF is 0 " << std::endl;
+    				if (position != 0)
+	    				++position;
+
     				++first;
     			}
     		}

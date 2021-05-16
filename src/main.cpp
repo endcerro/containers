@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/05/15 18:28:29 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/05/16 15:35:58 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,15 @@ int main()
 	for(int i = 0; i < 10; i++)
 	{
 		l.push_back(i);
-		t.push_back(i);
+		// t.push_back(i);
 	}
 	
 
-	ft::list<int>::iterator ti = t.begin();
+	// ft::list<int>::iterator ti = t.begin();
 	std::list<int>::iterator li = l.begin();
 	
 
-	ft::list<int>::iterator ti2 = t.begin();
+	// ft::list<int>::iterator ti2 = t.begin();
 	std::list<int>::iterator li2 = l.begin();
 
 
@@ -54,18 +54,23 @@ int main()
 
 	// li++; ti++;
 	// ti++;
-	std::list<int> test = l;
+	std::list<int> test;// = l;
 	test.insert(test.begin(), l.begin(), l.end());
-	test.insert(ti, l.begin(), l.end());
+	t.insert(t.begin(), l.begin(), l.end());
+	// test.insert(ti, l.begin(), l.end());
 
 	// li = l.erase(li, li2);
 	// ti = t.erase(++ti);
 	// li = l.erase(++li);
-	t.print(t.begin(), t.end());
+	// t.print(t.begin(), t.end());
 
 	// std::cout << "TI :" << *ti << "\n";
 	// std::cout << "li :" << *li << "\n";
-	
+	for(ft::list<int>::iterator i = t.begin(); i != t.end(); i++)
+	{
+		std::cout << *i << "|";
+	}
+	std::cout << "\n";
 	for(std::list<int>::iterator i = test.begin(); i != test.end(); i++)
 	{
 		std::cout << *i << "|";
