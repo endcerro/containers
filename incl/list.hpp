@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/05/18 17:58:23 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/05/26 17:11:45 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //http://www.cplusplus.com/reference/list/list/
@@ -27,6 +27,7 @@ namespace ft
 		private :
 			Node<T> *_h;
 			Node<T> *_t;
+			Node<T> *_e;
 			size_t _s;
 
 		public :
@@ -80,7 +81,9 @@ namespace ft
 					}
 					self_type operator--(int) //i++
 					{
-						iterator i = *this; 
+						if (this == 0)
+							return NULL;
+						iterator i = *this;
 						_ptr = _ptr->p;
 						return i;
 					}
@@ -151,8 +154,11 @@ namespace ft
 			iterator begin() const { return iterator(_h); }
 			iterator end() const { 
 				// std::cout << "NO CRASH YET : "<< _t << std::endl;
-				// iterator t =  
-				return (iterator(_t->n)); 
+				// iterator t = 
+				
+				if (_t)
+					return (iterator(_t->n)); 
+				return (iterator(_t));
 			}
 			reverse_iterator rbegin() const { return reverse_iterator(_t); }
 			reverse_iterator rend() const {	return reverse_iterator(_h->p); }
@@ -216,13 +222,21 @@ namespace ft
 				//THIS NEEDS TO USE ALLOCATORS IT SEEMS
 				if (_h == 0)
 				{
-					_h = new Node<T>;
-					_h->d = new T(val);
-					_h->n = _h->p = 0;
+					std::cout << "This is the good case\n" ;
+					Node<T> *elem = new Node<T>;
+					elem->d = new T(val);
+				
+					_h = elem;
+					_t = elem;
+					_h->n = 0; 
+					_h->p = 0;
 				}
 				else
 				{
+					std::cout << "We shouldn't be here" << std::endl;
+					
 					Node<T> *tmp = new Node<T>;
+					_h->p = tmp;
 					tmp->d = new T(val);
 					tmp->n = _h;
 					tmp->p = 0;
@@ -273,53 +287,102 @@ namespace ft
 			template<class IT>
 			IT insert (IT p, const T& val)
 			{
-				ft::Node<T> *new_elem = new Node<T>;
-				ft::Node<T> *pos_elem;
-				new_elem->d = new T(val);
+				std::cout << *p << std::endl;
 
-				if (p == begin() && p == 0)
+				if (p == begin())
 				{
-					push_back(val);
-					std::cout << "edge case" << std::endl;
-					// iterator ;
+					push_front(val);
 					return begin();
 				}
-				if (_h == 0)
+				else if (p == end())
 				{
-					_h = new_elem;
-					_t = new_elem;
-					new_elem->n = 0;
-					new_elem->p = 0;
-					iterator test(new_elem);
-					return test;
-						// std::cout << "also edge case" << std::endl;	
+					std::cout << "insrt at end" << std::endl;
+					push_back(val);
+					return end();
 				}
 				else
 				{
-					new_elem->n = p._ptr;
+					std::cout << "here" << std::endl;
+					ft::Node<T> *new_elem = new Node<T>;
+					new_elem->d = new T(val);
+					//Elem has been init;
+					//There must be something before since != begin
+					// if (p._ptr->p)
+					std::cout << "prev = " << p._ptr->p << " next = " << p._ptr->n << std::endl;
+					if (p._ptr->p != 0)
+					{
+						p._ptr->p->n = new_elem;;
+							// std::cout << "ohno";
+					}
+
+					// p._ptr->p->n = new_elem;
 					new_elem->p = p._ptr->p;
+					new_elem->n = p._ptr;
 					p._ptr->p = new_elem;
-					//ofc it doesn't work
-					std::cout << "HERE" << std::endl;
+
+					// new_elem->n = p._ptr;
+					// new_elem->p = p._ptr->p;
+					// if (p._ptr->p)
+					// 	p._ptr->p->n = new_elem;					
+					// p._ptr->p = new_elem;
+					// if (p._ptr->p)
+					// 	p._ptr->p->n = new_elem;	
+					// // new_elem->p = p._ptr->p
+					// p._ptr->p = new_elem;
+
+					// p._ptr->n->p = new_elem;
+
+					// p._ptr->n = new_elem;
+					// new_elem->p = p._ptr;
+					
+					return iterator(new_elem);	
+					// ft::Node<T> *pos_elem;
 				}
-				pos_elem = p._ptr;
-				
-				// if (p == 0)
+
+				// if (p == begin() && p == 0)
 				// {
-				// 	std::cout << "heeeey" << std::endl;
-
+					
+				// 	push_back(val);
+				// 	std::cout << "edge case" << std::endl;
+				// 	// iterator ;
+				// 	return begin();
 				// }
-				new_elem->d = new T(val);
-				new_elem->n = pos_elem;
-				new_elem->p = pos_elem->p;
+				// if (_h == 0)
+				// {
+				// 	_h = new_elem;
+				// 	_t = new_elem;
+				// 	new_elem->n = 0;
+				// 	new_elem->p = 0;
+				// 	iterator test(new_elem);
+				// 	return test;
+				// 		// std::cout << "also edge case" << std::endl;	
+				// }
+				// else
+				// {
+				// 	new_elem->n = p._ptr;
+				// 	new_elem->p = p._ptr->p;
+				// 	p._ptr->p = new_elem;
+				// 	//ofc it doesn't work
+				// 	std::cout << "HERE" << std::endl;
+				// }
+				// pos_elem = p._ptr;
 				
-				if (pos_elem->p)
-					pos_elem->p->n = new_elem;
-				else
-					_h = new_elem;
+				// // if (p == 0)
+				// // {
+				// // 	std::cout << "heeeey" << std::endl;
 
-				iterator ret(new_elem);
-				return ret;
+				// // }
+				// new_elem->d = new T(val);
+				// new_elem->n = pos_elem;
+				// new_elem->p = pos_elem->p;
+				
+				// if (pos_elem->p)
+				// 	pos_elem->p->n = new_elem;
+				// else
+				// 	_h = new_elem;
+
+				// iterator ret(new_elem);
+				// return ret;
 			}
 
 			template<class IT>

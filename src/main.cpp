@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/05/18 17:55:38 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/05/26 17:09:09 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,22 +24,69 @@ int main()
 	// i++
 	std::cout << "------------------------------------------" << std::endl;
 	// ++i
-	ft::list<int> t ;
-	std::list<int> l;
-	for(int i = 0; i < 10; i++)
-	{
-		l.push_back(i);
-		// t.push_back(i);
-	}
+	// ft::list<int> t ;
+	// std::list<int> l;
+	// for(int i = 0; i < 10; i++)
+	// {
+	// 	l.push_back(i);
+	// 	// t.push_back(i);
+	// }
 	
 
-	// ft::list<int>::iterator ti = t.begin();
-	std::list<int>::iterator li = l.begin();
+	// // ft::list<int>::iterator ti = t.begin();
+	// std::list<int>::iterator li = l.begin();
 	
 
-	// ft::list<int>::iterator ti2 = t.begin();
-	std::list<int>::iterator li2 = l.begin();
+	// // ft::list<int>::iterator ti2 = t.begin();
+	// std::list<int>::iterator li2 = l.begin();
 
+	std::list<int> base;
+	ft::list<int> custom;
+
+	// printf("%p %p\n", base.begin(), base.end());
+	// std::cout << base.begin() << " "<< base.end() << "|";	
+	// std::cout << custom.begin() << " "<< custom.end() << "|";	
+
+	// custom.push_front(1);
+	// base.push_front(1);
+	// base.push_back(10);
+	// custom.push_back(10);
+	// custom.push_front(11);
+	base.push_front(11);
+	// custom.push_back(11);
+
+	std::cout << *(--base.end()) << std::endl;
+	// custom.print(custom.begin(), custom.end());
+	// base.push_back(10);
+	// custom.push_back(10);
+
+	// custom.push_back(4);
+	// base.push_back(4);
+
+	// custom.push_back(42);
+	// base.push_back(42);
+
+	// base.push_front(11);
+	// custom.push_front(11);
+	
+	// base.push_front(12);
+	// custom.push_front(12);
+
+	// base.push_front(13);
+	// custom.push_front(13);
+
+	// base.insert(++base.begin(), 850);
+	// custom.insert(++custom.begin(), 850);
+
+	// for(ft::list<int>::iterator i = custom.begin(); i != custom.end(); i++)
+	// {
+	// 	// std::cout << "loop" << std::endl;
+	// 	std::cout << *i << "|";
+	// }
+	// std::cout << "\n---------------------------------------\n";
+	for(std::list<int>::iterator i = base.begin(); i != base.end(); i++)
+		std::cout << *i << "|";
+	// std::cout << "\n";
 
 	// ti2++;
 	// ti2++;
@@ -54,30 +101,21 @@ int main()
 
 	// li++; ti++;
 	// ti++;
-	std::list<int> test;// = l;
-	test.push_back(42);
-	test.insert(test.begin(), l.begin(), l.end());
-	t.push_back(42);
-	t.insert(t.begin(), l.begin(), l.end());
-	// test.insert(ti, l.begin(), l.end());
+	// std::list<int> test;// = l;
+	// test.push_back(42);
+	// test.insert(test.begin(), l.begin(), l.end());
+	// t.push_back(42);
+	
+	// t.insert(t.begin(), l.begin(), l.end());
+	// // test.insert(ti, l.begin(), l.end());
 
-	// li = l.erase(li, li2);
-	// ti = t.erase(++ti);
-	// li = l.erase(++li);
-	// t.print(t.begin(), t.end());
+	// // li = l.erase(li, li2);
+	// // ti = t.erase(++ti);
+	// // li = l.erase(++li);
+	// // t.print(t.begin(), t.end());
 
 	// std::cout << "TI :" << *ti << "\n";
 	// std::cout << "li :" << *li << "\n";
-	for(ft::list<int>::iterator i = t.begin(); i != t.end(); i++)
-	{
-		// if (i != 0)
-		std::cout << *i << "|";
-	}
-	std::cout << "\n";
-	for(std::list<int>::iterator i = test.begin(); i != test.end(); i++)
-	{
-		std::cout << *i << "|";
-	}
 	// std::cout << std::endl;
 	// for(std::list<int>::iterator i = l.begin(); i != l.end(); i++)
 	// {
