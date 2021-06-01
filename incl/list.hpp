@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edal <edal@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/05/26 17:11:45 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/01 15:58:54 by edal             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //http://www.cplusplus.com/reference/list/list/
@@ -287,7 +287,6 @@ namespace ft
 			template<class IT>
 			IT insert (IT p, const T& val)
 			{
-				std::cout << *p << std::endl;
 
 				if (p == begin())
 				{
@@ -399,7 +398,10 @@ namespace ft
     		{
     			while (first != last)
     			{
+    				std::cout << "old pos iterator gets me " << *position << std::endl;
     				position = insert(position, *first);
+    				std::cout << "new pos iterator gets me " << *position << std::endl;
+    				// std::cout << "insert is done" << std::endl;
     				++position;
     				++first;
     			}
