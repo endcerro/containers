@@ -36,6 +36,9 @@ $(OBJD)		:
 $(OBJD)/%.o	:	$(DIRSRC)/%.cpp
 				$(CC) -I./$(INCLUDE) $(CFLAGS) -o $@ -c $<
 
+TESTLIST : 
+	clang++ ./src/test.cpp -I ./incl/ -Wall -Wextra -std=c++98 -g3 -fsanitize=address
+
 all			:	$(NAME)
 
 clean		:

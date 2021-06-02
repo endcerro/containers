@@ -6,7 +6,7 @@
 /*   By: edal <edal@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/01 15:56:00 by edal             ###   ########.fr       */
+/*   Updated: 2021/06/02 11:39:21 by edal             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ int main()
 
 	base.insert(base.begin(), filler.begin(), filler.end());
 	custom.insert(custom.begin(), filler.begin(), filler.end());
+	// base.insert(base.end(), filler.begin(), filler.end());
+	// custom.insert(custom.end(), filler.begin(), filler.end());
 
 	print2(base, custom);
 	// std::cout << "custom : " << std::endl;
@@ -82,14 +84,14 @@ int main()
 	// ti2++; li2++;
 	// ti2++; li2++;
 	// ti2++; li2++;
-	// ti2++; li2++;
+/*	ti2++; li2++;
 
-	// li++; ti++;
-	// ti++;
-	// std::list<int> test;// = l;
-	// test.push_back(42);
-	// test.insert(test.begin(), l.begin(), l.end());
-	// t.push_back(42);
+	li++; ti++;
+	ti++;
+	std::list<int> test;// = l;
+	test.push_back(42);
+	test.insert(test.begin(), l.begin(), l.end());
+	t.push_back(42);*/
 	
 	// t.insert(t.begin(), l.begin(), l.end());
 	// // test.insert(ti, l.begin(), l.end());
