@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edal <edal@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 08:35:17 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/05/14 11:24:31 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/02 14:13:14 by edal             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ namespace ft
 	template <class T>
 	struct Node
 	{
-		T		*d;
-		Node	*n;
-		Node	*p;
+		T		*data;
+		Node	*next;
+		Node	*previous;
 	};
 
 	template<bool B, class Z = void>

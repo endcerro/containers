@@ -6,7 +6,7 @@
 /*   By: edal <edal@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/02 11:39:21 by edal             ###   ########.fr       */
+/*   Updated: 2021/06/02 14:29:07 by edal             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,54 +18,75 @@
 // 	int a;
 // 	int b;
 // };
-template <class T>
+/*template <class T>
 void print2(std::list<T> &base, ft::list<T> &custom)
 {
 
-	std::cout << "custom : " << std::endl;
-	for(ft::list<int>::iterator i = custom.begin(); i != custom.end(); i++)
-		std::cout << *i << "|";
-	std::cout << "\n---------------------------------------\n";
 	std::cout << "base : " << std::endl;
 	for(std::list<int>::iterator i = base.begin(); i != base.end(); i++)
 		std::cout << *i << "|";
+	std::cout << "\n---------------------------------------\n";
+	std::cout << "custom : " << std::endl;
+	// for(ft::list<int>::iterator i = custom.begin(); i != custom.end(); i++)
+	// 	std::cout << *i << "|";
 	std::cout << std::endl;
-}
+}*/
 
 int main()
 {
 	// i++
 	std::cout << "------------------------------------------" << std::endl;
 
-	std::list<int> base;
-	std::list<int> filler;
-	ft::list<int> custom;
-
-	for (int i = 0; i < 10; i++)
+	ft::list<int> int_list;
+	int_list.push_back(42);
+	int_list.push_back(420);
+	int_list.push_front(69);
+	int_list.print();
+	// std::list<char> char_list;
+	// std::list<int> filler;
+	// ft::list<int> first;
+	// ft::list<int> second (4,42);
+	// base.push_front(42);
+	// first.push_front(42);
+	// // first.push_front(41);
+	// print2(base, first);
+/*	for (ft::list<int>::iterator i = first.begin(); i != first.end(); i++ )
 	{
-		filler.push_back(i);
-	}
-	// filler.insert(filler.begin(), 5 ,8);
-	base.push_front(10);
-	custom.push_front(10);
+		std::cout << *i << std::endl;
+	}*/
 
-	base.push_back(11);
-	custom.push_back(11);
+	// std::cout << *first.begin() << std::endl;
+	// std::cout << *first.end() << std::endl;
+	// first.push_back(24);
+	// base.push_front(42);
+	// std::cout << *base.begin() << std::endl;
+	// std::cout << *base.end() << std::endl;
 
-	base.push_back(12);
-	custom.push_back(12);
+	// for (int i = 0; i < 10; i++)
+	// {
+	// 	filler.push_back(i);
+	// }
+	// // filler.insert(filler.begin(), 5 ,8);
+	// base.push_front(10);
+	// custom.push_front(10);
+
+	// base.push_back(11);
+	// custom.push_back(11);
+
+	// base.push_back(12);
+	// custom.push_back(12);
 
 
 
-	base.insert(base.begin(), 50);
-	custom.insert(custom.begin(), 50);
+	// base.insert(base.begin(), 50);
+	// custom.insert(custom.begin(), 50);
 
-	base.insert(base.begin(), filler.begin(), filler.end());
-	custom.insert(custom.begin(), filler.begin(), filler.end());
-	// base.insert(base.end(), filler.begin(), filler.end());
-	// custom.insert(custom.end(), filler.begin(), filler.end());
+	// base.insert(base.begin(), filler.begin(), filler.end());
+	// custom.insert(custom.begin(), filler.begin(), filler.end());
+	// // base.insert(base.end(), filler.begin(), filler.end());
+	// // custom.insert(custom.end(), filler.begin(), filler.end());
 
-	print2(base, custom);
+	// print2(base, custom);
 	// std::cout << "custom : " << std::endl;
 	// for(ft::list<int>::iterator i = custom.begin(); i != custom.end(); i++)
 	// 	std::cout << *i << "|";
