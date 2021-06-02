@@ -6,7 +6,7 @@
 /*   By: edal <edal@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/03 00:49:24 by edal             ###   ########.fr       */
+/*   Updated: 2021/06/03 01:09:15 by edal             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //http://www.cplusplus.com/reference/list/list/
@@ -127,52 +127,49 @@ namespace ft
 					Node<T> *_ptr;
 			};
 	// 		//may use friends
-	// 		class reverse_iterator //: virtual public iterator
-	// 		{
-	// 			friend class list<T>;
-	// 			public :
-	// 				typedef reverse_iterator self_type;
-	// 				typedef T value_type;
-	// 				typedef T& reference;
-	// 				typedef T* pointer;
-	// 				reverse_iterator() : _ptr(0) {};
-	// 				reverse_iterator(Node<T> *ptr) : _ptr(ptr) 
-	// 				{ }
-	// 				reverse_iterator operator++(int) //i++
-	// 				{
-	// 					reverse_iterator i = *this; 
-	// 					_ptr = _ptr->p;
-	// 					return i;
-	// 				}
-	// 				reverse_iterator operator++() //++i
-	// 				{ 
-	// 					_ptr = _ptr->p;
-	// 					return *this;
-	// 				}
-	// 				reference operator*() 
-	// 				{ 
-	// 					return *(_ptr->d); 
-	// 				}
-	// 				pointer operator->() 
-	// 				{ 
-	// 					return _ptr->d;
-	// 				}
-	// 				bool operator==(const reverse_iterator& rhs)
-	// 				{ 
-	// 					return _ptr == rhs._ptr; 
-	// 				}
-	// 				bool operator!=(const reverse_iterator& rhs) 
-	// 				{ 
-	// 					return _ptr != rhs._ptr; 
-	// 				}
-	// 			private :
-	// 				Node<T> *_ptr;
-	// 		};
+			class reverse_iterator //: virtual public iterator
+			{
+				friend class list<T>;
+				public :
+					typedef reverse_iterator self_type;
+					typedef T value_type;
+					typedef T& reference;
+					typedef T* pointer;
+					reverse_iterator() : _ptr(0) {};
+					reverse_iterator(Node<T> *ptr) : _ptr(ptr) 
+					{ }
+					reverse_iterator operator++(int) //i++
+					{
+						reverse_iterator i = *this;
+						_ptr = _ptr->previous;
+						return i;
+					}
+					reverse_iterator operator++() //++i
+					{ 
+						_ptr = _ptr->previous; 
+						return *this;					}
+					reference operator*() 
+					{ 
+						return *(_ptr->data); 
+					}
+					pointer operator->() 
+					{ 
+						return _ptr->data;
+					}
+					bool operator==(const reverse_iterator& rhs)
+					{ 
+						return _ptr == rhs._ptr; 
+					}
+					bool operator!=(const reverse_iterator& rhs) 
+					{ 
+						return _ptr != rhs._ptr; 
+					}
+				private :
+					Node<T> *_ptr;
+			};
 
 	// 			/* ITERATORS N SHIT 
 	// 		NEED TO ADD CONST ITERATORS N STUFF*/
-
-	// 			// friend iterator;		
 
 			iterator begin() const 
 			{ 
@@ -184,8 +181,16 @@ namespace ft
 			{
 				return (iterator(_center));
 			}
-	// 		reverse_iterator rbegin() const { return reverse_iterator(_t); }
-	// 		reverse_iterator rend() const {	return reverse_iterator(_h->p); }
+			reverse_iterator rbegin() const 
+			{ 
+				if (_center->previous)
+					return reverse_iterator(_center->previous);
+				return reverse_iterator(_center);
+			}
+			reverse_iterator rend() const 
+			{	
+				return reverse_iterator(_center); 
+			}
 
 	// 		template<class IT>
 	// 		IT erase(IT pos)
@@ -388,21 +393,36 @@ namespace ft
  //    		}
 
 	// 		//Seems good but watch out for allocators
-	// 		void swap(list &base)
-	// 		{
-	// 			ft::Node<T> *oh = _h;
-	// 			ft::Node<T> *ot = _t;
-	// 			size_t os = _s;
+			void swap(list &base)
+			{
+				ft::Node<T> *old_head = _center->next;
+				ft::Node<T> *old_tail = _center->previous;
+				T *old_data = _center->data;
+				size_t old_size = _size;
 
-	// 			_h = base._h;
-	// 			_t = base._t;
-	// 			_s = base._s;
+				_center->next = base._center->next;
+				_center->previous = base._center->previous;
+				_center->data = base._center->data;
 
-	// 			base._h = oh;
-	// 			base._t = ot;
-	// 			base._s = os;
+				if (_center->next)
+				{
+					_center->next->previous = _center;
+					_center->previous->next = _center;
+				}
 
-	// 		}
+				base._center->next = old_head;
+				base._center->previous = old_tail;
+				base._center->data = old_data;
+				
+				if (base._center->next)
+				{
+					base._center->next->previous = base._center;
+					base._center->previous->next = base._center;
+				}
+
+				_size = base._size;
+				base._size = old_size;
+			}
 	// 		bool empty(void) const 	{ return (_s > 0 ? true : false); }
 	// 		size_t size(void) const { return _s; }
 	// 		size_t max_size(void) 	{ return 0;	 };

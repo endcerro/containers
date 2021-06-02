@@ -6,7 +6,7 @@
 /*   By: edal <edal@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/03 00:50:31 by edal             ###   ########.fr       */
+/*   Updated: 2021/06/03 01:07:15 by edal             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,13 @@ int main()
 
  // = int_list.begin();
 	// int_iterator++;
+	ft::list<char> char_list;
+	// char_list.push_back();
+	char_list.push_back('e');
+	char_list.push_back('f');
+	char_list.push_back('g');
+	char_list.push_back('h');
+
 	int_list.push_back('a');
 	int_list.push_back('b');
 	int_list.push_back('c');
@@ -82,19 +89,28 @@ int main()
 	test.push_back('c');
 	test.push_back('d');
 
-	ft::list<char>::iterator int_iterator = int_list.begin();
-	std::list<char>::iterator base_iterator = test.begin();
-	while (int_iterator != int_list.end())
-	{
-		std::cout <<"loop "<< (*(int_iterator++)) << ' ';
-	}
-	std::cout << static_cast<int>(*(++int_iterator)) << ' ';
+	// ft::list<char>::reverse_iterator int_iterator = int_list.rbegin();
+	// std::list<char>::reverse_iterator base_iterator = test.rbegin();
+	int_list.print();
+	char_list.print();
+	int_list.swap(char_list);
+	int_list.print();
+	char_list.print();
+	// for (ft::list<char>::iterator i = int_list.begin(); i != int_list.end(); i++)
+	// 	std::cout << *i << ' ';
+	// std::cout << std::endl;
+	// for (ft::list<char>::iterator i = char_list.begin(); i != char_list.end(); i++)
+	// 	std::cout << *i << ' ';
+	
+
+
+	// std::cout << static_cast<int>(*(int_iterator)) << ' ';
 	std::cout << '\n';
-	while (base_iterator != test.end())
-	{
-		std::cout <<"loop "<< (*(base_iterator++)) << ' ';
-	}
-	std::cout << static_cast<int>(*(++base_iterator)) << ' ';
+	// for (std::list<char>::iterator i = test.begin(); i != test.end(); i++)
+	// {
+	// 	std::cout << *i++ << ' ';
+	// }
+	// std::cout << static_cast<int>(*(base_iterator)) << ' ';
 	// // std::cout << *int_iterator << std::endl;
 	// std::cout << std::endl;
 
