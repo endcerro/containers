@@ -6,7 +6,7 @@
 /*   By: edal <edal@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/02 14:29:07 by edal             ###   ########.fr       */
+/*   Updated: 2021/06/02 16:19:44 by edal             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,44 @@ int main()
 	std::cout << "------------------------------------------" << std::endl;
 
 	ft::list<int> int_list;
+	int_list.push_back(69);
 	int_list.push_back(42);
-	int_list.push_back(420);
-	int_list.push_front(69);
 	int_list.print();
+	int_list.push_back(777);
+	int_list.print();
+	// int_list.push_front(69);
+	// int_list.push_back(2);
+	// int_list.push_front(420);
+	// int_list.push_front(69);
+	// int_list.push_front(69);
+	// int_list.push_front(69);
+	// int_list.push_back(2);
+	// int_list.push_back(7);
+	// int_list.push_back(18);
+	// int_list.push_back(420);
+
+	// int_list.print();
+	// int_list.clear();
+	// int_list.push_back(42);
+	// int_list.push_front(69);
+	// int_list.push_back(420);
+	// int_list.push_front(1080);
+	// int_list.push_front(1920);
+
+	// int_list.print();
+	// int_list.push_back(42);
+	// int_list.print();
+	// int_list.print();
+	// int_list.push_back(420);
+	// int_list.push_front(69);
+	// int_list.clear();
+	// int_list.push_front(1080);
+	// int_list.push_back(1920);
+	// int_list.print();
+	// int_list.pop_front();
+	// int_list.pop_front();
+	// int_list.pop_back();
+	// int_list.print();
 	// std::list<char> char_list;
 	// std::list<int> filler;
 	// ft::list<int> first;

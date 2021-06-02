@@ -6,7 +6,7 @@
 /*   By: edal <edal@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/02 14:29:14 by edal             ###   ########.fr       */
+/*   Updated: 2021/06/02 16:14:33 by edal             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //http://www.cplusplus.com/reference/list/list/
@@ -58,7 +58,9 @@ namespace ft
 
 			~list()
 			{ 
-				clear(); 
+				clear();
+				delete _center->data;
+				delete _center;
 			};
 
 			/* OVERLOADS */
@@ -224,11 +226,13 @@ namespace ft
 				//THIS NEEDS TO USE ALLOCATORS IT SEEMS
 				//Case where this is the first one
 				Node<T> *elem = new Node<T>;
-				Node<T> *old;
 				elem->data = new T(val);
 
+				Node<T> *old;
+				std::cout << "next:" << _center->next << " prev:" << _center->previous << std::endl;
 				if (_center->next == 0)
 				{
+					std::cout << "Z1" << std::endl;
 					_center->next = elem;
 					_center->previous = elem;
 					elem->next = _center;
@@ -236,6 +240,7 @@ namespace ft
 				}
 				else
 				{
+					std::cout << "Z2" << std::endl;
 					old = _center->previous;
 					elem->previous = old;
 					elem->next = _center;
@@ -247,7 +252,7 @@ namespace ft
 			void push_front (const T& val)
 			{
 				if (_center->next == 0)
-					push_back(val);
+					return (push_back(val));
 				Node<T> *elem = new Node<T>;
 				elem->data = new T(val);
 				Node<T> *old = _center->next;
@@ -261,14 +266,27 @@ namespace ft
 	// 		T& front(void) const	{ return *(_h->d); }
 	// 		T& back(void) const		{ return *(_t->d); }
 
-	// 		void pop_front(void)
-	// 		{
-	// 			Node<T> *tmp = _h;
-	// 			if (_h)	
-	// 				_h = _h->n;
-	// 			delete tmp;
-	// 			_s--;
-	// 		}
+			void pop_front(void)
+			{
+				Node<T> *old = _center->next;
+
+				if (old->next == _center)
+				{
+					// delete old->data;
+					// delete old;
+					_center->next = 0;
+					_center->previous = 0;
+				}
+				else
+				{
+
+					_center->next = old->next;
+					_center->next->previous = 0;
+				}
+				delete old->data;
+				delete old;
+				--_size;
+			}
 	// 		void pop_back(void)
 	// 		{
 	// 			Node<T>	 *tmp = _t;
@@ -288,12 +306,7 @@ namespace ft
 				// In order to check if the list has one elem, check head address
 				// Don't forget to delete the last element as it should be instancied at all times
 				if (current->next == 0)
-				{
-					delete _center->data;
-					delete _center;
-					_center = 0;
 					return ;
-				}
 				current = current->next;
 				while (current != _center)
 				{
@@ -302,9 +315,17 @@ namespace ft
 					delete current;
 					current	= next;
 				}
+				_center->next = 0;
+				_center->previous = 0;
 			}
 			void print()
 			{
+				if (_center->next == 0)
+				{
+
+					std::/**/cout << "No elems in here" << std::endl;
+					return;
+				}
 				Node<T> *current = _center->next;
 				// current = current->next;
 				while (current != _center)
