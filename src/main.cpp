@@ -6,7 +6,7 @@
 /*   By: edal <edal@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/02 21:00:08 by edal             ###   ########.fr       */
+/*   Updated: 2021/06/03 00:50:31 by edal             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,30 +44,64 @@ int main()
 	// base_list.push_back(777);
 	// base_list.print();
 
-	ft::list<int> int_list;
-	int_list.push_back(69);
-	int_list.push_back(42);
+	ft::list<char> int_list;
+	// int_list.push_back(69);
+	// int_list.push_back(42);
+	// // int_list.print();
+	// int_list.push_front(666);
+	// int_list.push_back(777);
 	// int_list.print();
-	int_list.push_front(666);
-	int_list.push_back(777);
-	int_list.print();
-	int_list.pop_front();
-	int_list.print();
-	int_list.push_front(111);
-	int_list.push_back(222);
-		// int_list.pop_back();
-	int_list.print();
-	int_list.pop_front();
-	int_list.print();
-	int_list.push_front(333);
-	int_list.push_back(444);
-	int_list.print();
-	std::cout << "Pop back" << std::endl;
-	int_list.pop_back();
-	int_list.print();
-	int_list.push_front(555);
-	int_list.push_back(888);
-	int_list.print();
+	// int_list.pop_front();
+	// int_list.print();
+	// int_list.push_front(111);
+	// int_list.push_back(222);
+	// 	// int_list.pop_back();
+	// int_list.print();
+	// int_list.pop_front();
+	// int_list.print();
+	// int_list.push_front(333);
+	// int_list.push_back(444);
+	// int_list.print();
+	// std::cout << "Pop back" << std::endl;
+	// int_list.pop_back();
+	// int_list.print();
+	// int_list.push_front(555);
+	// int_list.push_back(888);
+	// int_list.print();
+
+ // = int_list.begin();
+	// int_iterator++;
+	int_list.push_back('a');
+	int_list.push_back('b');
+	int_list.push_back('c');
+	int_list.push_back('d');
+	std::list<char> test;
+	// test.insert(test.begin(), int_list.begin(), int_list.end());
+	test.push_back('a');
+	test.push_back('b');
+	test.push_back('c');
+	test.push_back('d');
+
+	ft::list<char>::iterator int_iterator = int_list.begin();
+	std::list<char>::iterator base_iterator = test.begin();
+	while (int_iterator != int_list.end())
+	{
+		std::cout <<"loop "<< (*(int_iterator++)) << ' ';
+	}
+	std::cout << static_cast<int>(*(++int_iterator)) << ' ';
+	std::cout << '\n';
+	while (base_iterator != test.end())
+	{
+		std::cout <<"loop "<< (*(base_iterator++)) << ' ';
+	}
+	std::cout << static_cast<int>(*(++base_iterator)) << ' ';
+	// // std::cout << *int_iterator << std::endl;
+	// std::cout << std::endl;
+
+
+
+
+	// std::cout << std::endl;
 	// std::cout << int_list.front() << std::endl;
 	// int_list.push_front(69);
 	// int_list.push_back(2);

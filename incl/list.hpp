@@ -6,7 +6,7 @@
 /*   By: edal <edal@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/02 21:02:01 by edal             ###   ########.fr       */
+/*   Updated: 2021/06/03 00:49:24 by edal             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //http://www.cplusplus.com/reference/list/list/
@@ -24,10 +24,10 @@ namespace ft
 	template <class T>
 	class list
 	{
-		private :
-			Node<T> *_center;
-			size_t _size;
-			int _capacity;
+		private : 
+			Node<T> 	*_center;
+			size_t		_size;
+			int 		_capacity;
 
 		public :
 			/* CONSTRUCTORS N DESTRUCTORS */
@@ -35,7 +35,7 @@ namespace ft
 			list() : _size(0), _capacity(-1) 
 			{
 				_center = new Node<T>;
-				_center->data = new int;
+				_center->data = new T;
 				*(_center->data) = 0;
 				_center->next = 0;
 				_center->previous = 0;
@@ -72,64 +72,60 @@ namespace ft
 	// 			return *this;
 	// 		};
 			
-	// 		friend class iterator;
+			friend class iterator;
 	// 		/* MEMBER FUNS */
 	// 		//Use friends
-	// 		class iterator
-	// 		{
-	// 			friend class list<T>;
-	// 			public :
-	// 				typedef iterator self_type;
-	// 				typedef T value_type;
-	// 				typedef T& reference;
-	// 				typedef T* pointer;
-	// 				// typedef std::forward_iterator_tag iterator_category;
-	// 				iterator(Node<T> *ptr) : _ptr(ptr) 
-	// 				{ }
-	// 				iterator() : _ptr(0) {};
-	// 				self_type operator++(int) //i++
-	// 				{
-	// 					iterator i = *this; 
-	// 					if (_ptr->n)
-	// 						_ptr = _ptr->n;				
-	// 					// _ptr = _ptr->n;
-	// 					return i;
-	// 				}
-	// 				self_type operator++() //i++
-	// 				{
-	// 				/*	if (this == 0)
-	// 					{
-	// 						std::cerr << "NULL CASE OPERATOR++ LIST" << std::endl;
-	// 						return NULL;
-	// 					}*/
-	// 					if (_ptr->n)
-	// 						_ptr = _ptr->n; 
-	// 					return *this;
-	// 				}
-	// 				self_type operator--(int) //i++
-	// 				{
-	// 					if (this == 0)
-	// 						return NULL;
-	// 					iterator i = *this;
-	// 					_ptr = _ptr->p;
-	// 					return i;
-	// 				}
-	// 				self_type operator--() //i++
-	// 				{ 
-	// 					_ptr = _ptr->p; 
-	// 					return *this;
-	// 				}
-	// 				reference operator*() 
-	// 				{ return *(_ptr->d); }
-	// 				pointer operator->() 
-	// 				{ return _ptr->d; }
-	// 				bool operator==(const self_type& rhs)
-	// 				{ return _ptr == rhs._ptr; }
-	// 				bool operator!=(const self_type& rhs) 
-	// 				{ return _ptr != rhs._ptr; }
-	// 			private :
-	// 				Node<T> *_ptr;
-	// 		};
+			class iterator
+			{
+				friend class list<T>;
+				public :
+					typedef iterator self_type;
+					typedef T value_type;
+					typedef T& reference;
+					typedef T* pointer;
+					// typedef std::forward_iterator_tag iterator_category;
+					iterator(Node<T> *ptr) : _ptr(ptr) 
+					{ }
+					iterator() : _ptr(0) 
+					{};
+					self_type operator++(int) //i++
+					{
+						iterator i = *this;
+						_ptr = _ptr->next;
+						return i;
+					}
+					self_type operator++() //i++
+					{
+						// if (this != _center)
+							_ptr = _ptr->next; 
+						return *this;
+					}
+					// self_type operator--(int) //i++
+					// {
+					// 	if (this == 0)
+					// 		return NULL;f
+					// 	iterator i = *this;
+					// 	_ptr = _ptr->p;
+					// 	return i;
+					// }
+					// self_type operator--() //i++
+					// { 
+					// 	_ptr = _ptr->p; 
+					// 	return *this;
+					// }
+					reference operator*() 
+					{ 
+						return *(_ptr->data); 
+					}
+					// pointer operator->() 
+					// { return _ptr->d; }
+					bool operator==(const self_type& rhs)
+					{ return _ptr == rhs._ptr; }
+					bool operator!=(const self_type& rhs) 
+					{ return _ptr != rhs._ptr; }
+				private :
+					Node<T> *_ptr;
+			};
 	// 		//may use friends
 	// 		class reverse_iterator //: virtual public iterator
 	// 		{
@@ -178,13 +174,16 @@ namespace ft
 
 	// 			// friend iterator;		
 
-	// 		iterator begin() const { return iterator(_h); }
-	// 		iterator end() const { 
-	// 			// std::cout << "NO CRASH YET : "<< _t << std::endl;
-	// 			// iterator t = 
-				
-	// 			// if (_/*:*/eturn (iterator(_t->n)); 
-	// 			return (iterator(_t));}
+			iterator begin() const 
+			{ 
+				if (_center->next)
+					return iterator(_center->next);
+				return iterator(_center);
+			}
+			iterator end() const 
+			{
+				return (iterator(_center));
+			}
 	// 		reverse_iterator rbegin() const { return reverse_iterator(_t); }
 	// 		reverse_iterator rend() const {	return reverse_iterator(_h->p); }
 
@@ -247,7 +246,7 @@ namespace ft
 					elem->next = _center;
 					old->next = elem;
 				}
-				++_size;
+				++(*_center->data);
 			}
 
 			void push_front (const T& val)
@@ -261,7 +260,7 @@ namespace ft
 				elem->previous = _center;
 				old->previous = elem;
 				_center->next = elem;
-				++_size;
+				++(*_center->data);
 			}
 
 			// T& front(void) const	{ 
@@ -284,7 +283,7 @@ namespace ft
 				}
 				delete old->data;
 				delete old;
-				--_size;
+				--(*_center->data);
 			}
 			void pop_back(void)
 			{
@@ -299,7 +298,7 @@ namespace ft
 				}
 				delete old->data;
 				delete old;
-				--_size;
+				--(*_center->data);
 			}
 
 			void clear(void)
