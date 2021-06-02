@@ -242,6 +242,7 @@ namespace ft
 				{
 					std::cout << "Z2" << std::endl;
 					old = _center->previous;
+                                        _center->previous = elem;
 					elem->previous = old;
 					elem->next = _center;
 					old->next = elem;
