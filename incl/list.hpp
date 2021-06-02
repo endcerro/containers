@@ -6,7 +6,7 @@
 /*   By: edal <edal@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/03 01:09:15 by edal             ###   ########.fr       */
+/*   Updated: 2021/06/03 01:18:22 by edal             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //http://www.cplusplus.com/reference/list/list/
@@ -252,6 +252,7 @@ namespace ft
 					old->next = elem;
 				}
 				++(*_center->data);
+				++_size;
 			}
 
 			void push_front (const T& val)
@@ -266,6 +267,7 @@ namespace ft
 				old->previous = elem;
 				_center->next = elem;
 				++(*_center->data);
+				++_size;
 			}
 
 			// T& front(void) const	{ 
@@ -289,6 +291,7 @@ namespace ft
 				delete old->data;
 				delete old;
 				--(*_center->data);
+				--_size;
 			}
 			void pop_back(void)
 			{
@@ -304,6 +307,7 @@ namespace ft
 				delete old->data;
 				delete old;
 				--(*_center->data);
+				--_size;
 			}
 
 			void clear(void)
@@ -423,9 +427,14 @@ namespace ft
 				_size = base._size;
 				base._size = old_size;
 			}
-	// 		bool empty(void) const 	{ return (_s > 0 ? true : false); }
-	// 		size_t size(void) const { return _s; }
-	// 		size_t max_size(void) 	{ return 0;	 };
+			bool empty(void) const 	
+			{ 
+				if (_center->next != _center && _center->next != 0)
+					return false;
+				return true;
+			}
+			size_t size(void) const { return _size; }
+			size_t max_size(void) 	{ return _capacity;	 };
 			
 	// 		template <class IT>
 	// 		void print(IT s, IT e)
@@ -436,22 +445,20 @@ namespace ft
 	// 				++s;
 	// 			}
 	// 		};
-	// 		void assign(size_t n, const T &val)
-	// 		{
-	// 			clear();
-	// 			for (size_t i = 0; i < n; i++)
-	// 				push_back(val);
-	// 			_s = n;
-	// 		}
-	// 		template <class InputIterator>
-	// 		void assign(typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type s, InputIterator e)
-	// 		{
-	// 			size_t i = 0;
-	// 			clear();
-	// 			while (s != e && ++i)
-	// 				push_back(*(s++));
-	// 			_s = i;
-	// 		}
+			void assign(size_t n, const T &val)
+			{
+				clear();
+				for (size_t i = 0; i < n; i++)
+					push_back(val);
+			}
+			template <class InputIterator>
+			void assign(typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type s, InputIterator e)
+			{
+				std::cou
+				clear();
+				while (s != e)
+					push_back(*(s++));
+			}
 	};
 }
 #endif

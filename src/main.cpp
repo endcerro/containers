@@ -6,7 +6,7 @@
 /*   By: edal <edal@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/03 01:07:15 by edal             ###   ########.fr       */
+/*   Updated: 2021/06/03 01:18:13 by edal             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,10 @@ int main()
 	int_list.push_back('d');
 	std::list<char> test;
 	// test.insert(test.begin(), int_list.begin(), int_list.end());
-	test.push_back('a');
-	test.push_back('b');
-	test.push_back('c');
-	test.push_back('d');
+	test.push_back('w');
+	test.push_back('x');
+	test.push_back('y');
+	test.push_back('z');
 
 	// ft::list<char>::reverse_iterator int_iterator = int_list.rbegin();
 	// std::list<char>::reverse_iterator base_iterator = test.rbegin();
@@ -102,10 +102,20 @@ int main()
 	// for (ft::list<char>::iterator i = char_list.begin(); i != char_list.end(); i++)
 	// 	std::cout << *i << ' ';
 	
-
-
+	char_list.clear();
+	// test.clear();
+	char_list.push_back(4);
+	// test.push_back(4);
+	char_list.pop_front();
+	// test.pop_front();
 	// std::cout << static_cast<int>(*(int_iterator)) << ' ';
-	std::cout << '\n';
+
+	std::cout << char_list.empty() <<'\n';
+	std::cout << test.empty() <<'\n';
+	// char_list.print();
+	char_list.assign(test.begin(),test.end());
+	char_list.print();
+
 	// for (std::list<char>::iterator i = test.begin(); i != test.end(); i++)
 	// {
 	// 	std::cout << *i++ << ' ';
