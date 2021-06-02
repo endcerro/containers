@@ -6,7 +6,7 @@
 /*   By: edal <edal@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/02 16:14:33 by edal             ###   ########.fr       */
+/*   Updated: 2021/06/02 21:02:01 by edal             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //http://www.cplusplus.com/reference/list/list/
@@ -229,10 +229,10 @@ namespace ft
 				elem->data = new T(val);
 
 				Node<T> *old;
-				std::cout << "next:" << _center->next << " prev:" << _center->previous << std::endl;
+				// std::cout << "next:" << _center->next << " prev:" << _center->previous << std::endl;
 				if (_center->next == 0)
 				{
-					std::cout << "Z1" << std::endl;
+					// std::cout << "Z1" << std::endl;
 					_center->next = elem;
 					_center->previous = elem;
 					elem->next = _center;
@@ -240,9 +240,9 @@ namespace ft
 				}
 				else
 				{
-					std::cout << "Z2" << std::endl;
+					// std::cout << "Z2" << std::endl;
 					old = _center->previous;
-                                        _center->previous = elem;
+					_center->previous = elem;
 					elem->previous = old;
 					elem->next = _center;
 					old->next = elem;
@@ -264,7 +264,11 @@ namespace ft
 				++_size;
 			}
 
-	// 		T& front(void) const	{ return *(_h->d); }
+			// T& front(void) const	{ 
+			// 	if (_center->next)
+			// 		return *(_center->next->data);
+			// 	return 0; 
+			// }
 	// 		T& back(void) const		{ return *(_t->d); }
 
 			void pop_front(void)
@@ -272,33 +276,32 @@ namespace ft
 				Node<T> *old = _center->next;
 
 				if (old->next == _center)
-				{
-					// delete old->data;
-					// delete old;
-					_center->next = 0;
-					_center->previous = 0;
-				}
+					_center->next =_center->previous = 0;
 				else
 				{
-
 					_center->next = old->next;
-					_center->next->previous = 0;
+					_center->next->previous = _center;
 				}
 				delete old->data;
 				delete old;
 				--_size;
 			}
-	// 		void pop_back(void)
-	// 		{
-	// 			Node<T>	 *tmp = _t;
-	// 			if (_t)
-	// 			{
-	// 				_t = _t->p;
-	// 				_t->n = 0;
-	// 			}
-	// 			delete tmp;
-	// 			_s--;
-	// 		}
+			void pop_back(void)
+			{
+				Node<T> *old = _center->previous;
+
+				if (old->previous == _center)
+					_center->next = _center->previous = 0;
+				else
+				{
+					_center->previous = old->previous;
+					old->previous->next = _center;
+				}
+				delete old->data;
+				delete old;
+				--_size;
+			}
+
 			void clear(void)
 			{
 				Node<T> *current = _center;

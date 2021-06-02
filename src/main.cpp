@@ -6,7 +6,7 @@
 /*   By: edal <edal@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/02 16:19:44 by edal             ###   ########.fr       */
+/*   Updated: 2021/06/02 21:00:08 by edal             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,38 @@ int main()
 	// i++
 	std::cout << "------------------------------------------" << std::endl;
 
+	std::list<char> base_list;
+	// base_list.push_back(69);
+	// base_list.push_back(42);
+	// // base_list.print();
+	// base_list.push_back(777);
+	// base_list.print();
+
 	ft::list<int> int_list;
 	int_list.push_back(69);
 	int_list.push_back(42);
-	int_list.print();
+	// int_list.print();
+	int_list.push_front(666);
 	int_list.push_back(777);
 	int_list.print();
+	int_list.pop_front();
+	int_list.print();
+	int_list.push_front(111);
+	int_list.push_back(222);
+		// int_list.pop_back();
+	int_list.print();
+	int_list.pop_front();
+	int_list.print();
+	int_list.push_front(333);
+	int_list.push_back(444);
+	int_list.print();
+	std::cout << "Pop back" << std::endl;
+	int_list.pop_back();
+	int_list.print();
+	int_list.push_front(555);
+	int_list.push_back(888);
+	int_list.print();
+	// std::cout << int_list.front() << std::endl;
 	// int_list.push_front(69);
 	// int_list.push_back(2);
 	// int_list.push_front(420);
