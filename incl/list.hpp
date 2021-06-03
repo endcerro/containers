@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/03 01:25:39 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/03 14:09:03 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //http://www.cplusplus.com/reference/list/list/
@@ -100,19 +100,17 @@ namespace ft
 							_ptr = _ptr->next; 
 						return *this;
 					}
-					// self_type operator--(int) //i++
-					// {
-					// 	if (this == 0)
-					// 		return NULL;f
-					// 	iterator i = *this;
-					// 	_ptr = _ptr->p;
-					// 	return i;
-					// }
-					// self_type operator--() //i++
-					// { 
-					// 	_ptr = _ptr->p; 
-					// 	return *this;
-					// }
+					self_type operator--(int) //i++
+					{
+						iterator i = *this;
+						_ptr = _ptr->previous;
+						return i;
+					}
+					self_type operator--() //i++
+					{ 
+						_ptr = _ptr->previous; 
+						return *this;
+					}
 					reference operator*() 
 					{ 
 						return *(_ptr->data); 
@@ -348,33 +346,34 @@ namespace ft
 				std::cout << std::endl;
 			}
 
-	// 		template<class IT>
-	// 		IT insert (IT p, const T& val)
-	// 		{
+			template<class IT>
+			IT insert (IT p, const T& val)
+			{
 
-	// 			if (p == begin())
-	// 			{
-	// 				push_front(val);
-	// 				return begin();
-	// 			}
-	// 			else if (p == end())
-	// 			{
-	// 				push_back(val);
-	// 				return end();
-	// 			}
-	// 			else
-	// 			{
-	// 				ft::Node<T> *new_elem = new Node<T>;
-	// 				new_elem->d = new T(val);
-	// 				if (p._ptr->p != 0)
-	// 					p._ptr->p->n = new_elem;;
-	// 				new_elem->p = p._ptr->p;
-	// 				new_elem->n = p._ptr;
-	// 				p._ptr->p = new_elem;
+				if (p == begin())
+				{
+					push_front(val);
+					return begin();
+				}
+				else if (p == end())
+				{
+					push_back(val);
+					return --end();
+				}
+				else
+					std::cout << "Oh no"<<std::endl;
+				// {
+				// 	ft::Node<T> *new_elem = new Node<T>;
+				// 	new_elem->d = new T(val);
+				// 	if (p._ptr->p != 0)
+				// 		p._ptr->p->n = new_elem;;
+				// 	new_elem->p = p._ptr->p;
+				// 	new_elem->n = p._ptr;
+				// 	p._ptr->p = new_elem;
 
-	// 				return iterator(new_elem);	
-	// 			}
-	// 		}
+				// 	return iterator(new_elem);	
+				// }
+			}
 
 	// 		template<class IT>
 	// 		void insert (IT position, size_t n, const T& val)
@@ -454,7 +453,6 @@ namespace ft
 			template <class InputIterator>
 			void assign(typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type s, InputIterator e)
 			{
-				std::cou
 				clear();
 				while (s != e)
 					push_back(*(s++));
