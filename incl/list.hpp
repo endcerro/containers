@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/05 17:35:40 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/05 17:42:16 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //http://www.cplusplus.com/reference/list/list/
@@ -193,20 +193,27 @@ namespace ft
 			template<class IT>
 			IT erase(IT pos)
 			{
-				if (pos._ptr == _center)
+				if (pos == end())
 					return pos;
+				Node<T> *todel = pos._ptr;
 
-				
+				todel->previous->next = todel->next;
+				todel->next->previous = todel->previous;
+				delete todel->data;
+				delete todel;
+				_size--;
+				*(_center->data) = *(_center->data) - 1;
+				return begin();
 			}
 
-	// 		template<class IT>
-	// 		IT erase(IT start,IT end)
-	// 		{
-	// 			IT ret = start;
-	// 			while (start != end)
-	// 				ret = erase(start++);
-	// 			return ret;
-	// 		}
+			template<class IT>
+			IT erase(IT start,IT end)
+			{
+				IT ret = start;
+				while (start != end)
+					ret = erase(start++);
+				return ret;
+			}
 
 			void push_back (const T& val)
 			{

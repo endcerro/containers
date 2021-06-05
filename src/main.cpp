@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/05 17:34:48 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/05 17:44:35 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,20 @@ int main()
 
 	// test.push_front('c');
 	// test.push_back('d');
+
+	print2(test, char_list);
+
+	ft::list<char>::iterator var = char_list.begin();
+	std::list<char>::iterator var2 = test.begin();
+	++var;
+	++var2;
+	++var;
+	++var2;
+	++var;
+	++var2;
+
+	char_list.erase(char_list.begin(), var);
+	test.erase(test.begin(), var2);
 
 	print2(test, char_list);
 	// print2(test, char_list);
