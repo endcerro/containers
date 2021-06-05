@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/03 14:17:16 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/05 17:34:48 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,19 @@
 // 	int a;
 // 	int b;
 // };
-// template <class T>
-// void print2(std::list<T> &base, ft::list<T> &custom)
-// {
+template <class T>
+void print2(std::list<T> &base, ft::list<T> &custom)
+{
 
-// 	std::cout << "base : " << std::endl;
-// 	for(std::list<char>::iterator i = base.begin(); i != base.end(); i++)
-// 		std::cout << *i << "|";
-// 	std::cout << "\n---------------------------------------\n";
-// 	std::cout << "custom : " << std::endl;
-// 	for(ft::list<char>::iterator i = custom.begin(); i != custom.end(); i++)
-// 		std::cout << *i << "|";
-// 	std::cout << std::endl;
-// }
+	std::cout << "base : " << std::endl;
+	for(std::list<char>::iterator i = base.begin(); i != base.end(); i++)
+		std::cout << *i << "|";
+	std::cout << "\n---------------------------------------\n";
+	std::cout << "custom : " << std::endl;
+	for(ft::list<char>::iterator i = custom.begin(); i != custom.end(); i++)
+		std::cout << *i << "|";
+	std::cout << std::endl;
+}
 
 int test_push()
 {
@@ -152,29 +152,58 @@ int main()
 
 	std::cout << char_list.empty() <<'\n';
 	std::cout << test.empty() <<'\n';
+	char_list.clear();
+	test.clear();
 	// char_list.print();
-	char_list.assign(test.begin(),test.end());
-	char_list.print();
+	// char_list.assign(test.begin(),test.end());
+	// char_list.print();
+	std::list<char> demo;
+	demo.push_back('a');
+	demo.push_back('b');
+	demo.push_back('c');
+	// char_list.push_front('a');
+	// char_list.push_back('b');
+
+	// test.push_front('a');
+	// test.push_back('b');
+	char_list.push_front('c');
+	char_list.push_back('d');
+
+	test.push_front('c');
+	test.push_back('d');
+
+	char_list.insert(char_list.begin(), demo.begin(), demo.end());
+	test.insert(test.begin(),demo.begin(), demo.end());
+
+
+
+	// char_list.push_front('c');
+	// char_list.push_back('d');
+
+	// test.push_front('c');
+	// test.push_back('d');
+
+	print2(test, char_list);
 	// print2(test, char_list);
-	for (std::list<char>::iterator i = test.begin(); i != test.end(); i++)
-		std::cout << *i << ' ';
-	std::cout << std::endl;
-	// for (ft::list<char>::iterator i = char_list.begin(); i != char_list.end(); i++)
+	// for (std::list<char>::iterator i = test.begin(); i != test.end(); i++)
+	// 	std::cout << *i << ' ';
+	// std::cout << std::endl;
+	// // for (ft::list<char>::iterator i = char_list.begin(); i != char_list.end(); i++)
+	// // 	std::cout << *i << ' ';
+
+	// // ft::list<char>::iterator it = char_list.insert(char_list.end(), 'X');
+	// // std::cout << "The returned: " << *it << std::endl;
+	
+	// for (std::list<char>::iterator i = test.begin(); i != test.end(); i++)
+	// 	std::cout << *i << ' ';
+	// std::cout << std::endl;
+
+	// std::list<char>::iterator tit = test.insert(test.end(), 'X');
+	// std::cout << "The returned: " << *tit << std::endl;
+	// for (std::list<char>::iterator i = test.begin(); i != test.end(); i++)
 	// 	std::cout << *i << ' ';
 
-	// ft::list<char>::iterator it = char_list.insert(char_list.end(), 'X');
-	// std::cout << "The returned: " << *it << std::endl;
-	
-	for (std::list<char>::iterator i = test.begin(); i != test.end(); i++)
-		std::cout << *i << ' ';
-	std::cout << std::endl;
-
-	std::list<char>::iterator tit = test.insert(test.end(), 'X');
-	std::cout << "The returned: " << *tit << std::endl;
-	for (std::list<char>::iterator i = test.begin(); i != test.end(); i++)
-		std::cout << *i << ' ';
-
-	test_push();
+	// test_push();
 
 	return 0;
 }

@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/03 14:09:03 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/05 17:35:40 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //http://www.cplusplus.com/reference/list/list/
@@ -190,29 +190,14 @@ namespace ft
 				return reverse_iterator(_center); 
 			}
 
-	// 		template<class IT>
-	// 		IT erase(IT pos)
-	// 		{
-	// 			Node<T> *curr = pos._ptr;
-	// 			if (curr->p)
-	// 			{
-	// 				curr->p->n = curr->n;
-	// 				if (curr->n)
-	// 					curr->n->p = curr->p;
-	// 			}
-	// 			else
-	// 			{
-	// 				// _h = curr->n;
-	// 				if ((_h = curr->n))
-	// 					curr->n->p = 0;
-	// 			}
-	// 			if (curr == _t)
-	// 				_t = curr->p;
-	// 			IT ret(curr->n);
-	// 			delete curr->d;
-	// 			delete curr;
-	// 			return ret;
-	// 		}
+			template<class IT>
+			IT erase(IT pos)
+			{
+				if (pos._ptr == _center)
+					return pos;
+
+				
+			}
 
 	// 		template<class IT>
 	// 		IT erase(IT start,IT end)
@@ -314,7 +299,7 @@ namespace ft
 				Node<T> *next;
 
 				// In order to check if the list has one elem, check head address
-				// Don't forget to delete the last element as it should be instancied at all times
+				// Don't forget to delete the end element as it should be instancied at all times
 				if (current->next == 0)
 					return ;
 				current = current->next;
@@ -361,39 +346,34 @@ namespace ft
 					return --end();
 				}
 				else
-					std::cout << "Oh no"<<std::endl;
-				// {
-				// 	ft::Node<T> *new_elem = new Node<T>;
-				// 	new_elem->d = new T(val);
-				// 	if (p._ptr->p != 0)
-				// 		p._ptr->p->n = new_elem;;
-				// 	new_elem->p = p._ptr->p;
-				// 	new_elem->n = p._ptr;
-				// 	p._ptr->p = new_elem;
-
-				// 	return iterator(new_elem);	
-				// }
+				{
+					Node<T> *new_elem = new Node<T>;
+					new_elem->data = new T(val);
+					new_elem->next = p._ptr;
+					new_elem->previous = p._ptr->previous;
+					p._ptr->previous->next = new_elem;
+					p._ptr->previous = new_elem;
+					return iterator(new_elem);
+				}
 			}
 
-	// 		template<class IT>
-	// 		void insert (IT position, size_t n, const T& val)
-	// 		{
-	// 			for (size_t i = 0; i < n; i++)
-	// 			{
-	// 				position = insert(position, val);
-	// 			}
-	// 		}
+			template<class IT>
+			void insert (IT position, size_t n, const T& val)
+			{
+				for (size_t i = 0; i < n; i++)
+					position = insert(position, val);
+			}
 			
-	// 		template <class InputIterator, class IT>
- //    		void insert (IT position, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type first, InputIterator last)
- //    		{
- //    			while (first != last)
- //    			{
- //    				position = insert(position, *first);
- //    				++position;
- //    				++first;
- //    			}
- //    		}
+			template <class InputIterator, class IT>
+    		void insert (IT position, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type start, InputIterator end)
+    		{
+    			while (start != end)
+    			{
+    				position = insert(position, *start);
+    				++position;
+    				++start;
+    			}
+    		}
 
 	// 		//Seems good but watch out for allocators
 			void swap(list &base)
