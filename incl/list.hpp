@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/05 17:49:10 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/05 18:33:12 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //http://www.cplusplus.com/reference/list/list/
@@ -42,19 +42,57 @@ namespace ft
 				_size = 0;
 			};
 			
-			// list(const list &f) { *this = f; };
+			list(const list &f) 
+			{
+				_center = new Node<T>;
+				_center->data = new T;
+				*(_center->data) = 0;
+				_center->next = 0;
+				_center->previous = 0;
+				_size = 0; 
+				*this = f; 
+			};
 
 			template<class InputIterator>
 			list(InputIterator s, InputIterator e) 
 			{ 
-				list();
+				// list();
+				_center = new Node<T>;
+				_center->data = new T;
+				*(_center->data) = 0;
+				_center->next = 0;
+				_center->previous = 0;
+				_size = 0;
 				assign(s, e); 
 			}
 
-			list (size_t n, const T& val) 
+			list (size_t n, const T& val) : _size(n), _capacity(-1)
 			{
-				list();
+				// list();
+				_center = new Node<T>;
+				_center->data = new T;
+				*(_center->data) = 0;
+				_center->next = 0;
+				_center->previous = 0;
+				_size = 0;
+				// std::cout << "No crash yet" << std::endl;
 				assign(n, val); 
+			}
+			list (size_t n) : _size(n), _capacity(-1)
+			{
+				// list();
+				_center = new Node<T>;
+				_center->data = new T;
+				*(_center->data) = 0;
+				_center->next = 0;
+				_center->previous = 0;
+				_size = 0;
+				// std::cout << "No crash yet" << std::endl;
+				// assign(n, val); 
+				for (size_t i = 0; i < n; i++)
+				{
+					push_back(0);
+				}
 			}
 
 			~list()
@@ -66,12 +104,12 @@ namespace ft
 
 			/* OVERLOADS */
 
-	// 		list& operator=(const list &b)
-	// 		{
-	// 			assign(b.begin(), b.end());
-	// 			_s = b._s;
-	// 			return *this;
-	// 		};
+			list& operator=(const list &b)
+			{
+				assign(b.begin(), b.end());
+				_size = b._size;
+				return *this;
+			};
 			
 			friend class iterator;
 	// 		/* MEMBER FUNS */
@@ -146,7 +184,19 @@ namespace ft
 					reverse_iterator operator++() //++i
 					{ 
 						_ptr = _ptr->previous; 
-						return *this;					}
+						return *this;					
+					}
+					self_type operator--(int) //i++
+					{
+						iterator i = *this;
+						_ptr = _ptr->next;
+						return i;
+					}
+					self_type operator--() //i++
+					{ 
+						_ptr = _ptr->next; 
+						return *this;
+					}
 					reference operator*() 
 					{ 
 						return *(_ptr->data); 
@@ -304,6 +354,13 @@ namespace ft
 				--(*_center->data);
 				--_size;
 			}
+            void resize (size_t n, T val = T())
+            {
+                while (n > _size)
+                    push_back(val);
+                while (n < _size)
+                    pop_back();
+            }
 
 			void clear(void)
 			{
