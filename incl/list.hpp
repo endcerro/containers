@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/05 17:42:16 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/05 17:49:10 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //http://www.cplusplus.com/reference/list/list/
@@ -44,17 +44,18 @@ namespace ft
 			
 			// list(const list &f) { *this = f; };
 
-			// template<class InputIterator>
-			// list(InputIterator s, InputIterator e) { assign(s,e); }
+			template<class InputIterator>
+			list(InputIterator s, InputIterator e) 
+			{ 
+				list();
+				assign(s, e); 
+			}
 
-			// list (size_t n, const T& val) 
-			// {
-			// 	// for (int i = 0; i < n; i++)
-			// 	// {
-			// 	// 	push_back
-			// 	// }
-			// 	assign(n, val); 
-			// }
+			list (size_t n, const T& val) 
+			{
+				list();
+				assign(n, val); 
+			}
 
 			~list()
 			{ 
@@ -260,12 +261,16 @@ namespace ft
 				++_size;
 			}
 
-			// T& front(void) const	{ 
-			// 	if (_center->next)
-			// 		return *(_center->next->data);
-			// 	return 0; 
-			// }
-	// 		T& back(void) const		{ return *(_t->d); }
+			T& front(void) const	{ 
+				if (_center->next)
+					return *(_center->next->data);
+				return *(_center->data); 
+			}
+			T& back(void) const		{ 
+				if (_center->next)
+					return *(_center->previous->data); 
+				return *(_center->data); 
+			}
 
 			void pop_front(void)
 			{

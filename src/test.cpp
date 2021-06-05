@@ -56,8 +56,8 @@ int     main()
 
 		// constructors used in the same order as described above:
 		ft::list<int> first;                                // empty list of ints
-		ft::list<int> second (4,100);                       // four ints with value 100
-		ft::list<int> third (second.begin(),second.end());  // iterating through second
+		// ft::list<int> second (4,100);                       // four ints with value 100
+		// ft::list<int> third (second.begin(),second.end());  // iterating through second
 		// ft::list<int> fourth (third);                       // a copy of third
 
 		// ft::list<int> fourth (second);                       // a copy of third
