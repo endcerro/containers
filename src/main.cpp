@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/07 17:14:05 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/07 17:55:27 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,28 @@ int main()
 	b1.splice(b1.begin(), b2);
 	c1.splice(c1.begin(), c2);
 	std::cout << "SPLICE\n----------------------------------\n";
-	printl(c1.begin(), c1.end());
-	printl(c2.begin(), c2.end());
+	printl(c1.rbegin(), c1.rend());
+	printl(c2.rbegin(), c2.rend());
+	
+	printl(b1.rbegin(), b1.rend());
+	printl(b2.rbegin(), b2.rend());
+	c2.assign(5, 420);
+	b2.assign(5, 420);
 
-	printl(b1.begin(), b1.end());
-	printl(b2.begin(), b2.end());
+	printl(c1.rbegin(), c1.rend());
+	printl(c2.rbegin(), c2.rend());
+	
+	printl(b1.rbegin(), b1.rend());
+	printl(b2.rbegin(), b2.rend());
 
+	b1.splice(b1.begin(), b2, b2.begin(), ++(++b2.begin()));
+	c1.splice(c1.begin(), c2, c2.begin(), ++(++c2.begin()));
 
-
-
+	// printl(c1.rbegin(), c1.rend());
+	// printl(c2.rbegin(), c2.rend());
+	
+	// printl(b1.rbegin(), b1.rend());
+	// printl(b2.rbegin(), b2.rend());
 
 
 
