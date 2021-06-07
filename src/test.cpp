@@ -554,50 +554,50 @@ int     main()
 
 	}
 
-	// std::cout << "\n\033[1;33m======================================================" << std::endl;
-	// std::cout << "          ERASE" << std::endl;
-	// std::cout << "======================================================\033[37m\n" << std::endl;
-	// {
+	std::cout << "\n\033[1;33m======================================================" << std::endl;
+	std::cout << "          ERASE" << std::endl;
+	std::cout << "======================================================\033[37m\n" << std::endl;
+	{
 
-	// 	ft::list<int> mylist;
-	// 	ft::list<int>::iterator it1,it2;
+		ft::list<int> mylist;
+		ft::list<int>::iterator it1,it2;
 
-	// 	// set some values:
-	// 	for (int i=1; i<10; ++i) mylist.push_back(i*10);
+		// set some values:
+		for (int i=1; i<10; ++i) mylist.push_back(i*10);
 
-	// 								// 10 20 30 40 50 60 70 80 90
-	// 	it1 = it2 = mylist.begin(); // ^^
-	// 	advance (it2,6);            // ^                 ^
-	// 	++it1;                      //    ^              ^
+									// 10 20 30 40 50 60 70 80 90
+		it1 = it2 = mylist.begin(); // ^^
+		advance (it2,6);            // ^                 ^
+		++it1;                      //    ^              ^
 
-	// 	it1 = mylist.erase (it1);   // 10 30 40 50 60 70 80 90
-	// 								//    ^           ^
+		it1 = mylist.erase (it1);   // 10 30 40 50 60 70 80 90
+									//    ^           ^
 
-	// 	it2 = mylist.erase (it2);   // 10 30 40 50 60 80 90
-	// 								//    ^           ^
+		it2 = mylist.erase (it2);   // 10 30 40 50 60 80 90
+									//    ^           ^
 
-	// 	++it1;                      //       ^        ^
-	// 	--it2;                      //       ^     ^
+		++it1;                      //       ^        ^
+		--it2;                      //       ^     ^
 
-	// 	mylist.erase (it1,it2);     // 10 30 60 80 90
-	// 								//    ^
+		mylist.erase (it1,it2);     // 10 30 60 80 90
+									//    ^
 
-	// 	std::cout << "\033[37m"<< std::endl;
-	// 	std::cout << "\033[1;31mreponse attendu:\033[1;32m"<< std::endl;
-	// 	std::cout << "mylist contains: 10 30 60 80 90"<< std::endl;
-	// 	std::cout << "\033[37m"<< std::endl;
+		std::cout << "\033[37m"<< std::endl;
+		std::cout << "\033[1;31mreponse attendu:\033[1;32m"<< std::endl;
+		std::cout << "mylist contains: 10 30 60 80 90"<< std::endl;
+		std::cout << "\033[37m"<< std::endl;
 
-	// 	std::cout << "mylist contains:";
-	// 	for (it1=mylist.begin(); it1!=mylist.end(); ++it1)
-	// 		std::cout << ' ' << *it1;
+		std::cout << "mylist contains:";
+		for (it1=mylist.begin(); it1!=mylist.end(); ++it1)
+			std::cout << ' ' << *it1;
 
-	// 	std::cout << "\nmylist contains:";
-	// 	for (it1 = --mylist.end(); it1!=mylist.begin(); --it1)
-	// 		std::cout << ' ' << *it1;
-	// 	std::cout << ' ' << *it1;
-	// 	std::cout << "\nsize list = " << mylist.size() << std::endl;
+		std::cout << "\nmylist contains:";
+		for (it1 = --mylist.end(); it1!=mylist.begin(); --it1)
+			std::cout << ' ' << *it1;
+		std::cout << ' ' << *it1;
+		std::cout << "\nsize list = " << mylist.size() << std::endl;
 
-	// }
+	}
 
 	// std::cout << "\n\033[1;33m======================================================" << std::endl;
 	// std::cout << "          SWAP" << std::endl;

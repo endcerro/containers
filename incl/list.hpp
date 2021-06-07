@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/05 18:33:12 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/07 13:59:52 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //http://www.cplusplus.com/reference/list/list/
@@ -247,14 +247,15 @@ namespace ft
 				if (pos == end())
 					return pos;
 				Node<T> *todel = pos._ptr;
-
+				Node<T> *tmp = todel->next;
+				// iterator(todel->next);
 				todel->previous->next = todel->next;
 				todel->next->previous = todel->previous;
 				delete todel->data;
 				delete todel;
 				_size--;
 				*(_center->data) = *(_center->data) - 1;
-				return begin();
+				return iterator(tmp);
 			}
 
 			template<class IT>
@@ -379,6 +380,8 @@ namespace ft
 					delete current;
 					current	= next;
 				}
+				_size = 0;
+				*(_center->data) = 0;
 				_center->next = 0;
 				_center->previous = 0;
 			}
@@ -422,6 +425,8 @@ namespace ft
 					new_elem->previous = p._ptr->previous;
 					p._ptr->previous->next = new_elem;
 					p._ptr->previous = new_elem;
+					_size++;
+					*(_center->data) = *(_center->data) + 1;
 					return iterator(new_elem);
 				}
 			}
