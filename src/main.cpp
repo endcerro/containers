@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/07 16:30:58 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/07 17:14:05 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int main()
 	std::cout << "SPLICE\n----------------------------------\n";
 	printl(c1.begin(), c1.end());
 	printl(c2.begin(), c2.end());
+
 	printl(b1.begin(), b1.end());
 	printl(b2.begin(), b2.end());
 
