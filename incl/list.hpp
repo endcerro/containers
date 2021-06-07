@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/07 17:14:17 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/07 17:14:40 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //http://www.cplusplus.com/reference/list/list/
@@ -464,32 +464,9 @@ namespace ft
     			x._center->next->previous = old_previous;
     			old_previous->next = x._center->next;
 
-
-
-    			// current->next = x._center->next;
-    			// old_next->previous = x._center->previous;
-
-    			// x._center->next->previous = current;
-    			// x._center->previous->next = old_next;
-    			
-
-    			// x._center->next->previous = current;
-    			// x._center->previous->next = old_next;
-
-    			//Current is plugged to new
-				// current->next = x._center->next;
-				// //Start of new is plugged to current
-    // 			x._center->next->previous = current;
-    			
-
-    // 			x._center->previous->next = next;
-    			
-    // 			//Reset the old item
     			x._center->next = x._center;
     			x._center->previous = x._center;
 
-
-    			// next->previous = x._center->previous;
     			_size += x._size;
     			*(_center->data) = _size;
 				*(x._center->data) = 0;
