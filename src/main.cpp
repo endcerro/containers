@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/07 14:00:16 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/07 16:30:58 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,23 @@
 // 	int b;
 // };
 template <class T>
-void print2(std::list<T> &base, ft::list<T> &custom)
+void print2(ft::list<T> &base, ft::list<T> &custom)
 {
 
 	std::cout << "base : " << std::endl;
-	for(std::list<int>::iterator i = base.begin(); i != base.end(); i++)
+	for(ft::list<int>::iterator i = base.begin(); i != base.end(); i++)
 		std::cout << *i << "|";
 	std::cout << "\n---------------------------------------\n";
 	std::cout << "custom : " << std::endl;
 	for(ft::list<int>::iterator i = custom.begin(); i != custom.end(); i++)
 		std::cout << *i << "|";
+	std::cout << std::endl;
+}
+template <class IT>
+void printl(IT begin, IT end)
+{
+	while (begin != end)
+		std::cout << *(begin++)<< " ";
 	std::cout << std::endl;
 }
 
@@ -37,39 +44,30 @@ int main()
 	// i++
 	std::cout << "------------------------------------------" << std::endl;
 
-	std::list<int> base_list;
-	ft::list<int> 	custom_list;
+	ft::list<int> 	c1;
+	ft::list<int> 	c2;
+	std::list<int> 	b1;
+	std::list<int> 	b2;
+
 	for (int i = 0; i < 10; i++)
 	{
-		base_list.push_back(i);
-		custom_list.push_back(i);
+		c1.push_back(i);
+		c2.push_back(-i);
+		b1.push_back(i);
+		b2.push_back(-i);
 	}
+	printl(c1.begin(), c1.end());
+	printl(c2.begin(), c2.end());
+	printl(b1.begin(), b1.end());
+	printl(b2.begin(), b2.end());
 
-	print2(base_list, custom_list);
-
-
-	std::list<int>::iterator bi = base_list.begin();
-	ft::list<int>::iterator bc = custom_list.begin();
-		
-	bi++;
-	bc++;
-
-	bi++;
-	bc++;
-
-	bi = base_list.erase(bi);
-	bc = custom_list.erase(bc);
-	std::cout << *bi << std::endl;
-	std::cout << *bc << std::endl;
-	print2(base_list, custom_list);
-
-
-
-
-
-
-
-
+	b1.splice(b1.begin(), b2);
+	c1.splice(c1.begin(), c2);
+	std::cout << "SPLICE\n----------------------------------\n";
+	printl(c1.begin(), c1.end());
+	printl(c2.begin(), c2.end());
+	printl(b1.begin(), b1.end());
+	printl(b2.begin(), b2.end());
 
 
 

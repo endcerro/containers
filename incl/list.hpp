@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/07 13:59:52 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/07 16:22:26 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //http://www.cplusplus.com/reference/list/list/
@@ -448,7 +448,53 @@ namespace ft
     				++start;
     			}
     		}
+    		template<class IT>
+    		void splice(IT position, list<T> &x)
+    		{
+    			Node<T> *current = position._ptr;
+    			Node<T> *next = position._ptr->next;
+    			current->next = x._center->next;
+    			x._center->next->previous = current;
+    			x._center->previous->next = next;
+    			x._center->next = x._center;
+    			x._center->previous = x._center;
+    			
+    			next->previous = x._center->previous;
+    			_size += x._size;
+    			*(_center->data) = _size;
+				*(x._center->data) = 0;
+    			x._size = 0;
+    		}
+			template<class IT>
+    		void splice (IT position, list<T> &x, IT i)
+    		{
+    			Node<T> *current = position._ptr;
+    			Node<T> *next = position._ptr->next;
 
+    			i._ptr->next->previous = i._ptr->previous;
+    			i._ptr->previous->next = i._ptr->next;
+    			x._size--;
+    			--(*x._center->data);
+
+    			i._ptr->next = current->next;
+    			i._ptr->previous = current;
+
+    			current->next->previous = i._ptr;
+    			current->next = i._ptr;
+
+    			_size++;
+    			++(*_center->data);
+
+    		}
+    		template<class IT>
+    		void splice(IT position, list& x, IT first, IT last)
+    		{
+    			while (first != last)
+    			{
+    				splice(position, x, first++);
+    				// first++;
+    			}
+    		}
 	// 		//Seems good but watch out for allocators
 			void swap(list &base)
 			{

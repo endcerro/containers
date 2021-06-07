@@ -599,179 +599,179 @@ int     main()
 
 	}
 
-	// std::cout << "\n\033[1;33m======================================================" << std::endl;
-	// std::cout << "          SWAP" << std::endl;
-	// std::cout << "======================================================\033[37m\n" << std::endl;
-	// {
+	std::cout << "\n\033[1;33m======================================================" << std::endl;
+	std::cout << "          SWAP" << std::endl;
+	std::cout << "======================================================\033[37m\n" << std::endl;
+	{
 
-	// 	ft::list<int> first (3,100);   // three ints with a value of 100
-	// 	ft::list<int> second (5,200);  // five ints with a value of 200
+		ft::list<int> first (3,100);   // three ints with a value of 100
+		ft::list<int> second (5,200);  // five ints with a value of 200
 
-	// 	first.swap(second);
+		first.swap(second);
 
-	// 	std::cout << "\033[37m"<< std::endl;
-	// 	std::cout << "\033[1;31mreponse attendu:\033[1;32m"<< std::endl;
-	// 	std::cout << "first contains: 200 200 200 200 200 \nsecond contains: 100 100 100 "<< std::endl;
-	// 	std::cout << "\033[37m"<< std::endl;
+		std::cout << "\033[37m"<< std::endl;
+		std::cout << "\033[1;31mreponse attendu:\033[1;32m"<< std::endl;
+		std::cout << "first contains: 200 200 200 200 200 \nsecond contains: 100 100 100 "<< std::endl;
+		std::cout << "\033[37m"<< std::endl;
 
-	// 	std::cout << "first contains:";
-	// 	for (ft::list<int>::iterator it=first.begin(); it!=first.end(); it++)
-	// 		std::cout << ' ' << *it;
+		std::cout << "first contains:";
+		for (ft::list<int>::iterator it=first.begin(); it!=first.end(); it++)
+			std::cout << ' ' << *it;
 
-	// 	std::cout << "\nfirst contains:";
-	// 	ft::list<int>::iterator it;
-	// 	for (it = --first.end(); it!=first.begin(); --it)
-	// 		std::cout << ' ' << *it;
-	// 	std::cout << ' ' << *it;
-	// 	std::cout << "\nsize list = " << first.size() << std::endl;
+		std::cout << "\nfirst contains:";
+		ft::list<int>::iterator it;
+		for (it = --first.end(); it!=first.begin(); --it)
+			std::cout << ' ' << *it;
+		std::cout << ' ' << *it;
+		std::cout << "\nsize list = " << first.size() << std::endl;
 
-	// 	std::cout << "second contains:";
-	// 	for (ft::list<int>::iterator it=second.begin(); it!=second.end(); it++)
-	// 		std::cout << ' ' << *it;
+		std::cout << "second contains:";
+		for (ft::list<int>::iterator it=second.begin(); it!=second.end(); it++)
+			std::cout << ' ' << *it;
 
-	// 	std::cout << "\nsecond contains:";
-	// 	for (it = --second.end(); it!=second.begin(); --it)
-	// 		std::cout << ' ' << *it;
-	// 	std::cout << ' ' << *it;
-	// 	std::cout << "\nsize list = " << second.size() << std::endl;
+		std::cout << "\nsecond contains:";
+		for (it = --second.end(); it!=second.begin(); --it)
+			std::cout << ' ' << *it;
+		std::cout << ' ' << *it;
+		std::cout << "\nsize list = " << second.size() << std::endl;
 
-	// 	std::cout << std::endl;
+		std::cout << std::endl;
 
-	// }
+	}
 
-	// std::cout << "\n\033[1;33m======================================================" << std::endl;
-	// std::cout << "          RESIZE" << std::endl;
-	// std::cout << "======================================================\033[37m\n" << std::endl;
-	// {
+	std::cout << "\n\033[1;33m======================================================" << std::endl;
+	std::cout << "          RESIZE" << std::endl;
+	std::cout << "======================================================\033[37m\n" << std::endl;
+	{
 
-	// 	ft::list<int> mylist;
+		ft::list<int> mylist;
 
-	// 	// set some initial content:
-	// 	for (int i=1; i<10; ++i) mylist.push_back(i);
+		// set some initial content:
+		for (int i=1; i<10; ++i) mylist.push_back(i);
 
-	// 	mylist.resize(5);
-	// 	mylist.resize(8,100);
-	// 	mylist.resize(12);
+		mylist.resize(5);
+		mylist.resize(8,100);
+		mylist.resize(12);
 
-	// 	std::cout << "\033[37m"<< std::endl;
-	// 	std::cout << "\033[1;31mreponse attendu:\033[1;32m"<< std::endl;
-	// 	std::cout << "mylist contains: 1 2 3 4 5 100 100 100 0 0 0 0"<< std::endl;
-	// 	std::cout << "\033[37m"<< std::endl;
+		std::cout << "\033[37m"<< std::endl;
+		std::cout << "\033[1;31mreponse attendu:\033[1;32m"<< std::endl;
+		std::cout << "mylist contains: 1 2 3 4 5 100 100 100 0 0 0 0"<< std::endl;
+		std::cout << "\033[37m"<< std::endl;
 
-	// 	std::cout << "mylist contains:";
-	// 	for (ft::list<int>::iterator it=mylist.begin(); it!=mylist.end(); ++it)
-	// 		std::cout << ' ' << *it;
+		std::cout << "mylist contains:";
+		for (ft::list<int>::iterator it=mylist.begin(); it!=mylist.end(); ++it)
+			std::cout << ' ' << *it;
 
-	// 	std::cout << "\nmylist contains:";
-	// 	ft::list<int>::iterator it;
-	// 	for (it = --mylist.end(); it!=mylist.begin(); --it)
-	// 		std::cout << ' ' << *it;
-	// 	std::cout << ' ' << *it;
-	// 	std::cout << "\nsize list = " << mylist.size() << std::endl;
+		std::cout << "\nmylist contains:";
+		ft::list<int>::iterator it;
+		for (it = --mylist.end(); it!=mylist.begin(); --it)
+			std::cout << ' ' << *it;
+		std::cout << ' ' << *it;
+		std::cout << "\nsize list = " << mylist.size() << std::endl;
 
-	// }
+	}
 
-	// std::cout << "\n\033[1;33m======================================================" << std::endl;
-	// std::cout << "          CLEAR" << std::endl;
-	// std::cout << "======================================================\033[37m\n" << std::endl;
-	// {
+	std::cout << "\n\033[1;33m======================================================" << std::endl;
+	std::cout << "          CLEAR" << std::endl;
+	std::cout << "======================================================\033[37m\n" << std::endl;
+	{
 
-	// 	ft::list<int> mylist;
-	// 	ft::list<int>::iterator it;
+		ft::list<int> mylist;
+		ft::list<int>::iterator it;
 
-	// 	mylist.push_back (100);
-	// 	mylist.push_back (200);
-	// 	mylist.push_back (300);
+		mylist.push_back (100);
+		mylist.push_back (200);
+		mylist.push_back (300);
 
-	// 	std::cout << "\033[37m"<< std::endl;
-	// 	std::cout << "\033[1;31mreponse attendu:\033[1;32m"<< std::endl;
-	// 	std::cout << "mylist contains: 100 200 300\nmylist contains: 1101 2202"<< std::endl;
-	// 	std::cout << "\033[37m"<< std::endl;
+		std::cout << "\033[37m"<< std::endl;
+		std::cout << "\033[1;31mreponse attendu:\033[1;32m"<< std::endl;
+		std::cout << "mylist contains: 100 200 300\nmylist contains: 1101 2202"<< std::endl;
+		std::cout << "\033[37m"<< std::endl;
 
-	// 	std::cout << "mylist contains:";
-	// 	for (it=mylist.begin(); it!=mylist.end(); ++it)
-	// 		std::cout << ' ' << *it;
+		std::cout << "mylist contains:";
+		for (it=mylist.begin(); it!=mylist.end(); ++it)
+			std::cout << ' ' << *it;
 
-	// 	std::cout << "\nmylist contains:";
-	// 	for (it = --mylist.end(); it!=mylist.begin(); --it)
-	// 		std::cout << ' ' << *it;
-	// 	std::cout << ' ' << *it;
-	// 	std::cout << "\nsize list = " << mylist.size() << std::endl;
+		std::cout << "\nmylist contains:";
+		for (it = --mylist.end(); it!=mylist.begin(); --it)
+			std::cout << ' ' << *it;
+		std::cout << ' ' << *it;
+		std::cout << "\nsize list = " << mylist.size() << std::endl;
 
-	// 	mylist.clear();
-	// 	mylist.push_back (1101);
-	// 	mylist.push_back (2202);
+		mylist.clear();
+		mylist.push_back (1101);
+		mylist.push_back (2202);
 
-	// 	std::cout << "mylist contains:";
-	// 	for (it=mylist.begin(); it!=mylist.end(); ++it)
-	// 		std::cout << ' ' << *it;
+		std::cout << "mylist contains:";
+		for (it=mylist.begin(); it!=mylist.end(); ++it)
+			std::cout << ' ' << *it;
 
-	// 	std::cout << "\nmylist contains:";
-	// 	for (it = --mylist.end(); it!=mylist.begin(); --it)
-	// 		std::cout << ' ' << *it;
-	// 	std::cout << ' ' << *it;
-	// 	std::cout << "\nsize list = " << mylist.size() << std::endl;
+		std::cout << "\nmylist contains:";
+		for (it = --mylist.end(); it!=mylist.begin(); --it)
+			std::cout << ' ' << *it;
+		std::cout << ' ' << *it;
+		std::cout << "\nsize list = " << mylist.size() << std::endl;
 
-	// }
+	}
 
-	// std::cout << "\n\033[1;33m======================================================" << std::endl;
-	// std::cout << "          SPLICE" << std::endl;
-	// std::cout << "======================================================\033[37m\n" << std::endl;
-	// {
+	std::cout << "\n\033[1;33m======================================================" << std::endl;
+	std::cout << "          SPLICE" << std::endl;
+	std::cout << "======================================================\033[37m\n" << std::endl;
+	{
 
-	// 	ft::list<int> mylist1, mylist2;
-	// 	ft::list<int>::iterator it;
+		ft::list<int> mylist1, mylist2;
+		ft::list<int>::iterator it;
 
-	// 	// set some initial values:
-	// 	for (int i=1; i<=4; ++i)
-	// 		mylist1.push_back(i);      // mylist1: 1 2 3 4
+		// set some initial values:
+		for (int i=1; i<=4; ++i)
+			mylist1.push_back(i);      // mylist1: 1 2 3 4
 
-	// 	for (int i=1; i<=3; ++i)
-	// 		mylist2.push_back(i*10);   // mylist2: 10 20 30
+		for (int i=1; i<=3; ++i)
+			mylist2.push_back(i*10);   // mylist2: 10 20 30
 
-	// 	it = mylist1.begin();
-	// 	++it;                         // points to 2
+		it = mylist1.begin();
+		++it;                         // points to 2
 
-	// 	mylist1.splice (it, mylist2); // mylist1: 1 10 20 30 2 3 4
-	// 									// mylist2 (empty)
-	// 									// "it" still points to 2 (the 5th element)
+		mylist1.splice (it, mylist2); // mylist1: 1 10 20 30 2 3 4
+										// mylist2 (empty)
+										// "it" still points to 2 (the 5th element)
 												
-	// 	mylist2.splice (mylist2.begin(),mylist1, it);
-	// 									// mylist1: 1 10 20 30 3 4
-	// 									// mylist2: 2
-	// 									// "it" is now invalid.
-	// 	it = mylist1.begin();
-	// 	advance(it,3);           // "it" points now to 30
+		mylist2.splice (mylist2.begin(),mylist1, it);
+										// mylist1: 1 10 20 30 3 4
+										// mylist2: 2
+										// "it" is now invalid.
+		it = mylist1.begin();
+		advance(it,3);           // "it" points now to 30
 
-	// 	mylist1.splice ( mylist1.begin(), mylist1, it, mylist1.end());
-	// 									// mylist1: 30 3 4 1 10 20
+		mylist1.splice ( mylist1.begin(), mylist1, it, mylist1.end());
+										// mylist1: 30 3 4 1 10 20
 
-	// 	std::cout << "\033[37m"<< std::endl;
-	// 	std::cout << "\033[1;31mreponse attendu:\033[1;32m"<< std::endl;
-	// 	std::cout << "mylist1 contains: 30 3 4 1 10 20\nmylist2 contains: 2"<< std::endl;
-	// 	std::cout << "\033[37m"<< std::endl;
+		std::cout << "\033[37m"<< std::endl;
+		std::cout << "\033[1;31mreponse attendu:\033[1;32m"<< std::endl;
+		std::cout << "mylist1 contains: 30 3 4 1 10 20\nmylist2 contains: 2"<< std::endl;
+		std::cout << "\033[37m"<< std::endl;
 
-	// 	std::cout << "mylist1 contains:";
-	// 	for (it=mylist1.begin(); it!=mylist1.end(); ++it)
-	// 		std::cout << ' ' << *it;
+		std::cout << "mylist1 contains:";
+		for (it=mylist1.begin(); it!=mylist1.end(); ++it)
+			std::cout << ' ' << *it;
 		
-	// 	std::cout << "\nmylist1 contains:";
-	// 	for (it = --mylist1.end(); it!=mylist1.begin(); --it)
-	// 		std::cout << ' ' << *it;
-	// 	std::cout << ' ' << *it;
-	// 	std::cout << "\nsize list = " << mylist1.size() << std::endl;
+		std::cout << "\nmylist1 contains:";
+		for (it = --mylist1.end(); it!=mylist1.begin(); --it)
+			std::cout << ' ' << *it;
+		std::cout << ' ' << *it;
+		std::cout << "\nsize list = " << mylist1.size() << std::endl;
 
-	// 	std::cout << "mylist2 contains:";
-	// 	for (it=mylist2.begin(); it!=mylist2.end(); ++it)
-	// 		std::cout << ' ' << *it;
+		std::cout << "mylist2 contains:";
+		for (it=mylist2.begin(); it!=mylist2.end(); ++it)
+			std::cout << ' ' << *it;
 		
-	// 	std::cout << "\nmylist1 contains:";
-	// 	for (it = --mylist2.end(); it!=mylist2.begin(); --it)
-	// 		std::cout << ' ' << *it;
-	// 	std::cout << ' ' << *it;
-	// 	std::cout << "\nsize list = " << mylist2.size() << std::endl;
+		std::cout << "\nmylist1 contains:";
+		for (it = --mylist2.end(); it!=mylist2.begin(); --it)
+			std::cout << ' ' << *it;
+		std::cout << ' ' << *it;
+		std::cout << "\nsize list = " << mylist2.size() << std::endl;
 
-	// }
+	}
 
 	// std::cout << "\n\033[1;33m======================================================" << std::endl;
 	// std::cout << "          REMOVE" << std::endl;
