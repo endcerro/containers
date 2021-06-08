@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/07 17:52:47 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/08 16:28:29 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //http://www.cplusplus.com/reference/list/list/
@@ -87,12 +87,9 @@ namespace ft
 				_center->next = 0;
 				_center->previous = 0;
 				_size = 0;
-				// std::cout << "No crash yet" << std::endl;
-				// assign(n, val); 
+ 
 				for (size_t i = 0; i < n; i++)
-				{
 					push_back(0);
-				}
 			}
 
 			~list()
@@ -135,8 +132,8 @@ namespace ft
 					}
 					self_type operator++() //i++
 					{
-						// if (this != _center)
-							_ptr = _ptr->next; 
+						
+						_ptr = _ptr->next; 
 						return *this;
 					}
 					self_type operator--(int) //i++
@@ -154,8 +151,10 @@ namespace ft
 					{ 
 						return *(_ptr->data); 
 					}
-					// pointer operator->() 
-					// { return _ptr->d; }
+					pointer operator->() 
+					{ 
+						return _ptr->data; 
+					}
 					bool operator==(const self_type& rhs)
 					{ return _ptr == rhs._ptr; }
 					bool operator!=(const self_type& rhs) 
@@ -454,7 +453,7 @@ namespace ft
     			std::cout << " In here " << std::endl;
     			Node<T> *current = position._ptr;
 
-    			Node<T> *old_next = position._ptr->next;
+    			// Node<T> *old_next = position._ptr->next;
     			Node<T> *old_previous = position._ptr->previous;
 
 
@@ -480,7 +479,10 @@ namespace ft
     			i._ptr->next->previous = i._ptr->previous;
     			i._ptr->previous->next = i._ptr->next;
 
+
+
     			position._ptr->previous->next = i._ptr;
+    			i._ptr->previous = position._ptr->previous;
     			i._ptr->next = position._ptr;
     			position._ptr->previous = i._ptr;
 
