@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/08 16:28:29 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/08 17:17:19 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //http://www.cplusplus.com/reference/list/list/
@@ -473,13 +473,9 @@ namespace ft
     		}
 			template<class IT>
     		void splice (IT position, list<T> &x, IT i)
-    		{
-    			// std::cout << "WE HERE" << std::endl;
-    			
+    		{	
     			i._ptr->next->previous = i._ptr->previous;
     			i._ptr->previous->next = i._ptr->next;
-
-
 
     			position._ptr->previous->next = i._ptr;
     			i._ptr->previous = position._ptr->previous;
@@ -540,7 +536,20 @@ namespace ft
 			}
 			size_t size(void) const { return _size; }
 			size_t max_size(void) 	{ return _capacity;	 };
-			
+			void remove (const T& val)
+			{
+				iterator it = begin();
+				while(it != end())
+				{
+					if (*it == val)
+					{
+						erase(it);
+						it = begin();
+					}
+					else
+						it++;
+				}
+			}
 	// 		template <class IT>
 	// 		void print(IT s, IT e)
 	// 		{

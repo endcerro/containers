@@ -7,13 +7,13 @@ echo "==========================================================================
 echo -e "\033[0m"
 
 #ADD BACK --98 
-g++ -Wall -Wextra -g3 -fsanitize=address main.cpp -o tstd
+g++ -Wall -Wextra -g3 -fsanitize=address hector_main.cpp -o tstd
 if [[ $? -ne 0 ]]; then
 	echo -e "\033[31mCOMPILATION ERROR\033[0m"
 	exit
 fi
 
-g++ -Wall -Wextra  -g3 -fsanitize=address -D TFT main.cpp -o tft
+g++ -Wall -Wextra  -g3 -fsanitize=address -D TFT hector_main.cpp -o tft
 if [[ $? -ne 0 ]]; then
 	echo -e "\033[31mCOMPILATION ERROR\033[0m"
 	exit

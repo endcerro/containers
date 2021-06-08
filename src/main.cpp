@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/08 16:28:40 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/08 17:18:45 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,13 @@ int main()
 	// b1.splice(b1.begin(), b2);//, b2.begin(), (++b2.begin()));
 	c1.splice(c1.begin(), c2, ++c2.begin());
 
-	printl(c1.rbegin(), c1.rend());
-	printl(c2.rbegin(), c2.rend());
-	
+	printl(c1.begin(), c1.end());
+	printl(c2.begin(), c2.end());
+
+	c1.remove(800);
+	printl(c1.begin(), c1.end());
+	c1.remove(7);
+	printl(c1.begin(), c1.end());
 	// printl(b1.rbegin(), b1.rend());
 	// printl(b2.rbegin(), b2.rend());
 
