@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/11 17:29:45 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/11 17:34:14 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //http://www.cplusplus.com/reference/list/list/
@@ -35,7 +35,7 @@ namespace ft
 			list() : _size(0), _capacity(-1) 
 			{
 				_center = new Node<T>;
-				_center->data = new T;
+				_center->data = &_center->size;
 				// *(_center->data) = static_cast<T>(0);
 				_center->size = 0;
 				_center->next = 0;
@@ -46,7 +46,7 @@ namespace ft
 			list(const list &f) 
 			{
 				_center = new Node<T>;
-				_center->data = new T;
+				_center->data = &_center->size;
 				// *(_center->data) = 0;
 				_center->size = 0;
 				_center->next = 0;
@@ -60,7 +60,7 @@ namespace ft
 			{ 
 				// list();
 				_center = new Node<T>;
-				_center->data = new T;
+				_center->data = &_center->size;
 				// *(_center->data) = 0;
 				_center->size = 0;
 				_center->next = 0;
@@ -73,7 +73,7 @@ namespace ft
 			{
 				// list();
 				_center = new Node<T>;
-				_center->data = new T;
+				_center->data = &_center->size;
 				// *(_center->data) = 0;
 				_center->size = 0;
 				_center->next = 0;
@@ -86,7 +86,7 @@ namespace ft
 			{
 				// list();
 				_center = new Node<T>;
-				_center->data = new T;
+				_center->data = &_center->size;
 				// *(_center->data) = 0;
 				_center->size = 0;
 				_center->next = 0;
@@ -100,7 +100,7 @@ namespace ft
 			~list()
 			{ 
 				clear();
-				delete _center->data;
+				// delete _center->data;
 				delete _center;
 			};
 
@@ -202,7 +202,9 @@ namespace ft
 						return *this;
 					}
 					reference operator*() 
-					{ 
+					{
+						// if (_ptr == end()._ptr)
+						// 	return (&end()._ptr->size);
 						return *(_ptr->data); 
 					}
 					pointer operator->() 
