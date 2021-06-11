@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/08 17:18:45 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/11 17:10:41 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,24 @@ int main()
 
 	for (int i = 1; i <= 10; i++)
 	{
-		c1.push_back(i);
-		c2.push_back(-i);
-		b1.push_back(i);
-		b2.push_back(-i);
+		if (i % 2)
+		{
+			c1.push_back(i * 2);
+			c2.push_back(-i* 2);
+			b1.push_back(i* 2);
+			b2.push_back(-i* 2);
+		}
+		else
+		{
+			c1.push_back(i);
+			c2.push_back(-i);
+			b1.push_back(i);
+			b2.push_back(-i);	
+		}
+		// c1.push_back(i);
+		// c2.push_back(-i);
+		// b1.push_back(i);
+		// b2.push_back(-i);
 	}
 	// printl(c1.begin(), c1.end());
 	// printl(c2.begin(), c2.end());
@@ -93,7 +107,9 @@ int main()
 	c1.remove(800);
 	printl(c1.begin(), c1.end());
 	c1.remove(7);
+	c1.sort();
 	printl(c1.begin(), c1.end());
+
 	// printl(b1.rbegin(), b1.rend());
 	// printl(b2.rbegin(), b2.rend());
 

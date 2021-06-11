@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/08 17:17:19 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/11 17:29:45 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //http://www.cplusplus.com/reference/list/list/
@@ -36,7 +36,8 @@ namespace ft
 			{
 				_center = new Node<T>;
 				_center->data = new T;
-				*(_center->data) = 0;
+				// *(_center->data) = static_cast<T>(0);
+				_center->size = 0;
 				_center->next = 0;
 				_center->previous = 0;
 				_size = 0;
@@ -46,7 +47,8 @@ namespace ft
 			{
 				_center = new Node<T>;
 				_center->data = new T;
-				*(_center->data) = 0;
+				// *(_center->data) = 0;
+				_center->size = 0;
 				_center->next = 0;
 				_center->previous = 0;
 				_size = 0; 
@@ -59,7 +61,8 @@ namespace ft
 				// list();
 				_center = new Node<T>;
 				_center->data = new T;
-				*(_center->data) = 0;
+				// *(_center->data) = 0;
+				_center->size = 0;
 				_center->next = 0;
 				_center->previous = 0;
 				_size = 0;
@@ -71,7 +74,8 @@ namespace ft
 				// list();
 				_center = new Node<T>;
 				_center->data = new T;
-				*(_center->data) = 0;
+				// *(_center->data) = 0;
+				_center->size = 0;
 				_center->next = 0;
 				_center->previous = 0;
 				_size = 0;
@@ -83,11 +87,12 @@ namespace ft
 				// list();
 				_center = new Node<T>;
 				_center->data = new T;
-				*(_center->data) = 0;
+				// *(_center->data) = 0;
+				_center->size = 0;
 				_center->next = 0;
 				_center->previous = 0;
 				_size = 0;
- 
+
 				for (size_t i = 0; i < n; i++)
 					push_back(0);
 			}
@@ -109,8 +114,8 @@ namespace ft
 			};
 			
 			friend class iterator;
-	// 		/* MEMBER FUNS */
-	// 		//Use friends
+			/* MEMBER FUNS */
+			//Use friends
 			class iterator
 			{
 				friend class list<T>;
@@ -162,7 +167,7 @@ namespace ft
 				private :
 					Node<T> *_ptr;
 			};
-	// 		//may use friends
+			//may use friends
 			class reverse_iterator //: virtual public iterator
 			{
 				friend class list<T>;
@@ -216,8 +221,8 @@ namespace ft
 					Node<T> *_ptr;
 			};
 
-	// 			/* ITERATORS N SHIT 
-	// 		NEED TO ADD CONST ITERATORS N STUFF*/
+			/* ITERATORS N SHIT 
+			NEED TO ADD CONST ITERATORS N STUFF*/
 
 			iterator begin() const 
 			{ 
@@ -253,7 +258,8 @@ namespace ft
 				delete todel->data;
 				delete todel;
 				_size--;
-				*(_center->data) = *(_center->data) - 1;
+				_center->size--;
+				// *(_center->data) = *(_center->data) - 1;
 				return iterator(tmp);
 			}
 
@@ -292,7 +298,8 @@ namespace ft
 					elem->next = _center;
 					old->next = elem;
 				}
-				++(*_center->data);
+				++_center->size;
+				// ++(*_center->data);
 				++_size;
 			}
 
@@ -307,19 +314,20 @@ namespace ft
 				elem->previous = _center;
 				old->previous = elem;
 				_center->next = elem;
-				++(*_center->data);
+				++_center->size;
+				// ++(*_center->data);
 				++_size;
 			}
 
 			T& front(void) const	{ 
 				if (_center->next)
 					return *(_center->next->data);
-				return *(_center->data); 
+				return (_center->size); 
 			}
 			T& back(void) const		{ 
 				if (_center->next)
 					return *(_center->previous->data); 
-				return *(_center->data); 
+				return (_center->size); 
 			}
 
 			void pop_front(void)
@@ -335,7 +343,8 @@ namespace ft
 				}
 				delete old->data;
 				delete old;
-				--(*_center->data);
+				--_center->size;
+				// --(*_center->data);
 				--_size;
 			}
 			void pop_back(void)
@@ -351,16 +360,17 @@ namespace ft
 				}
 				delete old->data;
 				delete old;
-				--(*_center->data);
+				--_center->size;
+				// --(*_center->data);
 				--_size;
 			}
-            void resize (size_t n, T val = T())
-            {
-                while (n > _size)
-                    push_back(val);
-                while (n < _size)
-                    pop_back();
-            }
+			void resize (size_t n, T val = T())
+			{
+				while (n > _size)
+					push_back(val);
+				while (n < _size)
+					pop_back();
+			}
 
 			void clear(void)
 			{
@@ -380,7 +390,8 @@ namespace ft
 					current	= next;
 				}
 				_size = 0;
-				*(_center->data) = 0;
+				_center->size = 0;
+				// *(_center->data) = static_cast<T>(0);
 				_center->next = 0;
 				_center->previous = 0;
 			}
@@ -425,7 +436,8 @@ namespace ft
 					p._ptr->previous->next = new_elem;
 					p._ptr->previous = new_elem;
 					_size++;
-					*(_center->data) = *(_center->data) + 1;
+					++_center->size;
+					// *(_center->data) = *(_center->data) + 1;
 					return iterator(new_elem);
 				}
 			}
@@ -437,77 +449,80 @@ namespace ft
 					position = insert(position, val);
 			}
 			
-			template <class InputIterator, class IT>
-    		void insert (IT position, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type start, InputIterator end)
-    		{
-    			while (start != end)
-    			{
-    				position = insert(position, *start);
-    				++position;
-    				++start;
-    			}
-    		}
-    		template<class IT>
-    		void splice(IT position, list<T> &x)
-    		{
-    			std::cout << " In here " << std::endl;
-    			Node<T> *current = position._ptr;
-
-    			// Node<T> *old_next = position._ptr->next;
-    			Node<T> *old_previous = position._ptr->previous;
-
-
-    			//Link the curren list begin and end
-    			current->previous = x._center->previous;
-    			x._center->previous->next = current;
-    			x._center->next->previous = old_previous;
-    			old_previous->next = x._center->next;
-
-    			x._center->next = x._center;
-    			x._center->previous = x._center;
-
-    			_size += x._size;
-    			*(_center->data) = _size;
-				*(x._center->data) = 0;
-    			x._size = 0;
-    		}
+				template <class InputIterator, class IT>
+			void insert (IT position, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type start, InputIterator end)
+			{
+				while (start != end)
+				{
+					position = insert(position, *start);
+					++position;
+					++start;
+				}
+			}
 			template<class IT>
-    		void splice (IT position, list<T> &x, IT i)
-    		{	
-    			i._ptr->next->previous = i._ptr->previous;
-    			i._ptr->previous->next = i._ptr->next;
+			void splice(IT position, list<T> &x)
+			{
+				std::cout << " In here " << std::endl;
+				Node<T> *current = position._ptr;
 
-    			position._ptr->previous->next = i._ptr;
-    			i._ptr->previous = position._ptr->previous;
-    			i._ptr->next = position._ptr;
-    			position._ptr->previous = i._ptr;
+				// Node<T> *old_next = position._ptr->next;
+				Node<T> *old_previous = position._ptr->previous;
 
-    			x._size--;
-    			--*(x._center->data);	
-    			_size++;
-    			++(*_center->data);
 
-    		}
-    		template<class IT>
-    		void splice(IT position, list& x, IT first, IT last)
-    		{
-    			while (first != last)
-    			{
-    				splice(position, x, first++);
-    				// first++;
-    			}
-    		}
+				//Link the curren list begin and end
+				current->previous = x._center->previous;
+				x._center->previous->next = current;
+				x._center->next->previous = old_previous;
+				old_previous->next = x._center->next;
+
+				x._center->next = x._center;
+				x._center->previous = x._center;
+
+				_size += x._size;
+				// *(_center->data) = _size;
+				// *(x._center->data) = 0;
+				_center->size = _size;
+				x._size = 0;
+			}
+			template<class IT>
+			void splice (IT position, list<T> &x, IT i)
+			{	
+				i._ptr->next->previous = i._ptr->previous;
+				i._ptr->previous->next = i._ptr->next;
+
+				position._ptr->previous->next = i._ptr;
+				i._ptr->previous = position._ptr->previous;
+				i._ptr->next = position._ptr;
+				position._ptr->previous = i._ptr;
+
+				x._size--;
+				--x._center->size;
+				// --*(x._center->data);	
+				++_size;
+				++_center->size;
+
+			}
+			template<class IT>
+			void splice(IT position, list& x, IT first, IT last)
+			{
+				while (first != last)
+				{
+					splice(position, x, first++);
+					// first++;
+				}
+			}
 	// 		//Seems good but watch out for allocators
 			void swap(list &base)
 			{
 				ft::Node<T> *old_head = _center->next;
 				ft::Node<T> *old_tail = _center->previous;
-				T *old_data = _center->data;
+				// T *old_data = _center->data;
 				size_t old_size = _size;
 
 				_center->next = base._center->next;
 				_center->previous = base._center->previous;
-				_center->data = base._center->data;
+				// _center->data = base._center->data;
+				_center->size = base._center->size;
 
 				if (_center->next)
 				{
@@ -517,7 +532,7 @@ namespace ft
 
 				base._center->next = old_head;
 				base._center->previous = old_tail;
-				base._center->data = old_data;
+				// base._center->data = old_data;
 				
 				if (base._center->next)
 				{
@@ -548,6 +563,70 @@ namespace ft
 					}
 					else
 						it++;
+				}
+			}
+
+			//THIS AND THE FUNCTION BELOW ARE PROBABLY WRONG
+			template <class Predicate>
+			void remove_if (Predicate pred)
+			{
+				iterator it = begin();
+				while(it != end())
+				{
+					if (pred(*it))
+					{
+						erase(it);
+						it = begin();
+					}
+					else
+						it++;
+				}	
+			}
+
+			template <class BinaryPredicate>
+			void unique (BinaryPredicate binary_pred)
+			{
+				iterator prev = begin();
+				iterator current = begin();
+				while (++current != end())
+				{	
+					if (binary_pred)
+						erase(current);
+				}
+			}
+			void sort()
+			{
+				Node<T> *curr = _center->next;
+				T *tmp;
+				while (curr != _center && curr->next != _center)
+				{
+					if (*curr->data > *curr->next->data)
+					{
+						tmp = curr->data;
+						curr->data = curr->next->data;
+						curr->next->data = tmp;
+						curr = _center->next;
+					}
+					else
+						curr = curr->next;
+				}
+			}
+			template <class Compare>
+			void sort (Compare comp)
+			{
+				Node<T> *curr = _center->next;
+				T *tmp;
+				while (curr != _center && curr->next != _center)
+				{
+					if (comp(*curr->data,*curr->next->data))
+					{
+						tmp = curr->data;
+						curr->data = curr->next->data;
+						curr->next->data = tmp;
+						curr = _center->next;
+					}
+					else
+						curr = curr->next;
 				}
 			}
 	// 		template <class IT>

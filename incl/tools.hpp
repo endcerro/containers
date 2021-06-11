@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 08:35:17 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/03 01:25:42 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/11 17:21:04 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ namespace ft
 	struct Node
 	{
 		T		*data;
+		int     size;
 		Node	*next;
 		Node	*previous;
 	};
