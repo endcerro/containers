@@ -6,12 +6,12 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:55:26 by hpottier          #+#    #+#             */
-/*   Updated: 2021/05/14 15:12:43 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/08 16:59:04 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
-#include "incl/ft_list.hpp"
+#include "../incl/list.hpp"
 // #include "vector.hpp"
 // #include "stack.hpp"
 // #include "queue.hpp"
