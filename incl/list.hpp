@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edal <edal@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/02 11:41:57 by edal             ###   ########.fr       */
+/*   Updated: 2021/06/11 17:34:14 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //http://www.cplusplus.com/reference/list/list/
@@ -24,32 +24,92 @@ namespace ft
 	template <class T>
 	class list
 	{
-		private :
-			Node<T> *_h;
-			Node<T> *_t;
-			Node<T> *_e;
-			size_t _s;
+		private : 
+			Node<T> 	*_center;
+			size_t		_size;
+			int 		_capacity;
 
 		public :
 			/* CONSTRUCTORS N DESTRUCTORS */
-			list() : _h(0), _t(0),  _s(0) {};
+			//THIS IS ONLY FOR NOW, I 
+			list() : _size(0), _capacity(-1) 
+			{
+				_center = new Node<T>;
+				_center->data = &_center->size;
+				// *(_center->data) = static_cast<T>(0);
+				_center->size = 0;
+				_center->next = 0;
+				_center->previous = 0;
+				_size = 0;
+			};
 			
-			list(const list &f) { *this = f; };
+			list(const list &f) 
+			{
+				_center = new Node<T>;
+				_center->data = &_center->size;
+				// *(_center->data) = 0;
+				_center->size = 0;
+				_center->next = 0;
+				_center->previous = 0;
+				_size = 0; 
+				*this = f; 
+			};
 
 			template<class InputIterator>
-			list(InputIterator s, InputIterator e) { assign(s,e); }
+			list(InputIterator s, InputIterator e) 
+			{ 
+				// list();
+				_center = new Node<T>;
+				_center->data = &_center->size;
+				// *(_center->data) = 0;
+				_center->size = 0;
+				_center->next = 0;
+				_center->previous = 0;
+				_size = 0;
+				assign(s, e); 
+			}
 
-			list (size_t n, const T& val) { assign(n, val); }
+			list (size_t n, const T& val) : _size(n), _capacity(-1)
+			{
+				// list();
+				_center = new Node<T>;
+				_center->data = &_center->size;
+				// *(_center->data) = 0;
+				_center->size = 0;
+				_center->next = 0;
+				_center->previous = 0;
+				_size = 0;
+				// std::cout << "No crash yet" << std::endl;
+				assign(n, val); 
+			}
+			list (size_t n) : _size(n), _capacity(-1)
+			{
+				// list();
+				_center = new Node<T>;
+				_center->data = &_center->size;
+				// *(_center->data) = 0;
+				_center->size = 0;
+				_center->next = 0;
+				_center->previous = 0;
+				_size = 0;
+
+				for (size_t i = 0; i < n; i++)
+					push_back(0);
+			}
 
 			~list()
-			{ clear(); };
+			{ 
+				clear();
+				// delete _center->data;
+				delete _center;
+			};
 
 			/* OVERLOADS */
 
 			list& operator=(const list &b)
 			{
 				assign(b.begin(), b.end());
-				_s = b._s;
+				_size = b._size;
 				return *this;
 			};
 			
@@ -67,40 +127,39 @@ namespace ft
 					// typedef std::forward_iterator_tag iterator_category;
 					iterator(Node<T> *ptr) : _ptr(ptr) 
 					{ }
-					iterator() : _ptr(0) {};
+					iterator() : _ptr(0) 
+					{};
 					self_type operator++(int) //i++
 					{
-						iterator i = *this; 
-						_ptr = _ptr->n;
+						iterator i = *this;
+						_ptr = _ptr->next;
 						return i;
 					}
 					self_type operator++() //i++
-					{ 
-					/*	if (this == 0)
-						{
-							std::cerr << "NULL CASE OPERATOR++ LIST" << std::endl;
-							return NULL;
-						}*/
-						_ptr = _ptr->n; 
+					{
+						
+						_ptr = _ptr->next; 
 						return *this;
 					}
 					self_type operator--(int) //i++
 					{
-						if (this == 0)
-							return NULL;
 						iterator i = *this;
-						_ptr = _ptr->p;
+						_ptr = _ptr->previous;
 						return i;
 					}
 					self_type operator--() //i++
 					{ 
-						_ptr = _ptr->p; 
+						_ptr = _ptr->previous; 
 						return *this;
 					}
 					reference operator*() 
-					{ return *(_ptr->d); }
+					{ 
+						return *(_ptr->data); 
+					}
 					pointer operator->() 
-					{ return _ptr->d; }
+					{ 
+						return _ptr->data; 
+					}
 					bool operator==(const self_type& rhs)
 					{ return _ptr == rhs._ptr; }
 					bool operator!=(const self_type& rhs) 
@@ -122,22 +181,35 @@ namespace ft
 					{ }
 					reverse_iterator operator++(int) //i++
 					{
-						reverse_iterator i = *this; 
-						_ptr = _ptr->p;
+						reverse_iterator i = *this;
+						_ptr = _ptr->previous;
 						return i;
 					}
 					reverse_iterator operator++() //++i
 					{ 
-						_ptr = _ptr->p;
+						_ptr = _ptr->previous; 
+						return *this;					
+					}
+					self_type operator--(int) //i++
+					{
+						iterator i = *this;
+						_ptr = _ptr->next;
+						return i;
+					}
+					self_type operator--() //i++
+					{ 
+						_ptr = _ptr->next; 
 						return *this;
 					}
 					reference operator*() 
-					{ 
-						return *(_ptr->d); 
+					{
+						// if (_ptr == end()._ptr)
+						// 	return (&end()._ptr->size);
+						return *(_ptr->data); 
 					}
 					pointer operator->() 
 					{ 
-						return _ptr->d;
+						return _ptr->data;
 					}
 					bool operator==(const reverse_iterator& rhs)
 					{ 
@@ -151,45 +223,46 @@ namespace ft
 					Node<T> *_ptr;
 			};
 
-				/* ITERATORS N SHIT 
+			/* ITERATORS N SHIT 
 			NEED TO ADD CONST ITERATORS N STUFF*/
 
-				// friend iterator;		
-
-			iterator begin() const { return iterator(_h); }
-			iterator end() const { 
-				// std::cout << "NO CRASH YET : "<< _t << std::endl;
-				// iterator t = 
-				
-				if (_t)
-					return (iterator(_t->n)); 
-				return (iterator(_t));
+			iterator begin() const 
+			{ 
+				if (_center->next)
+					return iterator(_center->next);
+				return iterator(_center);
 			}
-			reverse_iterator rbegin() const { return reverse_iterator(_t); }
-			reverse_iterator rend() const {	return reverse_iterator(_h->p); }
+			iterator end() const 
+			{
+				return (iterator(_center));
+			}
+			reverse_iterator rbegin() const 
+			{ 
+				if (_center->previous)
+					return reverse_iterator(_center->previous);
+				return reverse_iterator(_center);
+			}
+			reverse_iterator rend() const 
+			{	
+				return reverse_iterator(_center); 
+			}
 
 			template<class IT>
 			IT erase(IT pos)
 			{
-				Node<T> *curr = pos._ptr;
-				if (curr->p)
-				{
-					curr->p->n = curr->n;
-					if (curr->n)
-						curr->n->p = curr->p;
-				}
-				else
-				{
-					// _h = curr->n;
-					if ((_h = curr->n))
-						curr->n->p = 0;
-				}
-				if (curr == _t)
-					_t = curr->p;
-				IT ret(curr->n);
-				delete curr->d;
-				delete curr;
-				return ret;
+				if (pos == end())
+					return pos;
+				Node<T> *todel = pos._ptr;
+				Node<T> *tmp = todel->next;
+				// iterator(todel->next);
+				todel->previous->next = todel->next;
+				todel->next->previous = todel->previous;
+				delete todel->data;
+				delete todel;
+				_size--;
+				_center->size--;
+				// *(_center->data) = *(_center->data) - 1;
+				return iterator(tmp);
 			}
 
 			template<class IT>
@@ -204,86 +277,142 @@ namespace ft
 			void push_back (const T& val)
 			{
 				//THIS NEEDS TO USE ALLOCATORS IT SEEMS
-				if (_t == 0)
+				//Case where this is the first one
+				Node<T> *elem = new Node<T>;
+				elem->data = new T(val);
+
+				Node<T> *old;
+				// std::cout << "next:" << _center->next << " prev:" << _center->previous << std::endl;
+				if (_center->next == 0)
 				{
-					_t = new Node<T>;
-					_t->d = new T(val);
-					_t->n = _t->p = 0;
+					// std::cout << "Z1" << std::endl;
+					_center->next = elem;
+					_center->previous = elem;
+					elem->next = _center;
+					elem->previous = _center;
 				}
 				else
 				{
-					_t->n = new Node<T>;
-					_t->n->d = new T(val);
-					_t->n->n = 0;
-					_t->n->p = _t;
-					_t = _t->n;
+					// std::cout << "Z2" << std::endl;
+					old = _center->previous;
+					_center->previous = elem;
+					elem->previous = old;
+					elem->next = _center;
+					old->next = elem;
 				}
-				if (_h == 0)
-					_h = _t;
-				++_s;
-			}
-			void push_front (const T& val)
-			{
-				//THIS NEEDS TO USE ALLOCATORS IT SEEMS
-				if (_h == 0)
-				{
-					Node<T> *elem = new Node<T>;
-					elem->d = new T(val);
-				
-					_h = elem;
-					_t = elem;
-					_h->n = 0; 
-					_h->p = 0;
-				}
-				else
-				{
-					Node<T> *tmp = new Node<T>;
-					_h->p = tmp;
-					tmp->d = new T(val);
-					tmp->n = _h;
-					tmp->p = 0;
-					_h = tmp;
-				}
-				if (_t == 0)
-					_t = _h;
-				_s++;
+				++_center->size;
+				// ++(*_center->data);
+				++_size;
 			}
 
-			T& front(void) const	{ return *(_h->d); }
-			T& back(void) const		{ return *(_t->d); }
+			void push_front (const T& val)
+			{
+				if (_center->next == 0)
+					return (push_back(val));
+				Node<T> *elem = new Node<T>;
+				elem->data = new T(val);
+				Node<T> *old = _center->next;
+				elem->next = old;
+				elem->previous = _center;
+				old->previous = elem;
+				_center->next = elem;
+				++_center->size;
+				// ++(*_center->data);
+				++_size;
+			}
+
+			T& front(void) const	{ 
+				if (_center->next)
+					return *(_center->next->data);
+				return (_center->size); 
+			}
+			T& back(void) const		{ 
+				if (_center->next)
+					return *(_center->previous->data); 
+				return (_center->size); 
+			}
 
 			void pop_front(void)
 			{
-				Node<T> *tmp = _h;
-				if (_h)	
-					_h = _h->n;
-				delete tmp;
-				_s--;
+				Node<T> *old = _center->next;
+
+				if (old->next == _center)
+					_center->next =_center->previous = 0;
+				else
+				{
+					_center->next = old->next;
+					_center->next->previous = _center;
+				}
+				delete old->data;
+				delete old;
+				--_center->size;
+				// --(*_center->data);
+				--_size;
 			}
 			void pop_back(void)
 			{
-				Node<T>	 *tmp = _t;
-				if (_t)
+				Node<T> *old = _center->previous;
+
+				if (old->previous == _center)
+					_center->next = _center->previous = 0;
+				else
 				{
-					_t = _t->p;
-					_t->n = 0;
+					_center->previous = old->previous;
+					old->previous->next = _center;
 				}
-				delete tmp;
-				_s--;
+				delete old->data;
+				delete old;
+				--_center->size;
+				// --(*_center->data);
+				--_size;
 			}
+			void resize (size_t n, T val = T())
+			{
+				while (n > _size)
+					push_back(val);
+				while (n < _size)
+					pop_back();
+			}
+
 			void clear(void)
 			{
-				Node<T> *curr = _h;
+				Node<T> *current = _center;
 				Node<T> *next;
-				while (curr)
+
+				// In order to check if the list has one elem, check head address
+				// Don't forget to delete the end element as it should be instancied at all times
+				if (current->next == 0)
+					return ;
+				current = current->next;
+				while (current != _center)
 				{
-					next = curr->n;
-					delete curr->d;
-					delete curr;
-					curr = next;
+					next = current->next;
+					delete current->data;
+					delete current;
+					current	= next;
 				}
-				_h = _t = 0;
-				_s = 0;
+				_size = 0;
+				_center->size = 0;
+				// *(_center->data) = static_cast<T>(0);
+				_center->next = 0;
+				_center->previous = 0;
+			}
+			void print()
+			{
+				if (_center->next == 0)
+				{
+
+					std::/**/cout << "No elems in here" << std::endl;
+					return;
+				}
+				Node<T> *current = _center->next;
+				// current = current->next;
+				while (current != _center)
+				{
+					std::cout << *current->data << '|';
+					current = current->next;
+				}
+				std::cout << std::endl;
 			}
 
 			template<class IT>
@@ -298,19 +427,20 @@ namespace ft
 				else if (p == end())
 				{
 					push_back(val);
-					return end();
+					return --end();
 				}
 				else
 				{
-					ft::Node<T> *new_elem = new Node<T>;
-					new_elem->d = new T(val);
-					if (p._ptr->p != 0)
-						p._ptr->p->n = new_elem;;
-					new_elem->p = p._ptr->p;
-					new_elem->n = p._ptr;
-					p._ptr->p = new_elem;
-
-					return iterator(new_elem);	
+					Node<T> *new_elem = new Node<T>;
+					new_elem->data = new T(val);
+					new_elem->next = p._ptr;
+					new_elem->previous = p._ptr->previous;
+					p._ptr->previous->next = new_elem;
+					p._ptr->previous = new_elem;
+					_size++;
+					++_center->size;
+					// *(_center->data) = *(_center->data) + 1;
+					return iterator(new_elem);
 				}
 			}
 
@@ -318,66 +448,210 @@ namespace ft
 			void insert (IT position, size_t n, const T& val)
 			{
 				for (size_t i = 0; i < n; i++)
-				{
 					position = insert(position, val);
-				}
 			}
 			
-			template <class InputIterator, class IT>
-    		void insert (IT position, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type first, InputIterator last)
-    		{
-    			while (first != last)
-    			{
-    				position = insert(position, *first);
-    				++position;
-    				++first;
-    			}
-    		}
+				template <class InputIterator, class IT>
+			void insert (IT position, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type start, InputIterator end)
+			{
+				while (start != end)
+				{
+					position = insert(position, *start);
+					++position;
+					++start;
+				}
+			}
+			template<class IT>
+			void splice(IT position, list<T> &x)
+			{
+				std::cout << " In here " << std::endl;
+				Node<T> *current = position._ptr;
 
-			//Seems good but watch out for allocators
+				// Node<T> *old_next = position._ptr->next;
+				Node<T> *old_previous = position._ptr->previous;
+
+
+				//Link the curren list begin and end
+				current->previous = x._center->previous;
+				x._center->previous->next = current;
+				x._center->next->previous = old_previous;
+				old_previous->next = x._center->next;
+
+				x._center->next = x._center;
+				x._center->previous = x._center;
+
+				_size += x._size;
+				// *(_center->data) = _size;
+				// *(x._center->data) = 0;
+				_center->size = _size;
+				x._size = 0;
+			}
+			template<class IT>
+			void splice (IT position, list<T> &x, IT i)
+			{	
+				i._ptr->next->previous = i._ptr->previous;
+				i._ptr->previous->next = i._ptr->next;
+
+				position._ptr->previous->next = i._ptr;
+				i._ptr->previous = position._ptr->previous;
+				i._ptr->next = position._ptr;
+				position._ptr->previous = i._ptr;
+
+				x._size--;
+				--x._center->size;
+				// --*(x._center->data);	
+				++_size;
+				++_center->size;
+
+			}
+			template<class IT>
+			void splice(IT position, list& x, IT first, IT last)
+			{
+				while (first != last)
+				{
+					splice(position, x, first++);
+					// first++;
+				}
+			}
+	// 		//Seems good but watch out for allocators
 			void swap(list &base)
 			{
-				ft::Node<T> *oh = _h;
-				ft::Node<T> *ot = _t;
-				size_t os = _s;
+				ft::Node<T> *old_head = _center->next;
+				ft::Node<T> *old_tail = _center->previous;
+				// T *old_data = _center->data;
+				size_t old_size = _size;
 
-				_h = base._h;
-				_t = base._t;
-				_s = base._s;
+				_center->next = base._center->next;
+				_center->previous = base._center->previous;
+				// _center->data = base._center->data;
+				_center->size = base._center->size;
 
-				base._h = oh;
-				base._t = ot;
-				base._s = os;
-
-			}
-			bool empty(void) const 	{ return (_s > 0 ? true : false); }
-			size_t size(void) const { return _s; }
-			size_t max_size(void) 	{ return 0;	 };
-			
-			template <class IT>
-			void print(IT s, IT e)
-			{
-				while (s != e)
+				if (_center->next)
 				{
-					std::cout << *s << std::endl;
-					++s;
+					_center->next->previous = _center;
+					_center->previous->next = _center;
 				}
-			};
+
+				base._center->next = old_head;
+				base._center->previous = old_tail;
+				// base._center->data = old_data;
+				
+				if (base._center->next)
+				{
+					base._center->next->previous = base._center;
+					base._center->previous->next = base._center;
+				}
+
+				_size = base._size;
+				base._size = old_size;
+			}
+			bool empty(void) const 	
+			{ 
+				if (_center->next != _center && _center->next != 0)
+					return false;
+				return true;
+			}
+			size_t size(void) const { return _size; }
+			size_t max_size(void) 	{ return _capacity;	 };
+			void remove (const T& val)
+			{
+				iterator it = begin();
+				while(it != end())
+				{
+					if (*it == val)
+					{
+						erase(it);
+						it = begin();
+					}
+					else
+						it++;
+				}
+			}
+
+			//THIS AND THE FUNCTION BELOW ARE PROBABLY WRONG
+			template <class Predicate>
+			void remove_if (Predicate pred)
+			{
+				iterator it = begin();
+				while(it != end())
+				{
+					if (pred(*it))
+					{
+						erase(it);
+						it = begin();
+					}
+					else
+						it++;
+				}	
+			}
+
+			template <class BinaryPredicate>
+			void unique (BinaryPredicate binary_pred)
+			{
+				iterator prev = begin();
+				iterator current = begin();
+				while (++current != end())
+				{	
+					if (binary_pred)
+						erase(current);
+				}
+			}
+			void sort()
+			{
+				Node<T> *curr = _center->next;
+				T *tmp;
+				while (curr != _center && curr->next != _center)
+				{
+					if (*curr->data > *curr->next->data)
+					{
+						tmp = curr->data;
+						curr->data = curr->next->data;
+						curr->next->data = tmp;
+						curr = _center->next;
+					}
+					else
+						curr = curr->next;
+				}
+			}
+			template <class Compare>
+			void sort (Compare comp)
+			{
+				Node<T> *curr = _center->next;
+				T *tmp;
+				while (curr != _center && curr->next != _center)
+				{
+					if (comp(*curr->data,*curr->next->data))
+					{
+						tmp = curr->data;
+						curr->data = curr->next->data;
+						curr->next->data = tmp;
+						curr = _center->next;
+					}
+					else
+						curr = curr->next;
+				}
+			}
+	// 		template <class IT>
+	// 		void print(IT s, IT e)
+	// 		{
+	// 			while (s != e)
+	// 			{
+	// 				std::cout << *s << std::endl;
+	// 				++s;
+	// 			}
+	// 		};
 			void assign(size_t n, const T &val)
 			{
 				clear();
 				for (size_t i = 0; i < n; i++)
 					push_back(val);
-				_s = n;
 			}
 			template <class InputIterator>
 			void assign(typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type s, InputIterator e)
 			{
-				size_t i = 0;
 				clear();
-				while (s != e && ++i)
+				while (s != e)
 					push_back(*(s++));
-				_s = i;
 			}
 	};
 }
