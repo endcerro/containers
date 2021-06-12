@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/12 16:26:47 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/12 16:46:37 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //http://www.cplusplus.com/reference/list/list/
@@ -464,6 +464,8 @@ namespace ft
 			template<class IT>
 			void splice(IT position, list<T> &x)
 			{
+				if (x == *this)
+					return;
 				std::cout << " In here " << std::endl;
 				Node<T> *current = position._ptr;
 
@@ -488,7 +490,9 @@ namespace ft
 			}
 			template<class IT>
 			void splice (IT position, list<T> &x, IT i)
-			{	
+			{
+				if (x == *this)
+					return;
 				i._ptr->next->previous = i._ptr->previous;
 				i._ptr->previous->next = i._ptr->next;
 
@@ -507,6 +511,8 @@ namespace ft
 			template<class IT>
 			void splice(IT position, list& x, IT first, IT last)
 			{
+				if (x == *this)
+					return;
 				while (first != last)
 				{
 					splice(position, x, first++);
@@ -516,6 +522,8 @@ namespace ft
 	// 		//Seems good but watch out for allocators
 			void swap(list &base)
 			{
+				if (base == *this)
+					return;
 				ft::Node<T> *old_head = _center->next;
 				ft::Node<T> *old_tail = _center->previous;
 				// T *old_data = _center->data;
