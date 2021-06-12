@@ -833,43 +833,43 @@ int     main()
 
 	}
 
-	// std::cout << "\n\033[1;33m======================================================" << std::endl;
-	// std::cout << "          UNIQUE" << std::endl;
-	// std::cout << "======================================================\033[37m\n" << std::endl;
-	// {
+	std::cout << "\n\033[1;33m======================================================" << std::endl;
+	std::cout << "          UNIQUE" << std::endl;
+	std::cout << "======================================================\033[37m\n" << std::endl;
+	{
 
-	// 	double mydoubles[]={ 12.15,  2.72, 73.0,  12.77,  3.14,
- //                       12.77, 73.35, 72.25, 15.3,  72.25 };
-	// 	ft::list<double> mylist (mydoubles,mydoubles+10);
+		double mydoubles[]={ 12.15,  2.72, 73.0,  12.77,  3.14,
+                       12.77, 73.35, 72.25, 15.3,  72.25 };
+		ft::list<double> mylist (mydoubles,mydoubles+10);
 		
-	// 	mylist.sort();             //  2.72,  3.14, 12.15, 12.77, 12.77,
-	// 								// 15.3,  72.25, 72.25, 73.0,  73.35
+		mylist.sort();             //  2.72,  3.14, 12.15, 12.77, 12.77,
+									// 15.3,  72.25, 72.25, 73.0,  73.35
 
-	// 	mylist.unique();           //  2.72,  3.14, 12.15, 12.77
-	// 								// 15.3,  72.25, 73.0,  73.35
+		mylist.unique();           //  2.72,  3.14, 12.15, 12.77
+									// 15.3,  72.25, 73.0,  73.35
 
-	// 	mylist.unique (same_integral_part);  //  2.72,  3.14, 12.15
-	// 										// 15.3,  72.25, 73.0
+		mylist.unique (same_integral_part);  //  2.72,  3.14, 12.15
+											// 15.3,  72.25, 73.0
 
-	// 	mylist.unique (is_near());           //  2.72, 12.15, 72.25
+		mylist.unique (is_near());           //  2.72, 12.15, 72.25
 
-	// 	std::cout << "\033[37m"<< std::endl;
-	// 	std::cout << "\033[1;31mreponse attendu:\033[1;32m"<< std::endl;
-	// 	std::cout << "mylist contains: 2.72 12.15 72.25"<< std::endl;
-	// 	std::cout << "\033[37m"<< std::endl;
+		std::cout << "\033[37m"<< std::endl;
+		std::cout << "\033[1;31mreponse attendu:\033[1;32m"<< std::endl;
+		std::cout << "mylist contains: 2.72 12.15 72.25"<< std::endl;
+		std::cout << "\033[37m"<< std::endl;
 
-	// 	std::cout << "mylist contains:";
-	// 	for (ft::list<double>::iterator it=mylist.begin(); it!=mylist.end(); ++it)
-	// 		std::cout << ' ' << *it;
+		std::cout << "mylist contains:";
+		for (ft::list<double>::iterator it=mylist.begin(); it!=mylist.end(); ++it)
+			std::cout << ' ' << *it;
 
-	// 	std::cout << "\nmylist contains:";
-	// 	ft::list<double>::iterator it;
-	// 	for (it = --mylist.end(); it!=mylist.begin(); --it)
-	// 		std::cout << ' ' << *it;
-	// 	std::cout << ' ' << *it;
-	// 	std::cout << "\nsize list = " << mylist.size() << std::endl;
+		std::cout << "\nmylist contains:";
+		ft::list<double>::iterator it;
+		for (it = --mylist.end(); it!=mylist.begin(); --it)
+			std::cout << ' ' << *it;
+		std::cout << ' ' << *it;
+		std::cout << "\nsize list = " << mylist.size() << std::endl;
 
-	// }
+	}
 
 	// std::cout << "\n\033[1;33m======================================================" << std::endl;
 	// std::cout << "          MERGE" << std::endl;
@@ -957,36 +957,36 @@ int     main()
 
 	}
 
-	// std::cout << "\n\033[1;33m======================================================" << std::endl;
-	// std::cout << "          REVERSE" << std::endl;
-	// std::cout << "======================================================\033[37m\n" << std::endl;
-	// {
+	std::cout << "\n\033[1;33m======================================================" << std::endl;
+	std::cout << "          REVERSE" << std::endl;
+	std::cout << "======================================================\033[37m\n" << std::endl;
+	{
 
-	// 	ft::list<int> mylist;
+		ft::list<int> mylist;
 
-	// 	for (int i=1; i<10; ++i) mylist.push_back(i);
+		for (int i=1; i<10; ++i) mylist.push_back(i);
 
-	// 	mylist.reverse();
+		mylist.reverse();
 
-	// 	std::cout << "\033[37m"<< std::endl;
-	// 	std::cout << "\033[1;31mreponse attendu:\033[1;32m"<< std::endl;
-	// 	std::cout << "mylist contains: 9 8 7 6 5 4 3 2 1"<< std::endl;
-	// 	std::cout << "\033[37m"<< std::endl;
+		std::cout << "\033[37m"<< std::endl;
+		std::cout << "\033[1;31mreponse attendu:\033[1;32m"<< std::endl;
+		std::cout << "mylist contains: 9 8 7 6 5 4 3 2 1"<< std::endl;
+		std::cout << "\033[37m"<< std::endl;
 
-	// 	std::cout << "mylist contains:";
-	// 	for (ft::list<int>::iterator it=mylist.begin(); it!=mylist.end(); ++it)
-	// 		std::cout << ' ' << *it;
+		std::cout << "mylist contains:";
+		for (ft::list<int>::iterator it=mylist.begin(); it!=mylist.end(); ++it)
+			std::cout << ' ' << *it;
 
-	// 	std::cout << "\nmylist contains:";
-	// 	ft::list<int>::iterator it;
-	// 	for (it = --mylist.end(); it!=mylist.begin(); --it)
-	// 		std::cout << ' ' << *it;
-	// 	std::cout << ' ' << *it;
-	// 	std::cout << "\nsize list = " << mylist.size() << std::endl;
+		std::cout << "\nmylist contains:";
+		ft::list<int>::iterator it;
+		for (it = --mylist.end(); it!=mylist.begin(); --it)
+			std::cout << ' ' << *it;
+		std::cout << ' ' << *it;
+		std::cout << "\nsize list = " << mylist.size() << std::endl;
 
-	// 	std::cout << '\n';		
+		std::cout << '\n';		
 
-	// }
+	}
 
 	// std::cout << "\n\033[1;33m======================================================" << std::endl;
 	// std::cout << "          RELATIONAL OPERATOR" << std::endl;

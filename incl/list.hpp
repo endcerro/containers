@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/11 17:48:00 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/12 16:26:47 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //http://www.cplusplus.com/reference/list/list/
@@ -35,7 +35,7 @@ namespace ft
 			list() : _size(0), _capacity(-1) 
 			{
 				_center = new Node<T>;
-				_center->data = static_cast<T *>(&_center->size);
+				_center->data = reinterpret_cast<T *>(&_center->size);
 				// *(_center->data) = static_cast<T>(0);
 				_center->size = 0;
 				_center->next = 0;
@@ -46,7 +46,7 @@ namespace ft
 			list(const list &f) 
 			{
 				_center = new Node<T>;
-				_center->data = static_cast<T *>(&_center->size);
+				_center->data = reinterpret_cast<T *>(&_center->size);
 				// *(_center->data) = 0;
 				_center->size = 0;
 				_center->next = 0;
@@ -60,7 +60,7 @@ namespace ft
 			{ 
 				// list();
 				_center = new Node<T>;
-				_center->data = static_cast<T *>(&_center->size);
+				_center->data = reinterpret_cast<T *>(&_center->size);
 				// *(_center->data) = 0;
 				_center->size = 0;
 				_center->next = 0;
@@ -73,7 +73,7 @@ namespace ft
 			{
 				// list();
 				_center = new Node<T>;
-				_center->data = static_cast<T *>(&_center->size);
+				_center->data = reinterpret_cast<T *>(&_center->size);
 				// *(_center->data) = 0;
 				_center->size = 0;
 				_center->next = 0;
@@ -86,7 +86,7 @@ namespace ft
 			{
 				// list();
 				_center = new Node<T>;
-				_center->data = static_cast<T *>(&_center->size);
+				_center->data = reinterpret_cast<T *>(&_center->size);
 				// *(_center->data) = 0;
 				_center->size = 0;
 				_center->next = 0;
@@ -584,16 +584,38 @@ namespace ft
 						it++;
 				}	
 			}
-
+			void merge (list& x)
+			{
+				if (x == this)
+					return;
+			}
+			template <class Compare>
+  			void merge (list& x, Compare comp)
+  			{
+				if (x == this)
+					return;
+  			}
+  			void unique()
+  			{
+				iterator prev = begin();
+				iterator current = begin();
+				while (current != end())
+				{
+					prev = current++;
+					if (*prev == *current && current._ptr != prev._ptr)
+						current = erase(current);
+				}
+  			}
 			template <class BinaryPredicate>
 			void unique (BinaryPredicate binary_pred)
 			{
-				iterator prev = begin();
+			iterator prev = begin();
 				iterator current = begin();
-				while (++current != end())
-				{	
-					if (binary_pred)
-						erase(current);
+				while (current != end())
+				{
+					prev = current++;
+					if (binary_pred(*prev, *current) && current._ptr != prev._ptr)
+						current = erase(current);
 				}
 			}
 			void sort()
@@ -630,6 +652,27 @@ namespace ft
 					else
 						curr = curr->next;
 				}
+			}
+			void reverse()
+			{
+				Node<T> *curr = _center->next;
+				Node<T> *next = _center->next;
+				Node<T> *prev;
+				
+				_center->next = _center->previous;
+				_center->previous = next;
+
+				while (curr != _center)// && curr->next != _center)
+				{
+					// std::cout << "LOOP\n";
+					next = curr->next;
+					prev = curr->previous;
+					// std::cout << "Binding "
+					curr->next = prev;
+					curr->previous = next;
+
+					curr = next;
+				}	
 			}
 	// 		template <class IT>
 	// 		void print(IT s, IT e)

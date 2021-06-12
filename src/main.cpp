@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/11 17:10:41 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/12 16:20:49 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ int main()
 		if (i % 2)
 		{
 			c1.push_back(i * 2);
-			c2.push_back(-i* 2);
-			b1.push_back(i* 2);
-			b2.push_back(-i* 2);
+			c2.push_back(-i * 2);
+			b1.push_back( i * 2);
+			b2.push_back(-i * 2);
 		}
 		else
 		{
@@ -99,17 +99,47 @@ int main()
 	// printl(b2.rbegin(), b2.rend());
 
 	// b1.splice(b1.begin(), b2);//, b2.begin(), (++b2.begin()));
-	c1.splice(c1.begin(), c2, ++c2.begin());
+	// c1.splice(c1.begin(), c2, ++c2.begin());
 
-	printl(c1.begin(), c1.end());
-	printl(c2.begin(), c2.end());
+	// printl(c1.begin(), c1.end());
+	// printl(c2.begin(), c2.end());
 
-	c1.remove(800);
-	printl(c1.begin(), c1.end());
-	c1.remove(7);
+	// c1.remove(800);
+	// printl(c1.begin(), c1.end());
+	// c1.remove(7);
 	c1.sort();
+	b1.sort();
+	// printl(c1.begin(), c1.end());
+	// c1.reverse();
+	ft::list<int>::iterator spot = c1.begin();
+	std::list<int>::iterator bpot = b1.begin();
+
+	spot++; bpot++;
+	spot++; bpot++;
+		
+	printl(b1.begin(), b1.end());
 	printl(c1.begin(), c1.end());
 
+	std::cout << "Custom : " << *spot << std::endl;
+	std::cout << "Base : " << *bpot << std::endl;
+	
+	spot = c1.erase(spot);
+	bpot = b1.erase(bpot);
+
+	std::cout << "Custom : " << *spot << std::endl;
+	std::cout << "Base : " << *bpot << std::endl;
+
+	printl(b1.begin(), b1.end());
+	printl(c1.begin(), c1.end());
+
+	spot = c1.erase(c1.begin(), spot);
+	bpot = b1.erase(b1.begin(), bpot);
+
+	std::cout << "Custom : " << *spot << std::endl;
+	std::cout << "Base : " << *bpot << std::endl;
+
+	printl(b1.begin(), b1.end());
+	printl(c1.begin(), c1.end());
 	// printl(b1.rbegin(), b1.rend());
 	// printl(b2.rbegin(), b2.rend());
 
