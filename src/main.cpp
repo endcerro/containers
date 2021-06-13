@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/12 16:52:50 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/13 18:04:27 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,38 +108,46 @@ int main()
 	// printl(c1.begin(), c1.end());
 	// c1.remove(7);
 	c1.sort();
-	b1.sort();
+	// b1.sort();
 	// printl(c1.begin(), c1.end());
 	// c1.reverse();
 	ft::list<int>::iterator spot = c1.begin();
-	std::list<int>::iterator bpot = b1.begin();
+	ft::list<int>::iterator bpot = c2.begin();
 
 	spot++; bpot++;
 	spot++; bpot++;
 		
-	printl(b1.begin(), b1.end());
-	printl(c1.begin(), c1.end());
+	// printl(c2.begin(), c2.end());
+	// printl(c1.begin(), c1.end());
 
-	std::cout << "Custom : " << *spot << std::endl;
-	std::cout << "Base : " << *bpot << std::endl;
+	// std::cout << "Custom : " << *spot << std::endl;
+	// std::cout << "Base : " << *bpot << std::endl;
 	
-	spot = c1.erase(spot);
-	bpot = b1.erase(bpot);
+	// spot = c1.erase(spot);
+	// // bpot = b1.erase(bpot);
 
-	std::cout << "Custom : " << *spot << std::endl;
-	std::cout << "Base : " << *bpot << std::endl;
+	// std::cout << "Custom : " << *spot << std::endl;
+	// std::cout << "Base : " << *bpot << std::endl;
 
-	printl(b1.begin(), b1.end());
+	// // printl(b1.begin(), b1.end());
+	// printl(c1.begin(), c1.end());
+
+	// spot = c1.erase(c1.begin(), spot);
+	// bpot = b1.erase(b1.begin(), bpot);
+
+	// std::cout << "Custom : " << *spot << std::endl;
+	// std::cout << "Base : " << *bpot << std::endl;
+
+	// printl(b1.begin(), b1.end());
+	c1.sort();
+	c2.sort();
 	printl(c1.begin(), c1.end());
-
-	spot = c1.erase(c1.begin(), spot);
-	bpot = b1.erase(b1.begin(), bpot);
-
-	std::cout << "Custom : " << *spot << std::endl;
-	std::cout << "Base : " << *bpot << std::endl;
-
-	printl(b1.begin(), b1.end());
+	printl(c2.begin(), c2.end());
+	c1.merge(c2);
 	printl(c1.begin(), c1.end());
+	printl(c2.begin(), c2.end());
+	// c1.sort();
+	// b1.sort();
 	// printl(b1.rbegin(), b1.rend());
 	// printl(b2.rbegin(), b2.rend());
 

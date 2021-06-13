@@ -871,50 +871,50 @@ int     main()
 
 	}
 
-	// std::cout << "\n\033[1;33m======================================================" << std::endl;
-	// std::cout << "          MERGE" << std::endl;
-	// std::cout << "======================================================\033[37m\n" << std::endl;
-	// {
+	std::cout << "\n\033[1;33m======================================================" << std::endl;
+	std::cout << "          MERGE" << std::endl;
+	std::cout << "======================================================\033[37m\n" << std::endl;
+	{
 
-	// 	ft::list<double> first, second;
+		ft::list<double> first, second;
 
-	// 	first.push_back (3.1);
-	// 	first.push_back (2.2);
-	// 	first.push_back (2.9);
+		first.push_back (3.1);
+		first.push_back (2.2);
+		first.push_back (2.9);
 
-	// 	second.push_back (3.7);
-	// 	second.push_back (7.1);
-	// 	second.push_back (1.4);
+		second.push_back (3.7);
+		second.push_back (7.1);
+		second.push_back (1.4);
 
-	// 	first.sort();
-	// 	second.sort();
+		first.sort();
+		second.sort();
 
-	// 	first.merge(second);
+		first.merge(second);
 
-	// 	// (second is now empty)
+		// (second is now empty)
 
-	// 	second.push_back (2.1);
+		second.push_back (2.1);
 
-	// 	first.merge(second,mycomparison);
+		// first.merge(second,mycomparison);
 
-	// 	std::cout << "\033[37m"<< std::endl;
-	// 	std::cout << "\033[1;31mreponse attendu:\033[1;32m"<< std::endl;
-	// 	std::cout << "first contains: 1.4 2.2 2.9 2.1 3.1 3.7 7.1"<< std::endl;
-	// 	std::cout << "\033[37m"<< std::endl;
+		std::cout << "\033[37m"<< std::endl;
+		std::cout << "\033[1;31mreponse attendu:\033[1;32m"<< std::endl;
+		std::cout << "first contains: 1.4 2.2 2.9 2.1 3.1 3.7 7.1"<< std::endl;
+		std::cout << "\033[37m"<< std::endl;
 
-	// 	std::cout << "first contains:";
-	// 	for (ft::list<double>::iterator it=first.begin(); it!=first.end(); ++it)
-	// 		std::cout << ' ' << *it;
+		std::cout << "first contains:";
+		for (ft::list<double>::iterator it=first.begin(); it!=first.end(); ++it)
+			std::cout << ' ' << *it;
 
-	// 			std::cout << "\nfirst contains:";
-	// 	ft::list<double>::iterator it;
-	// 	for (it = --first.end(); it!=first.begin(); --it)
-	// 		std::cout << ' ' << *it;
-	// 	std::cout << ' ' << *it;
-	// 	std::cout << "\nsize list = " << first.size() << std::endl;
+				std::cout << "\nfirst contains:";
+		ft::list<double>::iterator it;
+		for (it = --first.end(); it!=first.begin(); --it)
+			std::cout << ' ' << *it;
+		std::cout << ' ' << *it;
+		std::cout << "\nsize list = " << first.size() << std::endl;
 
-	// }
-
+	}
+	/*
 	std::cout << "\n\033[1;33m======================================================" << std::endl;
 	std::cout << "          SORT" << std::endl;
 	std::cout << "======================================================\033[37m\n" << std::endl;
@@ -1057,7 +1057,7 @@ int     main()
 	// 	std::cout << "\nsize list = " << bar.size() << std::endl;
 
 	// }
-
+*/
 
 	return 0;
 }
