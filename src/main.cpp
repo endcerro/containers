@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/13 18:04:27 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/14 17:19:42 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,10 +139,16 @@ int main()
 	// std::cout << "Base : " << *bpot << std::endl;
 
 	// printl(b1.begin(), b1.end());
-	c1.sort();
-	c2.sort();
-	printl(c1.begin(), c1.end());
-	printl(c2.begin(), c2.end());
+	c1.clear();
+	c2.clear();
+	c1.push_back(1);
+	c1.push_back(2);
+	c1.push_back(3);
+	c2.push_back(4);
+	c2.push_back(5);
+	c2.push_back(6);
+	// printl(c1.begin(), c1.end());
+	// printl(c2.begin(), c2.end());
 	c1.merge(c2);
 	printl(c1.begin(), c1.end());
 	printl(c2.begin(), c2.end());

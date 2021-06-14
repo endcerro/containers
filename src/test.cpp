@@ -895,7 +895,7 @@ int     main()
 
 		second.push_back (2.1);
 
-		// first.merge(second,mycomparison);
+		first.merge(second,mycomparison);
 
 		std::cout << "\033[37m"<< std::endl;
 		std::cout << "\033[1;31mreponse attendu:\033[1;32m"<< std::endl;

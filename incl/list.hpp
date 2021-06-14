@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/13 17:59:44 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/14 17:19:48 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //http://www.cplusplus.com/reference/list/list/
@@ -594,33 +594,36 @@ namespace ft
 			}
 			void merge (list& x)
 			{
-          		if (&x == this)
-                    return ;
-				                    
-                iterator current = begin();
+				if (&x != this)
+				{
+					iterator itx(x._center->next);
+					iterator it(_center->next);
 
-                iterator list_it = x.begin();
-
-
-                while (list_it != end())
-                {
-                	std::cout << "Loop on lit : " << *list_it << " | curr : " << *current << std::endl;
-                	if (*list_it <= *current)
-                	{
-                		splice(current, x, list_it);
-                		list_it = begin();
-                	}
-                	else
-                		++current;
-                }
+					while (itx != x.end())
+					{
+						while (it != end() && (*itx < *it == false))
+							++it;
+						splice(it, x, itx++);
+					}
+				}
 
 			}
-			// template <class Compare>
-  	// 		void merge (list& x, Compare comp)
-  	// 		{
-			// 	if (x._center == this->_center)
-			// 		return;
-  	// 		}
+			template <class Compare>
+			void merge(list &x, Compare comp)
+			{
+				if (&x != this)
+				{
+					iterator itx(x._center->next);
+					iterator it(_center->next);
+
+					while (itx != x.end())
+					{
+						while (it != end() && (comp(*itx, *it) == false))
+							++it;
+						splice(it, x, itx++);
+					}
+				}
+			}
   			void unique()
   			{
 				iterator prev = begin();
