@@ -453,35 +453,38 @@ int     main()
 
 	}
 
-	// std::cout << "\n\033[1;33m======================================================" << std::endl;
-	// std::cout << "          PUSH_BACK" << std::endl;
-	// std::cout << "======================================================\033[37m\n" << std::endl;
-	// {
+	std::cout << "\n\033[1;33m======================================================" << std::endl;
+	std::cout << "          PUSH_BACK" << std::endl;
+	std::cout << "======================================================\033[37m\n" << std::endl;
+	{
 
-	// 	ft::list<int> mylist;
-	// 	int myint;
+		ft::list<int> mylist;
+		int myint;
 
-	// 	std::cout << "Please enter some integers (enter 0 to end):\n";
+		// std::cout << "Please enter some integers (enter 0 to end):\n";
 
-	// 	do {
-	// 		std::cin >> myint;
-	// 		mylist.push_back (myint);
-	// 	} while (myint);
+		// do {
+		// 	std::cin >> myint;
+		// 	mylist.push_back (myint);
+		// } while (myint);
+		mylist.push_back (100);
+		mylist.push_back (200);
+		mylist.push_back (300);
+	
+		std::cout << "mylist stores " << mylist.size() << " numbers.\n";
 
-	// 	std::cout << "mylist stores " << mylist.size() << " numbers.\n";
+		std::cout << "mylist contains:";
+		for (ft::list<int>::iterator it=mylist.begin(); it!=mylist.end(); ++it)
+			std::cout << ' ' << *it;
 
-	// 	std::cout << "mylist contains:";
-	// 	for (ft::list<int>::iterator it=mylist.begin(); it!=mylist.end(); ++it)
-	// 		std::cout << ' ' << *it;
+		std::cout << "\nmylist contains:";
+		ft::list<int>::iterator it;
+		for (it = --mylist.end(); it!=mylist.begin(); --it)
+			std::cout << ' ' << *it;
+		std::cout << ' ' << *it;
+		std::cout << "\nsize list = " << mylist.size() << std::endl;
 
-	// 	std::cout << "\nmylist contains:";
-	// 	ft::list<int>::iterator it;
-	// 	for (it = --mylist.end(); it!=mylist.begin(); --it)
-	// 		std::cout << ' ' << *it;
-	// 	std::cout << ' ' << *it;
-	// 	std::cout << "\nsize list = " << mylist.size() << std::endl;
-
-	// }
+	}
 
 	std::cout << "\n\033[1;33m======================================================" << std::endl;
 	std::cout << "          POP_BACK" << std::endl;
@@ -914,7 +917,7 @@ int     main()
 		std::cout << "\nsize list = " << first.size() << std::endl;
 
 	}
-	/*
+	
 	std::cout << "\n\033[1;33m======================================================" << std::endl;
 	std::cout << "          SORT" << std::endl;
 	std::cout << "======================================================\033[37m\n" << std::endl;
@@ -988,76 +991,76 @@ int     main()
 
 	}
 
-	// std::cout << "\n\033[1;33m======================================================" << std::endl;
-	// std::cout << "          RELATIONAL OPERATOR" << std::endl;
-	// std::cout << "======================================================\033[37m\n" << std::endl;
-	// {
+	std::cout << "\n\033[1;33m======================================================" << std::endl;
+	std::cout << "          RELATIONAL OPERATOR" << std::endl;
+	std::cout << "======================================================\033[37m\n" << std::endl;
+	{
 
-	// 	ft::list<int> a;
-	// 	a.push_back(10);
-	// 	a.push_back(20);
-	// 	a.push_back(30);
-	// 	ft::list<int> b;
-	// 	b.push_back(10);
-	// 	b.push_back(20);
-	// 	b.push_back(30);
-	// 	ft::list<int> c;
-	// 	c.push_back(30);
-	// 	c.push_back(20);
-	// 	c.push_back(10);
+		ft::list<int> a;
+		a.push_back(10);
+		a.push_back(20);
+		a.push_back(30);
+		ft::list<int> b;
+		b.push_back(10);
+		b.push_back(20);
+		b.push_back(30);
+		ft::list<int> c;
+		c.push_back(30);
+		c.push_back(20);
+		c.push_back(10);
 
-	// 	std::cout << "\033[37m"<< std::endl;
-	// 	std::cout << "\033[1;31mreponse attendu:\033[1;32m"<< std::endl;
-	// 	std::cout << "a and b are equal\nb and c are not equal\nb is less than c\nc is greater than b\na is less than or equal to b\na is greater than or equal to b"<< std::endl;
-	// 	std::cout << "\033[37m"<< std::endl;
+		std::cout << "\033[37m"<< std::endl;
+		std::cout << "\033[1;31mreponse attendu:\033[1;32m"<< std::endl;
+		std::cout << "a and b are equal\nb and c are not equal\nb is less than c\nc is greater than b\na is less than or equal to b\na is greater than or equal to b"<< std::endl;
+		std::cout << "\033[37m"<< std::endl;
 
-	// 	if (a==b) std::cout << "a and b are equal\n";
-	// 	if (b!=c) std::cout << "b and c are not equal\n";
-	// 	if (b<c) std::cout << "b is less than c\n";
-	// 	if (c>b) std::cout << "c is greater than b\n";
-	// 	if (a<=b) std::cout << "a is less than or equal to b\n";
-	// 	if (a>=b) std::cout << "a is greater than or equal to b\n";
+		if (a==b) std::cout << "a and b are equal\n";
+		if (b!=c) std::cout << "b and c are not equal\n";
+		if (b<c) std::cout << "b is less than c\n";
+		if (c>b) std::cout << "c is greater than b\n";
+		if (a<=b) std::cout << "a is less than or equal to b\n";
+		if (a>=b) std::cout << "a is greater than or equal to b\n";
 
-	// }
+	}
 
-	// std::cout << "\n\033[1;33m======================================================" << std::endl;
-	// std::cout << "          SWAP" << std::endl;
-	// std::cout << "======================================================\033[37m\n" << std::endl;
-	// {
+	std::cout << "\n\033[1;33m======================================================" << std::endl;
+	std::cout << "          SWAP" << std::endl;
+	std::cout << "======================================================\033[37m\n" << std::endl;
+	{
 
-	// 	ft::list<int> foo (3,100);   // three ints with a value of 100
-	// 	ft::list<int> bar (5,200);   // five ints with a value of 200
+		ft::list<int> foo (3,100);   // three ints with a value of 100
+		ft::list<int> bar (5,200);   // five ints with a value of 200
 
-	// 	ft::swap(foo,bar);
+		ft::swap(foo,bar);
 
-	// 	std::cout << "\033[37m"<< std::endl;
-	// 	std::cout << "\033[1;31mreponse attendu:\033[1;32m"<< std::endl;
-	// 	std::cout << "foo contains: 200 200 200 200 200\nbar contains: 100 100 100"<< std::endl;
-	// 	std::cout << "\033[37m"<< std::endl;
+		std::cout << "\033[37m"<< std::endl;
+		std::cout << "\033[1;31mreponse attendu:\033[1;32m"<< std::endl;
+		std::cout << "foo contains: 200 200 200 200 200\nbar contains: 100 100 100"<< std::endl;
+		std::cout << "\033[37m"<< std::endl;
 
-	// 	std::cout << "foo contains:";
-	// 	for (ft::list<int>::iterator it = foo.begin(); it!=foo.end(); ++it)
-	// 		std::cout << ' ' << *it;
+		std::cout << "foo contains:";
+		for (ft::list<int>::iterator it = foo.begin(); it!=foo.end(); ++it)
+			std::cout << ' ' << *it;
 		
-	// 	std::cout << "\nfoo contains:";
-	// 	ft::list<int>::iterator it;
-	// 	for (it = --foo.end(); it!=foo.begin(); --it)
-	// 		std::cout << ' ' << *it;
-	// 	std::cout << ' ' << *it;
-	// 	std::cout << "\nsize list = " << foo.size() << std::endl;
+		std::cout << "\nfoo contains:";
+		ft::list<int>::iterator it;
+		for (it = --foo.end(); it!=foo.begin(); --it)
+			std::cout << ' ' << *it;
+		std::cout << ' ' << *it;
+		std::cout << "\nsize list = " << foo.size() << std::endl;
 
-	// 	std::cout << "bar contains:";
-	// 	for (ft::list<int>::iterator it = bar.begin(); it!=bar.end(); ++it)
-	// 		std::cout << ' ' << *it;
+		std::cout << "bar contains:";
+		for (ft::list<int>::iterator it = bar.begin(); it!=bar.end(); ++it)
+			std::cout << ' ' << *it;
 
-	// 	std::cout << "\nbar contains:";
-	// 	for (it = --bar.end(); it!=bar.begin(); --it)
-	// 		std::cout << ' ' << *it;
-	// 	std::cout << ' ' << *it;
-	// 	std::cout << "\nsize list = " << bar.size() << std::endl;
+		std::cout << "\nbar contains:";
+		for (it = --bar.end(); it!=bar.begin(); --it)
+			std::cout << ' ' << *it;
+		std::cout << ' ' << *it;
+		std::cout << "\nsize list = " << bar.size() << std::endl;
 
-	// }
-*/
+	}
+
 
 	return 0;
 }

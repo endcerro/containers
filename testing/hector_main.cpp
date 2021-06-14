@@ -95,7 +95,8 @@ void lst_testeur()
 	}
 	std::cout << std::endl;
 	lst.clear();
-	for (int i = 0; i < 5000; ++i)
+	/*I NEED TO INCREASE THE AMMOUNT AND SO SORT SPEED*/
+	for (int i = 0; i < 100; ++i)
 	{
 		lst.push_back(rand() % 42845);
 		lst.push_front(rand() % 41134);

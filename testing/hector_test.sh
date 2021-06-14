@@ -20,7 +20,9 @@ if [[ $? -ne 0 ]]; then
 fi
 
 ./tstd > tstd.results
+echo "TSTD DONE"
 ./tft > tft.results
+echo "TFT DONE"
 
 diff tstd.results tft.results > results.diff
 
@@ -29,5 +31,5 @@ if [[ $? -ne 0 ]]; then
 	exit
 else
 	echo -e "\033[32mEverything is working as intended\033[0m"
-	rm -rf tstd* tft* results.diff
+	#rm -rf tstd* tft* results.diff
 fi
