@@ -38,3 +38,4 @@ a.out.dSYM*
 *.o
 obj
 containers
+/testing/*.dSYM
