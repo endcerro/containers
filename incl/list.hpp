@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/14 17:19:48 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/14 18:10:15 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //http://www.cplusplus.com/reference/list/list/
@@ -15,13 +15,14 @@
 #define FT_LIST
 
 #include "tools.hpp"
+#include "allocator.hpp"
 #include <iostream>
 
 //IMPLEMENT ALLOCATORS
 namespace ft
 {	
 
-	template <class T>
+	template <class T, class Alloc = ft::allocator<T> >
 	class list
 	{
 		private : 
