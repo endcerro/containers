@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/15 15:50:24 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/15 15:57:24 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //http://www.cplusplus.com/reference/list/list/
@@ -592,7 +592,6 @@ namespace ft
 				// Node<T> *old_next = position._ptr->next;
 				Node<T> *old_previous = position._ptr->previous;
 
-
 				//Link the curren list begin and end
 				current->previous = x._center->previous;
 				x._center->previous->next = current;
@@ -603,8 +602,6 @@ namespace ft
 				x._center->previous = x._center;
 
 				_size += x._size;
-				// *(_center->data) = _size;
-				// *(x._center->data) = 0;
 				_center->size = _size;
 				x._center->size = 0;
 			}
@@ -623,7 +620,6 @@ namespace ft
 
 				x._size--;
 				--x._center->size;
-				// --*(x._center->data);	
 				++_size;
 				++_center->size;
 
@@ -645,46 +641,6 @@ namespace ft
 				ft::Node<T> *tmp = _center;
 				_center = base._center;
 				base._center = tmp;
-				// int olds = _center->size;
-				// _center->size = base._center->size;
-				// base._center->size = olds;
-				// if (base._center == this->_center)
-				// 	return;
-				
-				// ft::Node<T> *old_head = _center->next;
-				// ft::Node<T> *ol2d_tail = _center->previous;
-			
-				// size_t old_size = *(_center->data);
-
-				// if (_center->next == _center) || base._center->next == base._center)
-				// {
-				// 	std::cout << "HERE" << std::endl;
-				// 	return;
-				// }
-				
-				// _center->next = base._center->next;
-				// _center->previous = base._center->previous;
-				// // _center->data = base._center->data;
-				// _center->size = base._center->size;
-				// // *_center->data = old_size;
-				// if (_center->next != _center)
-				// {
-				// 	_center->next->previous = _center;
-				// 	_center->previous->next = _center;
-				// }
-
-				// base._center->next = old_head;
-				// base._center->previous = old_tail;
-				// // base._center->data = old_data;
-				
-				// if (base._center->next != base._center)
-				// {
-				// 	base._center->next->previous = base._center;
-				// 	base._center->previous->next = base._center;
-				// }
-
-				// _size = base._size;
-				// base._size = old_size;
 			}
 			bool empty(void) const 	
 			{ 
@@ -764,41 +720,30 @@ namespace ft
 			}
   			void unique()
   			{
-				iterator prev = begin();
 				iterator current = begin();
+				iterator prev = current++;;
+				
 				while (current != end())
 				{
-					prev = current++;
+					
 					if (*prev == *current && current._ptr != prev._ptr)
 						current = erase(current);
+					else
+						prev = current++;
 				}
   			}
-  	// 		template <class BinaryPredicate>
-			// void unique(BinaryPredicate binary_pred)
-			// {
-			// 	if (size() > 1)
-			// 	{
-			// 		iterator it(_center->next);
-			// 		while (++it != end())
-			// 			if (binary_pred(*it, *(static_cast<Node<T> *>(it._ptr->previous)->data)) == true)
-			// 				erase(it--);
-			// 	}
-			// }
+
 			template <class BinaryPredicate>
 			void unique (BinaryPredicate binary_pred)
 			{
 				iterator current = begin();
 				iterator prev =current++;
-				while (current != end())// && current._ptr->next != _center)
+				while (current != end())
 				{
 					if (binary_pred(*prev, *current))
-					{
-						current = erase(current);		
-					}
+						current = erase(current);
 					else
-					{
 						prev = current++;
-					}
 				}
 			}
 			void sort()
@@ -825,7 +770,6 @@ namespace ft
 				T *tmp;
 				while (curr != _center && curr->next != _center)
 				{
-					// if (comp(*curr->data,*curr->next->data))
 					if (comp(*curr->next->data,*curr->data))
 					{
 						tmp = curr->data;
@@ -848,25 +792,15 @@ namespace ft
 
 				while (curr != _center)// && curr->next != _center)
 				{
-					// std::cout << "LOOP\n";
 					next = curr->next;
 					prev = curr->previous;
-					// std::cout << "Binding "
+
 					curr->next = prev;
 					curr->previous = next;
 
 					curr = next;
 				}	
 			}
-	// 		template <class IT>
-	// 		void print(IT s, IT e)
-	// 		{
-	// 			while (s != e)
-	// 			{
-	// 				std::cout << *s << std::endl;
-	// 				++s;
-	// 			}
-	// 		};
 			void assign(size_t n, const T &val)
 			{
 				clear();
@@ -880,8 +814,6 @@ namespace ft
 				while (s != e)
 					push_back(*(s++));
 			}
-
-
 	};
 			template <class T>
 			bool operator==(const list<T> &lhs, const list<T> &rhs)

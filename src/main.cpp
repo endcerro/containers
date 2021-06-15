@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/15 15:44:04 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/15 15:54:42 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,11 +190,21 @@ int main()
 	// printl(t2.begin(), t2.end());
 
 
-	test<ft::list<int> >(c1);
+	// test<ft::list<int> >(c1);
 	// test<ft::list<int> >(c2);
-	test<std::list<int> >(t1);
+	// test<std::list<int> >(t1);
 	// test<std::list<int> >(t2);
-	// c1.clear();
+	c1.clear();
+	t1.clear();
+	c1.push_back(7);
+	c1.push_back(7);
+	c1.push_back(7);
+	t1.push_back(7);
+	t1.push_back(7);
+	t1.push_back(7);
+
+	c1.unique();
+	t1.unique();
 	// c1.pop_back();
 	// c1.pop_back();
 	// c1.pop_back();
