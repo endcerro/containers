@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/14 18:10:15 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/15 15:50:24 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //http://www.cplusplus.com/reference/list/list/
@@ -31,6 +31,10 @@ namespace ft
 			int 		_capacity;
 
 		public :
+			typedef list self_type;
+			typedef T value_type;
+			typedef T& reference;
+			typedef T* pointer;
 			/* CONSTRUCTORS N DESTRUCTORS */
 			//THIS IS ONLY FOR NOW, I 
 			list() : _size(0), _capacity(-1) 
@@ -39,8 +43,8 @@ namespace ft
 				_center->data = reinterpret_cast<T *>(&_center->size);
 				// *(_center->data) = static_cast<T>(0);
 				_center->size = 0;
-				_center->next = 0;
-				_center->previous = 0;
+				_center->next = _center;
+				_center->previous = _center;
 				_size = 0;
 			};
 			
@@ -50,8 +54,8 @@ namespace ft
 				_center->data = reinterpret_cast<T *>(&_center->size);
 				// *(_center->data) = 0;
 				_center->size = 0;
-				_center->next = 0;
-				_center->previous = 0;
+				_center->next = _center;
+				_center->previous = _center;
 				_size = 0; 
 				*this = f; 
 			};
@@ -64,8 +68,8 @@ namespace ft
 				_center->data = reinterpret_cast<T *>(&_center->size);
 				// *(_center->data) = 0;
 				_center->size = 0;
-				_center->next = 0;
-				_center->previous = 0;
+				_center->next = _center;
+				_center->previous = _center;
 				_size = 0;
 				assign(s, e); 
 			}
@@ -77,8 +81,8 @@ namespace ft
 				_center->data = reinterpret_cast<T *>(&_center->size);
 				// *(_center->data) = 0;
 				_center->size = 0;
-				_center->next = 0;
-				_center->previous = 0;
+				_center->next = _center;
+				_center->previous = _center;
 				_size = 0;
 				// std::cout << "No crash yet" << std::endl;
 				assign(n, val); 
@@ -90,8 +94,8 @@ namespace ft
 				_center->data = reinterpret_cast<T *>(&_center->size);
 				// *(_center->data) = 0;
 				_center->size = 0;
-				_center->next = 0;
-				_center->previous = 0;
+				_center->next = _center;
+				_center->previous = _center;
 				_size = 0;
 
 				for (size_t i = 0; i < n; i++)
@@ -208,7 +212,7 @@ namespace ft
 						_ptr = _ptr->previous; 
 						return *this;
 					}
-					const reference operator*() 
+					reference operator*() 
 					{ 
 						return (*(_ptr->data)); 
 					}
@@ -305,7 +309,7 @@ namespace ft
 					}
 					self_type operator--(int) //i++
 					{
-						iterator i = *this;
+						const_reverse_iterator i = *this;
 						_ptr = _ptr->next;
 						return i;
 					}
@@ -314,7 +318,7 @@ namespace ft
 						_ptr = _ptr->next; 
 						return *this;
 					}
-					const reference operator*() 
+					reference operator*()
 					{ 
 						return (*(_ptr->data)); 
 					}
@@ -361,6 +365,7 @@ namespace ft
 			template<class IT>
 			IT erase(IT pos)
 			{
+				// std::cout << "ERASING " << *pos << std::endl;
 				if (pos == end())
 					return pos;
 				Node<T> *todel = pos._ptr;
@@ -435,20 +440,22 @@ namespace ft
 			T& front(void) const	{ 
 				if (_center->next)
 					return *(_center->next->data);
-				return (_center->size); 
+				return (*_center->data); 
 			}
 			T& back(void) const		{ 
 				if (_center->next)
 					return *(_center->previous->data); 
-				return (_center->size); 
+				return (*_center->data); 
 			}
 
 			void pop_front(void)
 			{
+				if (_center->next == _center)
+					return;
 				Node<T> *old = _center->next;
 
 				if (old->next == _center)
-					_center->next =_center->previous = 0;
+					_center->next = _center->previous = _center;
 				else
 				{
 					_center->next = old->next;
@@ -462,10 +469,12 @@ namespace ft
 			}
 			void pop_back(void)
 			{
+				if (_center->next == _center)
+					return;
 				Node<T> *old = _center->previous;
 
 				if (old->previous == _center)
-					_center->next = _center->previous = 0;
+					_center->next = _center->previous = _center;
 				else
 				{
 					_center->previous = old->previous;
@@ -492,7 +501,7 @@ namespace ft
 
 				// In order to check if the list has one elem, check head address
 				// Don't forget to delete the end element as it should be instancied at all times
-				if (current->next == 0)
+				if (current->next == _center)
 					return ;
 				current = current->next;
 				while (current != _center)
@@ -505,8 +514,8 @@ namespace ft
 				_size = 0;
 				_center->size = 0;
 				// *(_center->data) = static_cast<T>(0);
-				_center->next = 0;
-				_center->previous = 0;
+				_center->next = _center;
+				_center->previous = _center;
 			}
 			void print()
 			{
@@ -597,12 +606,12 @@ namespace ft
 				// *(_center->data) = _size;
 				// *(x._center->data) = 0;
 				_center->size = _size;
-				x._size = 0;
+				x._center->size = 0;
 			}
 			template<class IT>
 			void splice (IT position, list<T> &x, IT i)
 			{
-				if (x._center == this->_center)
+				if (x._center == this->_center || i == x.end())
 					return;
 				i._ptr->next->previous = i._ptr->previous;
 				i._ptr->previous->next = i._ptr->next;
@@ -633,36 +642,49 @@ namespace ft
 	// 		//Seems good but watch out for allocators
 			void swap(list &base)
 			{
-				if (base._center == this->_center)
-					return;
-				ft::Node<T> *old_head = _center->next;
-				ft::Node<T> *old_tail = _center->previous;
-				// T *old_data = _center->data;
-				size_t old_size = _size;
-
-				_center->next = base._center->next;
-				_center->previous = base._center->previous;
-				// _center->data = base._center->data;
-				_center->size = base._center->size;
-
-				if (_center->next)
-				{
-					_center->next->previous = _center;
-					_center->previous->next = _center;
-				}
-
-				base._center->next = old_head;
-				base._center->previous = old_tail;
-				// base._center->data = old_data;
+				ft::Node<T> *tmp = _center;
+				_center = base._center;
+				base._center = tmp;
+				// int olds = _center->size;
+				// _center->size = base._center->size;
+				// base._center->size = olds;
+				// if (base._center == this->_center)
+				// 	return;
 				
-				if (base._center->next)
-				{
-					base._center->next->previous = base._center;
-					base._center->previous->next = base._center;
-				}
+				// ft::Node<T> *old_head = _center->next;
+				// ft::Node<T> *ol2d_tail = _center->previous;
+			
+				// size_t old_size = *(_center->data);
 
-				_size = base._size;
-				base._size = old_size;
+				// if (_center->next == _center) || base._center->next == base._center)
+				// {
+				// 	std::cout << "HERE" << std::endl;
+				// 	return;
+				// }
+				
+				// _center->next = base._center->next;
+				// _center->previous = base._center->previous;
+				// // _center->data = base._center->data;
+				// _center->size = base._center->size;
+				// // *_center->data = old_size;
+				// if (_center->next != _center)
+				// {
+				// 	_center->next->previous = _center;
+				// 	_center->previous->next = _center;
+				// }
+
+				// base._center->next = old_head;
+				// base._center->previous = old_tail;
+				// // base._center->data = old_data;
+				
+				// if (base._center->next != base._center)
+				// {
+				// 	base._center->next->previous = base._center;
+				// 	base._center->previous->next = base._center;
+				// }
+
+				// _size = base._size;
+				// base._size = old_size;
 			}
 			bool empty(void) const 	
 			{ 
@@ -670,7 +692,7 @@ namespace ft
 					return false;
 				return true;
 			}
-			size_t size(void) const { return _size; }
+			size_t size(void) const { return _center->size; }
 			size_t max_size(void) 	{ return _capacity;	 };
 			void remove (const T& val)
 			{
@@ -707,8 +729,11 @@ namespace ft
 			{
 				if (&x != this)
 				{
+					if (x._center->next == x._center)
+						return;
 					iterator itx(x._center->next);
 					iterator it(_center->next);
+					
 
 					while (itx != x.end())
 					{
@@ -724,6 +749,8 @@ namespace ft
 			{
 				if (&x != this)
 				{
+					if (x._center->next == x._center)
+						return;
 					iterator itx(x._center->next);
 					iterator it(_center->next);
 
@@ -746,16 +773,32 @@ namespace ft
 						current = erase(current);
 				}
   			}
+  	// 		template <class BinaryPredicate>
+			// void unique(BinaryPredicate binary_pred)
+			// {
+			// 	if (size() > 1)
+			// 	{
+			// 		iterator it(_center->next);
+			// 		while (++it != end())
+			// 			if (binary_pred(*it, *(static_cast<Node<T> *>(it._ptr->previous)->data)) == true)
+			// 				erase(it--);
+			// 	}
+			// }
 			template <class BinaryPredicate>
 			void unique (BinaryPredicate binary_pred)
 			{
-			iterator prev = begin();
 				iterator current = begin();
-				while (current != end())
+				iterator prev =current++;
+				while (current != end())// && current._ptr->next != _center)
 				{
-					prev = current++;
-					if (binary_pred(*prev, *current) && current._ptr != prev._ptr)
-						current = erase(current);
+					if (binary_pred(*prev, *current))
+					{
+						current = erase(current);		
+					}
+					else
+					{
+						prev = current++;
+					}
 				}
 			}
 			void sort()
@@ -782,7 +825,8 @@ namespace ft
 				T *tmp;
 				while (curr != _center && curr->next != _center)
 				{
-					if (comp(*curr->data,*curr->next->data))
+					// if (comp(*curr->data,*curr->next->data))
+					if (comp(*curr->next->data,*curr->data))
 					{
 						tmp = curr->data;
 						curr->data = curr->next->data;

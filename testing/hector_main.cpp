@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:55:26 by hpottier          #+#    #+#             */
-/*   Updated: 2021/06/08 16:59:04 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/15 12:21:57 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,6 +202,7 @@ void lst_testeur()
 	while (cit != lstr.end())
 	{
 		std::cout << *cit << std::endl;
+		// *cit = 0;
 		++cit;
 	}
 	std::cout << std::endl;

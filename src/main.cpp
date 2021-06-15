@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/14 17:19:42 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/15 15:44:04 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,11 @@ void printl(IT begin, IT end)
 		// std::cin >> line;	
 	}
 	std::cout << std::endl;
+}
+template <typename T>
+void test(T &c1)
+{
+	c1.unique(ft::binaryPredicateTest<typename T::value_type>);
 }
 
 int main()
@@ -141,17 +146,70 @@ int main()
 	// printl(b1.begin(), b1.end());
 	c1.clear();
 	c2.clear();
-	c1.push_back(1);
+	c1.push_back(150);
 	c1.push_back(2);
-	c1.push_back(3);
-	c2.push_back(4);
-	c2.push_back(5);
-	c2.push_back(6);
+	c1.push_back(8);
+	c2.push_back(20);
+	c2.push_back(12);
+	c2.push_back(800);
+	c2.push_back(7);
+	c2.push_back(1);
+	std::list<int> t1;
+	std::list<int> t2;
+	t1.push_back(150);
+	t1.push_back(2);
+	t1.push_back(8);
+	t2.push_back(20);
+	t2.push_back(12);
+	t2.push_back(800);
+	t2.push_back(7);
+	t2.push_back(1);
+
+
+
+
+	
 	// printl(c1.begin(), c1.end());
+	// printl(t1.begin(), t1.end());
 	// printl(c2.begin(), c2.end());
-	c1.merge(c2);
+	
+	// printl(t2.begin(), t2.end());
+	
+	// std::cout << c1.size() << std::endl;
+	// std::cout << c2.size() << std::endl;
+	
+	// t1.assign(c1.begin(), c1.end());
+	// t2.assign(c2.begin(), c2.end());
+
+	
+	// c1.splice(c1.begin(), c2);
+	c1.sort(); c2.sort(); t1.sort(); t2.sort();
 	printl(c1.begin(), c1.end());
-	printl(c2.begin(), c2.end());
+	printl(t1.begin(), t1.end());
+	// printl(c2.begin(), c2.end());
+	// printl(t2.begin(), t2.end());
+
+
+	test<ft::list<int> >(c1);
+	// test<ft::list<int> >(c2);
+	test<std::list<int> >(t1);
+	// test<std::list<int> >(t2);
+	// c1.clear();
+	// c1.pop_back();
+	// c1.pop_back();
+	// c1.pop_back();
+	// c1.pop_back();
+	// c1.pop_back();
+	std::cout << "Custom : \n";
+	printl(c1.begin(), c1.end());
+	std::cout << "Base : \n";
+	printl(t1.begin(), t1.end());
+	// printl(c2.begin(), c2.end());
+	// printl(t2.begin(), t2.end());
+	// std::cout << c1.size() << std::endl;
+	// std::cout << c2.size() << std::endl;
+	// std::cout << t1.size() << std::endl;
+	// std::cout << t2.size() << std::endl;
 	// c1.sort();
 	// b1.sort();
 	// printl(b1.rbegin(), b1.rend());
