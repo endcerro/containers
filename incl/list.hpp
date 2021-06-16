@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/15 15:57:24 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/16 11:51:38 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //http://www.cplusplus.com/reference/list/list/
@@ -398,10 +398,8 @@ namespace ft
 				elem->data = new T(val);
 
 				Node<T> *old;
-				// std::cout << "next:" << _center->next << " prev:" << _center->previous << std::endl;
 				if (_center->next == 0)
 				{
-					// std::cout << "Z1" << std::endl;
 					_center->next = elem;
 					_center->previous = elem;
 					elem->next = _center;
@@ -409,7 +407,6 @@ namespace ft
 				}
 				else
 				{
-					// std::cout << "Z2" << std::endl;
 					old = _center->previous;
 					_center->previous = elem;
 					elem->previous = old;
@@ -417,7 +414,6 @@ namespace ft
 					old->next = elem;
 				}
 				++_center->size;
-				// ++(*_center->data);
 				++_size;
 			}
 
@@ -522,7 +518,7 @@ namespace ft
 				if (_center->next == 0)
 				{
 
-					std::cout << "No elems in here" << std::endl;
+					// std::cout << "No elems in here" << std::endl;
 					return;
 				}
 				Node<T> *current = _center->next;
@@ -608,7 +604,8 @@ namespace ft
 			template<class IT>
 			void splice (IT position, list<T> &x, IT i)
 			{
-				if (x._center == this->_center || i == x.end())
+				// if (x._center == this->_center || i == x.end())
+				if (i == x.end())
 					return;
 				i._ptr->next->previous = i._ptr->previous;
 				i._ptr->previous->next = i._ptr->next;
@@ -627,8 +624,11 @@ namespace ft
 			template<class IT>
 			void splice(IT position, list& x, IT first, IT last)
 			{
-				if (x._center == this->_center)
-					return;
+				// if (x._center == this->_center)
+				// {
+				// 	std::cout << "CANCEL\n";
+				// 	return;
+				// }
 				while (first != last)
 				{
 					splice(position, x, first++);
