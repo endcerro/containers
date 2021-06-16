@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/15 15:57:24 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/16 12:27:29 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //http://www.cplusplus.com/reference/list/list/
@@ -27,7 +27,7 @@ namespace ft
 	{
 		private : 
 			Node<T> 	*_center;
-			size_t		_size;
+			// size_t		_size;
 			int 		_capacity;
 
 		public :
@@ -37,7 +37,7 @@ namespace ft
 			typedef T* pointer;
 			/* CONSTRUCTORS N DESTRUCTORS */
 			//THIS IS ONLY FOR NOW, I 
-			list() : _size(0), _capacity(-1) 
+			list() : _capacity(-1) 
 			{
 				_center = new Node<T>;
 				_center->data = reinterpret_cast<T *>(&_center->size);
@@ -45,7 +45,7 @@ namespace ft
 				_center->size = 0;
 				_center->next = _center;
 				_center->previous = _center;
-				_size = 0;
+				// _size = 0;
 			};
 			
 			list(const list &f) 
@@ -56,7 +56,7 @@ namespace ft
 				_center->size = 0;
 				_center->next = _center;
 				_center->previous = _center;
-				_size = 0; 
+				// _size = 0; 
 				*this = f; 
 			};
 
@@ -70,11 +70,11 @@ namespace ft
 				_center->size = 0;
 				_center->next = _center;
 				_center->previous = _center;
-				_size = 0;
+				// _size = 0;
 				assign(s, e); 
 			}
 
-			list (size_t n, const T& val) : _size(n), _capacity(-1)
+			list (size_t n, const T& val) : _capacity(-1)
 			{
 				// list();
 				_center = new Node<T>;
@@ -83,11 +83,11 @@ namespace ft
 				_center->size = 0;
 				_center->next = _center;
 				_center->previous = _center;
-				_size = 0;
+				// _size = 0;
 				// std::cout << "No crash yet" << std::endl;
 				assign(n, val); 
 			}
-			list (size_t n) : _size(n), _capacity(-1)
+			list (size_t n) : _capacity(-1)
 			{
 				// list();
 				_center = new Node<T>;
@@ -96,7 +96,7 @@ namespace ft
 				_center->size = 0;
 				_center->next = _center;
 				_center->previous = _center;
-				_size = 0;
+				// _size = 0;
 
 				for (size_t i = 0; i < n; i++)
 					push_back(0);
@@ -114,7 +114,7 @@ namespace ft
 			list& operator=(const list &b)
 			{
 				assign(b.begin(), b.end());
-				_size = b._size;
+				// _size = b._size;
 				return *this;
 			};
 			
@@ -375,7 +375,7 @@ namespace ft
 				todel->next->previous = todel->previous;
 				delete todel->data;
 				delete todel;
-				_size--;
+				// _size--;
 				_center->size--;
 				// *(_center->data) = *(_center->data) - 1;
 				return iterator(tmp);
@@ -398,10 +398,8 @@ namespace ft
 				elem->data = new T(val);
 
 				Node<T> *old;
-				// std::cout << "next:" << _center->next << " prev:" << _center->previous << std::endl;
 				if (_center->next == 0)
 				{
-					// std::cout << "Z1" << std::endl;
 					_center->next = elem;
 					_center->previous = elem;
 					elem->next = _center;
@@ -409,7 +407,6 @@ namespace ft
 				}
 				else
 				{
-					// std::cout << "Z2" << std::endl;
 					old = _center->previous;
 					_center->previous = elem;
 					elem->previous = old;
@@ -417,8 +414,7 @@ namespace ft
 					old->next = elem;
 				}
 				++_center->size;
-				// ++(*_center->data);
-				++_size;
+				// ++_size;
 			}
 
 			void push_front (const T& val)
@@ -434,7 +430,7 @@ namespace ft
 				_center->next = elem;
 				++_center->size;
 				// ++(*_center->data);
-				++_size;
+				// ++_size;
 			}
 
 			T& front(void) const	{ 
@@ -465,7 +461,7 @@ namespace ft
 				delete old;
 				--_center->size;
 				// --(*_center->data);
-				--_size;
+				// --_size;
 			}
 			void pop_back(void)
 			{
@@ -484,13 +480,13 @@ namespace ft
 				delete old;
 				--_center->size;
 				// --(*_center->data);
-				--_size;
+				// --_size;
 			}
 			void resize (size_t n, T val = T())
 			{
-				while (n > _size)
+				while (n > _center->size)
 					push_back(val);
-				while (n < _size)
+				while (n < _center->size)
 					pop_back();
 			}
 
@@ -511,34 +507,15 @@ namespace ft
 					delete current;
 					current	= next;
 				}
-				_size = 0;
+				// _size = 0;
 				_center->size = 0;
 				// *(_center->data) = static_cast<T>(0);
 				_center->next = _center;
 				_center->previous = _center;
 			}
-			void print()
-			{
-				if (_center->next == 0)
-				{
-
-					std::cout << "No elems in here" << std::endl;
-					return;
-				}
-				Node<T> *current = _center->next;
-				// current = current->next;
-				while (current != _center)
-				{
-					std::cout << *current->data << '|';
-					current = current->next;
-				}
-				std::cout << std::endl;
-			}
-
 			template<class IT>
 			IT insert (IT p, const T& val)
 			{
-
 				if (p == begin())
 				{
 					push_front(val);
@@ -557,7 +534,7 @@ namespace ft
 					new_elem->previous = p._ptr->previous;
 					p._ptr->previous->next = new_elem;
 					p._ptr->previous = new_elem;
-					_size++;
+					// _size++;
 					++_center->size;
 					// *(_center->data) = *(_center->data) + 1;
 					return iterator(new_elem);
@@ -571,14 +548,13 @@ namespace ft
 					position = insert(position, val);
 			}
 			
-				template <class InputIterator, class IT>
+			template <class InputIterator, class IT>
 			void insert (IT position, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type start, InputIterator end)
 			{
 				while (start != end)
 				{
 					position = insert(position, *start);
-					++position;
-					++start;
+					++position; ++start;
 				}
 			}
 			template<class IT>
@@ -586,10 +562,8 @@ namespace ft
 			{
 				if (x._center == this->_center)
 					return;
-				// std::cout << " In here " << std::endl;
 				Node<T> *current = position._ptr;
 
-				// Node<T> *old_next = position._ptr->next;
 				Node<T> *old_previous = position._ptr->previous;
 
 				//Link the curren list begin and end
@@ -601,14 +575,15 @@ namespace ft
 				x._center->next = x._center;
 				x._center->previous = x._center;
 
-				_size += x._size;
-				_center->size = _size;
+				// _size += x._size;
+				_center->size += x._center->size;
 				x._center->size = 0;
 			}
 			template<class IT>
 			void splice (IT position, list<T> &x, IT i)
 			{
-				if (x._center == this->_center || i == x.end())
+				// if (x._center == this->_center || i == x.end())
+				if (i == x.end())
 					return;
 				i._ptr->next->previous = i._ptr->previous;
 				i._ptr->previous->next = i._ptr->next;
@@ -618,17 +593,20 @@ namespace ft
 				i._ptr->next = position._ptr;
 				position._ptr->previous = i._ptr;
 
-				x._size--;
+				// x._size--;
 				--x._center->size;
-				++_size;
+				// ++_size;
 				++_center->size;
 
 			}
 			template<class IT>
 			void splice(IT position, list& x, IT first, IT last)
 			{
-				if (x._center == this->_center)
-					return;
+				// if (x._center == this->_center)
+				// {
+				// 	std::cout << "CANCEL\n";
+				// 	return;
+				// }
 				while (first != last)
 				{
 					splice(position, x, first++);
