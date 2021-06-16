@@ -39,3 +39,5 @@ a.out.dSYM*
 obj
 containers
 /testing/*.dSYM
+/testing/*.diff
+/testing/*.results
