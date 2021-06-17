@@ -6,10 +6,10 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 15:43:35 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/17 16:47:32 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/17 17:09:55 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
+// https://www.cplusplus.com/reference/vector/vector/
 #ifndef FT_VECTOR
 #define FT_VECTOR
 
@@ -50,7 +50,7 @@ namespace ft
 			vector (const Alloc &alloc = Alloc()) : _alloc(alloc)
 			{
 				_arr = vecNew(D_S);
-				_size = _max_size = 
+				_size = _max_size = D_S;
 			};
 			vector (size_t n, const T& val)
 			{			};

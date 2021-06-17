@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/16 12:27:29 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/17 17:35:00 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //http://www.cplusplus.com/reference/list/list/
@@ -27,85 +27,55 @@ namespace ft
 	{
 		private : 
 			Node<T> 	*_center;
-			// size_t		_size;
 			int 		_capacity;
 
-		public :
-			typedef list self_type;
-			typedef T value_type;
-			typedef T& reference;
-			typedef T* pointer;
-			/* CONSTRUCTORS N DESTRUCTORS */
-			//THIS IS ONLY FOR NOW, I 
-			list() : _capacity(-1) 
+			void 	init(void)
 			{
 				_center = new Node<T>;
 				_center->data = reinterpret_cast<T *>(&_center->size);
-				// *(_center->data) = static_cast<T>(0);
 				_center->size = 0;
 				_center->next = _center;
-				_center->previous = _center;
-				// _size = 0;
+				_center->previous = _center;	
+			}
+
+		public :
+			// typedef list self_type;
+			typedef T value_type;
+			// typedef T& reference;
+			// typedef T* pointer;
+			list() : _capacity(-1) 
+			{
+				init();
 			};
 			
 			list(const list &f) 
 			{
-				_center = new Node<T>;
-				_center->data = reinterpret_cast<T *>(&_center->size);
-				// *(_center->data) = 0;
-				_center->size = 0;
-				_center->next = _center;
-				_center->previous = _center;
-				// _size = 0; 
+				init();
 				*this = f; 
 			};
 
 			template<class InputIterator>
 			list(InputIterator s, InputIterator e) 
 			{ 
-				// list();
-				_center = new Node<T>;
-				_center->data = reinterpret_cast<T *>(&_center->size);
-				// *(_center->data) = 0;
-				_center->size = 0;
-				_center->next = _center;
-				_center->previous = _center;
-				// _size = 0;
+				init();
 				assign(s, e); 
 			}
 
 			list (size_t n, const T& val) : _capacity(-1)
 			{
-				// list();
-				_center = new Node<T>;
-				_center->data = reinterpret_cast<T *>(&_center->size);
-				// *(_center->data) = 0;
-				_center->size = 0;
-				_center->next = _center;
-				_center->previous = _center;
-				// _size = 0;
-				// std::cout << "No crash yet" << std::endl;
+				init();
 				assign(n, val); 
 			}
 			list (size_t n) : _capacity(-1)
 			{
-				// list();
-				_center = new Node<T>;
-				_center->data = reinterpret_cast<T *>(&_center->size);
-				// *(_center->data) = 0;
-				_center->size = 0;
-				_center->next = _center;
-				_center->previous = _center;
-				// _size = 0;
-
+				init();
 				for (size_t i = 0; i < n; i++)
-					push_back(0);
+					push_back(T());
 			}
 
 			~list()
 			{ 
 				clear();
-				// delete _center->data;
 				delete _center;
 			};
 
@@ -114,7 +84,6 @@ namespace ft
 			list& operator=(const list &b)
 			{
 				assign(b.begin(), b.end());
-				// _size = b._size;
 				return *this;
 			};
 			
@@ -125,50 +94,48 @@ namespace ft
 			{
 				friend class list<T>;
 				public :
-					typedef iterator self_type;
-					typedef T value_type;
-					typedef T& reference;
-					typedef T* pointer;
-					// typedef std::forward_iterator_tag iterator_category;
 					iterator(Node<T> *ptr) : _ptr(ptr) 
 					{ }
 					iterator() : _ptr(0) 
 					{};
-					self_type operator++(int) //i++
+					iterator operator++(int) //i++
 					{
 						iterator i = *this;
 						_ptr = _ptr->next;
 						return i;
 					}
-					self_type operator++() //i++
-					{
-						
+					iterator operator++() //i++
+					{		
 						_ptr = _ptr->next; 
 						return *this;
 					}
-					self_type operator--(int) //i++
+					iterator operator--(int) //i++
 					{
 						iterator i = *this;
 						_ptr = _ptr->previous;
 						return i;
 					}
-					self_type operator--() //i++
+					iterator operator--() //i++
 					{ 
 						_ptr = _ptr->previous; 
 						return *this;
 					}
-					reference operator*() 
+					T& operator*() 
 					{ 
 						return *(_ptr->data); 
 					}
-					pointer operator->() 
+					T* operator->() 
 					{ 
 						return _ptr->data; 
 					}
-					bool operator==(const self_type& rhs)
-					{ return _ptr == rhs._ptr; }
-					bool operator!=(const self_type& rhs) 
-					{ return _ptr != rhs._ptr; }
+					bool operator==(const iterator& it)
+					{ 
+						return (_ptr == it._ptr); 
+					}
+					bool operator!=(const iterator& it) 
+					{
+						return (_ptr != it._ptr); 
+					}
 				private :
 					Node<T> *_ptr;
 			};
@@ -178,65 +145,63 @@ namespace ft
 			{
 				friend class list<T>;
 				public :
-					typedef const_iterator self_type;
-					typedef T value_type;
-					typedef T& reference;
-					typedef T* pointer;
-					// typedef std::forward_const_iterator_tag const_iterator_category;
 					const_iterator(Node<T> *ptr) : _ptr(ptr) 
 					{ }
 					const_iterator() : _ptr(0) 
 					{};
 					const_iterator(iterator x) : _ptr(x._ptr) 
 					{ }
-					self_type operator++(int) //i++
+					const_iterator operator++(int) //i++
 					{
 						const_iterator i = *this;
 						_ptr = _ptr->next;
 						return i;
 					}
-					self_type operator++() //i++
+					const_iterator operator++() //i++
 					{
 						
 						_ptr = _ptr->next; 
 						return *this;
 					}
-					self_type operator--(int) //i++
+					const_iterator operator--(int) //i++
 					{
 						const_iterator i = *this;
 						_ptr = _ptr->previous;
 						return i;
 					}
-					self_type operator--() //i++
+					const_iterator operator--() //i++
 					{ 
 						_ptr = _ptr->previous; 
 						return *this;
 					}
-					reference operator*() 
+					T& operator*() 
 					{ 
 						return (*(_ptr->data)); 
 					}
-					pointer operator->() 
+					T* operator->() 
 					{ 
 						return _ptr->data; 
 					}
-					bool operator==(const self_type& rhs)
-					{ return _ptr == rhs._ptr; }
-					bool operator!=(const self_type& rhs) 
-					{ return _ptr != rhs._ptr; }
+					bool operator==(const const_iterator& it)
+					{
+						return _ptr == it._ptr;
+					}
+					bool operator!=(const const_iterator& it) 
+					{
+						return _ptr != it._ptr;
+					}
 				private :
 					Node<T> *_ptr;
 			};
-			//may use friends
 			
-			class reverse_iterator //: virtual public iterator
+			class reverse_iterator
 			{
 				friend class list<T>;
 				public :
-					typedef reverse_iterator self_type;
+					// typedef reverse_iterator self_type;
 					typedef T value_type;
-					typedef T& reference;
-					typedef T* pointer;
+					// typedef T& reference;
+					// typedef T* pointer;
 					reverse_iterator() : _ptr(0) {};
 					reverse_iterator(Node<T> *ptr) : _ptr(ptr) 
 					{ }
@@ -251,34 +216,34 @@ namespace ft
 						_ptr = _ptr->previous; 
 						return *this;					
 					}
-					self_type operator--(int) //i++
+					reverse_iterator operator--(int) //i++
 					{
 						iterator i = *this;
 						_ptr = _ptr->next;
 						return i;
 					}
-					self_type operator--() //i++
+					reverse_iterator operator--() //i++
 					{ 
 						_ptr = _ptr->next; 
 						return *this;
 					}
-					reference operator*() 
+					T& operator*() 
 					{
 						// if (_ptr == end()._ptr)
 						// 	return (&end()._ptr->size);
 						return *(_ptr->data); 
 					}
-					pointer operator->() 
+					T* operator->() 
 					{ 
 						return _ptr->data;
 					}
-					bool operator==(const reverse_iterator& rhs)
+					bool operator==(const reverse_iterator& it)
 					{ 
-						return _ptr == rhs._ptr; 
+						return _ptr == it._ptr; 
 					}
-					bool operator!=(const reverse_iterator& rhs) 
+					bool operator!=(const reverse_iterator& it) 
 					{ 
-						return _ptr != rhs._ptr; 
+						return _ptr != it._ptr; 
 					}
 				private :
 					Node<T> *_ptr;
@@ -287,10 +252,10 @@ namespace ft
 			{
 				friend class list<T>;
 				public :
-					typedef const_reverse_iterator self_type;
-					typedef T value_type;
-					typedef T& reference;
-					typedef T* pointer;
+					// typedef const_reverse_iterator self_type;
+					// typedef T value_type;
+					// typedef T& reference;
+					// typedef T* pointer;
 					const_reverse_iterator() : _ptr(0) {};
 					const_reverse_iterator(Node<T> *ptr) : _ptr(ptr) 
 					{ }
@@ -307,32 +272,32 @@ namespace ft
 						_ptr = _ptr->previous; 
 						return *this;					
 					}
-					self_type operator--(int) //i++
+					const_reverse_iterator operator--(int) //i++
 					{
 						const_reverse_iterator i = *this;
 						_ptr = _ptr->next;
 						return i;
 					}
-					self_type operator--() //i++
+					const_reverse_iterator operator--() //i++
 					{ 
 						_ptr = _ptr->next; 
 						return *this;
 					}
-					reference operator*()
+					T& operator*()
 					{ 
 						return (*(_ptr->data)); 
 					}
-					pointer operator->() 
+					T* operator->() 
 					{ 
 						return _ptr->data;
 					}
-					bool operator==(const const_reverse_iterator& rhs)
+					bool operator==(const const_reverse_iterator& it)
 					{ 
-						return _ptr == rhs._ptr; 
+						return _ptr == it._ptr; 
 					}
-					bool operator!=(const const_reverse_iterator& rhs) 
+					bool operator!=(const const_reverse_iterator& it) 
 					{ 
-						return _ptr != rhs._ptr; 
+						return _ptr != it._ptr; 
 					}
 				private :
 					Node<T> *_ptr;
@@ -365,20 +330,16 @@ namespace ft
 			template<class IT>
 			IT erase(IT pos)
 			{
-				// std::cout << "ERASING " << *pos << std::endl;
 				if (pos == end())
 					return pos;
 				Node<T> *todel = pos._ptr;
-				Node<T> *tmp = todel->next;
-				// iterator(todel->next);
+				iterator ret = iterator(todel->next);
 				todel->previous->next = todel->next;
 				todel->next->previous = todel->previous;
 				delete todel->data;
 				delete todel;
-				// _size--;
 				_center->size--;
-				// *(_center->data) = *(_center->data) - 1;
-				return iterator(tmp);
+				return ret;
 			}
 
 			template<class IT>
@@ -392,35 +353,20 @@ namespace ft
 
 			void push_back (const T& val)
 			{
-				//THIS NEEDS TO USE ALLOCATORS IT SEEMS
-				//Case where this is the first one
+				Node<T> *old;
 				Node<T> *elem = new Node<T>;
 				elem->data = new T(val);
 
-				Node<T> *old;
-				if (_center->next == 0)
-				{
-					_center->next = elem;
-					_center->previous = elem;
-					elem->next = _center;
-					elem->previous = _center;
-				}
-				else
-				{
-					old = _center->previous;
-					_center->previous = elem;
-					elem->previous = old;
-					elem->next = _center;
-					old->next = elem;
-				}
+				old = _center->previous;
+				_center->previous = elem;
+				elem->previous = old;
+				elem->next = _center;
+				old->next = elem;
 				++_center->size;
-				// ++_size;
 			}
 
 			void push_front (const T& val)
 			{
-				if (_center->next == 0)
-					return (push_back(val));
 				Node<T> *elem = new Node<T>;
 				elem->data = new T(val);
 				Node<T> *old = _center->next;
@@ -429,16 +375,16 @@ namespace ft
 				old->previous = elem;
 				_center->next = elem;
 				++_center->size;
-				// ++(*_center->data);
-				// ++_size;
 			}
 
-			T& front(void) const	{ 
+			T& front(void) const //Still not sure about that
+			{ 
 				if (_center->next)
 					return *(_center->next->data);
 				return (*_center->data); 
 			}
-			T& back(void) const		{ 
+			T& back(void) const	//This one as well
+			{
 				if (_center->next)
 					return *(_center->previous->data); 
 				return (*_center->data); 
@@ -446,9 +392,10 @@ namespace ft
 
 			void pop_front(void)
 			{
+				Node<T> *old = _center->next;
+
 				if (_center->next == _center)
 					return;
-				Node<T> *old = _center->next;
 
 				if (old->next == _center)
 					_center->next = _center->previous = _center;
@@ -460,14 +407,13 @@ namespace ft
 				delete old->data;
 				delete old;
 				--_center->size;
-				// --(*_center->data);
-				// --_size;
 			}
 			void pop_back(void)
 			{
+				Node<T> *old = _center->previous;
+
 				if (_center->next == _center)
 					return;
-				Node<T> *old = _center->previous;
 
 				if (old->previous == _center)
 					_center->next = _center->previous = _center;
@@ -479,8 +425,6 @@ namespace ft
 				delete old->data;
 				delete old;
 				--_center->size;
-				// --(*_center->data);
-				// --_size;
 			}
 			void resize (size_t n, T val = T())
 			{
@@ -495,8 +439,6 @@ namespace ft
 				Node<T> *current = _center;
 				Node<T> *next;
 
-				// In order to check if the list has one elem, check head address
-				// Don't forget to delete the end element as it should be instancied at all times
 				if (current->next == _center)
 					return ;
 				current = current->next;
@@ -507,9 +449,7 @@ namespace ft
 					delete current;
 					current	= next;
 				}
-				// _size = 0;
 				_center->size = 0;
-				// *(_center->data) = static_cast<T>(0);
 				_center->next = _center;
 				_center->previous = _center;
 			}
@@ -534,9 +474,7 @@ namespace ft
 					new_elem->previous = p._ptr->previous;
 					p._ptr->previous->next = new_elem;
 					p._ptr->previous = new_elem;
-					// _size++;
 					++_center->size;
-					// *(_center->data) = *(_center->data) + 1;
 					return iterator(new_elem);
 				}
 			}
@@ -560,13 +498,12 @@ namespace ft
 			template<class IT>
 			void splice(IT position, list<T> &x)
 			{
-				if (x._center == this->_center)
+				if (x._center == this->_center) //This may need to go
 					return;
 				Node<T> *current = position._ptr;
 
 				Node<T> *old_previous = position._ptr->previous;
 
-				//Link the curren list begin and end
 				current->previous = x._center->previous;
 				x._center->previous->next = current;
 				x._center->next->previous = old_previous;
@@ -575,14 +512,12 @@ namespace ft
 				x._center->next = x._center;
 				x._center->previous = x._center;
 
-				// _size += x._size;
 				_center->size += x._center->size;
 				x._center->size = 0;
 			}
 			template<class IT>
 			void splice (IT position, list<T> &x, IT i)
 			{
-				// if (x._center == this->_center || i == x.end())
 				if (i == x.end())
 					return;
 				i._ptr->next->previous = i._ptr->previous;
@@ -593,41 +528,38 @@ namespace ft
 				i._ptr->next = position._ptr;
 				position._ptr->previous = i._ptr;
 
-				// x._size--;
 				--x._center->size;
-				// ++_size;
 				++_center->size;
-
 			}
 			template<class IT>
 			void splice(IT position, list& x, IT first, IT last)
 			{
-				// if (x._center == this->_center)
-				// {
-				// 	std::cout << "CANCEL\n";
-				// 	return;
-				// }
 				while (first != last)
-				{
 					splice(position, x, first++);
-					// first++;
-				}
 			}
-	// 		//Seems good but watch out for allocators
+
 			void swap(list &base)
 			{
 				ft::Node<T> *tmp = _center;
 				_center = base._center;
 				base._center = tmp;
 			}
+			
 			bool empty(void) const 	
 			{ 
 				if (_center->next != _center && _center->next != 0)
 					return false;
 				return true;
 			}
-			size_t size(void) const { return _center->size; }
-			size_t max_size(void) 	{ return _capacity;	 };
+			
+			size_t size(void) const 
+			{ 
+				return _center->size; 
+			}
+			size_t max_size(void) //CAPACITY TODO
+			{
+				return _capacity;
+			};
 			void remove (const T& val)
 			{
 				iterator it = begin();
@@ -642,8 +574,6 @@ namespace ft
 						it++;
 				}
 			}
-
-			//THIS AND THE FUNCTION BELOW ARE PROBABLY WRONG
 			template <class Predicate>
 			void remove_if (Predicate pred)
 			{
@@ -661,14 +591,10 @@ namespace ft
 			}
 			void merge (list& x)
 			{
-				if (&x != this)
+				if (&x != this && x._center->next != x._center)
 				{
-					if (x._center->next == x._center)
-						return;
 					iterator itx(x._center->next);
 					iterator it(_center->next);
-					
-
 					while (itx != x.end())
 					{
 						while (it != end() && (*itx < *it == false))
@@ -703,7 +629,6 @@ namespace ft
 				
 				while (current != end())
 				{
-					
 					if (*prev == *current && current._ptr != prev._ptr)
 						current = erase(current);
 					else
@@ -764,18 +689,14 @@ namespace ft
 				Node<T> *curr = _center->next;
 				Node<T> *next = _center->next;
 				Node<T> *prev;
-				
 				_center->next = _center->previous;
 				_center->previous = next;
-
-				while (curr != _center)// && curr->next != _center)
+				while (curr != _center)
 				{
 					next = curr->next;
 					prev = curr->previous;
-
 					curr->next = prev;
 					curr->previous = next;
-
 					curr = next;
 				}	
 			}
@@ -793,76 +714,76 @@ namespace ft
 					push_back(*(s++));
 			}
 	};
-			template <class T>
-			bool operator==(const list<T> &lhs, const list<T> &rhs)
-			{
-				if (lhs.size() == rhs.size())
-				{
-					typename list<T>::iterator lit;
-					lit = lhs.begin();
-					typename list<T>::iterator rit;
-					rit = rhs.begin();
+	template <class T>
+	bool operator==(const list<T> &l_lst, const list<T> &r_lst)
+	{
+		if (l_lst.size() == r_lst.size())
+		{
+			typename list<T>::iterator lit;
+			lit = l_lst.begin();
+			typename list<T>::iterator rit;
+			rit = r_lst.begin();
 
-					while (lit != lhs.end())
-					{
-						if (!(*lit == *rit))
-							return false;
-						++lit;
-						++rit;
-					}
-					return true;
-				}
+			while (lit != l_lst.end())
+			{
+				if (!(*lit == *rit))
+					return false;
+				++lit;
+				++rit;
+			}
+			return true;
+		}
+		return false;
+	}
+
+	template <class T>
+	bool operator!=(const list<T> &l_lst, const list<T> &r_lst)
+	{
+		return !(l_lst == r_lst);
+	}
+
+	template <class T>
+	bool operator<(const list<T> &l_lst, const list<T> &r_lst)
+	{
+		typename list<T>::iterator lit;
+		lit = l_lst.begin();
+		typename list<T>::iterator rit;
+		rit = r_lst.begin();
+
+		while (lit != l_lst.end())
+		{
+			if (rit == r_lst.end() || *rit < *lit)
 				return false;
-			}
+			else if (*lit < *rit)
+				return true;
+			++lit;
+			++rit;
+		}
+		return (rit != r_lst.end());
+	}
 
-			template <class T>
-			bool operator!=(const list<T> &lhs, const list<T> &rhs)
-			{
-				return !(lhs == rhs);
-			}
+	template <class T>
+	bool operator<=(const list<T> &l_lst, const list<T> &r_lst)
+	{
+		return !(r_lst < l_lst);
+	}
 
-			template <class T>
-			bool operator<(const list<T> &lhs, const list<T> &rhs)
-			{
-				typename list<T>::iterator lit;
-				lit = lhs.begin();
-				typename list<T>::iterator rit;
-				rit = rhs.begin();
+	template <class T>
+	bool operator>(const list<T> &l_lst, const list<T> &r_lst)
+	{
+		return (r_lst < l_lst);
+	}
 
-				while (lit != lhs.end())
-				{
-					if (rit == rhs.end() || *rit < *lit)
-						return false;
-					else if (*lit < *rit)
-						return true;
-					++lit;
-					++rit;
-				}
-				return rit != rhs.end();
-			}
+	template <class T>
+	bool operator>=(const list<T> &l_lst, const list<T> &r_lst)
+	{
+		return !(l_lst < r_lst);
+	}
 
-			template <class T>
-			bool operator<=(const list<T> &lhs, const list<T> &rhs)
-			{
-				return !(rhs < lhs);
-			}
-
-			template <class T>
-			bool operator>(const list<T> &lhs, const list<T> &rhs)
-			{
-				return rhs < lhs;
-			}
-
-			template <class T>
-			bool operator>=(const list<T> &lhs, const list<T> &rhs)
-			{
-				return !(lhs < rhs);
-			}
-
-			template <class T>
-			void swap(list<T> &x, list<T> &y)
-			{
-				x.swap(y);
-			}
+	template <class T>
+	void swap(list<T> &x, list<T> &y)
+	{
+		x.swap(y);
+	}
 }
 #endif
