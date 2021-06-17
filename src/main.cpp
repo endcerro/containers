@@ -6,11 +6,13 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/16 11:36:16 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/17 16:43:34 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/list.hpp"
+#include "../incl/vector.hpp"
+
 #include <list>
 
 // struct test
@@ -41,11 +43,6 @@ void printl(IT begin, IT end)
 		// std::cin >> line;	
 	}
 	std::cout << std::endl;
-}
-template <typename T>
-void test(T &c1)
-{
-	c1.unique(ft::binaryPredicateTest<typename T::value_type>);
 }
 
 void whathefuck()
@@ -105,152 +102,20 @@ void whathefuck()
 
 int main()
 {
-	// i++
-	std::cout << "------------------------------------------" << std::endl;
 
-	ft::list<int> 	c1;
-	ft::list<int> 	c2;
-	std::list<int> 	b1;
-	std::list<int> 	b2;
 
-	for (int i = 1; i <= 10; i++)
+
+	ft::vector<int> test;
+
+	test[0] = 42;
+	
+	for (int i = 0; i < 10; i++)
 	{
-		if (i % 2)
-		{
-			c1.push_back(i * 2);
-			c2.push_back(-i * 2);
-			b1.push_back( i * 2);
-			b2.push_back(-i * 2);
-		}
-		else
-		{
-			c1.push_back(i);
-			c2.push_back(-i);
-			b1.push_back(i);
-			b2.push_back(-i);	
-		}
-		// c1.push_back(i);
-		// c2.push_back(-i);
-		// b1.push_back(i);
-		// b2.push_back(-i);
+		std::cout << test[i] << std::endl;	
 	}
-	// printl(c1.begin(), c1.end());
-	// printl(c2.begin(), c2.end());
-	// printl(b1.begin(), b1.end());
-	// printl(b2.begin(), b2.end());
-
-	// b1.splice(b1.begin(), b2);
-	// c1.splice(c1.begin(), c2);
-	// std::cout << "SPLICE\n----------------------------------\n";
-	// printl(c1.rbegin(), c1.rend());
-	// printl(c2.rbegin(), c2.rend());
 	
-	// printl(b1.rbegin(), b1.rend());
-	// printl(b2.rbegin(), b2.rend());
-	// c2.clear();
-	// b2.clear();
-	// c2.assign(5, 420);
-	// b2.assign(5, 420);
-
-	// printl(c1.rbegin(), c1.rend());
-	// printl(c2.rbegin(), c2.rend());
-	
-	// printl(b1.rbegin(), b1.rend());
-	// printl(b2.rbegin(), b2.rend());
-
-	// b1.splice(b1.begin(), b2);//, b2.begin(), (++b2.begin()));
-	// c1.splice(c1.begin(), c2, ++c2.begin());
-
-	// printl(c1.begin(), c1.end());
-	// printl(c2.begin(), c2.end());
-
-	// c1.remove(800);
-	// printl(c1.begin(), c1.end());
-	// c1.remove(7);
-	c1.sort();
-	// b1.sort();
-	// printl(c1.begin(), c1.end());
-	// c1.reverse();
-	ft::list<int>::iterator spot = c1.begin();
-	ft::list<int>::iterator bpot = c2.begin();
-
-	spot++; bpot++;
-	spot++; bpot++;
-		
-	// printl(c2.begin(), c2.end());
-	// printl(c1.begin(), c1.end());
-
-	// std::cout << "Custom : " << *spot << std::endl;
-	// std::cout << "Base : " << *bpot << std::endl;
-	
-	// spot = c1.erase(spot);
-	// // bpot = b1.erase(bpot);
-
-	// std::cout << "Custom : " << *spot << std::endl;
-	// std::cout << "Base : " << *bpot << std::endl;
-
-	// // printl(b1.begin(), b1.end());
-	// printl(c1.begin(), c1.end());
-
-	// spot = c1.erase(c1.begin(), spot);
-	// bpot = b1.erase(b1.begin(), bpot);
-
-	// std::cout << "Custom : " << *spot << std::endl;
-	// std::cout << "Base : " << *bpot << std::endl;
-
-	// printl(b1.begin(), b1.end());
-	// c1.clear();
-	// // c2.clear();
-	// // c1.push_back(150);
-	// // c1.push_back(2);
-	// // c1.push_back(8);
-	// // c2.push_back(20);
-	// // c2.push_back(12);
-	// // c2.push_back(800);
-	// // c2.push_back(7);
-	// // c2.push_back(1);
-	// std::list<int> t1;
-	// // std::list<int> t2;
-	// t1.push_back(1);
-	// t1.push_back(2);
-	// t1.push_back(3);
-	// t1.push_back(4);
-	// c1.push_back(1);
-	// c1.push_back(2);
-	// c1.push_back(3);
-
-	// printl(c1.begin(), c1.end());
-	// printl(t1.begin(), t1.end());
-
-	// t1.splice(t1.begin(), t1, t1.begin(), t1.end());//, t1.begin(), t1.end());
-	// // c1.pop_back();
-	// // c1.pop_back();
-	// // c1.pop_back();
-	// // c1.pop_back();
-	// // c1.pop_back();
-	// std::cout << "Custom : \n";
-	// printl(c1.begin(), c1.end());
-	// std::cout << "Base : \n";
-	// printl(t1.begin(), t1.end());
-	// printl(c2.begin(), c2.end());
-	// printl(t2.begin(), t2.end());
-	// std::cout << c1.size() << std::endl;
-	// std::cout << c2.size() << std::endl;
-	// std::cout << t1.size() << std::endl;
-	// std::cout << t2.size() << std::endl;
-	// c1.sort();
-	// b1.sort();
-	// printl(b1.rbegin(), b1.rend());
-	// printl(b2.rbegin(), b2.rend());
-	whathefuck();
-
-
-
-
-
-
-
-
+	// std::cout << test[1] << std::endl;
+	// std::cout << test[1] << std::endl;
 
 
 
