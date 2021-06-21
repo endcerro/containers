@@ -41,3 +41,6 @@ containers
 /testing/*.dSYM
 /testing/*.diff
 /testing/*.results
+/testing/tft
+/testing/tstd
+
