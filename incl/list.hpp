@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/17 17:35:00 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/21 13:50:09 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //http://www.cplusplus.com/reference/list/list/
@@ -28,10 +28,12 @@ namespace ft
 		private : 
 			Node<T> 	*_center;
 			int 		_capacity;
+			Alloc 		_alloc;
 
 			void 	init(void)
 			{
 				_center = new Node<T>;
+				
 				_center->data = reinterpret_cast<T *>(&_center->size);
 				_center->size = 0;
 				_center->next = _center;
@@ -78,8 +80,6 @@ namespace ft
 				clear();
 				delete _center;
 			};
-
-			/* OVERLOADS */
 
 			list& operator=(const list &b)
 			{

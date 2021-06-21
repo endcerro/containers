@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 15:43:35 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/17 17:09:55 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/17 17:49:07 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 // https://www.cplusplus.com/reference/vector/vector/
@@ -57,7 +57,7 @@ namespace ft
 			template <class InputIterator>
 			vector (InputIterator first, InputIterator last)
 			{		};
-
+			
 			size_t size(void) const
 			{
 				return _size;

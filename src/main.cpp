@@ -6,12 +6,13 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/17 16:43:34 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/21 13:49:39 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/list.hpp"
-#include "../incl/vector.hpp"
+// #include "../incl/vector.hpp"
+#include "../incl/stack.hpp"
 
 #include <list>
 
@@ -103,22 +104,19 @@ void whathefuck()
 int main()
 {
 
+	whathefuck();
+
+	// ft::stack<int> st1;
+	// ft::stack<int> st2;
 
 
-	ft::vector<int> test;
+	// st1.push(12);
+	// st1.print();
 
-	test[0] = 42;
-	
-	for (int i = 0; i < 10; i++)
-	{
-		std::cout << test[i] << std::endl;	
-	}
-	
-	// std::cout << test[1] << std::endl;
-	// std::cout << test[1] << std::endl;
-
-
-
+	// for (int i = 0; i < st1.size(); i++)
+	// {
+	// 	std::cout << "kek\n";
+	// }
 
 
 
