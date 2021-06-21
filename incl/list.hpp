@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/21 14:00:53 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/21 14:05:56 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //http://www.cplusplus.com/reference/list/list/
@@ -572,7 +572,7 @@ namespace ft
 			}
 			size_t max_size(void) //CAPACITY TODO
 			{
-				return _capacity;
+				return _alloc.max_size();
 			};
 			void remove (const T& val)
 			{
