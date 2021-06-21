@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/21 16:08:56 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/21 16:39:26 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,21 +105,27 @@ int main()
 {
 
 	// whathefuck();
-	ft::vector<int> test;
+	
 	// ft::stack<int> st1;
 	// ft::stack<int> st2;
+	ft::list<int> list;
 
 
 	for (int i  = 0 ; i < 20; i++)
 	{
-		test.push_back(i);
+		list.push_back(i);
 	}
 	// test.push_back(12);
 	// test[1] = 850;
-
-	ft::vector<int> test2(test);
+	ft::vector<int> test(list.begin(), list.end());
+	// ft::vector<int> test2(test);
+	// test.pop_back();
+	// test.pop_back();
+	// test.pop_back();
+	test.resize(4);
+	test.resize(10);
 	test.print();
-	test2.print();
+	// test2.print();
 
 	// for (int i = 0; i < st1.size(); i++)
 	// {

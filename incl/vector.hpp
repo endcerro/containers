@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 15:43:35 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/21 16:08:07 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/21 16:41:16 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 // https://www.cplusplus.com/reference/vector/vector/
@@ -66,7 +66,17 @@ namespace ft
 			template <class InputIterator>
 			vector(InputIterator first, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last, const Alloc &alloc = Alloc()) : _size(0), _alloc(alloc)
 			{
-				std::cout << "InputConstructor\n";
+				InputIterator firstC = first;
+				InputIterator lastC = last;
+				size_t i = 0;
+				while (firstC != lastC)
+					++firstC; ++i;
+				_arr = _alloc.allocate(i);
+				_max_size = i;
+				_size = 0;
+
+				while (first != last)
+					push_back(*(first++));
 			};
 
 			vector(const vector &v)
@@ -122,18 +132,16 @@ namespace ft
 			{
 				if (_size == _max_size)
 					growarr(_size + 10);
-				// if (_size < _max_size)
-				// {
-					_arr[_size++] = val;
-				// }
-				// else
-				// {
-
-					
-				// }
+				_arr[_size++] = val;
 			}
 
-			void print()
+			void pop_back(void)
+			{
+				if (_size)
+					_alloc.destroy(&(_arr[_size--]));
+			}
+
+			void print() const
 			{
 				for (size_t i = 0; i < _size; i++)
 				{
@@ -142,9 +150,40 @@ namespace ft
 				std::cout << std::endl;
 			}
 
+			void resize (size_t n, T val = T())
+			{
+				// size_t i = 0;
+				while (n < _size)
+					pop_back();
+				while (n > _size)
+					push_back(val);
+			}
+			void reserve(size_t n)
+			{
+				if (n <= _max_size)
+					return;
+				growarr(n);
+			}
+
+
 			size_t size(void) const
 			{
 				return _size;
+			}
+
+			size_t capacity(void) const
+			{
+				return _max_size;
+			}
+
+			size_t max_size(void) const
+			{
+				return _alloc.max_size();
+			}
+
+			bool empty(void) const
+			{
+				return (_size > 0);
 			}
 
 			T& operator[](size_t n)
