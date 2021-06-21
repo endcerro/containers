@@ -1,0 +1,374 @@
+
+[1;33m======================================================
+          CONSTRUCTEUR
+======================================================[37m
+
+[1;31mreponse attendu:[1;32m
+The contents of fifth are: 16 2 77 29
+[37m
+The contents of fifth are: 16 2 77 29 
+The contents of fifth are: 29 77 2 16 
+size list = 4
+
+[1;33m======================================================
+          OPERATEUR=
+======================================================[37m
+
+[1;31mreponse attendu:[1;32m
+Size of first: 0
+Size of second: 3
+[37m
+Size of first: 0
+Size of second: 3
+
+[1;33m======================================================
+          BEGIN
+======================================================[37m
+
+[1;31mreponse attendu:[1;32m
+mylist contains: 75 23 65 42 13
+[37m
+mylist contains: 75 23 65 42 13
+mylist contains: 13 42 65 23 75
+size list = 5
+
+
+[1;33m======================================================
+          END
+======================================================[37m
+
+[1;31mreponse attendu:[1;32m
+mylist contains: 75 23 65 42 13
+[37m
+mylist contains: 75 23 65 42 13
+mylist contains: 13 42 65 23 75
+size list = 5
+
+
+[1;33m======================================================
+          RBEGIN
+======================================================[37m
+
+[1;31mreponse attendu:[1;32m
+mylist backwards: 5 4 3 2 1
+[37m
+mylist backwards: 5 4 3 2 1
+mylist backwards: 1 2 3 4 5
+size list = 5
+
+
+[1;33m======================================================
+          REND
+======================================================[37m
+
+[1;31mreponse attendu:[1;32m
+mylist backwards: 5 4 3 2 1
+[37m
+mylist backwards: 5 4 3 2 1
+mylist backwards: 1 2 3 4 5
+size list = 5
+
+
+[1;33m======================================================
+          EMPTY
+======================================================[37m
+
+[1;31mreponse attendu:[1;32m
+total: 55
+[37m
+total: 55
+mylist backwards:
+size list = 0
+
+
+[1;33m======================================================
+          SIZE
+======================================================[37m
+
+[1;31mreponse attendu:[1;32m
+0. size: 0
+1. size: 10
+2. size: 20
+3. size: 19
+[37m
+0. size: 0
+1. size: 10
+2. size: 20
+3. size: 19
+mylist contains: 100 100 100 100 100 100 100 100 100 100 0 1 2 3 4 5 6 7 8
+mylist contains: 8 7 6 5 4 3 2 1 0 100 100 100 100 100 100 100 100 100 100
+
+[1;33m======================================================
+          FRONT
+======================================================[37m
+
+[1;31mreponse attendu:[1;32m
+mylist.front() is now 55
+[37m
+mylist.front() is now 55
+
+[1;33m======================================================
+          BACK
+======================================================[37m
+
+[1;31mreponse attendu:[1;32m
+mylist contains: 10 9 8 7 6 5 4 3 2 1 0
+[37m
+mylist contains: 10 9 8 7 6 5 4 3 2 1 0
+mylist contains: 0 1 2 3 4 5 6 7 8 9 10
+size list = 11
+
+[1;33m======================================================
+          ASSIGN
+======================================================[37m
+
+[1;31mreponse attendu:[1;32m
+Size of first: 3
+Size of second: 7
+[37m
+Size of first: 3
+Size of second: 7
+mylist first: 1776 7 4
+mylist first: 4 7 1776
+mylist second: 100 100 100 100 100 100 100
+mylist second: 100 100 100 100 100 100 100
+
+[1;33m======================================================
+          PUSH_FRONT
+======================================================[37m
+
+[1;31mreponse attendu:[1;32m
+mylist contains: 300 200 100 100
+[37m
+mylist contains: 300 200 100 100
+mylist contains: 100 100 200 300
+size list = 4
+
+[1;33m======================================================
+          POP_FRONT
+======================================================[37m
+
+[1;31mreponse attendu:[1;32m
+Popping out the elements in mylist: 100 200 300
+Final size of mylist is 0
+[37m
+Popping out the elements in mylist: 100 200 300
+Final size of mylist is 0
+mylist contains:
+
+[1;33m======================================================
+          PUSH_BACK
+======================================================[37m
+
+mylist stores 3 numbers.
+mylist contains: 100 200 300
+mylist contains: 300 200 100
+size list = 3
+
+[1;33m======================================================
+          POP_BACK
+======================================================[37m
+
+[1;31mreponse attendu:[1;32m
+The elements of mylist summed 600
+[37m
+The elements of mylist summed 600
+mylist contains:
+size list = 0
+
+[1;33m======================================================
+          INSERT
+======================================================[37m
+
+[1;31mreponse attendu:[1;32m
+mylist contains: 1 10 20 30 30 20 2 3 4 5
+[37m
+mylist contains: 1 10 20 30 30 20 2 3 4 5
+mylist contains: 5 4 3 2 20 30 30 20 10 1
+size list = 10
+
+[1;33m======================================================
+          ERASE
+======================================================[37m
+
+[37m
+[1;31mreponse attendu:[1;32m
+mylist contains: 10 30 60 80 90
+[37m
+mylist contains: 10 30 60 80 90
+mylist contains: 90 80 60 30 10
+size list = 5
+
+[1;33m======================================================
+          SWAP
+======================================================[37m
+
+[37m
+[1;31mreponse attendu:[1;32m
+first contains: 200 200 200 200 200 
+second contains: 100 100 100 
+[37m
+first contains: 200 200 200 200 200
+first contains: 200 200 200 200 200
+size list = 5
+second contains: 100 100 100
+second contains: 100 100 100
+size list = 3
+
+
+[1;33m======================================================
+          RESIZE
+======================================================[37m
+
+[37m
+[1;31mreponse attendu:[1;32m
+mylist contains: 1 2 3 4 5 100 100 100 0 0 0 0
+[37m
+mylist contains: 1 2 3 4 5 100 100 100 0 0 0 0
+mylist contains: 0 0 0 0 100 100 100 5 4 3 2 1
+size list = 12
+
+[1;33m======================================================
+          CLEAR
+======================================================[37m
+
+[37m
+[1;31mreponse attendu:[1;32m
+mylist contains: 100 200 300
+mylist contains: 1101 2202
+[37m
+mylist contains: 100 200 300
+mylist contains: 300 200 100
+size list = 3
+mylist contains: 1101 2202
+mylist contains: 2202 1101
+size list = 2
+
+[1;33m======================================================
+          SPLICE
+======================================================[37m
+
+[37m
+[1;31mreponse attendu:[1;32m
+mylist1 contains: 30 3 4 1 10 20
+mylist2 contains: 2
+[37m
+mylist1 contains: 30 3 4 1 10 20
+mylist1 contains: 20 10 1 4 3 30
+size list = 6
+mylist2 contains: 2
+mylist1 contains: 2
+size list = 1
+
+[1;33m======================================================
+          REMOVE
+======================================================[37m
+
+[37m
+[1;31mreponse attendu:[1;32m
+mylist contains: 17 7 14
+[37m
+mylist contains: 17 7 14
+mylist contains: 14 7 17
+size list = 3
+
+[1;33m======================================================
+          REMOVE_IF
+======================================================[37m
+
+[37m
+[1;31mreponse attendu:[1;32m
+mylist contains: 36 20
+[37m
+mylist contains: 36 20
+mylist contains: 20 36
+size list = 2
+
+[1;33m======================================================
+          UNIQUE
+======================================================[37m
+
+[37m
+[1;31mreponse attendu:[1;32m
+mylist contains: 2.72 12.15 72.25
+[37m
+mylist contains: 2.72 12.15 72.25
+mylist contains: 72.25 12.15 2.72
+size list = 3
+
+[1;33m======================================================
+          MERGE
+======================================================[37m
+
+[37m
+[1;31mreponse attendu:[1;32m
+first contains: 1.4 2.2 2.9 2.1 3.1 3.7 7.1
+[37m
+first contains: 1.4 2.2 2.9 2.1 3.1 3.7 7.1
+first contains: 7.1 3.7 3.1 2.1 2.9 2.2 1.4
+size list = 7
+
+[1;33m======================================================
+          SORT
+======================================================[37m
+
+[37m
+[1;31mreponse attendu:[1;32m
+mylist contains: Three one two
+mylist contains: one Three two
+[37m
+mylist contains: Three one two
+mylist contains: two one Three
+size list = 3
+mylist contains: one Three two
+mylist contains: two Three one
+size list = 3
+
+[1;33m======================================================
+          REVERSE
+======================================================[37m
+
+[37m
+[1;31mreponse attendu:[1;32m
+mylist contains: 9 8 7 6 5 4 3 2 1
+[37m
+mylist contains: 9 8 7 6 5 4 3 2 1
+mylist contains: 1 2 3 4 5 6 7 8 9
+size list = 9
+
+
+[1;33m======================================================
+          RELATIONAL OPERATOR
+======================================================[37m
+
+[37m
+[1;31mreponse attendu:[1;32m
+a and b are equal
+b and c are not equal
+b is less than c
+c is greater than b
+a is less than or equal to b
+a is greater than or equal to b
+[37m
+a and b are equal
+b and c are not equal
+b is less than c
+c is greater than b
+a is less than or equal to b
+a is greater than or equal to b
+
+[1;33m======================================================
+          SWAP
+======================================================[37m
+
+[37m
+[1;31mreponse attendu:[1;32m
+foo contains: 200 200 200 200 200
+bar contains: 100 100 100
+[37m
+foo contains: 200 200 200 200 200
+foo contains: 200 200 200 200 200
+size list = 5
+bar contains: 100 100 100
+bar contains: 100 100 100
+size list = 3

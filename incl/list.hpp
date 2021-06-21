@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/21 13:50:09 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/21 14:00:53 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //http://www.cplusplus.com/reference/list/list/
@@ -33,7 +33,7 @@ namespace ft
 			void 	init(void)
 			{
 				_center = new Node<T>;
-				
+				// _center = _alloc.allocate(1);
 				_center->data = reinterpret_cast<T *>(&_center->size);
 				_center->size = 0;
 				_center->next = _center;
@@ -336,7 +336,9 @@ namespace ft
 				iterator ret = iterator(todel->next);
 				todel->previous->next = todel->next;
 				todel->next->previous = todel->previous;
-				delete todel->data;
+				_alloc.destroy(todel->data);
+				_alloc.deallocate(todel->data, sizeof(T));
+				// delete todel->data;
 				delete todel;
 				_center->size--;
 				return ret;
@@ -355,7 +357,9 @@ namespace ft
 			{
 				Node<T> *old;
 				Node<T> *elem = new Node<T>;
-				elem->data = new T(val);
+				elem->data = _alloc.allocate(1);
+				_alloc.construct(elem->data, val);
+				// elem->data = new T(val);
 
 				old = _center->previous;
 				_center->previous = elem;
@@ -368,7 +372,9 @@ namespace ft
 			void push_front (const T& val)
 			{
 				Node<T> *elem = new Node<T>;
-				elem->data = new T(val);
+				// elem->data = new T(val);
+				elem->data = _alloc.allocate(1);
+				_alloc.construct(elem->data, val);
 				Node<T> *old = _center->next;
 				elem->next = old;
 				elem->previous = _center;
@@ -404,7 +410,9 @@ namespace ft
 					_center->next = old->next;
 					_center->next->previous = _center;
 				}
-				delete old->data;
+				_alloc.destroy(old->data);
+				_alloc.deallocate(old->data, sizeof(T));
+				// delete old->data;
 				delete old;
 				--_center->size;
 			}
@@ -422,7 +430,9 @@ namespace ft
 					_center->previous = old->previous;
 					old->previous->next = _center;
 				}
-				delete old->data;
+				_alloc.destroy(old->data);
+				_alloc.deallocate(old->data, sizeof(T));
+				// delete old->data;
 				delete old;
 				--_center->size;
 			}
@@ -445,7 +455,9 @@ namespace ft
 				while (current != _center)
 				{
 					next = current->next;
-					delete current->data;
+					_alloc.destroy(current->data);
+					_alloc.deallocate(current->data, sizeof(T));
+					// delete current->data;
 					delete current;
 					current	= next;
 				}
@@ -469,7 +481,9 @@ namespace ft
 				else
 				{
 					Node<T> *new_elem = new Node<T>;
-					new_elem->data = new T(val);
+					new_elem->data = _alloc.allocate(1);
+					_alloc.construct(new_elem->data, val);
+					// new_elem->data = new T(val);
 					new_elem->next = p._ptr;
 					new_elem->previous = p._ptr->previous;
 					p._ptr->previous->next = new_elem;
