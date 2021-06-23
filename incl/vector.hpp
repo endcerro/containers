@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 15:43:35 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/21 16:41:16 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/23 17:08:04 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 // https://www.cplusplus.com/reference/vector/vector/
@@ -105,6 +105,72 @@ namespace ft
 				}
 				std::cout << "Freed " << i << " elements" << std::endl;
 				_alloc.deallocate(_arr, sizeof(T) * _max_size);
+			}
+
+			friend class iterator;
+			/* MEMBER FUNS */
+			//Use friends
+			class iterator
+			{
+				friend class vector<T, Alloc>;
+				
+				private :
+					T *_ptr;
+				public :
+					iterator(T *ptr) : _ptr(ptr) 
+					{ }
+					iterator() : _ptr(0) 
+					{};
+					iterator operator++(int) //i++
+					{
+						iterator i = *this;
+						++_ptr; //= _ptr + sizeof(T);//->next;
+						return i;
+					}
+					iterator operator++() //i++
+					{		
+						_ptr = _ptr + sizeof(T); 
+						return *this;
+					}
+					// iterator operator--(int) //i++
+					// {
+					// 	iterator i = *this;
+					// 	_ptr = _ptr->previous;
+					// 	return i;
+					// }
+					// iterator operator--() //i++
+					// { 
+					// 	_ptr = _ptr->previous; 
+					// 	return *this;
+					// }
+					T& operator*() 
+					{ 
+						return *(_ptr); 
+					}
+					// T* operator->() 
+					// { 
+					// 	return _ptr->data; 
+					// }
+					bool operator==(const iterator& it)
+					{ 
+						return (_ptr == it._ptr); 
+					}
+					bool operator!=(const iterator& it) 
+					{
+						return (_ptr != it._ptr); 
+					}
+
+			};
+
+			iterator begin() const 
+			{ 
+				// if (_center->next)
+					// return iterator(_center->next);
+				return iterator(_arr);
+			}
+			iterator end() const 
+			{
+				return (iterator(_arr + sizeof(T) * (_size - 1)));
 			}
 
 			void growarr(size_t n)
