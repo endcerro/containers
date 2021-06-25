@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/23 17:06:25 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/25 23:05:42 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,12 +126,17 @@ int main()
 	test.resize(10, 8);
 	test.print();
 
+	test.test();
+
+	// std::cout <<"be/*/*gin : " <<test.begin().getptr() << std::endl;
+	// std::cout <<"end :" <<test.end().getptr() << std::endl;*/*/
 	
 	ft::vector<int>::iterator itt = test.begin();
 
 	while (itt != test.end())
 	{
-		std::cout << *(itt++) << std::endl;
+		std::cout << *(itt) << " @: "<< &(*(itt)) <<std::endl;
+		++itt;
 	}
 
 

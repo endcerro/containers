@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/21 14:05:56 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/25 22:27:52 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //http://www.cplusplus.com/reference/list/list/
@@ -352,6 +352,7 @@ namespace ft
 					ret = erase(start++);
 				return ret;
 			}
+
 
 			void push_back (const T& val)
 			{

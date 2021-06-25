@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 15:43:35 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/25 20:04:51 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/25 23:09:08 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 // https://www.cplusplus.com/reference/vector/vector/
@@ -119,41 +119,49 @@ namespace ft
 				
 				private :
 					T *_ptr;
+					size_t *size;
+					list<T> *obj;
 				public :
+					T *getptr(void)
+					{
+						return (_ptr);
+					}
+
 					iterator(T *ptr) : _ptr(ptr) 
-					{ }
+					{	}
 					iterator() : _ptr(0) 
-					{};
+					{	};
 					iterator operator++(int) //i++
 					{
 						iterator i = *this;
-						++_ptr; //= _ptr + sizeof(T);//->next;
+						++_ptr;
 						return i;
 					}
 					iterator operator++() //i++
 					{		
-						_ptr = _ptr + sizeof(T); 
+						++_ptr;
 						return *this;
 					}
-					// iterator operator--(int) //i++
-					// {
-					// 	iterator i = *this;
-					// 	_ptr = _ptr->previous;
-					// 	return i;
-					// }
-					// iterator operator--() //i++
-					// { 
-					// 	_ptr = _ptr->previous; 
-					// 	return *this;
-					// }
+					iterator operator--(int) //i++
+					{
+						iterator i = *this;
+						// _ptr = _ptr->previous;
+						--_ptr;
+						return i;
+					}
+					iterator operator--() //i++
+					{ 
+						--_ptr;// = _ptr->previous; 
+						return *this;
+					}
 					T& operator*() 
 					{ 
 						return *(_ptr); 
 					}
-					// T* operator->() 
-					// { 
-					// 	return _ptr->data; 
-					// }
+					T* operator->() 
+					{ 
+						return *_ptr;//->data; 
+					}
 					bool operator==(const iterator& it)
 					{ 
 						return (_ptr == it._ptr); 
@@ -165,6 +173,17 @@ namespace ft
 
 			};
 
+			void test(void)
+			{
+				
+				// std::cout << &(_arr[_size]) << std::endl;
+
+				for (int i = 0; i < _size; i++)
+				{
+					std::cout << &(_arr[i]) << std::endl;	
+				}
+			}
+
 			iterator begin() const 
 			{ 
 				// if (_center->next)
@@ -173,7 +192,7 @@ namespace ft
 			}
 			iterator end() const 
 			{
-				return (iterator(_arr + sizeof(T) * (_size - 1)));
+				return (iterator(&(_arr[_size])));// + sizeof(T) * (_size)));
 			}
 
 			void growarr(size_t n)
