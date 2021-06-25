@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 15:43:35 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/23 17:08:04 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/25 20:04:51 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 // https://www.cplusplus.com/reference/vector/vector/
@@ -70,7 +70,10 @@ namespace ft
 				InputIterator lastC = last;
 				size_t i = 0;
 				while (firstC != lastC)
-					++firstC; ++i;
+				{
+					++firstC; 
+					++i;
+				}
 				_arr = _alloc.allocate(i);
 				_max_size = i;
 				_size = 0;
