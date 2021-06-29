@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 15:43:35 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/29 14:48:15 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/29 14:54:07 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 // https://www.cplusplus.com/reference/vector/vector/
@@ -173,6 +173,64 @@ namespace ft
 
 			};
 
+			class reverse_iterator
+			{
+				friend class vector<T, Alloc>;
+				
+				private :
+					T *_ptr;
+					size_t *size;
+					list<T> *obj;
+				public :
+					T *getptr(void)
+					{
+						return (_ptr);
+					}
+
+					reverse_iterator(T *ptr) : _ptr(ptr) 
+					{	}
+					reverse_iterator() : _ptr(0) 
+					{	};
+					reverse_iterator operator++(int) //i++
+					{
+						reverse_iterator i = *this;
+						--_ptr;
+						return i;
+					}
+					reverse_iterator operator++() //i++
+					{		
+						--_ptr;
+						return *this;
+					}
+					reverse_iterator operator--(int) //i++
+					{
+						reverse_iterator i = *this;
+						++_ptr;
+						return i;
+					}
+					reverse_iterator operator--() //i++
+					{ 
+						++_ptr; 
+						return *this;
+					}
+					T& operator*() 
+					{ 
+						return *(_ptr); 
+					}
+					T* operator->() 
+					{ 
+						return *_ptr;//->data; 
+					}
+					bool operator==(const reverse_iterator& it)
+					{ 
+						return (_ptr == it._ptr); 
+					}
+					bool operator!=(const reverse_iterator& it) 
+					{
+						return (_ptr != it._ptr); 
+					}
+			};
+
 			void test(void)
 			{
 				
@@ -190,9 +248,19 @@ namespace ft
 					// return iterator(_center->next);
 				return iterator(_arr);
 			}
+			reverse_iterator rbegin() const 
+			{ 
+				// if (_center->next)
+					// return iterator(_center->next);
+				return reverse_iterator(&(_arr[_size - 1]));
+			}
 			iterator end() const 
 			{
 				return (iterator(&(_arr[_size])));// + sizeof(T) * (_size)));
+			}
+			reverse_iterator rend() const 
+			{
+				return (reverse_iterator(_arr - 1));// + sizeof(T) * (_size)));
 			}
 
 			void growarr(size_t n)

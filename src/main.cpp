@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/29 14:37:07 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/29 14:56:19 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,24 +136,34 @@ int main()
 	// std::cout <<"be/*/*gin : " <<test.begin().getptr() << std::endl;
 	// std::cout <<"end :" <<test.end().getptr() << std::endl;*/*/
 	
-	ft::vector<int>::iterator itt = test.begin();
+	ft::vector<int>::reverse_iterator itt = test.rbegin();
 
-	while (itt != test.end())
+	std::vector<int>::reverse_iterator bitt = base.rbegin();
+
+	while (itt != test.rend())
 	{
 		std::cout << *(itt) << " @: "<< &(*(itt)) <<std::endl;
 		++itt;
 	}
-
-	std::cout << " @: "<< &(*(itt)) <<std::endl;
-	std::vector<int>::iterator b_itt = base.begin();
-
-	while (b_itt != base.end())
+	std::cout << &(*itt) << std::endl;
+	while (bitt != base.rend())
 	{
-		std::cout << *(b_itt) << " @: "<< &(*(b_itt)) <<std::endl;
-		++b_itt;
+		std::cout << *(bitt) << " @: "<< &(*(bitt)) <<std::endl;
+		++bitt;
 	}
+	std::cout << &(*bitt) << std::endl;
 
-	std::cout << " @: "<< &(*(b_itt)) <<std::endl;
+
+	// std::cout << " @: "<< &(*(itt)) <<std::endl;
+	// std::vector<int>::iterator b_itt = base.begin();
+
+	// while (b_itt != base.end())
+	// {
+	// 	std::cout << *(b_itt) << " @: "<< &(*(b_itt)) <<std::endl;
+	// 	++b_itt;
+	// }
+
+	// std::cout << " @: "<< &(*(b_itt)) <<std::endl;
 
 
 
