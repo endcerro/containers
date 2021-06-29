@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 15:43:35 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/29 17:04:51 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/29 18:31:46 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 // https://www.cplusplus.com/reference/vector/vector/
@@ -128,10 +128,6 @@ namespace ft
 					size_t *size;
 					// list<T> *obj;
 				public :
-					T *getptr(void)
-					{
-						return (_ptr);
-					}
 
 					iterator(T *ptr) : _ptr(ptr) 
 					{	}
@@ -179,6 +175,25 @@ namespace ft
 						return (_ptr != it._ptr); 
 					}
 
+					// iterator operator+(int n)
+					iterator operator+(int n) const
+					{
+						return iterator(&(_ptr[n]));
+					}
+					iterator operator+=(int n)
+					{
+						_ptr = _ptr + n;
+						return *this;
+					}
+					iterator operator-(int n) const
+					{
+						return iterator(_ptr - n);
+					}
+					iterator operator-=(int n)
+					{
+						_ptr = _ptr - n;
+						return *this;
+					}
 			};
 
 			class const_iterator
@@ -190,10 +205,6 @@ namespace ft
 					size_t *size;
 					// list<T> *obj;
 				public :
-					T *getptr(void)
-					{
-						return (_ptr);
-					}
 
 					const_iterator(T *ptr) : _ptr(ptr) 
 					{	}
@@ -243,6 +254,24 @@ namespace ft
 					{
 						return (_ptr != it._ptr); 
 					}
+					const_iterator operator+(int n) const
+					{
+						return const_iterator(&(_ptr[n]));
+					}
+					const_iterator operator+=(int n)
+					{
+						_ptr = _ptr + n;
+						return *this;
+					}
+					const_iterator operator-(int n) const
+					{
+						return const_iterator(_ptr - n);
+					}
+					const_iterator operator-=(int n)
+					{
+						_ptr = _ptr - n;
+						return *this;
+					}
 
 			};
 
@@ -255,11 +284,6 @@ namespace ft
 					size_t *size;
 					// list<T> *obj;
 				public :
-					T *getptr(void)
-					{
-						return (_ptr);
-					}
-
 					reverse_iterator(T *ptr) : _ptr(ptr) 
 					{	}
 					reverse_iterator() : _ptr(0) 
@@ -302,6 +326,24 @@ namespace ft
 					{
 						return (_ptr != it._ptr); 
 					}
+					reverse_iterator operator+(int n) const
+					{
+						return reverse_iterator((_ptr - n));
+					}
+					reverse_iterator operator+=(int n)
+					{
+						_ptr = _ptr - n;
+						return *this;
+					}
+					reverse_iterator operator-(int n) const
+					{
+						return reverse_iterator(_ptr + n);
+					}
+					reverse_iterator operator-=(int n)
+					{
+						_ptr = _ptr + n;
+						return *this;
+					}
 			};
 			class const_reverse_iterator
 			{
@@ -310,18 +352,14 @@ namespace ft
 				private :
 					T *_ptr;
 					size_t *size;
-					// list<T> *obj;
+
 				public :
-					T *getptr(void)
-					{
-						return (_ptr);
-					}
 
 					const_reverse_iterator(T *ptr) : _ptr(ptr) 
 					{	}
 					const_reverse_iterator() : _ptr(0) 
 					{	};
-					const_reverse_iterator(reverse_iterator &n) : _ptr(n._ptr)
+					const_reverse_iterator(reverse_iterator n) : _ptr(n._ptr)
 					{
 
 					}
@@ -363,24 +401,34 @@ namespace ft
 					{
 						return (_ptr != it._ptr); 
 					}
+					const_reverse_iterator operator+(int n) const
+					{
+						return const_reverse_iterator((_ptr - n));
+					}
+					const_reverse_iterator operator+=(int n)
+					{
+						_ptr = _ptr - n;
+						return *this;
+					}
+					const_reverse_iterator operator-(int n) const
+					{
+						return const_reverse_iterator(_ptr + n);
+					}
+					const_reverse_iterator operator-=(int n)
+					{
+						_ptr = _ptr + n;
+						return *this;
+					}
 			};
 
 			iterator begin() const 
 			{ 
 				return iterator(_arr);
 			}
-			// const_iterator begin() const 
-			// { 
-			// 	return const_iterator(_arr);
-			// }
 			reverse_iterator rbegin() const 
 			{
 				return reverse_iterator(&(_arr[_size - 1]));
 			}
-			// const_reverse_iterator rbegin() const 
-			// {
-			// 	return const_reverse_iterator(&(_arr[_size - 1]));
-			// }
 			iterator end() const 
 			{
 				return (iterator(&(_arr[_size])));// + sizeof(T) * (_size)));
@@ -460,8 +508,9 @@ namespace ft
 			}
 			T& at(int a)
 			{
-				if (a >= _size || a < 0)
-					throw std::out_of_range(" ");
+				int ns = static_cast<int>(_size);
+				if (a >= ns || a < 0)
+					throw std::out_of_range("at is fucked up yoo");
 				return _arr[a];
 			}
 
@@ -489,6 +538,34 @@ namespace ft
 			{
 				return _arr[n];
 			}
+			template<class IT>
+			IT insert (IT position, const T& val)
+			{
+				size_t pos = position._ptr - _arr;
+
+				if (_size + 1 >= _max_size)
+					growarr(_max_size + D_S);
+				for (iterator tmp = end(); tmp._ptr != _arr + pos; --tmp)
+					*tmp = *(tmp - 1);
+				*(_arr + pos) = val;
+				++_size;	
+				return iterator(_arr + pos);
+			}
+			template<class IT>
+    		void insert (IT position, size_t n, const T& val)
+    		{
+    			if (_size + n >= _max_size)
+    				growarr(_size + n + D_S);
+    			for (size_t i = 0; i < n; i++)
+    			{
+	    			position = insert(position, val);
+    			}
+    		}	
+			// template <class IT, class InputIterator>
+   //  		void insert (IT position, InputIterator first, InputIterator last)
+   //  		{
+
+   //  		}
 	};
 }
 

@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/29 16:52:01 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/29 18:32:31 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,20 +103,42 @@ int main()
 	// ft::vector<int>::reverse_iterator itt = test.rbegin();
 
 	// std::vector<int>::reverse_iterator bitt = base.rbegin();
+	// std::cout << "Custom :\n";
+	// for (ft::vector<int>::iterator it = test.begin(); it != test.end(); it++)
+	// 	std::cout << *(it) << " @: "<< &(*(it)) <<std::endl;
+
+	// std::cout << "Base :\n";
+	// for (std::vector<int>::iterator it = base.begin(); it != base.end(); it++)
+	// 	std::cout << *(it) << " @: "<< &(*(it)) <<std::endl;
+
+
+
+
+	ft::vector<int>::iterator opt = test.begin();
+	std::vector<int>::iterator bopt = base.begin();
+
+	bopt = base.insert(bopt + 4 , 420);
+	base.insert(bopt + 4, 5, 69);
+
+	test.insert(opt + 4, 420);
+	test.insert(opt + 4, 5, 69);
+
 	std::cout << "Custom :\n";
-	for (ft::vector<int>::const_reverse_iterator it = test.rbegin(); it != test.rend(); it++)
+	for (ft::vector<int>::iterator it = test.begin(); it != test.end(); it++)
 		std::cout << *(it) << " @: "<< &(*(it)) <<std::endl;
+	// std::cout << "Base :\n";
+	// for (std::vector<int>::iterator it = base.begin(); it != base.end(); it++)
+	// 	std::cout << *(it) << " @: "<< &(*(it)) <<std::endl;
+	// // int amt = 18;
+	// std::cout << *(opt += amt) << std::endl;
+	// std::cout << *(bopt += amt) << std::endl;
 
-	std::cout << "Base :\n";
-	for (std::vector<int>::const_reverse_iterator it = base.rbegin(); it != base.rend(); it++)
-		std::cout << *(it) << " @: "<< &(*(it)) <<std::endl;
+	// std::cout << *(opt -= 8) << std::endl;
+	// std::cout << *(bopt -= 8) << std::endl;
 
 
-
-
-
-
-
+	// std::cout << *(opt += 1) << std::endl;
+	// std::cout << *(bopt += 1) << std::endl;
 
 
 

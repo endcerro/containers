@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/29 15:42:39 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/29 18:10:35 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //http://www.cplusplus.com/reference/list/list/
@@ -136,6 +136,11 @@ namespace ft
 					{
 						return (_ptr != it._ptr); 
 					}
+					// iterator operator+(iterator& it, int n)
+					// iterator operator+(int n)
+					// {
+					// 	return iterator(_ptr[n]);
+					// }
 				private :
 					Node<T> *_ptr;
 			};
@@ -500,7 +505,7 @@ namespace ft
 					p._ptr->previous->next = new_elem;
 					p._ptr->previous = new_elem;
 					++_center->size;
-					return iterator(new_elem);
+					return IT(new_elem);
 				}
 			}
 
