@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 15:43:35 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/29 18:31:46 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/29 22:57:19 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 // https://www.cplusplus.com/reference/vector/vector/
@@ -22,7 +22,7 @@
 #endif
 namespace ft 
 {
-	template <class T, class Alloc = ft::allocator<T> >
+	template <class T, class Alloc = std::allocator<T> >
 	class vector
 	{
 		private :
@@ -33,12 +33,13 @@ namespace ft
 
 			void growarr(size_t n)
 			{
-				std::cout << "growarr" << std::endl;
+				std::cout << "creating :" << n << std::endl;
 				
 				T* tmp = _alloc.allocate(n);
 				for (size_t i = 0; i < _size; i++)
 				{
-					tmp[i] = _arr[i];
+					_alloc.construct(&tmp[i], _arr[i]);
+					// tmp[i] = _arr[i];
 					_alloc.destroy(&(_arr[i]));
 				}
 				_alloc.deallocate(_arr, sizeof(T) * _max_size);
@@ -51,6 +52,7 @@ namespace ft
 			explicit vector (const Alloc &alloc = Alloc()) : _alloc(alloc)
 			{
 				_arr = _alloc.allocate(D_S);
+
 				// vecNew(D_S);
 				_size = 0;
 				_max_size = D_S;
@@ -541,31 +543,33 @@ namespace ft
 			template<class IT>
 			IT insert (IT position, const T& val)
 			{
-				size_t pos = position._ptr - _arr;
-
-				if (_size + 1 >= _max_size)
-					growarr(_max_size + D_S);
-				for (iterator tmp = end(); tmp._ptr != _arr + pos; --tmp)
-					*tmp = *(tmp - 1);
-				*(_arr + pos) = val;
-				++_size;	
-				return iterator(_arr + pos);
+				size_t delta = position._ptr - _arr;
+				if(_size + 1 >= _max_size)
+				{
+					growarr(_size + 1 + D_S);
+					position = IT(_arr + delta);
+				}
+				for (size_t i = _size; i > delta ; i--)
+					_arr[i] = _arr[i - 1];
+				*position = val;
+				++_size;
+				return IT(position);
 			}
+
 			template<class IT>
     		void insert (IT position, size_t n, const T& val)
     		{
-    			if (_size + n >= _max_size)
-    				growarr(_size + n + D_S);
     			for (size_t i = 0; i < n; i++)
-    			{
-	    			position = insert(position, val);
-    			}
+    				position = insert(position, val);
     		}	
-			// template <class IT, class InputIterator>
-   //  		void insert (IT position, InputIterator first, InputIterator last)
-   //  		{
-
-   //  		}
+			template <class IT, class InputIterator>
+    		void insert (IT position, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type start, InputIterator end)
+    		{
+    			while (start != end)
+    			{
+    				position = insert(position, *(start++));
+    			}
+    		}
 	};
 }
 

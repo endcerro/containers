@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/29 18:32:31 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/29 22:56:05 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,10 @@ int main()
 	ft::list<int> list;
 	std::list<int> base_list;
 
-	for (int i  = 0 ; i < 20; i++)
+	for (int i  = 0 ; i < 10; i++)
 	{
 		list.push_back(i);
-		base_list.push_back(i);
+		base_list.push_back(-i);
 
 	}
 
@@ -99,9 +99,9 @@ int main()
 	std::vector<int> base;//(base_list.begin(), base_list.end());
 
 	test.assign(list.begin(), list.end());
-	base.assign(base_list.begin(), base_list.end());
+	// base.assign(base_list.begin(), base_list.end());
 	// ft::vector<int>::reverse_iterator itt = test.rbegin();
-
+	test.push_back(42);
 	// std::vector<int>::reverse_iterator bitt = base.rbegin();
 	// std::cout << "Custom :\n";
 	// for (ft::vector<int>::iterator it = test.begin(); it != test.end(); it++)
@@ -117,12 +117,29 @@ int main()
 	ft::vector<int>::iterator opt = test.begin();
 	std::vector<int>::iterator bopt = base.begin();
 
-	bopt = base.insert(bopt + 4 , 420);
-	base.insert(bopt + 4, 5, 69);
+	// bopt = base.insert(bopt + 4 , 420);
+	// base.insert(bopt + 4, 5, 69);
+		// test.reserve(80);
+	
+	// opt = test.insert(opt, 68);
+	// opt = test.insert(opt, 67);
+	// opt = test.insert(opt, 66);
+	// opt = test.insert(opt, 65);
+	// std::cout << test.capacity() << "\n OPT = " << *opt <<  std::endl;
 
-	test.insert(opt + 4, 420);
-	test.insert(opt + 4, 5, 69);
+	// test.insert(opt, 65);
 
+	// test.insert(opt, 5, 69);
+	std::cout << "Custom :\n";
+	for (ft::vector<int>::iterator it = test.begin(); it != test.end(); it++)
+		std::cout << *(it) << " @: "<< &(*(it)) <<std::endl;
+	test.insert(test.end() ,12, 850);
+	test.insert(test.begin(), base_list.begin(), base_list.end());
+	// test.dec_one(test.end());
+	// test.dec_one(test.begin());
+	// test.dec_one(test.begin());
+	// test.dec_one(test.begin());
+	// test.dec_one(test.begin());
 	std::cout << "Custom :\n";
 	for (ft::vector<int>::iterator it = test.begin(); it != test.end(); it++)
 		std::cout << *(it) << " @: "<< &(*(it)) <<std::endl;
