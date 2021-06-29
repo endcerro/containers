@@ -6,13 +6,15 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/25 23:05:42 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/29 14:37:07 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/list.hpp"
 #include "../incl/vector.hpp"
 #include "../incl/stack.hpp"
+
+#include <vector>
 
 #include <list>
 
@@ -109,24 +111,27 @@ int main()
 	// ft::stack<int> st1;
 	// ft::stack<int> st2;
 	ft::list<int> list;
-
+	std::list<int> base_list;
 
 	for (int i  = 0 ; i < 20; i++)
 	{
 		list.push_back(i);
+		base_list.push_back(i);
+
 	}
 	// test.push_back(12);
 	// test[1] = 850;
 	ft::vector<int> test(list.begin(), list.end());
+	std::vector<int> base(base_list.begin(), base_list.end());
 	// ft::vector<int> test2(test);
 	// test.pop_back();
 	// test.pop_back();
 	// test.pop_back();
-	test.resize(4);
-	test.resize(10, 8);
-	test.print();
+	// test.resize(4);
+	// test.resize(10, 8);
+	// test.print();
 
-	test.test();
+	// test.test();
 
 	// std::cout <<"be/*/*gin : " <<test.begin().getptr() << std::endl;
 	// std::cout <<"end :" <<test.end().getptr() << std::endl;*/*/
@@ -138,6 +143,17 @@ int main()
 		std::cout << *(itt) << " @: "<< &(*(itt)) <<std::endl;
 		++itt;
 	}
+
+	std::cout << " @: "<< &(*(itt)) <<std::endl;
+	std::vector<int>::iterator b_itt = base.begin();
+
+	while (b_itt != base.end())
+	{
+		std::cout << *(b_itt) << " @: "<< &(*(b_itt)) <<std::endl;
+		++b_itt;
+	}
+
+	std::cout << " @: "<< &(*(b_itt)) <<std::endl;
 
 
 
