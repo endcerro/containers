@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/29 22:56:05 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/29 23:43:36 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,10 +131,12 @@ int main()
 
 	// test.insert(opt, 5, 69);
 	std::cout << "Custom :\n";
+	test.insert(test.end() ,2, 850);
 	for (ft::vector<int>::iterator it = test.begin(); it != test.end(); it++)
 		std::cout << *(it) << " @: "<< &(*(it)) <<std::endl;
-	test.insert(test.end() ,12, 850);
-	test.insert(test.begin(), base_list.begin(), base_list.end());
+		
+	test.erase(test.begin(), test.end());
+	// test.insert(test.begin(), base_list.begin(), base_list.end());
 	// test.dec_one(test.end());
 	// test.dec_one(test.begin());
 	// test.dec_one(test.begin());

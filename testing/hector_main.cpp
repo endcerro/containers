@@ -6,13 +6,13 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:55:26 by hpottier          #+#    #+#             */
-/*   Updated: 2021/06/16 17:34:50 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/29 23:04:52 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include "../incl/list.hpp"
-// #include "vector.hpp"
+#include "../incl/vector.hpp"
 // #include "stack.hpp"
 // #include "queue.hpp"
 // #include "map.hpp"
@@ -295,117 +295,117 @@ void lst_testeur()
 // 	std::cout << std::endl;
 // }
 
-// void vector_testeur()
-// {
-// 	NS::vector<int> vec;
+void vector_testeur()
+{
+	NS::vector<int> vec;
 
-// 	vec.push_back(2);
-// 	vec.push_back(-48);
-// 	vec.push_back(841);
-// 	vec.push_back(11654164);
-// 	vec.push_back(51);
-// 	vec.push_back(0);
-// 	vec.push_back(-8768451);
-// 	vec.pop_back();
-// 	vec.pop_back();
-// 	vec.push_back(16543);
-// 	vec.push_back(54612);
-// 	vec.push_back(6164);
-// 	vec.pop_back();
-// 	vec.push_back(123);
-// 	vec.push_back(-42);
-// 	vec.push_back(124834);
-// 	vec.push_back(31);
-// 	vec.push_back(32);
-// 	vec.push_back(4535);
+	vec.push_back(2);
+	vec.push_back(-48);
+	vec.push_back(841);
+	vec.push_back(11654164);
+	vec.push_back(51);
+	vec.push_back(0);
+	vec.push_back(-8768451);
+	vec.pop_back();
+	vec.pop_back();
+	vec.push_back(16543);
+	vec.push_back(54612);
+	vec.push_back(6164);
+	vec.pop_back();
+	vec.push_back(123);
+	vec.push_back(-42);
+	vec.push_back(124834);
+	vec.push_back(31);
+	vec.push_back(32);
+	vec.push_back(4535);
 
-// 	vec.reserve(72);
-// 	vec.resize(72, 42);
+	vec.reserve(72);
+	vec.resize(72, 42);
 
-// 	std::cout << vec.at(10) << std::endl;
-// 	std::cout << vec[10] << std::endl;
-// 	std::cout << vec.front() << std::endl;
-// 	std::cout << vec.back() << std::endl;
+	std::cout << vec.at(10) << std::endl;
+	std::cout << vec[10] << std::endl;
+	std::cout << vec.front() << std::endl;
+	std::cout << vec.back() << std::endl;
 
-// 	NS::vector<int>::iterator it(vec.begin());
-// 	while (it != vec.end())
-// 	{
-// 		std::cout << *it << std::endl;
-// 		++it;
-// 	}
-// 	it = vec.begin();
-// 	it += 6;
-// 	NS::vector<int>::iterator zit = it - 4;
-// 	std::cout << it - zit << std::endl;
-// 	zit = it + 2;
-// 	std::cout << *zit << *(3 + zit) << std::endl;
-// 	std::cout << std::endl;
+	NS::vector<int>::iterator it(vec.begin());
+	while (it != vec.end())
+	{
+		std::cout << *it << std::endl;
+		++it;
+	}
+	it = vec.begin();
+	it += 6;
+	NS::vector<int>::iterator zit = it - 4;
+	std::cout << it - zit << std::endl;
+	zit = it + 2;
+	std::cout << *zit << *(3 + zit) << std::endl;
+	std::cout << std::endl;
 
-// 	vec.clear();
+	vec.clear();
 
-// 	for (int i = 0; i < 5000; ++i)
-// 		vec.push_back(rand() % 354351);
-// 	std::cout << "SIZE = " << vec.size() << std::endl;
-// 	vec.assign(8, 42);
-// 	std::cout << "SIZE = " << vec.size() << std::endl;
+	for (int i = 0; i < 5000; ++i)
+		vec.push_back(rand() % 354351);
+	std::cout << "SIZE = " << vec.size() << std::endl;
+	vec.assign(8, 42);
+	std::cout << "SIZE = " << vec.size() << std::endl;
 
-// 	std::list<int> test;
-// 	test.push_back(98);
-// 	test.push_back(-45664);
-// 	test.push_back(643);
-// 	test.push_back(-8841);
-// 	test.push_back(0);
-// 	test.push_back(10);
+	std::list<int> test;
+	test.push_back(98);
+	test.push_back(-45664);
+	test.push_back(643);
+	test.push_back(-8841);
+	test.push_back(0);
+	test.push_back(10);
 
-// 	vec.assign(test.begin(), test.end());
-// 	std::cout << "SIZE = " << vec.size() << std::endl;
+	vec.assign(test.begin(), test.end());
+	std::cout << "SIZE = " << vec.size() << std::endl;
 
-// 	NS::vector<int> tvec(32, 42);
-// 	for (NS::vector<int>::iterator xit = tvec.begin(); xit != tvec.end(); ++xit)
-// 		std::cout << *xit << std::endl;
-// 	NS::vector<int> ttvec(test.begin(), test.end());
-// 	for (NS::vector<int>::iterator xit = ttvec.begin(); xit != ttvec.end(); ++xit)
-// 		std::cout << *xit << std::endl;
+	NS::vector<int> tvec(32, 42);
+	for (NS::vector<int>::iterator xit = tvec.begin(); xit != tvec.end(); ++xit)
+		std::cout << *xit << std::endl;
+	NS::vector<int> ttvec(test.begin(), test.end());
+	for (NS::vector<int>::iterator xit = ttvec.begin(); xit != ttvec.end(); ++xit)
+		std::cout << *xit << std::endl;
 
-// 	for (int i = 0; i < 500; ++i)
-// 		vec.push_back(rand() % 354351);
+	for (int i = 0; i < 500; ++i)
+		vec.push_back(rand() % 354351);
 
-// 	NS::vector<int>::iterator itins(vec.begin());
-// 	for (int i = 0; i < 52; ++i)
-// 		++itins;
-// 	vec.insert(itins, test.begin(), test.end());
-// 	std::cout << "SIZE = " << vec.size() << std::endl;
-// 	std::cout << *(vec.insert(itins, 48)) << std::endl;
-// 	std::cout << "SIZE = " << vec.size() << std::endl;
+	NS::vector<int>::iterator itins(vec.begin());
+	for (int i = 0; i < 52; ++i)
+		++itins;
+	vec.insert(itins, test.begin(), test.end());
+	std::cout << "SIZE = " << vec.size() << std::endl;
+	std::cout << *(vec.insert(itins, 48)) << std::endl;
+	std::cout << "SIZE = " << vec.size() << std::endl;
 
-// 	NS::vector<int>::reverse_iterator rit(vec.rbegin());
-// 	while (rit != vec.rend())
-// 	{
-// 		std::cout << *rit << std::endl;
-// 		++rit;
-// 	}
-// 	for (NS::vector<int>::const_reverse_iterator crit = vec.rbegin(); crit != vec.rend(); ++crit)
-// 		std::cout << *crit << std::endl;
-// 	std::cout << std::endl;
+	NS::vector<int>::reverse_iterator rit(vec.rbegin());
+	while (rit != vec.rend())
+	{
+		std::cout << *rit << std::endl;
+		++rit;
+	}
+	for (NS::vector<int>::const_reverse_iterator crit = vec.rbegin(); crit != vec.rend(); ++crit)
+		std::cout << *crit << std::endl;
+	std::cout << std::endl;
 
-// 	NS::vector<std::string> svec;
+	NS::vector<std::string> svec;
 
-// 	for (int i = 0; i < 5000; ++i)
-// 		svec.push_back(randstr(rand() % 17 + 1));
+	for (int i = 0; i < 5000; ++i)
+		svec.push_back(randstr(rand() % 17 + 1));
 
-// 	NS::vector<std::string>::iterator itinstr(svec.begin());
-// 	for (int i = 0; i < 52; ++i)
-// 		++itinstr;
-// 	svec.insert(itinstr, 42, "Bonjour je suis un str.");
+	NS::vector<std::string>::iterator itinstr(svec.begin());
+	for (int i = 0; i < 52; ++i)
+		++itinstr;
+	svec.insert(itinstr, 42, "Bonjour je suis un str.");
 
-// 	NS::vector<std::string>::const_iterator sit(svec.begin());
-// 	while (sit != svec.end())
-// 	{
-// 		std::cout << *sit << std::endl;
-// 		++sit;
-// 	}
-// 	std::cout << std::endl;
-// }
+	NS::vector<std::string>::const_iterator sit(svec.begin());
+	while (sit != svec.end())
+	{
+		std::cout << *sit << std::endl;
+		++sit;
+	}
+	std::cout << std::endl;
+}
 
 // void stack_testeur()
 // {
@@ -488,7 +488,7 @@ int main()
 	// srand(clock());
 	lst_testeur();
 	// map_testeur();
-	// vector_testeur();
+	vector_testeur();
 	// stack_testeur();
 	// queue_testeur();
 	std::cout << std::endl;

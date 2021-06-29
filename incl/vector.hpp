@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 15:43:35 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/29 22:57:19 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/29 23:45:24 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 // https://www.cplusplus.com/reference/vector/vector/
@@ -535,6 +535,26 @@ namespace ft
 			{
 				return (_size > 0);
 			}
+			void swap (vector& x)
+			{
+				T* ptr = _arr;
+				_arr = x._arr;
+				x._arr = ptr;
+
+				size_t tmp = _max_size;
+				_max_size = x._max_size;
+				x._max_size = tmp;
+
+				tmp = _size;
+				_size = x._size;
+				x._size = tmp;
+
+				Alloc a = _alloc;
+				_alloc = x._alloc;
+				x._alloc = a;
+
+			}
+
 
 			T& operator[](size_t n)
 			{
@@ -570,6 +590,26 @@ namespace ft
     				position = insert(position, *(start++));
     			}
     		}
+    		template<class IT>
+    		IT erase (IT position)
+    		{
+    			IT cp = position;
+    			_alloc.destroy(&(*position));
+    			if (position == end())
+    				return position;
+    			while (++position != end())
+    				*(position - 1) = *(position);
+    			_size--;
+    			return cp;
+    		}
+    		template<class IT>
+			IT erase (IT start, IT end)
+			{
+				// IT ret = start;
+				// while (start != end)
+				// 	ret = erase(start++);
+				// return ret;	
+			}
 	};
 }
 
