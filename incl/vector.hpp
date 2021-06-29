@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 15:43:35 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/29 14:54:07 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/29 17:04:51 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 // https://www.cplusplus.com/reference/vector/vector/
@@ -15,6 +15,7 @@
 
 #include "tools.hpp"
 #include "allocator.hpp"
+#include <stdexcept>
 #include <iostream>
 #ifndef D_S
 #define D_S 5
@@ -30,26 +31,27 @@ namespace ft
 			size_t _size;
 			Alloc _alloc;
 
-		public :
-			//I stole this
-			void vecDelete(T* p, size_t n)
+			void growarr(size_t n)
 			{
-				for (size_t x = 0; x < n; ++x)
-					_alloc.destroy(&(p[x]));
-				_alloc.deallocate(p, n);
-			}
-			//Stole this as well
-			T* vecNew(size_t n)
-			{
-				T* ret = _alloc.allocate(n);
-				for (size_t x = 0; x < n; ++x)
-					_alloc.construct(&(ret[x]), T());
-				return ret;
+				std::cout << "growarr" << std::endl;
+				
+				T* tmp = _alloc.allocate(n);
+				for (size_t i = 0; i < _size; i++)
+				{
+					tmp[i] = _arr[i];
+					_alloc.destroy(&(_arr[i]));
+				}
+				_alloc.deallocate(_arr, sizeof(T) * _max_size);
+				_max_size = n;
+				_arr = tmp;
 			}
 
+		public :
+			typedef T value_type;
 			explicit vector (const Alloc &alloc = Alloc()) : _alloc(alloc)
 			{
-				_arr = vecNew(D_S);
+				_arr = _alloc.allocate(D_S);
+				// vecNew(D_S);
 				_size = 0;
 				_max_size = D_S;
 			};
@@ -110,9 +112,13 @@ namespace ft
 				_alloc.deallocate(_arr, sizeof(T) * _max_size);
 			}
 
-			friend class iterator;
-			/* MEMBER FUNS */
-			//Use friends
+
+			vector& operator=(const vector &b)
+			{
+				assign(b.begin(), b.end());
+				return *this;
+			};
+
 			class iterator
 			{
 				friend class vector<T, Alloc>;
@@ -120,7 +126,7 @@ namespace ft
 				private :
 					T *_ptr;
 					size_t *size;
-					list<T> *obj;
+					// list<T> *obj;
 				public :
 					T *getptr(void)
 					{
@@ -131,8 +137,9 @@ namespace ft
 					{	}
 					iterator() : _ptr(0) 
 					{	};
-					iterator operator++(int) //i++
+					iterator operator++(int t) //i++
 					{
+						t = 0;
 						iterator i = *this;
 						++_ptr;
 						return i;
@@ -142,8 +149,9 @@ namespace ft
 						++_ptr;
 						return *this;
 					}
-					iterator operator--(int) //i++
+					iterator operator--(int t) //i++
 					{
+						t = 0;
 						iterator i = *this;
 						// _ptr = _ptr->previous;
 						--_ptr;
@@ -173,6 +181,71 @@ namespace ft
 
 			};
 
+			class const_iterator
+			{
+				friend class vector<T, Alloc>;
+				
+				private :
+					T *_ptr;
+					size_t *size;
+					// list<T> *obj;
+				public :
+					T *getptr(void)
+					{
+						return (_ptr);
+					}
+
+					const_iterator(T *ptr) : _ptr(ptr) 
+					{	}
+					const_iterator() : _ptr(0) 
+					{	};
+					const_iterator(iterator x) : _ptr(x._ptr)
+					{
+
+					}
+
+					const_iterator operator++(int) //i++
+					{
+						const_iterator i = *this;
+						++_ptr;
+						return i;
+					}
+					const_iterator operator++() //i++
+					{		
+						++_ptr;
+						return *this;
+					}
+					const_iterator operator--(int) //i++
+					{
+						const_iterator i = *this;
+						// _ptr = _ptr->previous;
+						--_ptr;
+						return i;
+					}
+					const_iterator operator--() //i++
+					{ 
+						--_ptr;// = _ptr->previous; 
+						return *this;
+					}
+					const T& operator*() 
+					{ 
+						return *(_ptr); 
+					}
+					const T* operator->() 
+					{ 
+						return *_ptr;//->data; 
+					}
+					bool operator==(const const_iterator& it)
+					{ 
+						return (_ptr == it._ptr); 
+					}
+					bool operator!=(const const_iterator& it) 
+					{
+						return (_ptr != it._ptr); 
+					}
+
+			};
+
 			class reverse_iterator
 			{
 				friend class vector<T, Alloc>;
@@ -180,7 +253,7 @@ namespace ft
 				private :
 					T *_ptr;
 					size_t *size;
-					list<T> *obj;
+					// list<T> *obj;
 				public :
 					T *getptr(void)
 					{
@@ -230,30 +303,84 @@ namespace ft
 						return (_ptr != it._ptr); 
 					}
 			};
-
-			void test(void)
+			class const_reverse_iterator
 			{
+				friend class vector<T, Alloc>;
 				
-				// std::cout << &(_arr[_size]) << std::endl;
+				private :
+					T *_ptr;
+					size_t *size;
+					// list<T> *obj;
+				public :
+					T *getptr(void)
+					{
+						return (_ptr);
+					}
 
-				for (int i = 0; i < _size; i++)
-				{
-					std::cout << &(_arr[i]) << std::endl;	
-				}
-			}
+					const_reverse_iterator(T *ptr) : _ptr(ptr) 
+					{	}
+					const_reverse_iterator() : _ptr(0) 
+					{	};
+					const_reverse_iterator(reverse_iterator &n) : _ptr(n._ptr)
+					{
+
+					}
+					const_reverse_iterator operator++(int) //i++
+					{
+						const_reverse_iterator i = *this;
+						--_ptr;
+						return i;
+					}
+					const_reverse_iterator operator++() //i++
+					{		
+						--_ptr;
+						return *this;
+					}
+					const_reverse_iterator operator--(int) //i++
+					{
+						const_reverse_iterator i = *this;
+						++_ptr;
+						return i;
+					}
+					const_reverse_iterator operator--() //i++
+					{ 
+						++_ptr; 
+						return *this;
+					}
+					T& operator*() 
+					{ 
+						return *(_ptr); 
+					}
+					T* operator->() 
+					{ 
+						return *_ptr;//->data; 
+					}
+					bool operator==(const const_reverse_iterator& it)
+					{ 
+						return (_ptr == it._ptr); 
+					}
+					bool operator!=(const const_reverse_iterator& it) 
+					{
+						return (_ptr != it._ptr); 
+					}
+			};
 
 			iterator begin() const 
 			{ 
-				// if (_center->next)
-					// return iterator(_center->next);
 				return iterator(_arr);
 			}
+			// const_iterator begin() const 
+			// { 
+			// 	return const_iterator(_arr);
+			// }
 			reverse_iterator rbegin() const 
-			{ 
-				// if (_center->next)
-					// return iterator(_center->next);
+			{
 				return reverse_iterator(&(_arr[_size - 1]));
 			}
+			// const_reverse_iterator rbegin() const 
+			// {
+			// 	return const_reverse_iterator(&(_arr[_size - 1]));
+			// }
 			iterator end() const 
 			{
 				return (iterator(&(_arr[_size])));// + sizeof(T) * (_size)));
@@ -263,27 +390,28 @@ namespace ft
 				return (reverse_iterator(_arr - 1));// + sizeof(T) * (_size)));
 			}
 
-			void growarr(size_t n)
+			void clear(void)
 			{
-				std::cout << "growarr" << std::endl;
-				
-				T* tmp;
-				tmp = _alloc.allocate(n);
-
 				for (size_t i = 0; i < _size; i++)
-				{
-					tmp[i] = _arr[i];
 					_alloc.destroy(&(_arr[i]));
-				}
-				
-
-				_alloc.deallocate(_arr, sizeof(T) * _max_size);
-				
-				_max_size = n;
-				_arr = tmp;
-
 			}
 
+			void assign (size_t n, const T& val)
+			{
+				clear();
+				for (size_t i = 0; i < n; i++)
+					push_back(val);
+			}
+			
+			template <class InputIterator>
+			void assign(typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type s, InputIterator e)
+			{
+				clear();
+				while (s != e)
+					push_back(*(s++));
+			}
+
+			
 			void push_back (const T& val)
 			{
 				if (_size == _max_size)
@@ -321,6 +449,21 @@ namespace ft
 				growarr(n);
 			}
 
+			T& front(void)
+			{
+				return _arr[0];
+			}
+
+			T& back(void)
+			{
+				return _arr[_size - 1];
+			}
+			T& at(int a)
+			{
+				if (a >= _size || a < 0)
+					throw std::out_of_range(" ");
+				return _arr[a];
+			}
 
 			size_t size(void) const
 			{

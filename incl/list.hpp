@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/25 22:27:52 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/29 15:42:39 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //http://www.cplusplus.com/reference/list/list/
@@ -87,7 +87,7 @@ namespace ft
 				return *this;
 			};
 			
-			friend class iterator;
+			// friend class iterator;
 			/* MEMBER FUNS */
 			//Use friends
 			class iterator
@@ -140,7 +140,7 @@ namespace ft
 					Node<T> *_ptr;
 			};
 
-			friend class reverse_iterator;
+			// friend class reverse_iterator;
 			class const_iterator
 			{
 				friend class list<T>;
@@ -174,11 +174,11 @@ namespace ft
 						_ptr = _ptr->previous; 
 						return *this;
 					}
-					T& operator*() 
+					const T& operator*() 
 					{ 
 						return (*(_ptr->data)); 
 					}
-					T* operator->() 
+					const T* operator->() 
 					{ 
 						return _ptr->data; 
 					}
@@ -283,11 +283,11 @@ namespace ft
 						_ptr = _ptr->next; 
 						return *this;
 					}
-					T& operator*()
+					const T& operator*()
 					{ 
 						return (*(_ptr->data)); 
 					}
-					T* operator->() 
+					const T* operator->() 
 					{ 
 						return _ptr->data;
 					}
@@ -312,10 +312,20 @@ namespace ft
 					return iterator(_center->next);
 				return iterator(_center);
 			}
+			// const iterator begin() const 
+			// { 
+			// 	if (_center->next)
+			// 		return iterator(_center->next);
+			// 	return iterator(_center);
+			// }
 			iterator end() const 
 			{
 				return (iterator(_center));
 			}
+			// const iterator end() const 
+			// {
+			// 	return (iterator(_center));
+			// }
 			reverse_iterator rbegin() const 
 			{ 
 				if (_center->previous)

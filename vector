@@ -9,8 +9,8 @@ Iterators:
 
 begin 	DONEV1	: 	Return iterator to beginning (public member function )
 end 	DONEV1	:	Return iterator to end (public member function )
-rbegin 	WIP	: 	Return reverse iterator to reverse beginning (public member function )
-rend 		: 	Return reverse iterator to reverse end (public member function )
+rbegin 	DONEV1	: 	Return reverse iterator to reverse beginning (public member function )
+rend 	DONEV1	: 	Return reverse iterator to reverse end (public member function )
 
 Capacity:
 
