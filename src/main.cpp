@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/30 18:01:46 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/30 19:13:58 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,30 +112,46 @@ void htest()
 	// base.assign(base.begin())
 }
 
-void segtest(ft::vector<int> cont)
+void segtest(ft::vector<int> &cont)
 {
-    int* x = new int(5);
-
-    // Erase everything
+    // int* x = new int(5);
+    std::vector<std::string> test;
+	const std::string arrString[20] = {"hello coco", "j'arrive", "oui-oui", "kafeolait", 
+                                        "jul d'ananas", "jul d'ananas", "42", "jura", 
+                                        "saperlipopette", "anticonstitutionnellement", 
+                                        "Pneumonoultramicroscopicsilicovolcanoconiosis", "Blue", 
+                                        "Red", "Orange", "Yellow", "boulette de viande hache",
+                                        "raviolis du nord est", "PNY", "street bangkok", "confifi"};
+    std::cout << "POG\n"; 
+    for (int i = 0 ;i < 800; i++)
     {
-        std::cout << "----- erase nothing -----";
-
-        ft::vector<int> tmp = cont;
-        std::cout << "size of tmp = " << tmp.size();
-
-        ft::vector<int>::iterator iter = tmp.erase(tmp.begin(), tmp.end());
-        if (tmp.size())
-        {
-        	std::cout << "new elem after erase: " << *iter; 
-    	}
-
-        std::cout << "size of tmp = " << tmp.size();
-        // printContainer("468", name, tmp);
-
-        // checking if everything was correcty destroyed
-        for (int i = 0; i < 20; ++i)
-            tmp.push_back(*x);
+    	test.push_back(arrString[i % 20]);
     }
+    test.clear();
+    for (int i = 0 ;i < 800; i++)
+    {
+    	test.push_back(arrString[i % 20]);
+    }
+    // // Erase everything
+    // {
+    //     std::cout << "----- erase nothing -----";
+
+    //     ft::vector<int> tmp = cont;
+    //     std::cout << "size of tmp = " << tmp.size();
+
+    //     ft::vector<int>::iterator iter = tmp.erase(tmp.begin(), tmp.end());
+    //     if (tmp.size())
+    //     {
+    //     	std::cout << "new elem after erase: " << *iter; 
+    // 	}
+
+    //     std::cout << "size of tmp = " << tmp.size();
+    //     // printContainer("468", name, tmp);
+
+    //     // checking if everything was correcty destroyed
+    //     for (int i = 0; i < 20; ++i)
+    //         tmp.push_back(*x);
+    // }
 }
 
 void optest()

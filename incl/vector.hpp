@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 15:43:35 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/30 18:18:10 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/30 19:09:22 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 // https://www.cplusplus.com/reference/vector/vector/
@@ -18,7 +18,7 @@
 #include <stdexcept>
 #include <iostream>
 #ifndef D_S
-#define D_S 5
+#define D_S 10
 #endif
 namespace ft 
 {
@@ -35,18 +35,23 @@ namespace ft
 			{
 				// std::cout << "creating :" << n << std::endl;
 				
-				// n = _max_size * 2 + n;
+					// n = 2 * n;
+				// T* tmp = _alloc.allocate(n);
+				// size_t i = 0;
+				// for (iterator p = begin(); p != end(); p++)
+				// {
+				// 	_alloc.construct(&(tmp[i++]), *p);
+				// 	_alloc.destroy(&(*p));	
+				// }
 
 				T* tmp = _alloc.allocate(n);
 				for (size_t i = 0; i < _size; i++)
 				{
 					_alloc.construct(&(tmp[i]), _arr[i]);
-					
-					// tmp[i] = _arr[i];
-					// std::cerr << "FREEING INDEX " << i << std::endl;
 					_alloc.destroy(&(_arr[i]));
 				}
 				_alloc.deallocate(_arr, sizeof(T) * _max_size);
+				
 				_max_size = n;
 				_arr = tmp;
 			}
