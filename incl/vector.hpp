@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 15:43:35 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/29 23:45:24 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/30 16:03:37 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 // https://www.cplusplus.com/reference/vector/vector/
@@ -33,8 +33,10 @@ namespace ft
 
 			void growarr(size_t n)
 			{
-				std::cout << "creating :" << n << std::endl;
+				// std::cout << "creating :" << n << std::endl;
 				
+				// n = _max_size * 2 + n;
+
 				T* tmp = _alloc.allocate(n);
 				for (size_t i = 0; i < _size; i++)
 				{
@@ -96,7 +98,7 @@ namespace ft
 				for (size_t i = 0; i < v._size; i++)
 					_arr[i] = v._arr[i];
 
-				std::cout << "CopyConstructor\n";
+				// std::cout << "CopyConstructor\n";
 			}
 
 			
@@ -110,7 +112,7 @@ namespace ft
 					_alloc.destroy(&(_arr[i++]));
 					// std::cout << ".... Done" << std::endl;
 				}
-				std::cout << "Freed " << i << " elements" << std::endl;
+				// std::cout << "Freed " << i << " elements" << std::endl;
 				_alloc.deallocate(_arr, sizeof(T) * _max_size);
 			}
 
@@ -182,6 +184,11 @@ namespace ft
 					{
 						return iterator(&(_ptr[n]));
 					}
+
+					// iterator operator+(int n) const
+					// {
+					// 	return iterator(t + n);
+					// }
 					iterator operator+=(int n)
 					{
 						_ptr = _ptr + n;
@@ -196,6 +203,42 @@ namespace ft
 						_ptr = _ptr - n;
 						return *this;
 					}
+
+					friend iterator operator+(int t ,iterator n)
+					{
+						return (n + t);
+					}
+					friend iterator operator-(int t ,iterator n)
+					{
+						return (n - t);
+					}
+					friend iterator operator+=(int t ,iterator n)
+					{
+						return (n += t);
+					}
+					friend iterator operator-=(int t ,iterator n)
+					{
+						return (n -= t);
+					}
+					// iterator operator+=(iterator n)
+					// {
+					// 	// size_t delta = &(*end) - &(*start);
+					// 	// _ptr += delta
+					// 	// // _ptr = _ptr + n;
+					// 	// return *this;
+					// }
+					size_t operator-(iterator n) const
+					{
+						size_t delta = &(*_ptr) - &(*n);
+
+						return delta;
+					}
+					// iterator operator-=(iterator n)
+					// {
+					// 	// size_t delta = &(*end) - &(*start);
+					// 	// _ptr -= delta;
+					// 	// return *this;
+					// }
 			};
 
 			class const_iterator
@@ -444,6 +487,7 @@ namespace ft
 			{
 				for (size_t i = 0; i < _size; i++)
 					_alloc.destroy(&(_arr[i]));
+				_size = 0;
 			}
 
 			void assign (size_t n, const T& val)
@@ -587,7 +631,9 @@ namespace ft
     		{
     			while (start != end)
     			{
-    				position = insert(position, *(start++));
+    				// std::cout << "insert at " << &(*position) << std::endl;
+    				insert(position++, *(start++));
+    				// position++;
     			}
     		}
     		template<class IT>
@@ -595,8 +641,6 @@ namespace ft
     		{
     			IT cp = position;
     			_alloc.destroy(&(*position));
-    			if (position == end())
-    				return position;
     			while (++position != end())
     				*(position - 1) = *(position);
     			_size--;
@@ -605,10 +649,18 @@ namespace ft
     		template<class IT>
 			IT erase (IT start, IT end)
 			{
-				// IT ret = start;
-				// while (start != end)
-				// 	ret = erase(start++);
-				// return ret;	
+				IT tmp;
+				size_t delta = &(*end) - &(*start);
+				if (delta < 0)
+				{
+					tmp = end;
+					end = start;
+					start = tmp;
+				}
+				tmp = start;
+				for(size_t i = 0; i < delta; i++)
+					start = erase(start);
+				return tmp;
 			}
 	};
 }

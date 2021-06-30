@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/29 23:43:36 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/30 15:59:28 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,48 @@ void whathefuck()
 
 }
 
+void print2(std::vector<int> &base, ft::vector<int> &custom)
+{
+	std::cout << "Custom 	: ";
+	for (ft::vector<int>::iterator it = custom.begin(); it != custom.end(); it++)
+		std::cout << *(it) << "|";
+	std::cout << std::endl;
+	std::cout << "Base 	: ";
+	for (std::vector<int>::iterator it = base.begin(); it != base.end(); it++)
+		std::cout << *(it) << "|";
+	std::cout << std::endl;	
+}
+
+void htest()
+{
+	std::vector<int> base;
+	ft::vector<int> custom;
+
+	std::list<int> list;
+
+	for (int i = 0; i < 5; i++)
+	{
+		list.push_back(rand() % 10);
+	}
+
+	base.insert(base.begin(), list.begin(), list.end());
+	custom.insert(custom.begin(), list.begin(), list.end());
+	print2(base,custom);
+	// for(int i = 0; i < 50; i++)
+	// {
+	// 	base.push_back(i);
+	// 	base.push_back(i);
+	// }
+
+	// base.assign(base.begin())
+}
+
 int main()
 {
 
 	// whathefuck();
-	
+	htest();
+	return 0;
 	// ft::stack<int> st1;
 	// ft::stack<int> st2;
 
@@ -88,10 +125,10 @@ int main()
 	ft::list<int> list;
 	std::list<int> base_list;
 
-	for (int i  = 0 ; i < 10; i++)
+	for (int i  = 0 ; i < 5; i++)
 	{
 		list.push_back(i);
-		base_list.push_back(-i);
+		base_list.push_back(i);
 
 	}
 
@@ -99,9 +136,10 @@ int main()
 	std::vector<int> base;//(base_list.begin(), base_list.end());
 
 	test.assign(list.begin(), list.end());
-	// base.assign(base_list.begin(), base_list.end());
+	base.assign(base_list.begin(), base_list.end());
 	// ft::vector<int>::reverse_iterator itt = test.rbegin();
 	test.push_back(42);
+	base.push_back(42);
 	// std::vector<int>::reverse_iterator bitt = base.rbegin();
 	// std::cout << "Custom :\n";
 	// for (ft::vector<int>::iterator it = test.begin(); it != test.end(); it++)
@@ -130,21 +168,43 @@ int main()
 	// test.insert(opt, 65);
 
 	// test.insert(opt, 5, 69);
-	std::cout << "Custom :\n";
 	test.insert(test.end() ,2, 850);
-	for (ft::vector<int>::iterator it = test.begin(); it != test.end(); it++)
-		std::cout << *(it) << " @: "<< &(*(it)) <<std::endl;
+	base.insert(base.end() ,2, 850);
+	print2(base,test);
+	// std::cout << "Custom :\n";
+	// for (ft::vector<int>::iterator it = test.begin(); it != test.end(); it++)
+	// 	std::cout << *(it) << "|";
+	// std::cout << std::endl;
+	// std::cout << "Custom :\n";
+	// for (ft::vector<int>::iterator it = test.begin(); it != test.end(); it++)
+	// 	std::cout << *(it) << "|";
+	// std::cout << std::endl;
 		
-	test.erase(test.begin(), test.end());
+	// test.erase(test.begin() + 2);
+	// base.erase(base.begin() + 2);
+	
+	print2(base,test);
+
+	opt = test.begin();
+	bopt = base.begin();
+
+
+	// test.erase(test.end());
+	// std::cout << "opt = " << *(opt + 5)<< "|bopt = " << *(bopt + 5) << std::endl;
+	std::cout << "opt = " << *(5 + opt)<< "|bopt = " << *(5  + bopt) << std::endl;
+
+	print2(base,test);
+
 	// test.insert(test.begin(), base_list.begin(), base_list.end());
 	// test.dec_one(test.end());
 	// test.dec_one(test.begin());
 	// test.dec_one(test.begin());
 	// test.dec_one(test.begin());
 	// test.dec_one(test.begin());
-	std::cout << "Custom :\n";
-	for (ft::vector<int>::iterator it = test.begin(); it != test.end(); it++)
-		std::cout << *(it) << " @: "<< &(*(it)) <<std::endl;
+	// std::cout << "Custom :\n";
+	// for (ft::vector<int>::iterator it = test.begin(); it != test.end(); it++)
+	// 	std::cout << *(it) << "|";
+	// std::cout << std::endl;
 	// std::cout << "Base :\n";
 	// for (std::vector<int>::iterator it = base.begin(); it != base.end(); it++)
 	// 	std::cout << *(it) << " @: "<< &(*(it)) <<std::endl;

@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:55:26 by hpottier          #+#    #+#             */
-/*   Updated: 2021/06/29 23:04:52 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/30 16:05:00 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -375,7 +375,9 @@ void vector_testeur()
 		++itins;
 	vec.insert(itins, test.begin(), test.end());
 	std::cout << "SIZE = " << vec.size() << std::endl;
-	std::cout << *(vec.insert(itins, 48)) << std::endl;
+	itins = vec.begin() + 52;
+		std::cout << *(vec.insert(itins, 48)) << std::endl;
+	
 	std::cout << "SIZE = " << vec.size() << std::endl;
 
 	NS::vector<int>::reverse_iterator rit(vec.rbegin());
