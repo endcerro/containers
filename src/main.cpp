@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/30 16:46:22 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/30 18:01:46 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,32 @@ void htest()
 	// base.assign(base.begin())
 }
 
+void segtest(ft::vector<int> cont)
+{
+    int* x = new int(5);
+
+    // Erase everything
+    {
+        std::cout << "----- erase nothing -----";
+
+        ft::vector<int> tmp = cont;
+        std::cout << "size of tmp = " << tmp.size();
+
+        ft::vector<int>::iterator iter = tmp.erase(tmp.begin(), tmp.end());
+        if (tmp.size())
+        {
+        	std::cout << "new elem after erase: " << *iter; 
+    	}
+
+        std::cout << "size of tmp = " << tmp.size();
+        // printContainer("468", name, tmp);
+
+        // checking if everything was correcty destroyed
+        for (int i = 0; i < 20; ++i)
+            tmp.push_back(*x);
+    }
+}
+
 void optest()
 {
 	ft::vector<int> v1;
@@ -122,9 +148,9 @@ void optest()
 	for(int i = 0; i < 5; i++)
 	{
 		v1.push_back(i);
-		v2.push_back(i);
+		v2.push_back(-i);
 		b1.push_back(i);
-		b2.push_back(i);
+		b2.push_back(-i);
 	}
 	// v1.push_back(2);
 	// b1.push_back(2);
@@ -135,7 +161,8 @@ void optest()
 	std::cout <<"Operator > " << (v1 > v2) <<" : "<< (b1 > b2)<< std::endl;
 	std::cout <<"Operator >= " << (v1 >= v2) <<" : "<< (b1 >= b2)<< std::endl;
 
-
+	v1.swap(v2);
+	swap(v1, v2);
 
 	// std::cout <<"Operator == " << (b1 == b2) << std::endl;
 	// std::cout <<"Operator != " << (b1 != b2) << std::endl;
@@ -148,8 +175,7 @@ int main()
 
 	// whathefuck();
 	// htest();
-	optest();
-	return 0;  
+  
 	// return 0;
 	// ft::stack<int> st1;
 	// ft::stack<int> st2;
@@ -158,7 +184,7 @@ int main()
 	ft::list<int> list;
 	std::list<int> base_list;
 
-	for (int i  = 0 ; i < 5; i++)
+	for (int i  = 0 ; i < 100; i++)
 	{
 		list.push_back(i);
 		base_list.push_back(i);
@@ -168,11 +194,18 @@ int main()
 	ft::vector<int> test;//(list.begin(), list.end());
 	std::vector<int> base;//(base_list.begin(), base_list.end());
 
+	for(int i = 0; i < 850; i++)
+	{
+		test.push_back(i);
+	}
+
 	test.assign(list.begin(), list.end());
 	base.assign(base_list.begin(), base_list.end());
 	// ft::vector<int>::reverse_iterator itt = test.rbegin();
 	test.push_back(42);
 	base.push_back(42);
+	segtest(test);
+	return 0;
 	// std::vector<int>::reverse_iterator bitt = base.rbegin();
 	// std::cout << "Custom :\n";
 	// for (ft::vector<int>::iterator it = test.begin(); it != test.end(); it++)

@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 15:43:35 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/30 16:46:15 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/30 18:18:10 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 // https://www.cplusplus.com/reference/vector/vector/
@@ -40,8 +40,10 @@ namespace ft
 				T* tmp = _alloc.allocate(n);
 				for (size_t i = 0; i < _size; i++)
 				{
-					_alloc.construct(&tmp[i], _arr[i]);
+					_alloc.construct(&(tmp[i]), _arr[i]);
+					
 					// tmp[i] = _arr[i];
+					// std::cerr << "FREEING INDEX " << i << std::endl;
 					_alloc.destroy(&(_arr[i]));
 				}
 				_alloc.deallocate(_arr, sizeof(T) * _max_size);
@@ -554,12 +556,12 @@ namespace ft
 				growarr(n);
 			}
 
-			T& front(void)
+			T& front(void) const
 			{
 				return _arr[0];
 			}
 
-			T& back(void)
+			T& back(void) const
 			{
 				return _arr[_size - 1];
 			}
@@ -588,7 +590,7 @@ namespace ft
 
 			bool empty(void) const
 			{
-				return (_size > 0);
+				return (_size == 0);
 			}
 			void swap (vector& x)
 			{
@@ -686,8 +688,8 @@ namespace ft
     			while (start != end)
     			{
     				// std::cout << "insert at " << &(*position) << std::endl;
-    				insert(position++, *(start++));
-    				// position++;
+    				position = insert(position, *(start++));
+    				position++;
     			}
     		}
     		template<class IT>
@@ -697,7 +699,7 @@ namespace ft
     			_alloc.destroy(&(*position));
     			while (++position != end())
     				*(position - 1) = *(position);
-    			_size--;
+    			--_size;
     			return cp;
     		}
     		template<class IT>
@@ -714,9 +716,15 @@ namespace ft
 				tmp = start;
 				for(size_t i = 0; i < delta; i++)
 					start = erase(start);
+				// --_size;
 				return tmp;
 			}
 	};
+	template <class T>
+	void swap(vector<T> &x, vector<T> &y)
+	{
+		x.swap(y);
+	}
 }
 
 #endif
