@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 15:43:35 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/30 16:44:26 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/30 16:46:15 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 // https://www.cplusplus.com/reference/vector/vector/
@@ -632,13 +632,7 @@ namespace ft
 			}
 			bool operator>(const vector &t)
 			{
-				if (*this == t)
-					return 0;
-				return !(*this < t);
-			}
-			bool operator<(const vector &t)
-			{
-				size_t i = 0;
+							size_t i = 0;
 				while (i < _size && i < t._size)
 				{
 					if (_arr[i] < t._arr[i])
@@ -648,6 +642,12 @@ namespace ft
 				if (i == _size)
 					return 0;
 				return 1;
+			}
+			bool operator<(const vector &t)
+			{
+				if (*this == t)
+					return 0;
+				return !(*this > t);
 			}
 			bool operator>=(const vector &t)
 			{

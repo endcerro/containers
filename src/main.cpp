@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/30 16:44:04 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/30 16:46:22 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,8 +126,8 @@ void optest()
 		b1.push_back(i);
 		b2.push_back(i);
 	}
-	v1.push_back(2);
-	b1.push_back(2);
+	// v1.push_back(2);
+	// b1.push_back(2);
 	std::cout <<"Operator == " << (v1 == v2) <<" : "<< (b1 == b2)<< std::endl;
 	std::cout <<"Operator != " << (v1 != v2) <<" : "<< (b1 != b2)<< std::endl;
 	std::cout <<"Operator < " << (v1 < v2) <<" : "<< (b1 < b2)<< std::endl;
