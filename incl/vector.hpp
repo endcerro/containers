@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 15:43:35 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/30 16:03:37 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/30 16:44:26 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 // https://www.cplusplus.com/reference/vector/vector/
@@ -203,7 +203,18 @@ namespace ft
 						_ptr = _ptr - n;
 						return *this;
 					}
-
+					// bool operator==(iterator t)
+					// {
+					// 	return (t._ptr == _ptr);
+					// }
+					// friend bool operator==(iterator n, iterator t)
+					// {
+					// 	return (n._ptr == t._ptr);
+					// }
+					// bool operator!=(iterator t)
+					// {
+					// 	return (t._ptr != _ptr);
+					// }
 					friend iterator operator+(int t ,iterator n)
 					{
 						return (n + t);
@@ -552,7 +563,7 @@ namespace ft
 			{
 				return _arr[_size - 1];
 			}
-			T& at(int a)
+			T& at(int a) const
 			{
 				int ns = static_cast<int>(_size);
 				if (a >= ns || a < 0)
@@ -604,6 +615,49 @@ namespace ft
 			{
 				return _arr[n];
 			}
+			bool operator==(const vector &t)
+			{
+				if (_size != t._size)
+					return 0;
+				for (size_t i = 0; i < _size; i++)
+				{
+					if (_arr[i] != t._arr[i])
+						return 0;
+				}
+				return 1;
+			}
+			bool operator!=(const vector &t)
+			{
+				return (!(*this == t));
+			}
+			bool operator>(const vector &t)
+			{
+				if (*this == t)
+					return 0;
+				return !(*this < t);
+			}
+			bool operator<(const vector &t)
+			{
+				size_t i = 0;
+				while (i < _size && i < t._size)
+				{
+					if (_arr[i] < t._arr[i])
+						return 0;
+					i++;
+				}
+				if (i == _size)
+					return 0;
+				return 1;
+			}
+			bool operator>=(const vector &t)
+			{
+				return (*this > t || *this == t);
+			}
+			bool operator<=(const vector &t)
+			{
+				return (*this < t || *this == t);
+			}
+
 			template<class IT>
 			IT insert (IT position, const T& val)
 			{

@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/30 15:59:28 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/06/30 16:44:04 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,12 +112,45 @@ void htest()
 	// base.assign(base.begin())
 }
 
+void optest()
+{
+	ft::vector<int> v1;
+	ft::vector<int> v2;
+	std::vector<int> b1;
+	std::vector<int> b2;
+
+	for(int i = 0; i < 5; i++)
+	{
+		v1.push_back(i);
+		v2.push_back(i);
+		b1.push_back(i);
+		b2.push_back(i);
+	}
+	v1.push_back(2);
+	b1.push_back(2);
+	std::cout <<"Operator == " << (v1 == v2) <<" : "<< (b1 == b2)<< std::endl;
+	std::cout <<"Operator != " << (v1 != v2) <<" : "<< (b1 != b2)<< std::endl;
+	std::cout <<"Operator < " << (v1 < v2) <<" : "<< (b1 < b2)<< std::endl;
+	std::cout <<"Operator <= " << (v1 <= v2) <<" : "<< (b1 <= b2)<< std::endl;
+	std::cout <<"Operator > " << (v1 > v2) <<" : "<< (b1 > b2)<< std::endl;
+	std::cout <<"Operator >= " << (v1 >= v2) <<" : "<< (b1 >= b2)<< std::endl;
+
+
+
+	// std::cout <<"Operator == " << (b1 == b2) << std::endl;
+	// std::cout <<"Operator != " << (b1 != b2) << std::endl;
+	// std::cout <<"Operator < " << (b1 < b2) << std::endl;
+	// std::cout <<"Operator > " << (b1 > b2) << std::endl;
+}
+
 int main()
 {
 
 	// whathefuck();
-	htest();
-	return 0;
+	// htest();
+	optest();
+	return 0;  
+	// return 0;
 	// ft::stack<int> st1;
 	// ft::stack<int> st2;
 
@@ -194,6 +227,8 @@ int main()
 	std::cout << "opt = " << *(5 + opt)<< "|bopt = " << *(5  + bopt) << std::endl;
 
 	print2(base,test);
+
+	std::cout << (test.begin() == test.begin()) << std::endl;
 
 	// test.insert(test.begin(), base_list.begin(), base_list.end());
 	// test.dec_one(test.end());
