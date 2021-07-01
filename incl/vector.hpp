@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 15:43:35 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/01 17:15:25 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/01 17:52:05 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 // https://www.cplusplus.com/reference/vector/vector/
@@ -712,48 +712,52 @@ namespace ft
 			{
 				return _arr[n];
 			}
-			bool operator==(const vector &t) const
-			{
-				if (_size != t._size)
-					return 0;
-				for (size_t i = 0; i < _size; i++)
-				{
-					if (_arr[i] != t._arr[i])
-						return 0;
-				}
-				return 1;
-			}
-			bool operator!=(const vector &t) const
-			{
-				return (!(*this == t));
-			}
-			bool operator>(const vector &t) const
-			{
-				size_t i = 0;
-				while (i < _size && i < t._size)
-				{
-					if (_arr[i] < t._arr[i])
-						return 0;
-					i++;
-				}
-				if (i == _size)
-					return 0;
-				return 1;
-			}
-			bool operator<(const vector &t) const
-			{
-				if (*this == t)
-					return 0;
-				return !(*this > t);
-			}
-			bool operator>=(const vector &t) const
-			{
-				return (*this > t || *this == t);
-			}
-			bool operator<=(const vector &t) const
-			{
-				return (*this < t || *this == t);
-			}
+			// bool operator==(const vector &t) const
+			// {
+			// 	if (_size != t._size)
+			// 		return 0;
+			// 	for (size_t i = 0; i < _size; i++)
+			// 	{
+			// 		if (_arr[i] != t._arr[i])
+			// 			return 0;
+			// 	}
+			// 	return 1;
+			// }
+			// bool operator!=(const vector &t) const
+			// {
+			// 	return (!(*this == t));
+			// }
+			// bool operator>(const vector &t) const
+			// {
+			// 	ft::iterator<T> right = begin();
+			// 	ft::iterator<T> left = t.begin()
+				
+
+			// 	size_t i = 0;
+			// 	while (i < _size && i < t._size)
+			// 	{
+			// 		if (_arr[i] < t._arr[i])
+			// 			return 0;
+			// 		i++;
+			// 	}
+			// 	if (i == _size)
+			// 		return 0;
+			// 	return 1;
+			// }
+			// bool operator<(const vector &t) const
+			// {
+			// 	if (*this == t)
+			// 		return 0;
+			// 	return !(*this > t);
+			// }
+			// bool operator>=(const vector &t) const
+			// {
+			// 	return (*this > t || *this == t);
+			// }
+			// bool operator<=(const vector &t) const
+			// {
+			// 	return (*this < t || *this == t);
+			// }
 
 			template<class IT>
 			IT insert (IT position, const T& val)
@@ -817,7 +821,68 @@ namespace ft
 	void swap(vector<T> &x, vector<T> &y)
 	{
 		x.swap(y);
-	}
+	};
+
+	template <class T>
+	bool operator==(const vector<T> &lhs, const vector<T> &rhs)
+	{
+		if (lhs.size() == rhs.size())
+		{
+			typename vector<T>::const_iterator lit = (lhs.begin());
+			typename vector<T>::const_iterator rit = (rhs.begin());
+			while (lit != lhs.end())
+			{
+				if (*lit != *rit)
+					return false;
+				++lit;
+				++rit;
+			}
+			return true;
+		}
+		return false;
+	};
+
+	template <class T>
+	bool operator!=(const vector<T> &lhs, const vector<T> &rhs)
+	{
+		return !(lhs == rhs);
+	};
+
+	template <class T>
+	bool operator<(const vector<T> &lhs, const vector<T> &rhs)
+	{
+		typename vector<T>::const_iterator lit = lhs.begin();
+		typename vector<T>::const_iterator rit = rhs.begin();
+
+		while (lit != lhs.end())
+		{
+			if (rit == rhs.end() || *rit < *lit)
+				return false;
+			else if (*lit < *rit)
+				return true;
+			++lit;
+			++rit;
+		}
+		return rit != rhs.end();
+	};
+
+	template <class T>
+	bool operator<=(const vector<T> &lhs, const vector<T> &rhs)
+	{
+		return !(rhs < lhs);
+	};
+
+	template <class T>
+	bool operator>(const vector<T> &lhs, const vector<T> &rhs)
+	{
+		return rhs < lhs;
+	};
+
+	template <class T>
+	bool operator>=(const vector<T> &lhs, const vector<T> &rhs)
+	{
+		return !(lhs < rhs);
+	};
 }
 
 #endif
