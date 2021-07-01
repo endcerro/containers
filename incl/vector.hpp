@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 15:43:35 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/01 18:59:24 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/01 19:41:00 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 // https://www.cplusplus.com/reference/vector/vector/
@@ -146,7 +146,7 @@ namespace ft
 					{ 
 						return *(_ptr); 
 					}
-					T* operator->() 
+					T* operator->() const 
 					{ 
 						return _ptr;//->data; 
 					}
@@ -326,7 +326,7 @@ namespace ft
 					{ 
 						return *(_ptr); 
 					}
-					const T* operator->() 
+					const T* operator->() const 
 					{ 
 						return _ptr;//->data; 
 					}
@@ -426,8 +426,7 @@ namespace ft
 				
 				private :
 					T *_ptr;
-					// size_t *size;
-					// list<T> *obj;
+
 				public :
 					reverse_iterator(T *ptr) : _ptr(ptr) 
 					{	}
@@ -437,7 +436,7 @@ namespace ft
 					{	};
 					reverse_iterator operator++(int) //i++
 					{
-						reverse_iterator i = *this;
+						reverse_iterator i(*this);
 						--_ptr;
 						return i;
 					}
@@ -465,9 +464,9 @@ namespace ft
 					{ 
 						return *(_ptr); 
 					}
-					T* operator->() 
+					T* operator->() const
 					{ 
-						return *_ptr;//->data; 
+						return _ptr;//->data; 
 					}
 					bool operator==(const reverse_iterator& it)
 					{ 
@@ -479,7 +478,7 @@ namespace ft
 					}
 					reverse_iterator operator+(int n) const
 					{
-						return reverse_iterator((_ptr - n));
+						return reverse_iterator(_ptr - n);
 					}
 					reverse_iterator &operator+=(int n)
 					{
@@ -500,6 +499,22 @@ namespace ft
 						// _ptr += n;
 						return _ptr[-n];
 					}
+					bool operator>(reverse_iterator t) const
+					{
+						return (_ptr < t._ptr);
+					}
+					bool operator>=(reverse_iterator t) const 
+					{
+						return (_ptr <= t._ptr);
+					}
+					bool operator<(reverse_iterator t) const
+					{
+						return (_ptr > t._ptr);
+					}
+					bool operator<=(reverse_iterator t) const
+					{
+						return (_ptr >= t._ptr);
+					}
 					friend reverse_iterator operator+(int t ,reverse_iterator n)
 					{
 						// std::cout <<"here" << std::endl;
@@ -517,34 +532,30 @@ namespace ft
 					{
 						return (n += t);
 					}
-					// friend bool operator!=(const const_iterator b, const iterator& it)
-					// {
-					// 	return (b._ptr != it._ptr); 
-					// }
-					// friend bool operator==(const const_iterator b, const iterator& it)
-					// {
-					// 	return (b._ptr == it._ptr); 
-					// }
-					// friend bool operator<(const const_iterator b, const iterator& it)
-					// {
-					// 	return (b._ptr < it._ptr); 
-					// }
-					// friend bool operator>(const const_iterator b, const iterator& it)
-					// {
-					// 	return (b._ptr > it._ptr); 
-					// }
-					// friend bool operator>=(const const_iterator b, const iterator& it)
-					// {
-					// 	return (b._ptr >= it._ptr); 
-					// }
-					// friend bool operator<=(const const_iterator b, const iterator& it)
-					// {
-					// 	return (b._ptr <= it._ptr); 
-					// }
-					// long int operator-(reverse_iterator t)
-					// {
-					// 	return (_ptr - t._ptr);
-					// }
+					friend bool operator!=(const reverse_iterator b, const const_reverse_iterator& it) 
+					{
+						return (b._ptr != it._ptr); 
+					}
+					friend bool operator==(const reverse_iterator b, const const_reverse_iterator& it) 
+					{
+						return (b._ptr == it._ptr); 
+					}
+					friend bool operator<(const reverse_iterator b, const const_reverse_iterator& it) 
+					{
+						return (b._ptr > it._ptr); 
+					}
+					friend bool operator>(const reverse_iterator b, const const_reverse_iterator& it) 
+					{
+						return (b._ptr < it._ptr); 
+					}
+					friend bool operator>=(const reverse_iterator b, const const_reverse_iterator& it) 
+					{
+						return (b._ptr <= it._ptr); 
+					}
+					friend bool operator<=(const reverse_iterator b, const const_reverse_iterator& it) 
+					{
+						return (b._ptr >= it._ptr); 
+					}
 			};
 			class const_reverse_iterator
 			{
@@ -552,8 +563,7 @@ namespace ft
 				
 				private :
 					T *_ptr;
-					// size_t *size;
-
+				
 				public :
 
 					const_reverse_iterator(T *ptr) : _ptr(ptr) 
@@ -568,7 +578,7 @@ namespace ft
 					{	}
 					const_reverse_iterator operator++(int) //i++
 					{
-						const_reverse_iterator i = *this;
+						const_reverse_iterator i(*this);
 						--_ptr;
 						return i;
 					}
@@ -583,22 +593,23 @@ namespace ft
 						++_ptr;
 						return i;
 					}
-					const_iterator base()
-					{
-						return const_iterator(_ptr + 1);
-					}
 					const_reverse_iterator &operator--() //i++
 					{ 
 						++_ptr; 
 						return *this;
 					}
-					T& operator*() 
+					const_iterator base()
+					{
+						return const_iterator(_ptr + 1);
+					}
+					
+					const T& operator*() 
 					{ 
 						return *(_ptr); 
 					}
-					T* operator->() 
+					const T* operator->() const 
 					{ 
-						return *_ptr;//->data; 
+						return _ptr;//->data; 
 					}
 					bool operator==(const const_reverse_iterator& it)
 					{ 
@@ -610,9 +621,9 @@ namespace ft
 					}
 					const_reverse_iterator operator+(int n) const
 					{
-						return const_reverse_iterator((_ptr - n));
+						return const_reverse_iterator(_ptr - n);
 					}
-					const_reverse_iterator operator+=(int n)
+					const_reverse_iterator &operator+=(int n)
 					{
 						_ptr = _ptr - n;
 						return *this;
@@ -629,6 +640,22 @@ namespace ft
 					long int operator-(const_reverse_iterator t)
 					{
 						return (t._ptr - _ptr);
+					}
+					bool operator>(const_reverse_iterator t) const
+					{
+						return (_ptr < t._ptr);
+					}
+					bool operator>=(const_reverse_iterator t) const 
+					{
+						return (_ptr <= t._ptr);
+					}
+					bool operator<(const_reverse_iterator t) const
+					{
+						return (_ptr > t._ptr);
+					}
+					bool operator<=(const_reverse_iterator t) const
+					{
+						return (_ptr >= t._ptr);
 					}
 					
 			};
