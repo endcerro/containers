@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 15:43:35 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/30 19:09:22 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/01 12:30:06 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 // https://www.cplusplus.com/reference/vector/vector/
@@ -33,27 +33,19 @@ namespace ft
 
 			void growarr(size_t n)
 			{
-				// std::cout << "creating :" << n << std::endl;
-				
-					// n = 2 * n;
-				// T* tmp = _alloc.allocate(n);
-				// size_t i = 0;
-				// for (iterator p = begin(); p != end(); p++)
-				// {
-				// 	_alloc.construct(&(tmp[i++]), *p);
-				// 	_alloc.destroy(&(*p));	
-				// }
-
 				T* tmp = _alloc.allocate(n);
 				for (size_t i = 0; i < _size; i++)
-				{
+				{		
+					// std::cerr << "Construct " << &(tmp[i]) << "/";
 					_alloc.construct(&(tmp[i]), _arr[i]);
+					// std::cerr << " Destroy " << &(_arr[i]) << std::endl;
 					_alloc.destroy(&(_arr[i]));
 				}
-				_alloc.deallocate(_arr, sizeof(T) * _max_size);
-				
-				_max_size = n;
+				// std::cerr << "Freeing " << _arr << std::endl;
+				// std::cerr << "Up to " << _arr + _max_size << std::endl;
+				_alloc.deallocate(_arr, _max_size);
 				_arr = tmp;
+				_max_size = n;
 			}
 
 		public :
@@ -61,36 +53,31 @@ namespace ft
 			explicit vector (const Alloc &alloc = Alloc()) : _alloc(alloc)
 			{
 				_arr = _alloc.allocate(D_S);
-
-				// vecNew(D_S);
 				_size = 0;
 				_max_size = D_S;
 			};
 			explicit vector (size_t n, const T& val, const Alloc &alloc = Alloc()) : _alloc(alloc)
 			{
-				_max_size = n + 10;
+				_arr = _alloc.allocate(n + D_S);
+				_max_size = n + D_S;
 				_size = n;
-				_arr = _alloc.allocate(n + 10);
-
 				for (size_t i = 0; i < n; i++)
 					_alloc.construct(&(_arr[i]), val);
-
 			};
+
 			template <class InputIterator>
 			vector(InputIterator first, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last, const Alloc &alloc = Alloc()) : _size(0), _alloc(alloc)
 			{
 				InputIterator firstC = first;
 				InputIterator lastC = last;
 				size_t i = 0;
-				while (firstC != lastC)
-				{
+				
+				while (firstC != lastC && ++i)
 					++firstC; 
-					++i;
-				}
-				_arr = _alloc.allocate(i);
-				_max_size = i;
-				_size = 0;
 
+				_arr = _alloc.allocate(i + D_S);
+				_max_size = i + D_S;
+				_size = 0;
 				while (first != last)
 					push_back(*(first++));
 			};
@@ -99,30 +86,16 @@ namespace ft
 			{
 				_max_size = v._max_size;
 				_size = v._size;
-
 				_arr = _alloc.allocate(_max_size);
-
-				for (size_t i = 0; i < v._size; i++)
-					_arr[i] = v._arr[i];
-
-				// std::cout << "CopyConstructor\n";
+				for (size_t i = 0; i < _size; i++)
+					_alloc.construct(&(_arr[i]), v._arr[i]);
 			}
 
-			
 			~vector(void)
 			{
-				// std::cout << "DESTRUCTOR CALLED" << std::endl;
-				size_t i= 0;
-				while (i < _size)
-				{
-					// std::cout << "Deal";
-					_alloc.destroy(&(_arr[i++]));
-					// std::cout << ".... Done" << std::endl;
-				}
-				// std::cout << "Freed " << i << " elements" << std::endl;
-				_alloc.deallocate(_arr, sizeof(T) * _max_size);
+				clear();
+				_alloc.deallocate(_arr, _max_size);
 			}
-
 
 			vector& operator=(const vector &b)
 			{
@@ -516,18 +489,18 @@ namespace ft
 			}
 			
 			template <class InputIterator>
-			void assign(typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type s, InputIterator e)
+			void assign(typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type start, InputIterator end)
 			{
 				clear();
-				while (s != e)
-					push_back(*(s++));
+				while (start != end)
+					push_back(*(start++));
 			}
 
 			
 			void push_back (const T& val)
 			{
-				if (_size == _max_size)
-					growarr(_size + 10);
+				if (_size + 1 >= _max_size)
+					growarr(_size + D_S);
 				_arr[_size++] = val;
 			}
 
@@ -548,7 +521,6 @@ namespace ft
 
 			void resize (size_t n, T val = T())
 			{
-				// size_t i = 0;
 				while (n < _size)
 					pop_back();
 				while (n > _size)
@@ -570,6 +542,7 @@ namespace ft
 			{
 				return _arr[_size - 1];
 			}
+
 			T& at(int a) const
 			{
 				int ns = static_cast<int>(_size);
@@ -616,7 +589,6 @@ namespace ft
 				x._alloc = a;
 
 			}
-
 
 			T& operator[](size_t n)
 			{
@@ -671,7 +643,7 @@ namespace ft
 				size_t delta = position._ptr - _arr;
 				if(_size + 1 >= _max_size)
 				{
-					growarr(_size + 1 + D_S);
+					growarr(_max_size + D_S);
 					position = IT(_arr + delta);
 				}
 				for (size_t i = _size; i > delta ; i--)
@@ -692,7 +664,6 @@ namespace ft
     		{
     			while (start != end)
     			{
-    				// std::cout << "insert at " << &(*position) << std::endl;
     				position = insert(position, *(start++));
     				position++;
     			}
@@ -701,7 +672,6 @@ namespace ft
     		IT erase (IT position)
     		{
     			IT cp = position;
-    			_alloc.destroy(&(*position));
     			while (++position != end())
     				*(position - 1) = *(position);
     			--_size;

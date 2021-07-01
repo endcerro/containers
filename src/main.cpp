@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/30 19:13:58 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/01 12:15:37 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,132 @@ void optest()
 	// std::cout <<"Operator > " << (b1 > b2) << std::endl;
 }
 
+template <typename T>
+void    vectorTest_EraseRange(T& cont)
+{
+    std::string name("erase iterator range:");
+    std::cout << "\n---------------------";
+
+    typename T::value_type* x = new typename T::value_type ();
+
+    // Erase everything
+    {
+        // printTestName("458", name); std::cout << "----- erase nothing -----";
+
+        T tmp = cont;
+        // printTestName("461", name); std::cout << "size of tmp = " << tmp.size();
+
+        typename T::iterator iter = tmp.erase(tmp.begin(), tmp.end());
+        // if (tmp.size())
+        //     { printTestName("465", name);   std::cout << "new elem after erase: " << *iter; }
+
+        // printTestName("467", name); std::cout << "size of tmp = " << tmp.size();
+        // printContainer("468", name, tmp);
+
+        // checking if everything was correcty destroyed
+        // std::cerr << "HERE " << *x << std::endl;    
+        for (int i = 0; i < 20; ++i)
+            tmp.push_back(*x);
+    }
+
+    // Erase nothing
+    {
+        std::cout << "----- erase nothing -----";
+
+        T tmp = cont;
+        // printTestName("480", name); std::cout << "size of tmp = " << tmp.size();
+
+        typename T::iterator iter = tmp.erase(tmp.end(), tmp.end());
+        
+        // printTestName("484", name);
+        for (typename T::iterator it = tmp.begin(); it != iter; ++it)
+            std::cout << *it << " | ";
+
+        // printTestName("488", name); std::cout << "size of tmp = " << tmp.size();
+
+        iter = tmp.erase(tmp.begin(), tmp.begin());
+        // if (tmp.size())
+        //     { printTestName("492", name);   std::cout << "new elem after erase: " << *iter; }
+
+        // printContainer("494", name, tmp);
+
+        // checking if everything was correcty destroyed and if we can push_back on erased values
+        for (int i = 0; i < 20; ++i)
+            tmp.push_back(*x);
+        // printContainer("499", name, tmp);
+    }
+        
+    // Erase last elem
+    if (cont.size())
+    {
+        // printTestName("505", name); std::cout << "----- erase last elem -----";
+        
+        T tmp = cont;
+        // printTestName("508", name); std::cout << "size of tmp = " << tmp.size();
+
+        typename T::iterator iter = tmp.erase(tmp.end() - 1, tmp.end());
+
+        // printTestName("512", name);
+        for (typename T::iterator it = tmp.begin(); it != iter; ++it)
+            std::cout << *it << " | ";
+
+        // printTestName("516", name); std::cout << "size of tmp = " << tmp.size();
+        // printContainer("517", name, tmp);
+
+        // checking if everything was correcty destroyed and if we can push_back on erased values
+        for (int i = 0; i < 20; ++i)
+            tmp.push_back(*x);
+        // printContainer("522", name, tmp);
+    }
+
+    // Erase everything except first elem
+    if (cont.size())
+    {
+        // printTestName("528", name); std::cout << "----- erase everything except first elem -----";
+
+        T tmp = cont;
+        // printTestName("531", name); std::cout << "size of tmp = " << tmp.size();
+
+        typename T::iterator iter = tmp.erase(tmp.begin() + 1, tmp.end());
+
+        // printTestName("535", name);
+        for (typename T::iterator it = tmp.begin(); it != iter; ++it)
+            std::cout << *it << " | ";
+
+        // printTestName("539", name); std::cout << "size of tmp = " << tmp.size();
+        // printContainer("540", name, tmp);
+        
+        // checking if everything was correcty destroyed and if we can push_back on erased values
+        for (int i = 0; i < 20; ++i)
+            tmp.push_back(*x);
+        // printContainer("545", name, tmp);
+    }
+
+    // Erase only first elem
+    if (cont.size())
+    {
+        // printTestName("551", name); std::cout << "----- erase only first elem -----";
+
+        T tmp = cont;
+        // printTestName("554", name); std::cout << "size of tmp = " << tmp.size();
+
+        typename T::iterator iter = tmp.erase(tmp.begin(), tmp.begin() + 1);
+
+        // printTestName("558", name);
+        for (typename T::iterator it = tmp.begin(); it != iter; ++it)
+            std::cout << *it << " | ";
+
+        // printTestName("562", name); std::cout << "size of tmp = " << tmp.size();
+        // printContainer("563", name, tmp);
+        
+        // checking if everything was correcty destroyed and if we can push_back on erased values
+        for (int i = 0; i < 20; ++i)
+            tmp.push_back(*x);
+        // printContainer("568", name, tmp);
+    }
+
+    delete x;
+}
 int main()
 {
 
