@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 15:43:35 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/01 12:34:45 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/01 15:56:26 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 // https://www.cplusplus.com/reference/vector/vector/
@@ -48,14 +48,14 @@ namespace ft
 			typedef T value_type;
 			explicit vector (const Alloc &alloc = Alloc()) : _alloc(alloc)
 			{
-				_arr = _alloc.allocate(D_S);
+				_arr = _alloc.allocate(10);//D_S);
 				_size = 0;
-				_max_size = D_S;
+				_max_size = 10;//D_S;
 			};
-			explicit vector (size_t n, const T& val, const Alloc &alloc = Alloc()) : _alloc(alloc)
+			explicit vector (size_t n, const T& val = T(), const Alloc &alloc = Alloc()) : _alloc(alloc)
 			{
-				_arr = _alloc.allocate(n + D_S);
-				_max_size = n + D_S;
+				_arr = _alloc.allocate(n);// + D_S);
+				_max_size = n;// + D_S;
 				_size = n;
 				for (size_t i = 0; i < n; i++)
 					_alloc.construct(&(_arr[i]), val);
@@ -71,8 +71,8 @@ namespace ft
 				while (firstC != lastC && ++i)
 					++firstC; 
 
-				_arr = _alloc.allocate(i + D_S);
-				_max_size = i + D_S;
+				_arr = _alloc.allocate(i);// + D_S);
+				_max_size = i;// + D_S;
 				_size = 0;
 				while (first != last)
 					push_back(*(first++));
@@ -80,11 +80,13 @@ namespace ft
 
 			vector(const vector &v)
 			{
+				// std::cerr << "HERE" << std::endl;
 				_max_size = v._max_size;
 				_size = v._size;
 				_arr = _alloc.allocate(_max_size);
 				for (size_t i = 0; i < _size; i++)
-					_alloc.construct(&(_arr[i]), v._arr[i]);
+					_arr[i] = v._arr[i];
+					// _alloc.construct(&(_arr[i]), v._arr[i]);
 			}
 
 			~vector(void)
@@ -113,29 +115,27 @@ namespace ft
 					{	}
 					iterator() : _ptr(0) 
 					{	};
-					iterator operator++(int t) //i++
+					iterator operator++(int) //i++
 					{
-						t = 0;
-						iterator i = *this;
+						iterator i = *this;// = *this;
 						++_ptr;
 						return i;
 					}
-					iterator operator++() //i++
+					iterator &operator++() //i++
 					{		
 						++_ptr;
 						return *this;
 					}
-					iterator operator--(int t) //i++
+					iterator operator--(int) //i++
 					{
-						t = 0;
 						iterator i = *this;
-						// _ptr = _ptr->previous;
 						--_ptr;
 						return i;
 					}
-					iterator operator--() //i++
+					iterator &operator--()
 					{ 
-						--_ptr;// = _ptr->previous; 
+						// std::cout << "here\n";
+						--_ptr; 
 						return *this;
 					}
 					T& operator*() 
@@ -178,6 +178,11 @@ namespace ft
 					{
 						_ptr = _ptr - n;
 						return *this;
+					}
+					T& operator[](int n)
+					{
+						// _ptr += n;
+						return _ptr[n];
 					}
 					// bool operator==(iterator t)
 					// {
@@ -261,7 +266,6 @@ namespace ft
 					const_iterator operator--(int) //i++
 					{
 						const_iterator i = *this;
-						// _ptr = _ptr->previous;
 						--_ptr;
 						return i;
 					}
@@ -496,7 +500,7 @@ namespace ft
 			void push_back (const T& val)
 			{
 				if (_size + 1 >= _max_size)
-					growarr(_size + D_S);
+					growarr(_size * 2); //+ D_S);
 				_arr[_size++] = val;
 			}
 
@@ -639,7 +643,7 @@ namespace ft
 				size_t delta = position._ptr - _arr;
 				if(_size + 1 >= _max_size)
 				{
-					growarr(_max_size + D_S);
+					growarr(_max_size * 2);// + D_S);
 					position = IT(_arr + delta);
 				}
 				for (size_t i = _size; i > delta ; i--)
