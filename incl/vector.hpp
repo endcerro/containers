@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 15:43:35 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/01 16:59:29 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/01 17:15:25 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 // https://www.cplusplus.com/reference/vector/vector/
@@ -58,8 +58,8 @@ namespace ft
 			};
 			explicit vector (size_t n, const T& val = T(), const Alloc &alloc = Alloc()) : _alloc(alloc)
 			{
-				_arr = _alloc.allocate(n);// + D_S);
-				_max_size = n;// + D_S;
+				_arr = _alloc.allocate(n + 1);// + D_S);
+				_max_size = n + 1;// + D_S;
 				_size = n;
 				for (size_t i = 0; i < n; i++)
 					_alloc.construct(&(_arr[i]), val);
@@ -75,8 +75,8 @@ namespace ft
 				while (firstC != lastC && ++i)
 					++firstC; 
 
-				_arr = _alloc.allocate(i);// + D_S);
-				_max_size = i;// + D_S;
+				_arr = _alloc.allocate(i + 1);// + D_S);
+				_max_size = i + 1;// + D_S;
 				_size = 0;
 				while (first != last)
 					push_back(*(first++));
@@ -188,24 +188,24 @@ namespace ft
 						_ptr = _ptr - n;
 						return *this;
 					}
-					T& operator[](int n)
+					T& operator[](int n) const
 					{
 						// _ptr += n;
 						return _ptr[n];
 					}
-					bool operator>(iterator t)
+					bool operator>(iterator t) const
 					{
 						return (_ptr > t._ptr);
 					}
-					bool operator>=(iterator t)
+					bool operator>=(iterator t) const
 					{
 						return (_ptr >= t._ptr);
 					}
-					bool operator<(iterator t)
+					bool operator<(iterator t) const
 					{
 						return (_ptr < t._ptr);
 					}
-					bool operator<=(iterator t)
+					bool operator<=(iterator t) const
 					{
 						return (_ptr <= t._ptr);
 					}
@@ -330,7 +330,7 @@ namespace ft
 					{ 
 						return _ptr;//->data; 
 					}
-					bool operator==(const const_iterator& it)
+					bool operator==(const const_iterator& it) const
 					{ 
 						return (_ptr == it._ptr); 
 					}
@@ -618,7 +618,7 @@ namespace ft
 			void push_back (const T& val)
 			{
 				if (_size + 1 >= _max_size)
-					growarr(_size * 2); //+ D_S);
+					growarr(_max_size * 2); //+ D_S);
 				_arr[_size++] = val;
 			}
 
@@ -712,7 +712,7 @@ namespace ft
 			{
 				return _arr[n];
 			}
-			bool operator==(const vector &t)
+			bool operator==(const vector &t) const
 			{
 				if (_size != t._size)
 					return 0;
@@ -723,13 +723,13 @@ namespace ft
 				}
 				return 1;
 			}
-			bool operator!=(const vector &t)
+			bool operator!=(const vector &t) const
 			{
 				return (!(*this == t));
 			}
-			bool operator>(const vector &t)
+			bool operator>(const vector &t) const
 			{
-							size_t i = 0;
+				size_t i = 0;
 				while (i < _size && i < t._size)
 				{
 					if (_arr[i] < t._arr[i])
@@ -740,17 +740,17 @@ namespace ft
 					return 0;
 				return 1;
 			}
-			bool operator<(const vector &t)
+			bool operator<(const vector &t) const
 			{
 				if (*this == t)
 					return 0;
 				return !(*this > t);
 			}
-			bool operator>=(const vector &t)
+			bool operator>=(const vector &t) const
 			{
 				return (*this > t || *this == t);
 			}
-			bool operator<=(const vector &t)
+			bool operator<=(const vector &t) const
 			{
 				return (*this < t || *this == t);
 			}
