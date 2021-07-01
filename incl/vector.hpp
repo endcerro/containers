@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 15:43:35 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/01 12:30:06 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/01 12:34:45 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 // https://www.cplusplus.com/reference/vector/vector/
@@ -36,13 +36,9 @@ namespace ft
 				T* tmp = _alloc.allocate(n);
 				for (size_t i = 0; i < _size; i++)
 				{		
-					// std::cerr << "Construct " << &(tmp[i]) << "/";
 					_alloc.construct(&(tmp[i]), _arr[i]);
-					// std::cerr << " Destroy " << &(_arr[i]) << std::endl;
 					_alloc.destroy(&(_arr[i]));
 				}
-				// std::cerr << "Freeing " << _arr << std::endl;
-				// std::cerr << "Up to " << _arr + _max_size << std::endl;
 				_alloc.deallocate(_arr, _max_size);
 				_arr = tmp;
 				_max_size = n;
