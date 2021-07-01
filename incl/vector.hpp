@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 15:43:35 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/01 19:41:00 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/01 19:44:10 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 // https://www.cplusplus.com/reference/vector/vector/
@@ -52,14 +52,14 @@ namespace ft
 			typedef T value_type;
 			explicit vector (const Alloc &alloc = Alloc()) : _alloc(alloc)
 			{
-				_arr = _alloc.allocate(10);//D_S);
+				_arr = _alloc.allocate(10);
 				_size = 0;
-				_max_size = 10;//D_S;
+				_max_size = 10;
 			};
 			explicit vector (size_t n, const T& val = T(), const Alloc &alloc = Alloc()) : _alloc(alloc)
 			{
-				_arr = _alloc.allocate(n + 1);// + D_S);
-				_max_size = n + 1;// + D_S;
+				_arr = _alloc.allocate(n + 1);
+				_max_size = n + 1;
 				_size = n;
 				for (size_t i = 0; i < n; i++)
 					_alloc.construct(&(_arr[i]), val);
@@ -75,8 +75,8 @@ namespace ft
 				while (firstC != lastC && ++i)
 					++firstC; 
 
-				_arr = _alloc.allocate(i + 1);// + D_S);
-				_max_size = i + 1;// + D_S;
+				_arr = _alloc.allocate(i + 1);
+				_max_size = i + 1;
 				_size = 0;
 				while (first != last)
 					push_back(*(first++));
@@ -84,13 +84,13 @@ namespace ft
 
 			vector(const vector &v)
 			{
-				// std::cerr << "HERE" << std::endl;
+
 				_max_size = v._max_size;
 				_size = v._size;
 				_arr = _alloc.allocate(_max_size);
 				for (size_t i = 0; i < _size; i++)
 					_arr[i] = v._arr[i];
-					// _alloc.construct(&(_arr[i]), v._arr[i]);
+
 			}
 
 			~vector(void)
@@ -111,26 +111,25 @@ namespace ft
 				
 				private :
 					T *_ptr;
-					// size_t *size;
-					// list<T> *obj;
+
 				public :
 
 					iterator(T *ptr) : _ptr(ptr) 
 					{	}
 					iterator() : _ptr(0) 
 					{	};
-					iterator operator++(int) //i++
+					iterator operator++(int)
 					{
-						iterator i = *this;// = *this;
+						iterator i = *this;
 						++_ptr;
 						return i;
 					}
-					iterator &operator++() //i++
+					iterator &operator++()
 					{		
 						++_ptr;
 						return *this;
 					}
-					iterator operator--(int) //i++
+					iterator operator--(int)
 					{
 						iterator i = *this;
 						--_ptr;
@@ -138,7 +137,6 @@ namespace ft
 					}
 					iterator &operator--()
 					{ 
-						// std::cout << "here\n";
 						--_ptr; 
 						return *this;
 					}
@@ -148,7 +146,7 @@ namespace ft
 					}
 					T* operator->() const 
 					{ 
-						return _ptr;//->data; 
+						return _ptr;
 					}
 					bool operator==(const iterator& it)
 					{ 
@@ -158,8 +156,6 @@ namespace ft
 					{
 						return (_ptr != it._ptr); 
 					}
-
-					// iterator operator+(int n)
 					iterator operator+(int n) const
 					{
 						return iterator(&(_ptr[n]));
@@ -170,10 +166,6 @@ namespace ft
 						return (_ptr - t._ptr);
 					}
 
-					// iterator operator+(int n) const
-					// {
-					// 	return iterator(t + n);
-					// }
 					iterator operator+=(int n)
 					{
 						_ptr = _ptr + n;
@@ -190,7 +182,6 @@ namespace ft
 					}
 					T& operator[](int n) const
 					{
-						// _ptr += n;
 						return _ptr[n];
 					}
 					bool operator>(iterator t) const
@@ -209,18 +200,7 @@ namespace ft
 					{
 						return (_ptr <= t._ptr);
 					}
-					// bool operator==(iterator t)
-					// {
-					// 	return (t._ptr == _ptr);
-					// }
-					// friend bool operator==(iterator n, iterator t)
-					// {
-					// 	return (n._ptr == t._ptr);
-					// }
-					// bool operator!=(iterator t)
-					// {
-					// 	return (t._ptr != _ptr);
-					// }
+
 					friend iterator operator+(int t ,iterator n)
 					{
 						return (n + t);
@@ -261,24 +241,6 @@ namespace ft
 					{
 						return (b._ptr <= it._ptr); 
 					}
-					// iterator operator+=(iterator n)
-					// {
-					// 	// size_t delta = &(*end) - &(*start);
-					// 	// _ptr += delta
-					// 	// // _ptr = _ptr + n;
-					// 	// return *this;
-					// }
-					// int operator-(iterator n) const
-					// {
-					// 	size_t delta = &(*_ptr) - &(*n);
-					// 	return delta;
-					// }
-					// iterator operator-=(iterator n)
-					// {
-					// 	// size_t delta = &(*end) - &(*start);
-					// 	// _ptr -= delta;
-					// 	// return *this;
-					// }
 			};
 
 			class const_iterator
@@ -287,8 +249,6 @@ namespace ft
 				
 				private :
 					T *_ptr;
-					// size_t *size;
-					// list<T> *obj;
 				public :
 
 					const_iterator(T *ptr) : _ptr(ptr) 
@@ -797,60 +757,13 @@ namespace ft
 			{
 				return _arr[n];
 			}
-			// bool operator==(const vector &t) const
-			// {
-			// 	if (_size != t._size)
-			// 		return 0;
-			// 	for (size_t i = 0; i < _size; i++)
-			// 	{
-			// 		if (_arr[i] != t._arr[i])
-			// 			return 0;
-			// 	}
-			// 	return 1;
-			// }
-			// bool operator!=(const vector &t) const
-			// {
-			// 	return (!(*this == t));
-			// }
-			// bool operator>(const vector &t) const
-			// {
-			// 	ft::iterator<T> right = begin();
-			// 	ft::iterator<T> left = t.begin()
-				
-
-			// 	size_t i = 0;
-			// 	while (i < _size && i < t._size)
-			// 	{
-			// 		if (_arr[i] < t._arr[i])
-			// 			return 0;
-			// 		i++;
-			// 	}
-			// 	if (i == _size)
-			// 		return 0;
-			// 	return 1;
-			// }
-			// bool operator<(const vector &t) const
-			// {
-			// 	if (*this == t)
-			// 		return 0;
-			// 	return !(*this > t);
-			// }
-			// bool operator>=(const vector &t) const
-			// {
-			// 	return (*this > t || *this == t);
-			// }
-			// bool operator<=(const vector &t) const
-			// {
-			// 	return (*this < t || *this == t);
-			// }
-
 			template<class IT>
 			IT insert (IT position, const T& val)
 			{
 				size_t delta = position._ptr - _arr;
 				if(_size + 1 >= _max_size)
 				{
-					growarr(_max_size * 2);// + D_S);
+					growarr(_max_size * 2);
 					position = IT(_arr + delta);
 				}
 				for (size_t i = _size; i > delta ; i--)
@@ -898,7 +811,6 @@ namespace ft
 				tmp = start;
 				for(size_t i = 0; i < delta; i++)
 					start = erase(start);
-				// --_size;
 				return tmp;
 			}
 	};
