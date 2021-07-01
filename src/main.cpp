@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/01 15:44:52 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/01 18:56:35 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,42 +94,53 @@ void whathefuck()
 
 }
 
-// void test()
-// {
-// 	TESTED_NAMESPACE::vector<TESTED_TYPE> vct(5);
-// 	TESTED_NAMESPACE::vector<TESTED_TYPE>::iterator it = vct.begin(), ite = vct.end();
+void test()
+{
 
-// 	std::cout << "len: " << (ite - it) << std::endl;
-// 	for (; it != ite; ++it)
-// 		*it = (ite - it);
+	const int size = 5;
+	ft::vector<int> vct(size);
+	ft::vector<int>::reverse_iterator it = vct.rbegin();
 
-// 	it = vct.begin();
-// 	TESTED_NAMESPACE::vector<TESTED_TYPE> vct_range(it, --(--ite));
-// 	for (int i = 0; it != ite; ++it)
-// 		*it = ++i * 5;
 
-// 	it = vct.begin();
-// 	TESTED_NAMESPACE::vector<TESTED_TYPE> vct_copy(vct);
-// 	for (int i = 0; it != ite; ++it)
-// 		*it = ++i * 7;
-// 	vct_copy.push_back(42);
-// 	vct_copy.push_back(21);
+	std::vector<int> Svct(size);
+	std::vector<int>::reverse_iterator Sit = Svct.rbegin();
+	// TESTED_NAMESPACE::vector<TESTED_TYPE>::const_reverse_iterator ite = vct.rbegin();
 
-// 	std::cout << "\t-- PART ONE --" << std::endl;
-// 	printSize(vct);
-// 	printSize(vct_range);
-// 	printSize(vct_copy);
+	for (int i = 0; i < size; ++i)
+	{
 
-// 	vct = vct_copy;
-// 	vct_copy = vct_range;
-// 	vct_range.clear();
+		it[i] = (size - i) * 5;
+		Sit[i] = (size - i) * 5;
+	}
 
-// 	std::cout << "\t-- PART TWO --" << std::endl;
-// 	printSize(vct);
-// 	printSize(vct_range);
-// 	printSize(vct_copy);
-// 	return (0);
-// }
+	it = it + 5;
+	it = 1 + it;
+	it = it - 4;
+
+	Sit = Sit + 5;
+	Sit = 1 + Sit;
+	Sit = Sit - 4;
+	
+	std::cout << *(it ) << std::endl;
+	std::cout << *(Sit ) << std::endl;
+	// std::cout << *(it -= 1) << std::endl;
+	// std::cout << *(it += 2) << std::endl;
+	// std::cout << *(it -= 1) << std::endl;
+
+	// *(it -= 2) = 42;
+	// *(it += 2) = 21;
+
+	// std::cout << "const_ite +=/-=: " << *(ite += 2) << " | " << *(ite -= 2) << std::endl;
+
+	// std::cout << "(it == const_it): " << (ite == it) << std::endl;
+	// std::cout << "(const_ite - it): " << (ite - it) << std::endl;
+	// std::cout << "(ite + 3 == it): " << (ite + 3 == it) << std::endl;
+
+	print2(Svct, vct);
+	// return (0);
+	
+	
+}
 
 
 
@@ -140,57 +151,63 @@ int main()
 	// whathefuck();
 	// htest();
   
-	// return 0;
-	ft::vector<int> custom(10);
-	std::vector<int> base(10);
-
-	ft::vector<int>::iterator cit = custom.begin(), cite = custom.end();
-	std::vector<int>::iterator bit = base.begin(), bite = base.end();
-
-	for (; cit != cite; ++cit)
-		*cit = (cite - cit);
-	for (; bit != bite; ++bit)
-		*bit = (bite - bit);
+	test();
+	return 0;
+	// ft::vector<int> custom;
+	// std::vector<int> base;
 
 
-	print2(base, custom);
+	// for (int i = 0; i < 10; i++)
+	// {
+	// 	custom.push_back(i);
+	// 	base.push_back(i);
+	// }
 
-	// std::cout << "C from :" << &(*custom.begin()) << " to " << &(*custom.end()) << std::endl;
-	// std::cout << "B from :" << &(*base.begin()) << " to " << &(*base.end()) << std::endl;
+	// ft::vector<int>::reverse_iterator cit = custom.rbegin();//, cite = custom.rend();
+	// std::vector<int>::reverse_iterator bit = base.rbegin();//, bite = base.rend();
 
-	// std::cout << "custom :" << &(*cit) << "|\n";// << *cite << std::endl;
-	// std::cout << "base :" << &(*bit) << "|\n";// << *bite << std::endl;
+	// // for (; cit != cite; ++cit)
+	// // 	*cit = (cite - cit);
+	// // for (; bit != bite; ++bit)
+	// // 	*bit = (bite - bit);
 
-	if (cite == custom.end())
-	{
-		std::cout << "cite is end " << std::endl;
-		// std::cout << *(--(--cite)) << std::endl;
-	}
-	if (bite == base.end())
-	{
-		std::cout << "bite is end " << std::endl;
-		// std::cout << *(--(--bite)) << std::endl;
-	}
+
+	// print2(base, custom);
+
+	// // std::cout << "C from :" << &(*custom.begin()) << " to " << &(*custom.end()) << std::endl;
+	// // std::cout << "B from :" << &(*base.begin()) << " to " << &(*base.end()) << std::endl;
+
+	// // std::cout << "custom :" << &(*cit) << "|\n";// << *cite << std::endl;
+	// // std::cout << "base :" << &(*bit) << "|\n";// << *bite << std::endl;
+
+	// if (cit == custom.rend())
+	// {
+	// 	std::cout << "cite is end " << std::endl;
+	// 	// std::cout << *(--(--cite)) << std::endl;
+	// }
+	// if (bit == base.rend())
+	// {
+	// 	std::cout << "bite is end " << std::endl;
+	// 	// std::cout << *(--(--bite)) << std::endl;
+	// }
 
 	// bit = base.begin();
 	// cit = custom.begin();
 	// print2(base,custom);
 	// ft::vector<int> custom_vct_range(cit, --(cite));
 	// std::vector<int> base_vct_range(bit, --(bite));
-	--(--cite);
-	--(--bite);
 	// --cite;
 	// --bite;
 	
-	std::cout << *cite << std::endl;
-	std::cout << *bite << std::endl;
-	// for (int i = 0; bit != bite; ++bit)
-	// 	*bit = ++i * 5;
-	// for (int i = 0; cit != cite; ++cit)
-	// 	*cit = ++i * 5;
+	// std::cout << *(cit - 0) << std::endl;
+	// std::cout << *(bit - 0)  << std::endl;
+	// // for (int i = 0; bit != bite; ++bit)
+	// // 	*bit = ++i * 5;
+	// // for (int i = 0; cit != cite; ++cit)
+	// // 	*cit = ++i * 5;
 
 
-	print2(base, custom);
+	// print2(base, custom);
 
 	// for (int i = 0; cit != cite; ++cit)
 	// 	*cit = ++i * 5;

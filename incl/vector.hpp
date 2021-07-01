@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 15:43:35 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/01 17:52:05 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/01 18:59:24 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 // https://www.cplusplus.com/reference/vector/vector/
@@ -431,6 +431,8 @@ namespace ft
 				public :
 					reverse_iterator(T *ptr) : _ptr(ptr) 
 					{	}
+					reverse_iterator(iterator t) : _ptr(t._ptr - 1) 
+					{	}
 					reverse_iterator() : _ptr(0) 
 					{	};
 					reverse_iterator operator++(int) //i++
@@ -455,6 +457,10 @@ namespace ft
 						++_ptr; 
 						return *this;
 					}
+					iterator base()
+					{
+						return iterator(_ptr + 1);
+					}
 					T& operator*() 
 					{ 
 						return *(_ptr); 
@@ -475,7 +481,7 @@ namespace ft
 					{
 						return reverse_iterator((_ptr - n));
 					}
-					reverse_iterator operator+=(int n)
+					reverse_iterator &operator+=(int n)
 					{
 						_ptr = _ptr - n;
 						return *this;
@@ -484,15 +490,61 @@ namespace ft
 					{
 						return reverse_iterator(_ptr + n);
 					}
-					reverse_iterator operator-=(int n)
+					reverse_iterator &operator-=(int n)
 					{
 						_ptr = _ptr + n;
 						return *this;
 					}
-					long int operator-(reverse_iterator t)
+					T& operator[](int n) const
 					{
-						return (_ptr - t._ptr);
+						// _ptr += n;
+						return _ptr[-n];
 					}
+					friend reverse_iterator operator+(int t ,reverse_iterator n)
+					{
+						// std::cout <<"here" << std::endl;
+						return reverse_iterator(n._ptr - t);
+					}
+					friend reverse_iterator operator-(int t ,reverse_iterator n)
+					{
+						return reverse_iterator(n._ptr + t);
+					}
+					friend reverse_iterator operator+=(int t ,reverse_iterator n)
+					{
+						return (n -= t);
+					}
+					friend reverse_iterator operator-=(int t ,reverse_iterator n)
+					{
+						return (n += t);
+					}
+					// friend bool operator!=(const const_iterator b, const iterator& it)
+					// {
+					// 	return (b._ptr != it._ptr); 
+					// }
+					// friend bool operator==(const const_iterator b, const iterator& it)
+					// {
+					// 	return (b._ptr == it._ptr); 
+					// }
+					// friend bool operator<(const const_iterator b, const iterator& it)
+					// {
+					// 	return (b._ptr < it._ptr); 
+					// }
+					// friend bool operator>(const const_iterator b, const iterator& it)
+					// {
+					// 	return (b._ptr > it._ptr); 
+					// }
+					// friend bool operator>=(const const_iterator b, const iterator& it)
+					// {
+					// 	return (b._ptr >= it._ptr); 
+					// }
+					// friend bool operator<=(const const_iterator b, const iterator& it)
+					// {
+					// 	return (b._ptr <= it._ptr); 
+					// }
+					// long int operator-(reverse_iterator t)
+					// {
+					// 	return (_ptr - t._ptr);
+					// }
 			};
 			class const_reverse_iterator
 			{
@@ -509,9 +561,11 @@ namespace ft
 					const_reverse_iterator() : _ptr(0) 
 					{	};
 					const_reverse_iterator(reverse_iterator n) : _ptr(n._ptr)
-					{
-
-					}
+					{	}
+					const_reverse_iterator(const_iterator n) : _ptr(n._ptr - 1)
+					{	}
+					const_reverse_iterator(iterator n) : _ptr(n._ptr - 1)
+					{	}
 					const_reverse_iterator operator++(int) //i++
 					{
 						const_reverse_iterator i = *this;
@@ -528,6 +582,10 @@ namespace ft
 						const_reverse_iterator i = *this;
 						++_ptr;
 						return i;
+					}
+					const_iterator base()
+					{
+						return const_iterator(_ptr + 1);
 					}
 					const_reverse_iterator &operator--() //i++
 					{ 
@@ -570,7 +628,7 @@ namespace ft
 					}
 					long int operator-(const_reverse_iterator t)
 					{
-						return (_ptr - t._ptr);
+						return (t._ptr - _ptr);
 					}
 					
 			};
