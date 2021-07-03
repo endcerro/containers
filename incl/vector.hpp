@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 15:43:35 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/03 19:18:05 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/03 19:58:07 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 // https://www.cplusplus.com/reference/vector/vector/
@@ -50,18 +50,19 @@ namespace ft
 			class reverse_iterator;
 			class const_reverse_iterator;
 			// typedef T value_type;
-            typedef T&                                          reference;
-            typedef const T&                                    const_reference;
-            typedef T*                                          pointer;
-            typedef const T*                                    const_pointer;
+			typedef T&			reference;
+			typedef const T&	const_reference;
+			typedef T*			pointer;
+			typedef const T*	const_pointer;
 			typename Alloc::value_type value_type;
-			explicit vector (const Alloc &alloc = Alloc()) : _alloc(alloc)
+			
+			explicit vector(const Alloc &alloc = Alloc()) : _alloc(alloc)
 			{
 				_arr = _alloc.allocate(10);
 				_size = 0;
 				_max_size = 10;
 			};
-			explicit vector (size_t n, const T& val = T(), const Alloc &alloc = Alloc()) : _alloc(alloc)
+			explicit vector(size_t n, const T& val = T(), const Alloc &alloc = Alloc()) : _alloc(alloc)
 			{
 				_arr = _alloc.allocate(n + 1);
 				_max_size = n + 1;
@@ -73,13 +74,11 @@ namespace ft
 			template <class InputIterator>
 			vector(InputIterator first, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last, const Alloc &alloc = Alloc()) : _size(0), _alloc(alloc)
 			{
-				InputIterator firstC = first;
-				InputIterator lastC = last;
 				size_t i = 0;
-				
+				InputIterator firstC = first;
+				InputIterator lastC = last;				
 				while (firstC != lastC && ++i)
 					++firstC; 
-
 				_arr = _alloc.allocate(i + 1);
 				_max_size = i + 1;
 				_size = 0;
@@ -89,13 +88,11 @@ namespace ft
 
 			vector(const vector &v)
 			{
-
 				_max_size = v._max_size;
 				_size = v._size;
 				_arr = _alloc.allocate(_max_size);
 				for (size_t i = 0; i < _size; i++)
 					_arr[i] = v._arr[i];
-
 			}
 
 			~vector(void)
@@ -118,60 +115,51 @@ namespace ft
 					T *_ptr;
 
 				public :
-
 					explicit iterator(T *ptr = 0) : _ptr(ptr) 
-					{	
-						// std::cout << "here\n"; 
-					}
-					// iterator() : _ptr(0) 
-					// {	};
+					{	}
 					iterator operator++(int)
 					{
 						iterator i = *this;
 						++_ptr;
 						return i;
 					}
+
 					iterator &operator++()
 					{		
 						++_ptr;
 						return *this;
 					}
+
 					iterator operator--(int)
 					{
 						iterator i = *this;
 						--_ptr;
 						return i;
 					}
+
 					iterator &operator--()
 					{ 
 						--_ptr; 
 						return *this;
 					}
-					T& operator*() const
-					{ 
-						return *(_ptr); 
-					}
-					T* operator->() const 
-					{ 
-						return _ptr;
-					}
+
+					reference operator*() const
+					{	return *(_ptr); }
+					
+					pointer operator->() const 
+					{	return _ptr;	}
+					
 					bool operator==(const iterator& it) const
-					{ 
-						return (_ptr == it._ptr); 
-					}
+					{	return (_ptr == it._ptr);	}
+					
 					bool operator!=(const iterator& it) const
-					{
-						return (_ptr != it._ptr); 
-					}
+					{	return (_ptr != it._ptr);	}
+
 					iterator operator+(int n) const
-					{
-						return iterator(&(_ptr[n]));
-					}
+					{	return iterator(&(_ptr[n]));	}
 
 					long int operator-(iterator t) const
-					{
-						return (_ptr - t._ptr);
-					}
+					{	return (_ptr - t._ptr);	}
 
 					iterator operator+=(int n)
 					{
@@ -187,7 +175,7 @@ namespace ft
 						_ptr = _ptr - n;
 						return *this;
 					}
-					T& operator[](int n) const
+					reference operator[](int n) const
 					{
 						return _ptr[n];
 					}
@@ -286,111 +274,91 @@ namespace ft
 					}
 					const_iterator &operator--() //i++
 					{ 
-						--_ptr;// = _ptr->previous; 
+						--_ptr; 
 						return *this;
 					}
-					const T& operator*() const
-					{ 
-						return *(_ptr); 
-					}
-					const T* operator->() const 
-					{ 
-						return _ptr;//->data; 
-					}
+					const_reference operator*() const
+					{	return *(_ptr); }
+					
+					const_pointer operator->() const 
+					{	return _ptr;	}
+					
 					bool operator==(const const_iterator& it) const
-					{ 
-						return (_ptr == it._ptr); 
-					}
+					{	return (_ptr == it._ptr);	}
+					
 					bool operator!=(const const_iterator& it) const
-					{
-						return (_ptr != it._ptr); 
-					}
+					{	return (_ptr != it._ptr); }
+
 					const_iterator operator+(int n) const
 					{
 						return const_iterator(&(_ptr[n]));
 					}
+					
 					const_iterator operator+=(int n)
 					{
 						_ptr = _ptr + n;
 						return *this;
 					}
+					
 					const_iterator operator-(int n) const
-					{
-						return const_iterator(_ptr - n);
-					}
+					{	return const_iterator(_ptr - n);	}
+					
 					const_iterator operator-=(int n)
 					{
 						_ptr = _ptr - n;
 						return *this;
 					}
+					
 					bool operator>(const_iterator t) const
-					{
-						return (_ptr > t._ptr);
-					}
+					{	return (_ptr > t._ptr);	}
+					
 					bool operator>=(const_iterator t) const 
-					{
-						return (_ptr >= t._ptr);
-					}
+					{	return (_ptr >= t._ptr);	}
+					
 					bool operator<(const_iterator t) const
-					{
-						return (_ptr < t._ptr);
-					}
+					{	return (_ptr < t._ptr);	}
+
 					bool operator<=(const_iterator t) const
-					{
-						return (_ptr <= t._ptr);
-					}
+					{	return (_ptr <= t._ptr);	}
 				
 					long int operator-(const_iterator t) const
-					{
-						return (_ptr - t._ptr);
-					}
+					{	return (_ptr - t._ptr);	}
+					
 					friend const_iterator operator+(int t ,const_iterator n)  
-					{
-						return (n + t);
-					}
+					{	return (n + t);	}
+					
 					friend const_iterator operator-(int t ,const_iterator n)  
-					{
-						return (n - t);
-					}
+					{	return (n - t);	}
+					
 					friend const_iterator operator+=(int t ,const_iterator n)  
-					{
-						return (n += t);
-					}
+					{	return (n += t);	}
+					
 					friend const_iterator operator-=(int t ,const_iterator n) 
-					{
-						return (n -= t);
-					}
+					{	return (n -= t);	}
+					
 					friend bool operator!=(const iterator b, const const_iterator& it) 
-					{
-						return (b._ptr != it._ptr); 
-					}
+					{	return (b._ptr != it._ptr);	}
+					
 					friend bool operator==(const iterator b, const const_iterator& it) 
-					{
-						return (b._ptr == it._ptr); 
-					}
+					{	return (b._ptr == it._ptr);	}
+					
 					friend bool operator<(const iterator b, const const_iterator& it) 
-					{
-						return (b._ptr < it._ptr); 
-					}
+					{	return (b._ptr < it._ptr);	}
+					
 					friend bool operator>(const iterator b, const const_iterator& it) 
-					{
-						return (b._ptr > it._ptr); 
-					}
+					{	return (b._ptr > it._ptr);	}
+					
 					friend bool operator>=(const iterator b, const const_iterator& it) 
-					{
-						return (b._ptr >= it._ptr); 
-					}
+					{	return (b._ptr >= it._ptr);	}
+					
 					friend bool operator<=(const iterator b, const const_iterator& it) 
-					{
-						return (b._ptr <= it._ptr); 
-					}
-
+					{	return (b._ptr <= it._ptr);	}
 			};
 
 			class reverse_iterator
 			{
 				friend class vector<T, Alloc>;
-				
+
 				private :
 					T *_ptr;
 
@@ -423,106 +391,84 @@ namespace ft
 						++_ptr; 
 						return *this;
 					}
+					
 					iterator base() const
-					{
-						return iterator(_ptr + 1);
-					}
+					{	return iterator(_ptr + 1);	}
+					
 					T& operator*() const
-					{ 
-						return *(_ptr); 
-					}
-					T* operator->() const
-					{ 
-						return _ptr;//->data; 
-					}
+					{	return *(_ptr);	}
+					
+					pointer operator->() const
+					{	return _ptr;	}
+					
 					bool operator==(const reverse_iterator& it) const
-					{ 
-						return (_ptr == it._ptr); 
-					}
+					{	return (_ptr == it._ptr);	}
+
 					bool operator!=(const reverse_iterator& it) const
-					{
-						return (_ptr != it._ptr); 
-					}
+					{	return (_ptr != it._ptr);	}
+					
 					reverse_iterator operator+(int n) const
-					{
-						return reverse_iterator(_ptr - n);
-					}
+					{	return reverse_iterator(_ptr - n);	}
+					
 					reverse_iterator &operator+=(int n)
 					{
 						_ptr = _ptr - n;
 						return *this;
 					}
+					
 					reverse_iterator operator-(int n) const
-					{
-						return reverse_iterator(_ptr + n);
-					}
+					{	return reverse_iterator(_ptr + n);	}
+					
 					reverse_iterator &operator-=(int n)
 					{
 						_ptr = _ptr + n;
 						return *this;
 					}
-					T& operator[](int n) const
-					{
-						// _ptr += n;
-						return _ptr[-n];
-					}
+					
+					reference operator[](int n) const
+					{	return _ptr[-n];	}
+					
 					bool operator>(reverse_iterator t) const
-					{
-						return (_ptr < t._ptr);
-					}
+					{	return (_ptr < t._ptr);	}
+					
 					bool operator>=(reverse_iterator t) const 
-					{
-						return (_ptr <= t._ptr);
-					}
+					{	return (_ptr <= t._ptr);	}
+					
 					bool operator<(reverse_iterator t) const
-					{
-						return (_ptr > t._ptr);
-					}
+					{	return (_ptr > t._ptr);	}
+					
 					bool operator<=(reverse_iterator t) const
-					{
-						return (_ptr >= t._ptr);
-					}
+					{	return (_ptr >= t._ptr);	}
+					
 					friend reverse_iterator operator+(int t ,reverse_iterator n)
-					{
-						// std::cout <<"here" << std::endl;
-						return reverse_iterator(n._ptr - t);
-					}
+					{	return reverse_iterator(n._ptr - t);	}
+					
 					friend reverse_iterator operator-(int t ,reverse_iterator n)
-					{
-						return reverse_iterator(n._ptr + t);
-					}
+					{	return reverse_iterator(n._ptr + t);	}
+					
 					friend reverse_iterator operator+=(int t ,reverse_iterator n)
-					{
-						return (n -= t);
-					}
+					{	return (n -= t);	}
+					
 					friend reverse_iterator operator-=(int t ,reverse_iterator n)
-					{
-						return (n += t);
-					}
+					{	return (n += t);	}
+					
 					friend bool operator!=(const reverse_iterator b, const const_reverse_iterator& it) 
-					{
-						return (b._ptr != it._ptr); 
-					}
+					{	return (b._ptr != it._ptr);	}
+					
 					friend bool operator==(const reverse_iterator b, const const_reverse_iterator& it) 
-					{
-						return (b._ptr == it._ptr); 
-					}
+					{	return (b._ptr == it._ptr);	}
+					
 					friend bool operator<(const reverse_iterator b, const const_reverse_iterator& it) 
-					{
-						return (b._ptr > it._ptr); 
-					}
+					{	return (b._ptr > it._ptr);	}
+					
 					friend bool operator>(const reverse_iterator b, const const_reverse_iterator& it) 
-					{
-						return (b._ptr < it._ptr); 
-					}
+					{	return (b._ptr < it._ptr);	}
+					
 					friend bool operator>=(const reverse_iterator b, const const_reverse_iterator& it) 
-					{
-						return (b._ptr <= it._ptr); 
-					}
+					{	return (b._ptr <= it._ptr);	}
+					
 					friend bool operator<=(const reverse_iterator b, const const_reverse_iterator& it) 
-					{
-						return (b._ptr >= it._ptr); 
-					}
+					{	return (b._ptr >= it._ptr);	}
 			};
 			class const_reverse_iterator
 			{
@@ -570,95 +516,75 @@ namespace ft
 						return const_iterator(_ptr + 1);
 					}
 					
-					const T& operator*() const
-					{ 
-						return *(_ptr); 
-					}
-					const T* operator->() const 
-					{ 
-						return _ptr;//->data; 
-					}
+					const_reference operator*() const
+					{	return *(_ptr);	}
+
+					const_pointer operator->() const 
+					{	return _ptr;	}
+					
 					bool operator==(const const_reverse_iterator& it) const
-					{ 
-						return (_ptr == it._ptr); 
-					}
+					{	return (_ptr == it._ptr);	}
+					
 					bool operator!=(const const_reverse_iterator& it) const
-					{
-						return (_ptr != it._ptr); 
-					}
+					{	return (_ptr != it._ptr);	}
+
 					const_reverse_iterator operator+(int n) const
-					{
-						return const_reverse_iterator(_ptr - n);
-					}
+					{	return const_reverse_iterator(_ptr - n);	}
+					
 					const_reverse_iterator &operator+=(int n)
 					{
 						_ptr = _ptr - n;
 						return *this;
 					}
+					
 					const_reverse_iterator operator-(int n) const
-					{
-						return const_reverse_iterator(_ptr + n);
-					}
+					{	return const_reverse_iterator(_ptr + n);}
+					
 					const_reverse_iterator operator-=(int n)
 					{
 						_ptr = _ptr + n;
 						return *this;
 					}
-					long int operator-(const_reverse_iterator t) const
-					{
-						return (t._ptr - _ptr);
-					}
-					bool operator>(const_reverse_iterator t) const
-					{
-						return (_ptr < t._ptr);
-					}
-					bool operator>=(const_reverse_iterator t) const 
-					{
-						return (_ptr <= t._ptr);
-					}
-					bool operator<(const_reverse_iterator t) const
-					{
-						return (_ptr > t._ptr);
-					}
-					bool operator<=(const_reverse_iterator t) const
-					{
-						return (_ptr >= t._ptr);
-					}
 					
+					long int operator-(const_reverse_iterator t) const
+					{	return (t._ptr - _ptr);	}
+					
+					bool operator>(const_reverse_iterator t) const
+					{	return (_ptr < t._ptr);	}
+					
+					bool operator>=(const_reverse_iterator t) const 
+					{	return (_ptr <= t._ptr);	}
+					
+					bool operator<(const_reverse_iterator t) const
+					{	return (_ptr > t._ptr);	}
+					
+					bool operator<=(const_reverse_iterator t) const
+					{	return (_ptr >= t._ptr);	}
 			};
 
 			iterator begin() 
-			{ 
-				return iterator(_arr);
-			}
-			reverse_iterator rbegin() 
-			{
-				return reverse_iterator(&(_arr[_size - 1]));
-			}
-			iterator end() 
-			{
-				return (iterator(&(_arr[_size])));// + sizeof(T) * (_size)));
-			}
-			reverse_iterator rend() 
-			{
-				return (reverse_iterator(_arr - 1));// + sizeof(T) * (_size)));
-			}
+			{	return iterator(_arr);	}
+
 			const_iterator begin() const 
-			{ 
-				return const_iterator(_arr);
-			}
+			{	return const_iterator(_arr);	}
+			
+			reverse_iterator rbegin() 
+			{	return reverse_iterator(&(_arr[_size - 1]));	}
+
 			const_reverse_iterator rbegin() const 
-			{
-				return const_reverse_iterator(&(_arr[_size - 1]));
-			}
+			{	return const_reverse_iterator(&(_arr[_size - 1]));	}
+
+			iterator end() 
+			{	return (iterator(&(_arr[_size])));	}
+
 			const_iterator end() const 
-			{
-				return (const_iterator(&(_arr[_size])));// + sizeof(T) * (_size)));
-			}
+			{	return (const_iterator(&(_arr[_size])));	}
+			
+			reverse_iterator rend() 
+			{	return (reverse_iterator(_arr - 1));	}
+			
 			const_reverse_iterator rend() const 
-			{
-				return (const_reverse_iterator(_arr - 1));// + sizeof(T) * (_size)));
-			}
+			{	return (const_reverse_iterator(_arr - 1));	}
 
 			void clear(void)
 			{
@@ -682,11 +608,10 @@ namespace ft
 					push_back(*(start++));
 			}
 
-			
 			void push_back (const T& val)
 			{
 				if (_size + 1 >= _max_size)
-					growarr(_max_size * 2); //+ D_S);
+					growarr(_max_size * 2);
 				_arr[_size++] = val;
 			}
 
@@ -696,15 +621,6 @@ namespace ft
 					_alloc.destroy(&(_arr[_size--]));
 			}
 
-			void print() const
-			{
-				for (size_t i = 0; i < _size; i++)
-				{
-					std::cout << _arr[i] << "|";
-				}
-				std::cout << std::endl;
-			}
-
 			void resize (size_t n, T val = T())
 			{
 				while (n < _size)
@@ -712,6 +628,7 @@ namespace ft
 				while (n > _size)
 					push_back(val);
 			}
+
 			void reserve(size_t n)
 			{
 				if (n <= _max_size)
@@ -719,67 +636,66 @@ namespace ft
 				growarr(n);
 			}
 
-			T& front(void) const
+			const_reference front(void) const
+			{	return _arr[0];	}
+
+			reference front(void)
+			{	return _arr[0];	}
+
+			const_reference back(void) const
+			{	return _arr[_size - 1];	}
+
+			reference back(void)
+			{	return _arr[_size - 1];	}
+
+			reference at(int a)
 			{
-				return _arr[0];
+				if (a >= static_cast<int>(_size) || a < 0)
+					throw std::out_of_range("at is fucked up yoo");
+				return _arr[a];
 			}
 
-			T& back(void) const
-			{
-				return _arr[_size - 1];
-			}
-
-			T& at(int a) const
-			{
-				int ns = static_cast<int>(_size);
-				if (a >= ns || a < 0)
+			const_reference at(int a) const
+			{	
+				if (a >= static_cast<int>(_size) || a < 0)
 					throw std::out_of_range("at is fucked up yoo");
 				return _arr[a];
 			}
 
 			size_t size(void) const
-			{
-				return _size;
-			}
+			{	return _size;	}
 
 			size_t capacity(void) const
-			{
-				return _max_size;
-			}
+			{	return _max_size;	}
 
 			size_t max_size(void) const
-			{
-				return _alloc.max_size();
-			}
+			{	return _alloc.max_size();	}
 
 			bool empty(void) const
-			{
-				return (_size == 0);
-			}
+			{	return (_size == 0);	}
+
 			void swap (vector& x)
 			{
 				T* ptr = _arr;
+				Alloc a = _alloc;
+				size_t tmp = _max_size;
 				_arr = x._arr;
 				x._arr = ptr;
-
-				size_t tmp = _max_size;
 				_max_size = x._max_size;
 				x._max_size = tmp;
-
 				tmp = _size;
 				_size = x._size;
 				x._size = tmp;
-
-				Alloc a = _alloc;
 				_alloc = x._alloc;
 				x._alloc = a;
-
 			}
 
-			T& operator[](size_t n)
-			{
-				return _arr[n];
-			}
+			reference operator[](size_t n)
+			{	return _arr[n];	}
+
+			const_reference operator[](size_t n) const
+			{	return _arr[n];	}
+			
 			template<class IT>
 			IT insert (IT position, const T& val)
 			{
@@ -797,30 +713,33 @@ namespace ft
 			}
 
 			template<class IT>
-    		void insert (IT position, size_t n, const T& val)
-    		{
-    			for (size_t i = 0; i < n; i++)
-    				position = insert(position, val);
-    		}	
+			void insert (IT position, size_t n, const T& val)
+			{
+				for (size_t i = 0; i < n; i++)
+					position = insert(position, val);
+			}
+
 			template <class IT, class InputIterator>
-    		void insert (IT position, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type start, InputIterator end)
-    		{
-    			while (start != end)
-    			{
-    				position = insert(position, *(start++));
-    				position++;
-    			}
-    		}
-    		template<class IT>
-    		IT erase (IT position)
-    		{
-    			IT cp = position;
-    			while (++position != end())
-    				*(position - 1) = *(position);
-    			--_size;
-    			return cp;
-    		}
-    		template<class IT>
+			void insert (IT position, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type start, InputIterator end)
+			{
+				while (start != end)
+				{
+					position = insert(position, *(start++));
+					position++;
+				}
+			}
+
+			template<class IT>
+			IT erase (IT position)
+			{
+				IT cp = position;
+				while (++position != end())
+					*(position - 1) = *(position);
+				--_size;
+				return cp;
+			}
+
+			template<class IT>
 			IT erase (IT start, IT end)
 			{
 				IT tmp;
@@ -839,9 +758,7 @@ namespace ft
 	};
 	template <class T>
 	void swap(vector<T> &x, vector<T> &y)
-	{
-		x.swap(y);
-	};
+	{	x.swap(y);	};
 
 	template <class T>
 	bool operator==(const vector<T> &lhs, const vector<T> &rhs)
@@ -864,45 +781,36 @@ namespace ft
 
 	template <class T>
 	bool operator!=(const vector<T> &lhs, const vector<T> &rhs)
-	{
-		return !(lhs == rhs);
-	};
+	{	return !(lhs == rhs);	};
 
 	template <class T>
 	bool operator<(const vector<T> &lhs, const vector<T> &rhs)
 	{
 		typename vector<T>::const_iterator lit = lhs.begin();
 		typename vector<T>::const_iterator rit = rhs.begin();
-
 		while (lit != lhs.end())
 		{
 			if (rit == rhs.end() || *rit < *lit)
 				return false;
 			else if (*lit < *rit)
 				return true;
-			++lit;
-			++rit;
+			++lit;++rit;
 		}
-		return rit != rhs.end();
+		return (rit != rhs.end());
 	};
 
 	template <class T>
 	bool operator<=(const vector<T> &lhs, const vector<T> &rhs)
-	{
-		return !(rhs < lhs);
-	};
+	{	return !(rhs < lhs);	};
 
 	template <class T>
 	bool operator>(const vector<T> &lhs, const vector<T> &rhs)
-	{
-		return rhs < lhs;
-	};
+	{	return rhs < lhs;	};
 
 	template <class T>
 	bool operator>=(const vector<T> &lhs, const vector<T> &rhs)
-	{
-		return !(lhs < rhs);
-	};
+	{	return !(lhs < rhs);	};
+
 }
 
 #endif
