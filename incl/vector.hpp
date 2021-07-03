@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 15:43:35 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/01 19:44:10 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/03 17:08:02 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 // https://www.cplusplus.com/reference/vector/vector/
@@ -114,10 +114,12 @@ namespace ft
 
 				public :
 
-					iterator(T *ptr) : _ptr(ptr) 
-					{	}
-					iterator() : _ptr(0) 
-					{	};
+					explicit iterator(T *ptr = 0) : _ptr(ptr) 
+					{	
+						std::cout << "here\n"; 
+					}
+					// iterator() : _ptr(0) 
+					// {	};
 					iterator operator++(int)
 					{
 						iterator i = *this;
@@ -140,7 +142,7 @@ namespace ft
 						--_ptr; 
 						return *this;
 					}
-					T& operator*() 
+					T& operator*() const
 					{ 
 						return *(_ptr); 
 					}
@@ -148,7 +150,7 @@ namespace ft
 					{ 
 						return _ptr;
 					}
-					bool operator==(const iterator& it)
+					bool operator==(const iterator& it) const
 					{ 
 						return (_ptr == it._ptr); 
 					}
@@ -161,7 +163,7 @@ namespace ft
 						return iterator(&(_ptr[n]));
 					}
 
-					long int operator-(iterator t)
+					long int operator-(iterator t) const
 					{
 						return (_ptr - t._ptr);
 					}
@@ -282,7 +284,7 @@ namespace ft
 						--_ptr;// = _ptr->previous; 
 						return *this;
 					}
-					const T& operator*() 
+					const T& operator*() const
 					{ 
 						return *(_ptr); 
 					}
@@ -416,11 +418,11 @@ namespace ft
 						++_ptr; 
 						return *this;
 					}
-					iterator base()
+					iterator base() const
 					{
 						return iterator(_ptr + 1);
 					}
-					T& operator*() 
+					T& operator*() const
 					{ 
 						return *(_ptr); 
 					}
@@ -428,7 +430,7 @@ namespace ft
 					{ 
 						return _ptr;//->data; 
 					}
-					bool operator==(const reverse_iterator& it)
+					bool operator==(const reverse_iterator& it) const
 					{ 
 						return (_ptr == it._ptr); 
 					}
@@ -558,12 +560,12 @@ namespace ft
 						++_ptr; 
 						return *this;
 					}
-					const_iterator base()
+					const_iterator base() const
 					{
 						return const_iterator(_ptr + 1);
 					}
 					
-					const T& operator*() 
+					const T& operator*() const
 					{ 
 						return *(_ptr); 
 					}
@@ -571,7 +573,7 @@ namespace ft
 					{ 
 						return _ptr;//->data; 
 					}
-					bool operator==(const const_reverse_iterator& it)
+					bool operator==(const const_reverse_iterator& it) const
 					{ 
 						return (_ptr == it._ptr); 
 					}
@@ -597,7 +599,7 @@ namespace ft
 						_ptr = _ptr + n;
 						return *this;
 					}
-					long int operator-(const_reverse_iterator t)
+					long int operator-(const_reverse_iterator t) const
 					{
 						return (t._ptr - _ptr);
 					}

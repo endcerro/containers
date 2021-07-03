@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 15:41:19 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/20 15:59:37 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/03 16:51:33 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ namespace ft
 					std::cout << *test++ << std::endl;
 				}
 			}
+		// };
 	// };
 
 	// template <class T, class Container>
