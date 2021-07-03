@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/29 18:10:35 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/03 16:29:24 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //http://www.cplusplus.com/reference/list/list/
@@ -22,7 +22,7 @@
 namespace ft
 {	
 
-	template <class T, class Alloc = ft::allocator<T> >
+	template <class T, class Alloc = std::allocator<T> >
 	class list
 	{
 		private : 
@@ -41,6 +41,11 @@ namespace ft
 			}
 
 		public :
+			class iterator;
+			class const_iterator;
+			class reverse_iterator;
+			class const_reverse_iterator;
+
 			// typedef list self_type;
 			typedef T value_type;
 			// typedef T& reference;
@@ -104,7 +109,7 @@ namespace ft
 						_ptr = _ptr->next;
 						return i;
 					}
-					iterator operator++() //i++
+					iterator &operator++() //i++
 					{		
 						_ptr = _ptr->next; 
 						return *this;
@@ -115,7 +120,7 @@ namespace ft
 						_ptr = _ptr->previous;
 						return i;
 					}
-					iterator operator--() //i++
+					iterator &operator--() //i++
 					{ 
 						_ptr = _ptr->previous; 
 						return *this;
@@ -141,6 +146,10 @@ namespace ft
 					// {
 					// 	return iterator(_ptr[n]);
 					// }
+					friend bool operator!=(const const_iterator b, const iterator& it)
+					{
+						return (b._ptr != it._ptr); 
+					}
 				private :
 					Node<T> *_ptr;
 			};
@@ -162,7 +171,7 @@ namespace ft
 						_ptr = _ptr->next;
 						return i;
 					}
-					const_iterator operator++() //i++
+					const_iterator &operator++() //i++
 					{
 						
 						_ptr = _ptr->next; 
@@ -174,7 +183,7 @@ namespace ft
 						_ptr = _ptr->previous;
 						return i;
 					}
-					const_iterator operator--() //i++
+					const_iterator &operator--() //i++
 					{ 
 						_ptr = _ptr->previous; 
 						return *this;
@@ -187,13 +196,17 @@ namespace ft
 					{ 
 						return _ptr->data; 
 					}
-					bool operator==(const const_iterator& it)
+					bool operator==(const const_iterator& it) const
 					{
 						return _ptr == it._ptr;
 					}
-					bool operator!=(const const_iterator& it) 
+					bool operator!=(const const_iterator& it) const
 					{
 						return _ptr != it._ptr;
+					}
+					friend bool operator!=(const iterator b, const const_iterator& it)
+					{
+						return (b._ptr != it._ptr); 
 					}
 				private :
 					Node<T> *_ptr;
@@ -210,27 +223,33 @@ namespace ft
 					reverse_iterator() : _ptr(0) {};
 					reverse_iterator(Node<T> *ptr) : _ptr(ptr) 
 					{ }
+					reverse_iterator(iterator t) : _ptr(t._ptr->previous) 
+					{ }
 					reverse_iterator operator++(int) //i++
 					{
 						reverse_iterator i = *this;
 						_ptr = _ptr->previous;
 						return i;
 					}
-					reverse_iterator operator++() //++i
+					reverse_iterator &operator++() //++i
 					{ 
 						_ptr = _ptr->previous; 
 						return *this;					
 					}
 					reverse_iterator operator--(int) //i++
 					{
-						iterator i = *this;
+						reverse_iterator i = *this;
 						_ptr = _ptr->next;
 						return i;
 					}
-					reverse_iterator operator--() //i++
+					reverse_iterator &operator--() //i++
 					{ 
 						_ptr = _ptr->next; 
 						return *this;
+					}
+					iterator base() const
+					{
+						return iterator(_ptr->next);
 					}
 					T& operator*() 
 					{
@@ -250,6 +269,10 @@ namespace ft
 					{ 
 						return _ptr != it._ptr; 
 					}
+					friend bool operator!=(const reverse_iterator b, const const_reverse_iterator& it) 
+					{
+						return (b._ptr != it._ptr); 
+					}
 				private :
 					Node<T> *_ptr;
 			};
@@ -264,15 +287,20 @@ namespace ft
 					const_reverse_iterator() : _ptr(0) {};
 					const_reverse_iterator(Node<T> *ptr) : _ptr(ptr) 
 					{ }
+					const_reverse_iterator(const_iterator t) : _ptr(t._ptr->previous) 
+					{ }
+					const_reverse_iterator(iterator t) : _ptr(t._ptr->previous) 
+					{ }
 					const_reverse_iterator(reverse_iterator x) : _ptr(x._ptr) 
 					{ }
+
 					const_reverse_iterator operator++(int) //i++
 					{
 						const_reverse_iterator i = *this;
 						_ptr = _ptr->previous;
 						return i;
 					}
-					const_reverse_iterator operator++() //++i
+					const_reverse_iterator &operator++() //++i
 					{ 
 						_ptr = _ptr->previous; 
 						return *this;					
@@ -283,10 +311,14 @@ namespace ft
 						_ptr = _ptr->next;
 						return i;
 					}
-					const_reverse_iterator operator--() //i++
+					const_reverse_iterator &operator--() //i++
 					{ 
 						_ptr = _ptr->next; 
 						return *this;
+					}
+					const_iterator base() const
+					{
+						return const_iterator(_ptr->next);
 					}
 					const T& operator*()
 					{ 
@@ -586,7 +618,7 @@ namespace ft
 			{ 
 				return _center->size; 
 			}
-			size_t max_size(void) //CAPACITY TODO
+			size_t max_size(void) const//CAPACITY TODO
 			{
 				return _alloc.max_size();
 			};
