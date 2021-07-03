@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 15:43:35 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/03 17:08:02 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/03 19:18:05 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 // https://www.cplusplus.com/reference/vector/vector/
@@ -49,7 +49,12 @@ namespace ft
 			class const_iterator;
 			class reverse_iterator;
 			class const_reverse_iterator;
-			typedef T value_type;
+			// typedef T value_type;
+            typedef T&                                          reference;
+            typedef const T&                                    const_reference;
+            typedef T*                                          pointer;
+            typedef const T*                                    const_pointer;
+			typename Alloc::value_type value_type;
 			explicit vector (const Alloc &alloc = Alloc()) : _alloc(alloc)
 			{
 				_arr = _alloc.allocate(10);
@@ -116,7 +121,7 @@ namespace ft
 
 					explicit iterator(T *ptr = 0) : _ptr(ptr) 
 					{	
-						std::cout << "here\n"; 
+						// std::cout << "here\n"; 
 					}
 					// iterator() : _ptr(0) 
 					// {	};
@@ -622,21 +627,37 @@ namespace ft
 					
 			};
 
-			iterator begin() const 
+			iterator begin() 
 			{ 
 				return iterator(_arr);
 			}
-			reverse_iterator rbegin() const 
+			reverse_iterator rbegin() 
 			{
 				return reverse_iterator(&(_arr[_size - 1]));
 			}
-			iterator end() const 
+			iterator end() 
 			{
 				return (iterator(&(_arr[_size])));// + sizeof(T) * (_size)));
 			}
-			reverse_iterator rend() const 
+			reverse_iterator rend() 
 			{
 				return (reverse_iterator(_arr - 1));// + sizeof(T) * (_size)));
+			}
+			const_iterator begin() const 
+			{ 
+				return const_iterator(_arr);
+			}
+			const_reverse_iterator rbegin() const 
+			{
+				return const_reverse_iterator(&(_arr[_size - 1]));
+			}
+			const_iterator end() const 
+			{
+				return (const_iterator(&(_arr[_size])));// + sizeof(T) * (_size)));
+			}
+			const_reverse_iterator rend() const 
+			{
+				return (const_reverse_iterator(_arr - 1));// + sizeof(T) * (_size)));
 			}
 
 			void clear(void)

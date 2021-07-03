@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/03 17:09:06 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/03 19:16:55 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,8 +145,8 @@ void test()
 void shouldnotcmp()
 {
 	const int size = 5;
-	std::vector<int> const vct(size);
-	std::vector<int>::iterator it = vct.begin(); // <-- error expected
+	ft::vector<int> const vct(size);
+	ft::vector<int>::iterator it = vct.begin(); // <-- error expected
 
 	for (int i = 0; i < size; ++i)
 		it[i] = i;
