@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 15:43:35 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/03 19:58:07 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/04 19:53:15 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 // https://www.cplusplus.com/reference/vector/vector/
@@ -49,12 +49,12 @@ namespace ft
 			class const_iterator;
 			class reverse_iterator;
 			class const_reverse_iterator;
-			// typedef T value_type;
+			typedef T value_type;
 			typedef T&			reference;
 			typedef const T&	const_reference;
 			typedef T*			pointer;
 			typedef const T*	const_pointer;
-			typename Alloc::value_type value_type;
+			// typename Alloc::value_type value_type;
 			
 			explicit vector(const Alloc &alloc = Alloc()) : _alloc(alloc)
 			{

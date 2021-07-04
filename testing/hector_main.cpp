@@ -6,14 +6,14 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:55:26 by hpottier          #+#    #+#             */
-/*   Updated: 2021/07/01 12:09:02 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/04 20:26:52 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include "../incl/list.hpp"
 #include "../incl/vector.hpp"
-// #include "stack.hpp"
+#include "../incl/stack.hpp"
 // #include "queue.hpp"
 // #include "map.hpp"
 #include <list>
@@ -409,43 +409,43 @@ void vector_testeur()
 	std::cout << std::endl;
 }
 
-// void stack_testeur()
-// {
-// 	NS::stack<int> st;
+void stack_testeur()
+{
+	NS::stack<int> st;
 
-// 	st.push(42);
-// 	st.push(-4);
-// 	st.push(0);
-// 	st.push(42210);
-// 	st.pop();
-// 	st.push(-8654);
-// 	st.push(12);
-// 	st.push(1);
-// 	st.pop();
-// 	st.push(-468445);
-// 	st.push(5410);
-// 	st.push(123);
-// 	st.pop();
-// 	st.push(545);
+	st.push(42);
+	st.push(-4);
+	st.push(0);
+	st.push(42210);
+	st.pop();
+	st.push(-8654);
+	st.push(12);
+	st.push(1);
+	st.pop();
+	st.push(-468445);
+	st.push(5410);
+	st.push(123);
+	st.pop();
+	st.push(545);
 
-// 	std::cout << st.top() << '	' << st.size() << std::endl;
+	std::cout << st.top() << '	' << st.size() << std::endl;
 
-// 	st.pop();
+	st.pop();
 
-// 	std::cout << st.top() << '	' << st.size() << std::endl;
+	std::cout << st.top() << '	' << st.size() << std::endl;
 
-// 	NS::stack<int> st2 = st;
+	NS::stack<int> st2 = st;
 
-// 	std::cout << (st2 == st) << std::endl;
-// 	st2.pop();
-// 	std::cout << (st2 == st) << std::endl;
-// 	std::cout << (st2 < st) << std::endl;
+	std::cout << (st2 == st) << std::endl;
+	st2.pop();
+	std::cout << (st2 == st) << std::endl;
+	std::cout << (st2 < st) << std::endl;
 
-// 	while (st.empty() != true)
-// 		st.pop();
-// 	std::cout << st.size() << std::endl
-// 			  << std::endl;
-// }
+	while (st.empty() != true)
+		st.pop();
+	std::cout << st.size() << std::endl
+			  << std::endl;
+}
 
 // void queue_testeur()
 // {
@@ -491,7 +491,7 @@ int main()
 	lst_testeur();
 	// map_testeur();
 	vector_testeur();
-	// stack_testeur();
+	stack_testeur();
 	// queue_testeur();
 	std::cout << std::endl;
 }

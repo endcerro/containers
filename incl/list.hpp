@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:38:23 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/03 16:29:24 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/04 21:10:43 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //http://www.cplusplus.com/reference/list/list/
@@ -343,7 +343,13 @@ namespace ft
 			/* ITERATORS N SHIT 
 			NEED TO ADD CONST ITERATORS N STUFF*/
 
-			iterator begin() const 
+			const_iterator begin() const 
+			{ 
+				if (_center->next)
+					return iterator(_center->next);
+				return iterator(_center);
+			}
+			iterator begin() 
 			{ 
 				if (_center->next)
 					return iterator(_center->next);
@@ -354,8 +360,14 @@ namespace ft
 			// 	if (_center->next)
 			// 		return iterator(_center->next);
 			// 	return iterator(_center);
+			
 			// }
-			iterator end() const 
+			const_iterator end() const 
+			{
+				return (iterator(_center));
+			}
+
+			iterator end() 
 			{
 				return (iterator(_center));
 			}
@@ -781,9 +793,9 @@ namespace ft
 	{
 		if (l_lst.size() == r_lst.size())
 		{
-			typename list<T>::iterator lit;
+			typename list<T>::const_iterator lit;
 			lit = l_lst.begin();
-			typename list<T>::iterator rit;
+			typename list<T>::const_iterator rit;
 			rit = r_lst.begin();
 
 			while (lit != l_lst.end())
@@ -807,9 +819,9 @@ namespace ft
 	template <class T>
 	bool operator<(const list<T> &l_lst, const list<T> &r_lst)
 	{
-		typename list<T>::iterator lit;
+		typename list<T>::const_iterator lit;
 		lit = l_lst.begin();
-		typename list<T>::iterator rit;
+		typename list<T>::const_iterator rit;
 		rit = r_lst.begin();
 
 		while (lit != l_lst.end())
