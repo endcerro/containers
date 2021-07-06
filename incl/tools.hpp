@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 08:35:17 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/06/16 12:27:47 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/06 15:19:13 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,16 @@
 namespace ft
 {
 
+	template <class T>
+	struct less
+	{
+		typedef T first_argument_type;
+		typedef T second_argument_type;
+		typedef bool result_type;
+
+		bool operator()(const T &x, const T &y) const { return x < y; }
+	};
+	
 	template <class T1, class T2>
 	struct pair
 	{
