@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 08:35:17 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/06 15:19:13 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/09 14:12:00 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,15 @@ namespace ft
 	template <class T1, class T2>
 	struct pair
 	{
-		typedef T1 first_type;
-		typedef T2 second_type;
-
-		first_type first;
-		second_type second;
+		T1 first;
+		T2 second;
 
 		pair() : first(), second() {}
 
 		template <class U, class V>
 		pair(const pair<U, V> &pr) : first(pr.first), second(pr.second) {}
 
-		pair(const first_type &a, const second_type &b) : first(a), second(b) {}
+		pair(const T1 &a, const T2 &b) : first(a), second(b) {}
 
 		pair &operator=(const pair &pr)
 		{
