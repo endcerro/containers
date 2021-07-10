@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 15:41:19 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/10 17:40:32 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/10 18:41:39 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,72 @@ namespace ft
                 tmp->left = 0;
                 tmp->right = 0;
                 tmp->data = pair;
-
+                tmp->height = 0;
+                tmp->balancef = 0;
                 return tmp;
             }
+            Node *leftLeftCase(Node *node)
+			{
+				std::cout << "R1\n"; 
+				return rotate_right(node);
+				// return rotate_right(node);
+			}
+
+			Node *rightRightCase(Node *node)
+			{
+				std::cout << "R2\n";
+				return rotate_left(node);
+				// return rotate_left(node);
+			}
+			Node *leftRightCase(Node *node)
+			{
+				std::cout << "R3\n";
+				// std::cout << "Node is " << node->data.first << std::endl;
+				printtest(groot());
+				node->left = rotate_left(node->left);
+
+				std::cout << "\n\nPOST LEFTROT \n\n";
+				printtest(groot());
+
+				std::cout << "\n\n";
+				return rotate_left(node);
+
+				// node->left = rotate_left(node->left);
+				// return rotate_left(node);
+			}
+			Node *rightLeftCase(Node *node)
+			{
+				std::cout << "R4\n";
+
+				node->right = rotate_right(node->right);
+				return rotate_right(node);
+
+				// node->right = rotate_right(node->right);
+				// return rotate_right(node);
+			}
+
+			Node *balance(Node *node)
+			{
+				if (node->balancef == -2)
+				{
+					if (node->left->balancef <= 0)
+						return leftLeftCase(node);
+					else
+						return leftRightCase(node);
+				}
+				else if (node->balancef == 2)
+				{
+					if (node->right->balancef >= 0)
+						return rightRightCase(node);
+					else
+						return rightLeftCase(node);	
+				}
+				return node;
+			}
 		
 		public :
 
-			explicit map (const Compare& comp = Compare(), const Alloc& alloc = Alloc()) : _comp(comp), _alloc(alloc), _root(0)
+			explicit map (const Compare& comp = Compare(), const Alloc& alloc = Alloc()) :_root(0), _comp(comp), _alloc(alloc)
 			{	
 				_end = createNode(pair<Key, T>(Key(), T()));
 				// _top = NULL;// Node;
@@ -75,80 +134,10 @@ namespace ft
 			~map()
 			{			}
 			
-			void insert (Key key, T val)
-			{
-
-				// if (searchNode(k) != NULL)
-				// {
-
-				// }
-				if (_root == NULL)
-				{
-					_root = new Node();
-					_root->left = NULL;
-					_root->right = NULL;
-					_root->parent = 0;
-					_root->data = value_type(key, val);
-					std::cout << "Insert at top\n";
-					return ;
-				}
-				int done = 0;
-				Node *curr = _root;
-				while (done == 0)
-				{
-					if (curr->data.first > key)
-					{
-						// std::cout << "key " << key << " is smaller than " << curr->data.first << std::endl;
-						if (curr->left == NULL)
-						{
-							// std::cout << "insert"<< std::endl;
-							curr->left = createNode(value_type(key, val));
-							curr->left->parent = curr;
-							++_size;
-							return ;
-						}
-						else
-						{
-							// std::cout << "continue"<< std::endl;
-							curr = curr->left;
-							continue;
-						}
-					}
-					else if (curr->data.first < key)
-					{
-						// std::cout << "key " << key << " is greater than " << curr->data.first << std::endl;
-						if (curr->right == NULL)
-						{
-							// std::cout << "insert"<< std::endl;
-							curr->right = createNode(value_type(key, val));
-							curr->right->parent = curr;
-							++_size;
-							return ;
-						}
-						else
-						{
-							// std::cout << "continue"<< std::endl;
-							curr = curr->right;
-							continue;
-						}
-					}
-					else
-					{
-						// std::cout << "Key is already inserted\n";
-						return;
-					}
-				}
-				// getleftmostnode(_root)->
-			}
-
 			Node *groot()
 			{
 				return _root;
 			}
-			// Node *groot()
-			// {
-			// 	return _root;
-			// }
 
 			void printnode(Node *node)
 			{
@@ -166,8 +155,7 @@ namespace ft
 			{
 				if (curr == NULL)
 					return;
-				std::cout << "\n----\n";// << curr->data.first;
-				// std::cout << "|" << curr->data.second << std::endl;
+				std::cout << "\n----\n";
 				printnode(curr);
 				printtest(curr->left);
 				printtest(curr->right);
@@ -181,12 +169,13 @@ namespace ft
 			{
 				if (curr == NULL)
 					return NULL;
-				else if (k == curr->data.first)
-					return curr;
+				
 				else if (k > curr->data.first)
 					return searchNode(curr->right, k);
 				else if (k < curr->data.first)
 					return searchNode(curr->left, k);		
+				else
+					return curr;
 			}
 			static Node *getleftmostnode(Node *curr)
 			{
@@ -284,6 +273,8 @@ namespace ft
 				std::cout << "RIGHT ROTATION" << std::endl;
 				Node *P = A->parent;
 				Node *B = A->left;
+
+
 				A->left = B->right;
 				if (B->right != NULL)
 				{
@@ -299,32 +290,22 @@ namespace ft
 					else
 						P->right = B;
 				}
-				if (A == _root)
-					_root = B;
-				// update(B);
+				// if (A == _root)
+				// 	_root = B;
 				update(A);
 				update(B);
 				return B;
 			}
-			// int balancef(Node *root)
-			// {
-			// 	int left = 0;
-			// 	int right = 0;
-			// 	if ( root->right)
-			// 		right = balancef(root->right);
-			// 	if (root->left)
-			// 		left = balancef(root->left);
-			// 	std::cout << "BF = " << right - left;
-			// 	return right - left;
-			// }
 			Node *rotate_left(Node *A)
 			{
-				std::cout << "LEFT ROTATION" << std::endl;
+				std::cout << "RIGHT ROTATION" << std::endl;
 				Node *P = A->parent;
 				Node *B = A->right;
 				A->right = B->left;
-				if (B->left != NULL)
+				if (B->left !=  NULL)
+				{
 					B->left->parent = A;
+				}
 				B->left = A;
 				A->parent = B;
 				B->parent = P;
@@ -335,134 +316,66 @@ namespace ft
 					else
 						P->left = B;
 				}
-				if (A == _root)
-					_root = B;
-				// update(B);
+				// if (A == _root)
+				// 	_root = B;
 				update(A);
 				update(B);
 				return B;
 			}
-
 			void update(Node *node)
 			{
 				int left_h = -1;
 				int right_h = -1;
 				
 				if (node->left != NULL)
-				{
-					// std::cout << "update left\n";
 					left_h = node->left->height;
-				}
 				if (node->right != NULL)
-				{
-					// std::cout << "update right\n";
 					right_h = node->right->height;
-				}
 				
 				if (left_h > right_h)
 					node->height = 1 + left_h;
 				else
 					node->height = 1 + right_h;				
 
-				std::cout << "Right :" << right_h;
-				std::cout << " Left :" << left_h << std::endl	;
 				node->balancef = right_h - left_h;
-				// node.height = 1 + 
-			}
-			Node *leftLeftCase(Node *node)
-			{
-				return rotate_right(node);
 			}
 
-			Node *rightRightCase(Node *node)
-			{
-				return rotate_left(node);
-			}
-			Node *leftRightCase(Node *node)
-			{
-				node->left = rotate_left(node->left);
-				return rotate_left(node);
-			}
-			Node *rightLeftCase(Node *node)
-			{
-				node->right = rotate_right(node->right);
-				return rotate_right(node);
-			}
+			
+			
 
-
-			Node *balance(Node *node)
+			Node *ninsert(Node *node,Key key, T val)
 			{
-				if (node->balancef == -2)
+				if (node == NULL)
 				{
-					if (node->left && node->left->balancef <= 0)
-						return leftLeftCase(node);
-					else
-						return leftRightCase(node);
-				}
-				else if (node->balancef == 2)
-				{
-					if (node->right && node->right->balancef >= 0)
-						return rightRightCase(node);
-					else
-						return rightLeftCase(node);	
-				}
-				return node;
-			}
-
-			Node *ninsert(Node *root,Key key, T val)
-			{
-
-				// root = ninsert(root, key, val)
-				if (root == NULL)
-				{
-					root = new Node;
-					root->data.first = key;
-					root->data.second = val;
-					root->left = 0;
-					root->right = 0;
-					root->parent = 0;
-					root->height = 0;
-					root->balancef = 0;
-				// 	update(root);
-				// return balance(root) ;
-					return root;
-				
+					node = createNode(ft::pair<Key, T>(key, val));
+					return node;
 				}
 
-				int cmp = _comp(root->data.first, key);
-				
-				if (cmp > 0)
+				if (_comp(node->data.first, key) > 0)
 				{
-					root->right = ninsert(root->right, key, val);
-					root->right->parent = root;		
+					node->right = ninsert(node->right, key, val);
+					node->right->parent = node;		
 				}
 				else 
 				{			
-					root->left = ninsert(root->left, key, val);
-					root->left->parent  = root;
+					node->left = ninsert(node->left, key, val);
+					node->left->parent  = node;
 				}
-				update(root);
-				return balance(root) ;
+				update(node);
+				return balance(node) ;
 			}
 
-			void ninsert(Key key, T val)
+			void insert(Key key, T val)
 			{
-		
-				// if (count(key) == 0)
-				// 	return;
+				if (searchNode(key))
+					return;
 				_root = ninsert(_root, key, val);
 				++_size;
 			}	
 
 			iterator begin()
 			{
-				Node *ret = _root;
-
-				while (ret->left != 0)
-				{
-					ret = ret->left;
-				}
-				return iterator(ret);
+				return iterator(getleftmostnode(_root));
 			}
 			iterator end()
 			{

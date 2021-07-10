@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/10 17:41:38 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/10 18:41:19 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,30 @@ int main()
 	ft::map<int, char> custom;
 	std::map<int, char> base;
 
+	custom.insert(15, 'b');
+	// custom.printtest(custom.groot());
+	custom.insert(5, 'b');
+
+	custom.printtest(custom.groot());
+	std::cout << "\n\n";
+	// custom.insert(10, 'b');
+		
 	
-	custom.ninsert(10, 'b');
-	custom.ninsert(15, 'b');
-	custom.ninsert(20, 'C');
-	custom.ninsert(240, 'b');
-	// custom.ninsert(10, 'a');
+
+	// custom.insert(240, 'b');
+	// custom.insert(10, 'b');
+	// custom.insert(15, 'b');
+	
+
+	// custom.insert(20, 'C');
+		// custom.insert(500, 'a');
+		
+		// custom.insert(520, 'a');
+		// custom.insert(540, 'a');
+		// custom.insert(420, 'a');
+		// custom.insert(690, 'a');
+		// custom.insert(693, 'a');
+		// custom.insert(692, 'a');
 	// custom.ninsert(0, 'a');
 	// custom.ninsert(4, 'b');
 	// custom.ninsert(7, 'c');
@@ -60,7 +78,7 @@ int main()
 	// std::cout << custom.count(13) << std::endl;
 	// std::cout << custom.count(10) << std::endl;
 	std::cout<< "---------------------------------------\n";
-	custom.printtest(custom.groot());
+
 	// ft::Node<int, char> *tmp = ;
 	// if (tmp)
 	// std::cout << custom.searchNode(5)->data.second << std::endl; 
