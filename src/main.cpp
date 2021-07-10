@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/10 16:47:55 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/10 17:41:38 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,15 @@ int main()
 	ft::map<int, char> custom;
 	std::map<int, char> base;
 
-	custom.ninsert(10, 'a');
-	custom.ninsert(5, 'b');
-	custom.ninsert(11, 'b');
-	custom.ninsert(2, 'b');
-	// custom.ninsert(1, 'b');
-	// custom.insert(4, 'b');
-	// custom.insert(7, 'c');
+	
+	custom.ninsert(10, 'b');
+	custom.ninsert(15, 'b');
+	custom.ninsert(20, 'C');
+	custom.ninsert(240, 'b');
+	// custom.ninsert(10, 'a');
+	// custom.ninsert(0, 'a');
+	// custom.ninsert(4, 'b');
+	// custom.ninsert(7, 'c');
 	// // custom.insert(10, 'c');
 	// custom.insert(9, 'd');
 	// custom.insert(3, 'e');

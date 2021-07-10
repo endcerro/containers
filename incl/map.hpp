@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 15:41:19 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/10 16:49:03 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/10 17:40:32 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -281,6 +281,7 @@ namespace ft
 			}
 			Node *rotate_right(Node *A)
 			{
+				std::cout << "RIGHT ROTATION" << std::endl;
 				Node *P = A->parent;
 				Node *B = A->left;
 				A->left = B->right;
@@ -300,7 +301,7 @@ namespace ft
 				}
 				if (A == _root)
 					_root = B;
-				update(B);
+				// update(B);
 				update(A);
 				update(B);
 				return B;
@@ -318,13 +319,12 @@ namespace ft
 			// }
 			Node *rotate_left(Node *A)
 			{
+				std::cout << "LEFT ROTATION" << std::endl;
 				Node *P = A->parent;
 				Node *B = A->right;
 				A->right = B->left;
 				if (B->left != NULL)
-				{
 					B->left->parent = A;
-				}
 				B->left = A;
 				A->parent = B;
 				B->parent = P;
@@ -337,7 +337,7 @@ namespace ft
 				}
 				if (A == _root)
 					_root = B;
-				update(B);
+				// update(B);
 				update(A);
 				update(B);
 				return B;
@@ -349,15 +349,23 @@ namespace ft
 				int right_h = -1;
 				
 				if (node->left != NULL)
+				{
+					// std::cout << "update left\n";
 					left_h = node->left->height;
+				}
 				if (node->right != NULL)
-					left_h = node->right->height;
+				{
+					// std::cout << "update right\n";
+					right_h = node->right->height;
+				}
 				
 				if (left_h > right_h)
 					node->height = 1 + left_h;
 				else
 					node->height = 1 + right_h;				
 
+				std::cout << "Right :" << right_h;
+				std::cout << " Left :" << left_h << std::endl	;
 				node->balancef = right_h - left_h;
 				// node.height = 1 + 
 			}
@@ -386,14 +394,14 @@ namespace ft
 			{
 				if (node->balancef == -2)
 				{
-					if (node->left->balancef <= 0)
+					if (node->left && node->left->balancef <= 0)
 						return leftLeftCase(node);
 					else
 						return leftRightCase(node);
 				}
 				else if (node->balancef == 2)
 				{
-					if (node->right->balancef >= 0)
+					if (node->right && node->right->balancef >= 0)
 						return rightRightCase(node);
 					else
 						return rightLeftCase(node);	
@@ -413,55 +421,37 @@ namespace ft
 					root->left = 0;
 					root->right = 0;
 					root->parent = 0;
+					root->height = 0;
+					root->balancef = 0;
+				// 	update(root);
+				// return balance(root) ;
 					return root;
+				
 				}
-				int cmp = _comp(root->data.first,key);
-				std::cout << "Cmp for " << key << " and " << root->data.first;
-				std::cout << " is " << cmp <<std::endl;
 
-		
-
-				if (cmp == 0)
+				int cmp = _comp(root->data.first, key);
+				
+				if (cmp > 0)
 				{
-					// if (root->left == 0)
-					// {
-					// 	root->left = new Node;
-					// }
-					root->left = ninsert(root->left, key, val);
-					root->left->parent = root;
-				}
-				else if (cmp > 0)
-				{			
-					// if (root->right == 0)
-					// {
-					// 	root->right = new Node;
-					// }
 					root->right = ninsert(root->right, key, val);
-					root->right->parent = root;
+					root->right->parent = root;		
 				}
-
+				else 
+				{			
+					root->left = ninsert(root->left, key, val);
+					root->left->parent  = root;
+				}
 				update(root);
-				balance(root);
-				return root;
+				return balance(root) ;
 			}
 
 			void ninsert(Key key, T val)
 			{
-				if (_root == 0)
-				{
-					_root = ninsert(_root, key, val); 
-					return ;
-				}
-				// if (count(key) != 0)
+		
+				// if (count(key) == 0)
 				// 	return;
-				// _root = 
-				Node *tmp = ninsert(_root, key, val);
-				if (tmp == _root)
-				{
-					std::cout << "Root has been returned";
-				}
-				else
-					tmp->parent = _root;	
+				_root = ninsert(_root, key, val);
+				++_size;
 			}	
 
 			iterator begin()
@@ -480,6 +470,7 @@ namespace ft
 			}
 			iterator find(const Key& key)
 			{
+
 				for (iterator t = begin(); t != end(); t++)
 				{
 					if ((*t).first == key)
@@ -491,6 +482,8 @@ namespace ft
 			}
 			size_t count(const Key &key)
 			{
+				// if (_root == 0)
+				// 	return 0;
 				for (iterator t = begin(); t != end(); t++)
 				{
 					if ((*t).first == key)
