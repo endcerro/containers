@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 15:41:19 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/10 19:39:28 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/10 20:00:18 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -366,21 +366,14 @@ namespace ft
 
 			Node *remove(Node *node ,Key key)
 			{
-				int ret = _comp(node->data.first, key);
-				if (ret > 0)
+				// int ret = _comp(node->data.first, key);
+				// if (ret > 0)
+				if (_comp(node->data.first, key))
 				{
 					node->right  = remove(node->right , key);
-					// node->left = remove(node->left, key);
-					// node->right = ninsert(node->right, key, val);
-					// node->right->parent = node;		
 				}
 				else if (key != node->data.first)
-				{
 					node->left = remove(node->left, key);
-					
-					// node->left = ninsert(node->left, key, val);
-					// node->left->parent  = node;
-				}
 				else
 				{
 					if (node->left == NULL)
@@ -411,47 +404,10 @@ namespace ft
 							node->data.second = tmpval;
 							node->right = remove(node->right, tmpkey);
 						}
-
 					}
 				}
 				update(node);
 				return balance(node);
-				// Node *tmp = searchNode(key);
-				
-				// if (tmp->right == NULL && tmp->left == NULL)
-				// {
-				// 	if (tmp->parent->right == tmp)
-				// 		tmp->parent->right = 0;
-				// 	else
-				// 		tmp->parent->left = 0;
-				// 	delete tmp;
-				
-				// }
-				// else if (tmp->right == NULL)
-				// {
-				// 	tmp->left->parent = tmp->parent;
-				// 	if (tmp->parent->right == tmp)
-				// 		tmp->parent->right = tmp->left;
-				// 	else
-				// 		tmp->parent->left = tmp->left;
-				// 	delete tmp;
-				// }
-				// else if (tmp->left == NULL)
-				// {
-				// 	tmp->right->parent = tmp->parent;
-				// 	if (tmp->parent->right == tmp)
-				// 		tmp->parent->right = tmp->right;
-				// 	else
-				// 		tmp->parent->left = tmp->right;
-				// 	delete tmp;
-				// }
-				// else if (tmp->left && tmp->right)
-				// {
-				// 	tmp *tmp = getleftmostnode(tmp->right);
-
-				// }
-				// update(_root);
-				// balancef(_root);
 			}
 
 			iterator begin()
