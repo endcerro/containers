@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/10 18:52:07 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/10 19:39:38 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,9 @@ int main()
 	custom.insert(6, 'f');
 	custom.insert(156, 'b');
 	custom.insert(3, 'y');
+
+	custom.remove(20);
+	custom.remove(690);
 	// cuton.insert(std::make_pair(12, 'a'));
 	
 	// std::cout << custom.count(13) << std::endl;
