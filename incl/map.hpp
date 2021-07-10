@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 15:41:19 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/09 16:03:24 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/10 16:49:03 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,16 @@ namespace ft
 				Node *left;
 				Node *right;
 				ft::pair<Key, T> data;
+
+				int balancef;
+				int height;
 			};
 		private :
 	
 			Node	*_root;
 			Node	*_end;
-
+			Compare _comp;
+			// Alloc 	_alloc;
 			size_t 	_size;
 			Alloc 	_alloc;
 
@@ -58,7 +62,7 @@ namespace ft
 		
 		public :
 
-			explicit map (const Compare& comp = Compare(), const Alloc& alloc = Alloc())
+			explicit map (const Compare& comp = Compare(), const Alloc& alloc = Alloc()) : _comp(comp), _alloc(alloc), _root(0)
 			{	
 				_end = createNode(pair<Key, T>(Key(), T()));
 				// _top = NULL;// Node;
@@ -141,6 +145,10 @@ namespace ft
 			{
 				return _root;
 			}
+			// Node *groot()
+			// {
+			// 	return _root;
+			// }
 
 			void printnode(Node *node)
 			{
@@ -150,6 +158,9 @@ namespace ft
 				std::cout << "parent :" << node->parent << std::endl;
 				std::cout << "left :" << node->left << std::endl;
 				std::cout << "right :" << node->right << std::endl;
+				std::cout << "height :" << node->height << std::endl;
+				std::cout << "bf :" << node->balancef << std::endl;
+
 			}
 			void printtest(Node *curr)
 			{
@@ -247,6 +258,211 @@ namespace ft
 					}
 	
 			};
+			size_t getsubtreeheight(Node *curr, size_t n = 0)
+			{
+				size_t r = 0;
+				size_t l = 0;
+
+				if (curr != NULL && curr != _end)
+				{
+					if (curr->right != 0)
+						r = getsubtreeheight(curr->right, n + 1);
+					l = getsubtreeheight(curr->left, n + 1);
+					return l < r ? r : l;
+				}
+				return n - 1;
+			}
+			void printsubheight()
+			{
+				for (iterator i = begin(); i != end(); i++)
+				{
+					std::cout << "leaf " << (*i).first << " weight : " << getsubtreeheight(i.getNode()) << std::endl;
+				}
+			}
+			Node *rotate_right(Node *A)
+			{
+				Node *P = A->parent;
+				Node *B = A->left;
+				A->left = B->right;
+				if (B->right != NULL)
+				{
+					B->right->parent = A;
+				}
+				B->right = A;
+				A->parent = B;
+				B->parent = P;
+				if (P != NULL)
+				{
+					if (P->left == A)
+						P->left = B;
+					else
+						P->right = B;
+				}
+				if (A == _root)
+					_root = B;
+				update(B);
+				update(A);
+				update(B);
+				return B;
+			}
+			// int balancef(Node *root)
+			// {
+			// 	int left = 0;
+			// 	int right = 0;
+			// 	if ( root->right)
+			// 		right = balancef(root->right);
+			// 	if (root->left)
+			// 		left = balancef(root->left);
+			// 	std::cout << "BF = " << right - left;
+			// 	return right - left;
+			// }
+			Node *rotate_left(Node *A)
+			{
+				Node *P = A->parent;
+				Node *B = A->right;
+				A->right = B->left;
+				if (B->left != NULL)
+				{
+					B->left->parent = A;
+				}
+				B->left = A;
+				A->parent = B;
+				B->parent = P;
+				if (P != NULL)
+				{
+					if (P->right == A)
+						P->right = B;
+					else
+						P->left = B;
+				}
+				if (A == _root)
+					_root = B;
+				update(B);
+				update(A);
+				update(B);
+				return B;
+			}
+
+			void update(Node *node)
+			{
+				int left_h = -1;
+				int right_h = -1;
+				
+				if (node->left != NULL)
+					left_h = node->left->height;
+				if (node->right != NULL)
+					left_h = node->right->height;
+				
+				if (left_h > right_h)
+					node->height = 1 + left_h;
+				else
+					node->height = 1 + right_h;				
+
+				node->balancef = right_h - left_h;
+				// node.height = 1 + 
+			}
+			Node *leftLeftCase(Node *node)
+			{
+				return rotate_right(node);
+			}
+
+			Node *rightRightCase(Node *node)
+			{
+				return rotate_left(node);
+			}
+			Node *leftRightCase(Node *node)
+			{
+				node->left = rotate_left(node->left);
+				return rotate_left(node);
+			}
+			Node *rightLeftCase(Node *node)
+			{
+				node->right = rotate_right(node->right);
+				return rotate_right(node);
+			}
+
+
+			Node *balance(Node *node)
+			{
+				if (node->balancef == -2)
+				{
+					if (node->left->balancef <= 0)
+						return leftLeftCase(node);
+					else
+						return leftRightCase(node);
+				}
+				else if (node->balancef == 2)
+				{
+					if (node->right->balancef >= 0)
+						return rightRightCase(node);
+					else
+						return rightLeftCase(node);	
+				}
+				return node;
+			}
+
+			Node *ninsert(Node *root,Key key, T val)
+			{
+
+				// root = ninsert(root, key, val)
+				if (root == NULL)
+				{
+					root = new Node;
+					root->data.first = key;
+					root->data.second = val;
+					root->left = 0;
+					root->right = 0;
+					root->parent = 0;
+					return root;
+				}
+				int cmp = _comp(root->data.first,key);
+				std::cout << "Cmp for " << key << " and " << root->data.first;
+				std::cout << " is " << cmp <<std::endl;
+
+		
+
+				if (cmp == 0)
+				{
+					// if (root->left == 0)
+					// {
+					// 	root->left = new Node;
+					// }
+					root->left = ninsert(root->left, key, val);
+					root->left->parent = root;
+				}
+				else if (cmp > 0)
+				{			
+					// if (root->right == 0)
+					// {
+					// 	root->right = new Node;
+					// }
+					root->right = ninsert(root->right, key, val);
+					root->right->parent = root;
+				}
+
+				update(root);
+				balance(root);
+				return root;
+			}
+
+			void ninsert(Key key, T val)
+			{
+				if (_root == 0)
+				{
+					_root = ninsert(_root, key, val); 
+					return ;
+				}
+				// if (count(key) != 0)
+				// 	return;
+				// _root = 
+				Node *tmp = ninsert(_root, key, val);
+				if (tmp == _root)
+				{
+					std::cout << "Root has been returned";
+				}
+				else
+					tmp->parent = _root;	
+			}	
 
 			iterator begin()
 			{
