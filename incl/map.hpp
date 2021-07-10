@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 15:41:19 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/10 18:41:39 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/10 18:52:47 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,42 +62,26 @@ namespace ft
             }
             Node *leftLeftCase(Node *node)
 			{
-				std::cout << "R1\n"; 
+				// std::cout << "R1\n"; 
 				return rotate_right(node);
-				// return rotate_right(node);
 			}
 
 			Node *rightRightCase(Node *node)
 			{
-				std::cout << "R2\n";
+				// std::cout << "R2\n";
 				return rotate_left(node);
-				// return rotate_left(node);
 			}
 			Node *leftRightCase(Node *node)
 			{
-				std::cout << "R3\n";
-				// std::cout << "Node is " << node->data.first << std::endl;
-				printtest(groot());
+				// std::cout << "R3\n";
 				node->left = rotate_left(node->left);
-
-				std::cout << "\n\nPOST LEFTROT \n\n";
-				printtest(groot());
-
-				std::cout << "\n\n";
-				return rotate_left(node);
-
-				// node->left = rotate_left(node->left);
-				// return rotate_left(node);
+				return leftLeftCase(node);
 			}
 			Node *rightLeftCase(Node *node)
 			{
-				std::cout << "R4\n";
-
+				// std::cout << "R4\n";
 				node->right = rotate_right(node->right);
-				return rotate_right(node);
-
-				// node->right = rotate_right(node->right);
-				// return rotate_right(node);
+				return rightRightCase(node);
 			}
 
 			Node *balance(Node *node)
@@ -290,8 +274,6 @@ namespace ft
 					else
 						P->right = B;
 				}
-				// if (A == _root)
-				// 	_root = B;
 				update(A);
 				update(B);
 				return B;
@@ -316,8 +298,6 @@ namespace ft
 					else
 						P->left = B;
 				}
-				// if (A == _root)
-				// 	_root = B;
 				update(A);
 				update(B);
 				return B;

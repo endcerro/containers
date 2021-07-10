@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/10 18:41:19 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/10 18:52:07 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,34 +45,34 @@ int main()
 
 	custom.printtest(custom.groot());
 	std::cout << "\n\n";
-	// custom.insert(10, 'b');
+	custom.insert(10, 'b');
 		
 	
 
-	// custom.insert(240, 'b');
-	// custom.insert(10, 'b');
-	// custom.insert(15, 'b');
+	custom.insert(240, 'b');
+	custom.insert(10, 'b');
+	custom.insert(15, 'b');
 	
 
-	// custom.insert(20, 'C');
-		// custom.insert(500, 'a');
+	custom.insert(20, 'C');
+		custom.insert(500, 'a');
 		
-		// custom.insert(520, 'a');
-		// custom.insert(540, 'a');
-		// custom.insert(420, 'a');
-		// custom.insert(690, 'a');
-		// custom.insert(693, 'a');
-		// custom.insert(692, 'a');
-	// custom.ninsert(0, 'a');
-	// custom.ninsert(4, 'b');
-	// custom.ninsert(7, 'c');
-	// // custom.insert(10, 'c');
-	// custom.insert(9, 'd');
-	// custom.insert(3, 'e');
-	// custom.insert(11, 'f');
-	// custom.insert(6, 'f');
-	// custom.insert(156, 'b');
-	// custom.insert(3, 'y');
+		custom.insert(520, 'a');
+		custom.insert(540, 'a');
+		custom.insert(420, 'a');
+		custom.insert(690, 'a');
+		custom.insert(693, 'a');
+		custom.insert(692, 'a');
+	custom.insert(0, 'a');
+	custom.insert(4, 'b');
+	custom.insert(7, 'c');
+	// custom.insert(10, 'c');
+	custom.insert(9, 'd');
+	custom.insert(3, 'e');
+	custom.insert(11, 'f');
+	custom.insert(6, 'f');
+	custom.insert(156, 'b');
+	custom.insert(3, 'y');
 	// cuton.insert(std::make_pair(12, 'a'));
 	
 	// std::cout << custom.count(13) << std::endl;
