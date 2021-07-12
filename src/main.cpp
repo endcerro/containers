@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/12 18:44:56 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/12 19:27:22 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int main()
 		
 	int ssize = 0;
 
-	pret(custom.insert(ft::pair<int, char>(240, 'b')));
+	// pret(custom.insert(ft::pair<int, char>(240, 'b')));
 	pret(custom.insert(ft::pair<int, char>(10, 'b')));
 	pret(custom.insert(ft::pair<int, char>(15, 'b')));
 	
@@ -111,9 +111,11 @@ int main()
 	pret(custom.insert(ft::pair<int, char>(11, 'f')));
 	pret(custom.insert(ft::pair<int, char>(6, 'f')));
 	pret(custom.insert(ft::pair<int, char>(156, 'b')));
-	pret(custom.insert(ft::pair<int, char>(240, 'b')));
+	pret(custom.insert(ft::pair<int, char>(240, 'K')));
 	// custom.insert(3, 'y');
-
+	// std::cout << custom[240] << std::endl;
+	custom[4020] = 'X';
+	// std::cout << custom[4020] << std::endl;
 	// custom.remove(20);
 	// custom.remove(690);
 	// cuton.insert(std::make_pair(12, 'a'));
@@ -141,7 +143,7 @@ int main()
 	// // custom.printtest(custom.groot());	
 	for(ft::map<int, char>::iterator i = custom.begin(); i != custom.end(); i++)
 	{
-		std::cout << (*i).first << std::endl;
+		std::cout << (*i).first << "|"<< (*i).second<< std::endl;
 		// std::cout << (*i).first << std::endl;
 	}
 	// std::cout << (base[5] = 'k') << std::endl;
