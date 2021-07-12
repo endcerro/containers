@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 15:41:19 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/11 19:58:41 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/12 18:39:37 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -320,30 +320,33 @@ namespace ft
 					}
 	
 			};
-			size_t getsubtreeheight(Node *curr, size_t n = 0)
-			{
-				size_t r = 0;
-				size_t l = 0;
 
-				if (curr != NULL && curr != _end)
-				{
-					if (curr->right != 0)
-						r = getsubtreeheight(curr->right, n + 1);
-					l = getsubtreeheight(curr->left, n + 1);
-					return l < r ? r : l;
-				}
-				return n - 1;
-			}
-			void printsubheight()
-			{
-				for (iterator i = begin(); i != end(); i++)
-				{
-					std::cout << "leaf " << (*i).first << " weight : " << getsubtreeheight(i.getNode()) << std::endl;
-				}
-			}
+			// size_t getsubtreeheight(Node *curr, size_t n = 0)
+			// {
+			// 	size_t r = 0;
+			// 	size_t l = 0;
+
+			// 	if (curr != NULL && curr != _end)
+			// 	{
+			// 		if (curr->right != 0)
+			// 			r = getsubtreeheight(curr->right, n + 1);
+			// 		l = getsubtreeheight(curr->left, n + 1);
+			// 		return l < r ? r : l;
+			// 	}
+			// 	return n - 1;
+			// }
+			// void printsubheight()
+			// {
+			// 	for (iterator i = begin(); i != end(); i++)
+			// 	{
+			// 		std::cout << "leaf " << (*i).first << " weight : " << getsubtreeheight(i.getNode()) << std::endl;
+			// 	}
+			// }
+
+
 			Node *rotate_right(Node *A)
 			{
-				std::cout << "RIGHT ROTATION" << std::endl;
+				// std::cout << "RIGHT ROTATION" << std::endl;
 				Node *P = A->parent;
 				Node *B = A->left;
 
@@ -366,12 +369,12 @@ namespace ft
 				
 				update(A);
 				update(B);
-				std::cout << "DONE";
+				// std::cout << "DONE";
 				return B;
 			}
 			Node *rotate_left(Node *A)
 			{
-				std::cout << "LEFT ROTATION" << std::endl;
+				// std::cout << "LEFT ROTATION" << std::endl;
 				Node *P = A->parent;
 				Node *B = A->right;
 				A->right = B->left;
@@ -391,7 +394,7 @@ namespace ft
 				}
 				update(A);
 				update(B);
-				std::cout << "DONE";
+				// std::cout << "DONE";
 				return B;
 			}
 			void update(Node *node)
@@ -412,53 +415,92 @@ namespace ft
 				node->balancef = right_h - left_h;
 			}
 
-			
-			
+			// Node *ninsert(Node *node,Key key, T val)
+			// {
+			// 	if (node == NULL)
+			// 	{
+			// 		node = createNode(ft::pair<Key, T>(key, val));
+			// 		return node;
+			// 	}
 
-			Node *ninsert(Node *node,Key key, T val)
+			// 	if (_comp(node->data.first, key) > 0)
+			// 	{
+			// 		node->right = ninsert(node->right, key, val);
+			// 		node->right->parent = node;		
+			// 	}
+			// 	else 
+			// 	{			
+			// 		node->left = ninsert(node->left, key, val);
+			// 		node->left->parent  = node;
+			// 	}
+			// 	update(node);
+			// 	return balance(node) ;
+			// }
+
+			Node *ninsert(Node *node, const value_type &val)
 			{
 				if (node == NULL)
 				{
-					node = createNode(ft::pair<Key, T>(key, val));
+					node = createNode(val);
 					return node;
 				}
 
-				if (_comp(node->data.first, key) > 0)
+				if (_comp(node->data.first, val.first) > 0)
 				{
-					node->right = ninsert(node->right, key, val);
+					node->right = ninsert(node->right, val);
 					node->right->parent = node;		
 				}
 				else 
 				{			
-					node->left = ninsert(node->left, key, val);
+					node->left = ninsert(node->left, val);
 					node->left->parent  = node;
 				}
 				update(node);
 				return balance(node) ;
 			}
 
-			void insert(Key key, T val)
-			{
-				if (searchNode(key))
-					return;
-				_root = ninsert(_root, key, val);
-				++_size;
-			}
+			// void insert(Key key, T val)
+			// {
+			// 	insert(pair<Key, T>(key, val));
+			// 	// if (searchNode(key))
+			// 	// 	return;
+			// 	// _root = ninsert(_root, pair<Key, T>(key, val));
+			// 	// ++_size;
+			// }
 
-			pair<iterator,bool> insert (const value_type& val)
+			pair<iterator, bool> insert(const value_type &v)
 			{
-				Node *tmp = searchNode(val.first);
 				pair<iterator, bool> ret;
-				ret.second = false;
-				if (tmp == 0)
+				Node *tmp = searchNode(v.first);
+				if (tmp != NULL)
 				{
-					insert(val.first, val.second);
-					tmp = searchNode(val.first);
-					ret.second = true;
+					ret.first = iterator(tmp);
+					ret.second = false;
 				}
-				ret.first = iterator(tmp);
+				else
+				{
+					_root = ninsert(_root, v);
+					ret.first = iterator(searchNode(v.first));
+					ret.second = true;
+					++_size;	
+				}
 				return ret;
 			}
+
+			// pair<iterator,bool> insert (const value_type& val)
+			// {
+			// 	Node *tmp = searchNode(val.first);
+			// 	pair<iterator, bool> ret;
+			// 	ret.second = false;
+			// 	if (tmp == 0)
+			// 	{
+			// 		ninsert(val.first, val.second);
+			// 		tmp = searchNode(val.first);
+			// 		ret.second = true;
+			// 	}
+			// 	ret.first = iterator(tmp);
+			// 	return ret;
+			// }
 			iterator insert (iterator position, const value_type& val)
 			{
 				static_cast<void> (position);
@@ -478,8 +520,6 @@ namespace ft
  			}
 			void remove(Key key)
 			{
-				// Node *node = _root;
-				
 				if (searchNode(key))
 				{
 					remove(_root, key);
@@ -532,6 +572,10 @@ namespace ft
 				update(node);
 				return balance(node);
 			}
+			void erase (iterator position)
+			{
+				remove(position->first);
+			}
 
 			iterator begin()
 			{
@@ -561,6 +605,16 @@ namespace ft
 				}
 				return end();
 			}
+			mapped_type& operator[](const key_type& k)
+            {
+                Node* tmp = searchNode(_root, k);
+
+                if (tmp)
+                    return tmp->data.second;
+
+                value_type val = ft::pair<key_type, mapped_type>(k, mapped_type());
+                return ninsert(_root, val)->data.second;
+            }
 			size_t count(const Key &key)
 			{
 				// if (_root == 0)
@@ -577,8 +631,11 @@ namespace ft
 				iterator start = begin();
 				while (start != end())
 				{
-					remove(start->first);
-					start = begin();
+					erase(start++);
+					// std::cout << "removing " << start->first << std::endl;
+					// start = iterator(remove(start->first));
+					
+					// start = begin();
 				}
 			}
 			Compare key_comp() const
@@ -587,7 +644,7 @@ namespace ft
 			}
 			
 			bool empty() const
-			{	return (_size > 0);	}
+			{	return (_size == 0);	}
 			
 			size_t size() const
 			{	return (_size);	}
