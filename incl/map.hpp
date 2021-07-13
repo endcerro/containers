@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 15:41:19 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/13 16:22:31 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/13 17:27:42 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -274,7 +274,12 @@ namespace ft
 		public :
 
 			explicit map (const Compare& comp = Compare(), const Alloc& alloc = Alloc()) :_root(0), _comp(comp), _size(0), _alloc(alloc)
-			{	}
+			{
+				_end = new Node;
+				_end->parent = NULL;
+				_end->left = NULL;
+				_end->right = NULL;
+			}
 			
 			template <class InputIterator>  
 			map (InputIterator first, InputIterator last,   const Compare& comp = Compare(), const Alloc& alloc = Alloc()) :_root(0), _comp(comp) , _size(0), _alloc(alloc)
@@ -283,7 +288,10 @@ namespace ft
 					insert(*(first++));
 			}
 			~map()
-			{	clear();	}
+			{	
+				clear();
+				delete _end;
+			}
 			
 			bool operator==(const map &m)
 			{
@@ -589,7 +597,7 @@ namespace ft
 				friend class map<key_type, mapped_type, Compare,Alloc>;
 				private :
 					Node *_ptr;
-					// Node *_prev;
+					Node *_end;
 					typedef Key								key_type;
 					typedef Compare							key_compare;
 					typedef T								mapped_type;
@@ -605,14 +613,18 @@ namespace ft
 				
 				public :
 
-					iterator(Node *ptr = 0) : _ptr(ptr)
+					iterator(Node *ptr = 0, Node *end = 0) : _ptr(ptr), _end(end)
 					{ }
 					~iterator()
 					{ }
 					iterator& operator=(const iterator& assign)
 					{
+
 						if (this != &assign)
+						{
 							_ptr = assign._ptr;
+							_end = assign._end;
+						}
 						return (*this);
 					}
 					Node *getNode()
