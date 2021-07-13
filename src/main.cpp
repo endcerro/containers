@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/13 16:07:43 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/13 17:32:54 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ int main()
 	// custom.printsubheight();
 	// // ft::map<int, char>::iterator it = custom.begin();
 	// custom.printtest(custom.groot());
-	
+	custom.clear();
 	// for(ft::map<int, char>::iterator i = custom.begin(); i != custom.end(); i++)
 	// {
 	// 	std::cout << (*i).first << std::endl;
