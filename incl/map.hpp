@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 15:41:19 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/13 16:12:57 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/13 16:22:31 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ namespace ft
 			typedef T       mapped_type;
 			typedef ft::pair<key_type, T>   value_type;
 			typedef Compare key_compare;
+			class iterator;
+			class const_iterator;
 			class value_compare : public ft::binary_function<value_type, value_type, bool>
 			{
 				friend class map;
@@ -66,8 +68,6 @@ namespace ft
 			Node* createNode(const value_type& pair)
 			{
 				Node* tmp = new Node();
-
-				// _allocPair.construct(&tmp->content, pair);
 				tmp->parent = 0;
 				tmp->left = 0;
 				tmp->right = 0;
@@ -77,25 +77,17 @@ namespace ft
 				return tmp;
 			}
 			Node *leftLeftCase(Node *node)
-			{
-				// std::cout << "R1\n"; 
-				return rotate_right(node);
-			}
+			{	return rotate_right(node);	}
 
 			Node *rightRightCase(Node *node)
-			{
-				// std::cout << "R2\n";
-				return rotate_left(node);
-			}
+			{	return rotate_left(node);	}
 			Node *leftRightCase(Node *node)
 			{
-				// std::cout << "R3\n";
 				node->left = rotate_left(node->left);
 				return leftLeftCase(node);
 			}
 			Node *rightLeftCase(Node *node)
 			{
-				// std::cout << "R4\n";
 				node->right = rotate_right(node->right);
 				return rightRightCase(node);
 			}
@@ -118,36 +110,8 @@ namespace ft
 				}
 				return node;
 			}
-		
-		public :
 
-			explicit map (const Compare& comp = Compare(), const Alloc& alloc = Alloc()) :_root(0), _comp(comp), _size(0), _alloc(alloc)
-			{   
-				// _end = createNode(pair<Key, T>(Key(), T()));
-				// _top = NULL;// Node;
-				// _bottom = new Node;
-				// _bottom->parent = _top;
-				// _top->left = _bottom;
-				// _top->right = _bottom;
-
-			}
-			template <class InputIterator>  
-			map (InputIterator first, InputIterator last,   const Compare& comp = Compare(), const Alloc& alloc = Alloc()) :_root(0), _comp(comp) , _size(0), _alloc(alloc)
-			{
-				while (first != last)
-				{
-					insert(*(first++));
-				}
-			}
-			~map()
-			{	clear();	}
-			
-			Node *groot()
-			{
-				return _root;
-			}
-
-			void printnode(Node *node)
+			void printnode(Node *node) //TODEL
 			{
 				std::cout << "Node :" << node << std::endl;
 				std::cout << "data = " << node->data.first;
@@ -159,32 +123,10 @@ namespace ft
 				std::cout << "bf :" << node->balancef << std::endl;
 
 			}
-			void printtest(Node *curr)
-			{
-				if (curr == NULL)
-					return;
-				std::cout << "\n----\n";
-				printnode(curr);
-				printtest(curr->left);
-				printtest(curr->right);
 
-			}
 			Node *searchNode(const Key &k)
-			{
-				return searchNode(_root, k);
-			}
-			Node *searchNode(Node *curr, const Key &k)
-			{
-				if (curr == NULL)
-					return NULL;
-				
-				else if (k > curr->data.first)
-					return searchNode(curr->right, k);
-				else if (k < curr->data.first)
-					return searchNode(curr->left, k);       
-				else
-					return curr;
-			}
+			{	return searchNode(_root, k);	}
+
 			static Node *getleftmostnode(Node *curr)
 			{
 				if (curr->left != NULL)
@@ -215,165 +157,7 @@ namespace ft
 					n = n->parent;
 				return n->parent;
 			}
-  
-			class iterator
-			{
-				friend class map<key_type, mapped_type, Compare,Alloc>;
-				private :
-					Node *_ptr;
-					// Node *_prev;
-					typedef Key								key_type;
-					typedef Compare							key_compare;
-					typedef T								mapped_type;
-					
-					typedef ft::pair<key_type, mapped_type>	value_type;
-					typedef long int						difference_type;
-					typedef size_t							size_type;
-					typedef value_type&						reference;
-					typedef Node*							nodePtr;
-					// typedef std::bidirectional_iterator_tag                                     iterator_category;
-					// typedef typename chooseConst<B, value_type&, const value_type&>::type       reference;
-					// typedef typename chooseConst<B, value_type*, const value_type*>::type       pointer;
-				
-				public :
-
-					iterator(Node *ptr = 0) : _ptr(ptr)
-					{ }
-					~iterator()
-					{ }
-					iterator& operator=(const iterator& assign)
-					{
-						if (this != &assign)
-							_ptr = assign._ptr;
-						return (*this);
-					}
-					Node *getNode()
-					{
-						return (_ptr);
-					}
-					reference operator*() const
-					{ 
-						return (_ptr->data);
-					}
-					value_type* operator->() const
-					{ 
-						return &(_ptr->data);
-					}
-					bool operator==(const iterator &__x) const
-					{
-						return _ptr == __x._ptr;
-					}
-
-					bool operator!=(const iterator &__x) const
-					{
-						return _ptr != __x._ptr;
-					}
-
-					iterator &operator++()
-					{
-						_ptr = ft::map<Key, T>::getNext(_ptr);
-						return *this;
-					}
-					iterator &operator--()
-					{
-						_ptr = ft::map<Key, T>::getPrev(_ptr);
-						return *this;
-					}
-					iterator operator--(int)
-					{
-						iterator tmp = *this;
-						_ptr = ft::map<Key, T>::getPrev(_ptr);
-						return tmp;
-					}
-					iterator operator++(int)
-					{
-						iterator tmp = *this;
-						_ptr = ft::map<Key, T>::getNext(_ptr);
-						return tmp;
-					}
 	
-			};
-
-			class const_iterator
-			{
-				// friend iterator;
-				friend class map<key_type, mapped_type, Compare,Alloc>;
-				private :
-					Node *_ptr;
-					// Node *_prev;
-					typedef Key                                                 key_type;
-					typedef Compare                                         key_compare;
-					typedef T                                               mapped_type;
-					
-					typedef ft::pair<key_type, mapped_type>           value_type;
-					typedef long int                                        difference_type;
-					typedef size_t                                          size_type;
-					typedef value_type&                                     reference;
-					// typedef std::bidirectional_const_iterator_tag                                     const_iterator_category;
-					// typedef typename chooseConst<B, value_type&, const value_type&>::type       reference;
-					// typedef typename chooseConst<B, value_type*, const value_type*>::type       pointer;
-					typedef Node*                                                               nodePtr;
-				public :
-
-					const_iterator(Node *ptr = 0) : _ptr(ptr)
-					{ }
-					const_iterator(iterator it) : _ptr(it._ptr)
-					{ }
-					~const_iterator()
-					{ }
-					const_iterator& operator=(const const_iterator& assign)
-					{
-						if (this != &assign)
-							_ptr = assign._ptr;
-						return (*this);
-					}
-					Node *getNode()
-					{
-						return (_ptr);
-					}
-					reference operator*() const
-					{ 
-						return (_ptr->data);
-					}
-					const value_type* operator->() const
-					{ 
-						return &(_ptr->data);
-					}
-					bool operator==(const const_iterator &__x) const
-					{
-						return _ptr == __x._ptr;
-					}
-
-					bool operator!=(const const_iterator &__x) const
-					{
-						return _ptr != __x._ptr;
-					}
-					
-					const_iterator &operator++()
-					{
-						_ptr = ft::map<Key, T>::getNext(_ptr);
-						return *this;
-					}
-					const_iterator operator++(int)
-					{
-						const_iterator tmp = *this;
-						_ptr = ft::map<Key, T>::getNext(_ptr);
-						return tmp;
-					}
-					const_iterator &operator--()
-					{
-						_ptr = ft::map<Key, T>::getPrev(_ptr);
-						return *this;
-					}
-					const_iterator operator--(int)
-					{
-						const_iterator tmp = *this;
-						_ptr = ft::map<Key, T>::getPrev(_ptr);
-						return tmp;
-					}
-	
-			};
-
 			Node *rotate_right(Node *A)
 			{
 				Node *P = A->parent;
@@ -411,6 +195,7 @@ namespace ft
 				update(B);
 				return B;
 			}
+
 			void update(Node *node)
 			{
 				int left_h = -1;
@@ -435,7 +220,6 @@ namespace ft
 					node = createNode(val);
 					return node;
 				}
-
 				if (_comp(node->data.first, val.first) > 0)
 				{
 					node->right = ninsert(node->right, val);
@@ -448,6 +232,97 @@ namespace ft
 				}
 				update(node);
 				return balance(node) ;
+			}
+			Node *remove(Node *node ,Key key)
+			{
+				if (_comp(node->data.first, key))
+					node->right  = remove(node->right , key);
+				else if (key != node->data.first)
+					node->left = remove(node->left, key);
+				else
+				{
+					if (node->left == NULL)
+						return node->right;
+					else if (node->right == NULL)
+						return node->left; 
+					else
+					{
+						if (node->left->height > node->right->height)
+						{
+							Node *tmp = getrightmostnode(node->left);
+							T tmpval = tmp->data.second;
+							Key tmpkey = tmp->data.first;
+							node->data.first = tmpkey;
+							node->data.second = tmpval;
+							node->left = remove(node->left, tmpkey); 
+						}
+						else
+						{
+							Node *tmp = getleftmostnode(node->right);
+							T tmpval = tmp->data.second;
+							Key tmpkey = tmp->data.first;
+							node->data.first = tmpkey;
+							node->data.second = tmpval;
+							node->right = remove(node->right, tmpkey);
+						}
+					}
+				}
+				update(node);
+				return balance(node);
+			}
+
+		public :
+
+			explicit map (const Compare& comp = Compare(), const Alloc& alloc = Alloc()) :_root(0), _comp(comp), _size(0), _alloc(alloc)
+			{	}
+			
+			template <class InputIterator>  
+			map (InputIterator first, InputIterator last,   const Compare& comp = Compare(), const Alloc& alloc = Alloc()) :_root(0), _comp(comp) , _size(0), _alloc(alloc)
+			{
+				while (first != last)
+					insert(*(first++));
+			}
+			~map()
+			{	clear();	}
+			
+			bool operator==(const map &m)
+			{
+				iterator base = begin();
+				iterator ext = m.begin();
+				while (base != end() && ext != end())
+					if (*(base++) != *(ext++))
+						return false;
+				if (base == end() && ext == m.end())
+					return true;
+				return false;
+			}
+
+			bool operator!=(const map &m)
+			{	return !(*this == m);	}
+
+
+			void printtest(Node *curr)	//TODEL
+			{
+				if (curr == NULL)
+					return;
+				std::cout << "\n----\n";
+				printnode(curr);
+				printtest(curr->left);
+				printtest(curr->right);
+
+			}
+
+			Node *searchNode(Node *curr, const Key &k)
+			{
+				if (curr == NULL)
+					return NULL;
+				
+				else if (k > curr->data.first)
+					return searchNode(curr->right, k);
+				else if (k < curr->data.first)
+					return searchNode(curr->left, k);       
+				else
+					return curr;
 			}
 
 			pair<iterator, bool> insert (const value_type &v)
@@ -495,51 +370,7 @@ namespace ft
 				}
 			}
 
-			Node *remove(Node *node ,Key key)
-			{
-				// int ret = _comp(node->data.first, key);
-				// if (ret > 0)
-				if (_comp(node->data.first, key))
-				{
-					node->right  = remove(node->right , key);
-				}
-				else if (key != node->data.first)
-					node->left = remove(node->left, key);
-				else
-				{
-					if (node->left == NULL)
-					{
-						return node->right;
-					}
-					else if (node->right == NULL)
-					{
-						return node->left; 
-					}
-					else
-					{
-						if (node->left->height > node->right->height)
-						{
-							Node *tmp = getrightmostnode(node->left);
-							T tmpval = tmp->data.second;
-							Key tmpkey = tmp->data.first;
-							node->data.first = tmpkey;
-							node->data.second = tmpval;
-							node->left = remove(node->left, tmpkey); 
-						}
-						else
-						{
-							Node *tmp = getleftmostnode(node->right);
-							T tmpval = tmp->data.second;
-							Key tmpkey = tmp->data.first;
-							node->data.first = tmpkey;
-							node->data.second = tmpval;
-							node->right = remove(node->right, tmpkey);
-						}
-					}
-				}
-				update(node);
-				return balance(node);
-			}
+			
 			void erase (iterator position)
 			{
 				remove(position->first);
@@ -720,24 +551,7 @@ namespace ft
                 return pair<iterator, iterator>(it, next);
             }
 
-			bool operator==(const map &m)
-			{
-				iterator base = begin();
-				iterator ext = m.begin();
-				while (base != end() && ext != end())
-				{
-					if (*(base++) != *(ext++))
-						return false;
-				}
-				if (base == end() && ext == m.end())
-					return true;
-				return false;
-			}
-
-			bool operator!=(const map &m)
-			{
-				return !(*this == m);
-			}
+			
 			size_t count(const Key &key)
 			{
 				for (iterator t = begin(); t != end(); t++)
@@ -769,6 +583,164 @@ namespace ft
 			
 			size_t max_size() const
 			{   return (_alloc.max_size()); }
+
+			class iterator
+			{
+				friend class map<key_type, mapped_type, Compare,Alloc>;
+				private :
+					Node *_ptr;
+					// Node *_prev;
+					typedef Key								key_type;
+					typedef Compare							key_compare;
+					typedef T								mapped_type;
+					
+					typedef ft::pair<key_type, mapped_type>	value_type;
+					typedef long int						difference_type;
+					typedef size_t							size_type;
+					typedef value_type&						reference;
+					typedef Node*							nodePtr;
+					// typedef std::bidirectional_iterator_tag                                     iterator_category;
+					// typedef typename chooseConst<B, value_type&, const value_type&>::type       reference;
+					// typedef typename chooseConst<B, value_type*, const value_type*>::type       pointer;
+				
+				public :
+
+					iterator(Node *ptr = 0) : _ptr(ptr)
+					{ }
+					~iterator()
+					{ }
+					iterator& operator=(const iterator& assign)
+					{
+						if (this != &assign)
+							_ptr = assign._ptr;
+						return (*this);
+					}
+					Node *getNode()
+					{
+						return (_ptr);
+					}
+					reference operator*() const
+					{ 
+						return (_ptr->data);
+					}
+					value_type* operator->() const
+					{ 
+						return &(_ptr->data);
+					}
+					bool operator==(const iterator &__x) const
+					{
+						return _ptr == __x._ptr;
+					}
+
+					bool operator!=(const iterator &__x) const
+					{
+						return _ptr != __x._ptr;
+					}
+
+					iterator &operator++()
+					{
+						_ptr = ft::map<Key, T>::getNext(_ptr);
+						return *this;
+					}
+					iterator &operator--()
+					{
+						_ptr = ft::map<Key, T>::getPrev(_ptr);
+						return *this;
+					}
+					iterator operator--(int)
+					{
+						iterator tmp = *this;
+						_ptr = ft::map<Key, T>::getPrev(_ptr);
+						return tmp;
+					}
+					iterator operator++(int)
+					{
+						iterator tmp = *this;
+						_ptr = ft::map<Key, T>::getNext(_ptr);
+						return tmp;
+					}
+	
+			};
+
+			class const_iterator
+			{
+				// friend iterator;
+				friend class map<key_type, mapped_type, Compare,Alloc>;
+				private :
+					Node *_ptr;
+					// Node *_prev;
+					typedef Key                                                 key_type;
+					typedef Compare                                         key_compare;
+					typedef T                                               mapped_type;
+					
+					typedef ft::pair<key_type, mapped_type>           value_type;
+					typedef long int                                        difference_type;
+					typedef size_t                                          size_type;
+					typedef value_type&                                     reference;
+					// typedef std::bidirectional_const_iterator_tag                                     const_iterator_category;
+					// typedef typename chooseConst<B, value_type&, const value_type&>::type       reference;
+					// typedef typename chooseConst<B, value_type*, const value_type*>::type       pointer;
+					typedef Node*                                                               nodePtr;
+				public :
+
+					const_iterator(Node *ptr = 0) : _ptr(ptr)
+					{ }
+					const_iterator(iterator it) : _ptr(it._ptr)
+					{ }
+					~const_iterator()
+					{ }
+					const_iterator& operator=(const const_iterator& assign)
+					{
+						if (this != &assign)
+							_ptr = assign._ptr;
+						return (*this);
+					}
+					Node *getNode()
+					{
+						return (_ptr);
+					}
+					reference operator*() const
+					{ 
+						return (_ptr->data);
+					}
+					const value_type* operator->() const
+					{ 
+						return &(_ptr->data);
+					}
+					bool operator==(const const_iterator &__x) const
+					{
+						return _ptr == __x._ptr;
+					}
+
+					bool operator!=(const const_iterator &__x) const
+					{
+						return _ptr != __x._ptr;
+					}
+					
+					const_iterator &operator++()
+					{
+						_ptr = ft::map<Key, T>::getNext(_ptr);
+						return *this;
+					}
+					const_iterator operator++(int)
+					{
+						const_iterator tmp = *this;
+						_ptr = ft::map<Key, T>::getNext(_ptr);
+						return tmp;
+					}
+					const_iterator &operator--()
+					{
+						_ptr = ft::map<Key, T>::getPrev(_ptr);
+						return *this;
+					}
+					const_iterator operator--(int)
+					{
+						const_iterator tmp = *this;
+						_ptr = ft::map<Key, T>::getPrev(_ptr);
+						return tmp;
+					}
+	
+			};
 	};
 }
 
