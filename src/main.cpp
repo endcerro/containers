@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/12 19:27:22 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/13 16:07:43 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,12 @@ int main()
 		std::cout << (*i).first << "|"<< (*i).second<< std::endl;
 		// std::cout << (*i).first << std::endl;
 	}
+	ft::map<int, char>::iterator test = custom.begin();
+	std::cout << "Beg is " << test->first << std::endl;
+	++test; ++test; ++test;
+	std::cout << "+ 3 is " << test->first << std::endl;
+	--test;
+	std::cout << "- 1 is " << test->first << std::endl;
 	// std::cout << (base[5] = 'k') << std::endl;
 
 	return 0;
