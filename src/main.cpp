@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/13 17:32:54 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/15 17:58:24 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,22 +104,23 @@ int main()
 	pret(custom.insert(ft::pair<int, char>(693, 'a')));
 	pret(custom.insert(ft::pair<int, char>(692, 'a')));
 	pret(custom.insert(ft::pair<int, char>(0, 'a')));
-	pret(custom.insert(ft::pair<int, char>(4, 'b')));
-	pret(custom.insert(ft::pair<int, char>(7, 'c')));
-	pret(custom.insert(ft::pair<int, char>(9, 'd')));
-	pret(custom.insert(ft::pair<int, char>(3, 'e')));
-	pret(custom.insert(ft::pair<int, char>(11, 'f')));
-	pret(custom.insert(ft::pair<int, char>(6, 'f')));
-	pret(custom.insert(ft::pair<int, char>(156, 'b')));
-	pret(custom.insert(ft::pair<int, char>(240, 'K')));
+	// pret(custom.insert(ft::pair<int, char>(4, 'b')));
+	// pret(custom.insert(ft::pair<int, char>(7, 'c')));
+	// pret(custom.insert(ft::pair<int, char>(9, 'd')));
+	// pret(custom.insert(ft::pair<int, char>(3, 'e')));
+	// pret(custom.insert(ft::pair<int, char>(11, 'f')));
+	// pret(custom.insert(ft::pair<int, char>(6, 'f')));
+	// pret(custom.insert(ft::pair<int, char>(156, 'b')));
+	// pret(custom.insert(ft::pair<int, char>(240, 'K')));
 	// custom.insert(3, 'y');
 	// std::cout << custom[240] << std::endl;
-	custom[4020] = 'X';
+	// custom[4020] = 'X';
 	// std::cout << custom[4020] << std::endl;
 	// custom.remove(20);
 	// custom.remove(690);
 	// cuton.insert(std::make_pair(12, 'a'));
-	
+	pret(custom.insert(ft::pair<int, char>(40000, 'K')));
+	custom.endinfo();
 	// std::cout << custom.count(13) << std::endl;
 	// std::cout << custom.count(10) << std::endl;
 	std::cout<< "---------------------------------------\n";
@@ -130,7 +131,7 @@ int main()
 	// custom.printsubheight();
 	// // ft::map<int, char>::iterator it = custom.begin();
 	// custom.printtest(custom.groot());
-	custom.clear();
+	// custom.clear();
 	// for(ft::map<int, char>::iterator i = custom.begin(); i != custom.end(); i++)
 	// {
 	// 	std::cout << (*i).first << std::endl;
@@ -146,6 +147,7 @@ int main()
 		std::cout << (*i).first << "|"<< (*i).second<< std::endl;
 		// std::cout << (*i).first << std::endl;
 	}
+
 	ft::map<int, char>::iterator test = custom.begin();
 	std::cout << "Beg is " << test->first << std::endl;
 	++test; ++test; ++test;

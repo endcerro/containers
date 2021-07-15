@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 15:41:19 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/13 17:27:42 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/15 18:00:43 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ namespace ft
 
 			typedef Key     key_type;
 			typedef T       mapped_type;
-			typedef ft::pair<key_type, T>   value_type;
+			typedef ft::pair<key_type, mapped_type>   value_type;
 			typedef Compare key_compare;
 			class iterator;
 			class const_iterator;
@@ -136,7 +136,7 @@ namespace ft
 			static Node *getrightmostnode(Node *curr)
 			{
 				if (curr->right != NULL)
-					return getleftmostnode(curr->right);
+					return getrightmostnode(curr->right);
 				return curr;
 			}
 			static Node *getNext(Node *n)
@@ -218,6 +218,16 @@ namespace ft
 				if (node == NULL)
 				{
 					node = createNode(val);
+					//UPDATING END ON INSERT
+					if (_end->left == NULL)
+						_end->left = node;
+					else if (_end->left->data.first > val.first)
+						_end->left = node;
+					if (_end->right == NULL)
+						_end->right = node;
+					else if (_end->right->data.first < val.first)
+						_end->right = node;
+					//DONE UPDATING
 					return node;
 				}
 				if (_comp(node->data.first, val.first) > 0)
@@ -284,6 +294,10 @@ namespace ft
 			template <class InputIterator>  
 			map (InputIterator first, InputIterator last,   const Compare& comp = Compare(), const Alloc& alloc = Alloc()) :_root(0), _comp(comp) , _size(0), _alloc(alloc)
 			{
+				_end = new Node;
+				_end->parent = NULL;
+				_end->left = NULL;
+				_end->right = NULL;
 				while (first != last)
 					insert(*(first++));
 			}
@@ -291,6 +305,12 @@ namespace ft
 			{	
 				clear();
 				delete _end;
+			}
+				void endinfo()
+			{
+				std::cout << "END PARENT = " << _end->parent->data.first;
+				std::cout << " LEFT = " << _end->left->data.first;
+				std::cout << " RIGHT = " << _end->right->data.first << std::endl;
 			}
 			
 			bool operator==(const map &m)
@@ -332,7 +352,21 @@ namespace ft
 				else
 					return curr;
 			}
-
+			void upd_end()
+			{
+				_end->parent = _root;
+				// if (_end->left != NULL && _end->left->data.first > k)
+				// {
+				_end->left = getleftmostnode(_root);
+				// }
+				// if (_end->right != NULL && _end->right->data.first < k)
+				// {
+				_end->right = getrightmostnode(_root);
+				// }
+				// std::cout << "Leftmost=" << _end->left->data.first;
+				// std::cout << " Rightmost=" << _end->right->data.first;
+				// std::cout << " Root=" << _end->parent->data.first << std::endl;
+			}
 			pair<iterator, bool> insert (const value_type &v)
 			{
 				pair<iterator, bool> ret;
@@ -345,10 +379,12 @@ namespace ft
 				else
 				{
 					_root = ninsert(_root, v);
+					_end->parent = _root;
 					ret.first = iterator(searchNode(v.first));
 					ret.second = true;
 					++_size;    
 				}
+				// upd_end();
 				return ret;
 			}
 
@@ -360,6 +396,7 @@ namespace ft
 				iterator it(tmp);
 				if (tmp == 0)
 					it = insert(val).first;
+				
 				return it;
 			}
 
@@ -598,6 +635,7 @@ namespace ft
 				private :
 					Node *_ptr;
 					Node *_end;
+
 					typedef Key								key_type;
 					typedef Compare							key_compare;
 					typedef T								mapped_type;
