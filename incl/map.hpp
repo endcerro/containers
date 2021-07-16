@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 15:41:19 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/16 16:33:18 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/16 17:23:41 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,21 +238,21 @@ namespace ft
 				Node *tmp;
 				if (_comp(node->data.first, key))
 				{
-					std::cout << "1 Rdeleting ";
-					printnode(node->right);
+					// std::cout << "1 Rdeleting ";
+					// printnode(node->right);
 					node->right  = remove(node->right , key);
 				}
 				else if (key != node->data.first)
 				{
-					std::cout << "2 Ldeleting ";
-					printnode(node->left);
+					// std::cout << "2 Ldeleting ";
+					// printnode(node->left);
 					node->left = remove(node->left, key);
 				}
 				else
 				{
 					if (node->left == NULL || node->left == _end)
 					{
-						std::cout << "3 Ldeleting " << node->data.first << std::endl;
+						// std::cout << "3 Ldeleting " << node->data.first << std::endl;
 						tmp = node->right;
 						delete node;
 						// printnode(node->left);
@@ -261,7 +261,7 @@ namespace ft
 					else if (node->right == NULL || node->right == _end)
 					{
 
-						std::cout << "4 Rdeleting "<< node->data.first << std::endl;
+						// std::cout << "4 Rdeleting "<< node->data.first << std::endl;
 						tmp = node->left;
 						delete node;
 						// printnode(node->left);
@@ -313,6 +313,22 @@ namespace ft
 				_end->right = NULL;
 				while (first != last)
 					insert(*(first++));
+			}
+			map(const map &m)
+			{
+				_end = new Node;
+				_end->parent = NULL;
+				_end->left = NULL;
+				_end->right = NULL;
+				for (const_iterator t = m.begin(); t != m.end(); t++)
+					insert(*t);
+			}
+			map& operator=(const map &m)
+			{
+				clear();
+				for (const_iterator t = m.begin(); t != m.end(); t++)
+					insert(*t);
+				return *this;
 			}
 			// ~map()
 			// {	
@@ -374,7 +390,10 @@ namespace ft
 			}
 			void upd_end()
 			{
+				// if (_root == 0)
+				// 	return ;
 				_end->parent = _root;
+				
 				_end->parent->parent = _end;
 				_end->left = getleftmostnode(_root);
 				_end->left->left = _end;
@@ -451,13 +470,11 @@ namespace ft
 			// 	remove(k);
 			// 	return (size() - s); 
 			// }
-			// void erase (iterator first, iterator last)
-			// {
-			// 	while (first != last)
-			// 	{
-			// 		erase(first++);
-			// 	}
-			// }
+			void erase (iterator first, iterator last)
+			{
+				while (first != last)
+					erase(first++);
+			}
 			void printnode(Node *node) //TODEL
 			{
 				std::cout << "Node :" << node << std::endl;
@@ -537,13 +554,28 @@ namespace ft
 				Node* tmp = searchNode(_root, k);
 
 				if (tmp)
+				{
+					// std::cout << "HERE\n";
 					return tmp->data.second;
-				ninsert(_root, ft::pair<key_type, mapped_type>(k, mapped_type()));
+				}
+				insert(ft::pair<key_type, mapped_type>(k, mapped_type()));
+				// std::cout << "HERE\n";
 				tmp = searchNode(_root, k);
+				// std::cout << "HERE2\n";
+				// if (tmp != NULL)
+				// {
+				// 	// std::cout << "Found node\n";
+				// 	printnode(tmp);
+				// }
+				// else
+				// {
+				// 	std::cout << "Not found\n";
+				// }
 				// if (_root != )
 				// update(root);
 				// balance(root);
-				upd_end();
+				// upd_end();
+
 				return (tmp->data.second);
 			}
 
@@ -673,6 +705,7 @@ namespace ft
 			void clear()					//REWORKED
 			{
 				clear(_root);
+				_size = 0;
 				_root = 0;
 				_end->parent = 0;
 				_end->left = 0;
@@ -823,6 +856,15 @@ namespace ft
 						}
 						return (*this);
 					}
+					// bool operator==(const const_iterator &__x) const
+					// {
+					// 	return _ptr == __x._ptr;
+					// }
+
+					// bool operator!=(const const_iterator &__x) const
+					// {
+					// 	return _ptr != __x._ptr;
+					// }
 					Node *getNode()
 					{
 						return (_ptr);

@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/16 16:22:57 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/16 17:23:47 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,49 @@ void pret(ft::pair<ft::map<int, char>::iterator, bool> ret)
 	std::cout << "ID =" << (ret.first)->first << "|" << ret.second << std::endl;
 }
 
+// #define T1 int
+// #define T2 int
+// typedef _pair<const T1, T2> T3;
+template<class T, class IT>
+void	ft_comp(const T &mp, const IT &it1, const IT &it2, unsigned int &i)
+{
+
+	bool res[2];
+
+	std::cout << "\t-- [" << ++i << "] --" << std::endl;
+	res[0] = mp.key_comp()(it1->first, it2->first);
+	res[1] = mp.value_comp()(*it1, *it2);
+	std::cout << "with [" << it1->first << " and " << it2->first << "]: ";
+	std::cout << "key_comp: " << res[0] << " | " << "value_comp: " << res[1] << std::endl;
+}
+
+void test()
+{
+	unsigned int i = 0;
+	ft::map<char, float>	custom;
+	std::map<char, float>	base;
+
+	custom['a'] = 2.3;
+	custom['b'] = 1.4;
+	custom['c'] = 0.3;
+	custom['d'] = 4.2;
+	// base['a'] = 2.3;
+	// base['b'] = 1.4;
+	// base['c'] = 0.3;
+	// base['d'] = 4.2;
+	// printSize(mp);
+
+	// for (ft::map<char, float>::const_iterator it1 = custom.begin(); it1 != custom.end(); ++it1)
+	// 	for (ft::map<char, float>::const_iterator it2 = custom.begin(); it2 != custom.end(); ++it2)
+	// 		ft_comp(custom, it1, it2, i);
+
+	// for (std::map<char, float>::const_iterator it1 = base.begin(); it1 != base.end(); ++it1)
+	// 	for (std::map<char, float>::const_iterator it2 = base.begin(); it2 != base.end(); ++it2)
+	// 		ft_comp(base, it1, it2, i);
+// 
+	// printSize(mp);
+}
+
 
 int main()
 {
@@ -80,7 +123,10 @@ int main()
 	ft::map<int, char> custom;
 	std::map<int, char> base;
 
-	
+	test();
+	// std::cout << custom.groot() << std::endl;
+	// custom[0] = 'a';
+	// std::cout << custom[0] << std::endl;
 	// custom.printtest(custom.groot());
 	// // // custom.printtest(custom.groot());
 	// // custom.insert(5, 'b');
@@ -98,67 +144,67 @@ int main()
 
 	// pret(custom.insert(ft::pair<int, char>(20, 'C')));
 	// pret(custom.insert(ft::pair<int, char>(500, 'a')));
-	custom.insert(ft::pair<int, char>(15, 'b'));
-	custom.insert(ft::pair<int, char>(10, 'b'));
-	custom.insert(ft::pair<int, char>(20, 'b'));	
-	custom.insert(ft::pair<int, char>(520, 'a'));
-	custom.insert(ft::pair<int, char>(540, 'a'));
-	custom.insert(ft::pair<int, char>(420, 'a'));
-	custom.insert(ft::pair<int, char>(690, 'a'));
-	custom.insert(ft::pair<int, char>(693, 'a'));
-	custom.insert(ft::pair<int, char>(692, 'a'));
-	custom.insert(ft::pair<int, char>(0, 'a'));
+	// custom.insert(ft::pair<int, char>(15, 'b'));
+	// custom.insert(ft::pair<int, char>(10, 'b'));
+	// custom.insert(ft::pair<int, char>(20, 'b'));	
+	// custom.insert(ft::pair<int, char>(520, 'a'));
+	// custom.insert(ft::pair<int, char>(540, 'a'));
+	// custom.insert(ft::pair<int, char>(420, 'a'));
+	// custom.insert(ft::pair<int, char>(690, 'a'));
+	// custom.insert(ft::pair<int, char>(693, 'a'));
+	// custom.insert(ft::pair<int, char>(692, 'a'));
+	// custom.insert(ft::pair<int, char>(0, 'a'));
 
 
-	base.insert(std::pair<int, char>(15, 'b'));
-	base.insert(std::pair<int, char>(10, 'b'));
-	base.insert(std::pair<int, char>(20, 'b'));	
-	base.insert(std::pair<int, char>(520, 'a'));
-	base.insert(std::pair<int, char>(540, 'a'));
-	base.insert(std::pair<int, char>(420, 'a'));
-	base.insert(std::pair<int, char>(690, 'a'));
-	base.insert(std::pair<int, char>(693, 'a'));
-	base.insert(std::pair<int, char>(692, 'a'));
-	base.insert(std::pair<int, char>(0, 'a'));
+	// base.insert(std::pair<int, char>(15, 'b'));
+	// base.insert(std::pair<int, char>(10, 'b'));
+	// base.insert(std::pair<int, char>(20, 'b'));	
+	// base.insert(std::pair<int, char>(520, 'a'));
+	// base.insert(std::pair<int, char>(540, 'a'));
+	// base.insert(std::pair<int, char>(420, 'a'));
+	// base.insert(std::pair<int, char>(690, 'a'));
+	// base.insert(std::pair<int, char>(693, 'a'));
+	// base.insert(std::pair<int, char>(692, 'a'));
+	// base.insert(std::pair<int, char>(0, 'a'));
 	
 
-	std::cout<<"--------------------------------\n\n";
+	// std::cout<<"--------------------------------\n\n";
 	
-	ft::map<int, char>::iterator cit = custom.begin();
-	std::map<int, char>::iterator bit = base.begin();
+	// ft::map<int, char>::iterator cit = custom.begin();
+	// std::map<int, char>::iterator bit = base.begin();
 
 	
-	while (cit != custom.end())
-	{
-		std::cout << (cit++)->first << "|";
-	}
-	std::cout << std::endl;
-	while (bit != base.end())
-	{
-		std::cout << (bit++)->first << "|";
-	}
-	std::cout << std::endl;
+	// while (cit != custom.end())
+	// {
+	// 	std::cout << (cit++)->first << "|";
+	// }
+	// std::cout << std::endl;
+	// while (bit != base.end())
+	// {
+	// 	std::cout << (bit++)->first << "|";
+	// }
+	// std::cout << std::endl;
 
-	// custom.printnode(custom.gend()->right);
-	// custom.printnode(cit.getNode()->right);
+	// // custom.printnode(custom.gend()->right);
+	// // custom.printnode(cit.getNode()->right);
 	
 
-	std::cout << std::endl;
-	// std::cout << (--cit)->first << std::endl;
-	// std::cout << (--bit)->first << std::endl;
-	while (--cit != custom.begin())
-	{
-		std::cout << (cit)->first << "|";
-	}
-	std::cout << std::endl;
-	
-	while (--bit != base.begin())
-	{
-		std::cout << (bit)->first << "|";
-	}
-	std::cout << std::endl;
-	std::cout << (cit)->first << std::endl;
-	std::cout << (bit)->first << std::endl;
+	// std::cout << std::endl;
+	// // std::cout << (--cit)->first << std::endl;
+	// // std::cout << (--bit)->first << std::endl;
+	// while (--cit != custom.begin())
+	// {
+	// 	std::cout << (cit)->first << "|";
+	// }
+	// std::cout << std::endl;
+
+	// while (--bit != base.begin())
+	// {
+	// 	std::cout << (bit)->first << "|";
+	// }
+	// std::cout << std::endl;
+	// std::cout << (cit)->first << std::endl;
+	// std::cout << (bit)->first << std::endl;
 	// std::cout << bit->first << std::endl;
 
 	// for(ft::map<int, char>::iterator i = custom.begin(); i != custom.end(); i++)
