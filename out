@@ -1,0 +1,25 @@
+--------------------------------
+
+2 Ldeleting Node :0x604000000450
+data = 10|b
+parent :0x604000000490
+left :0x604000000650
+right :0x604000000410
+height :1
+bf :0
+2 Ldeleting Node :0x604000000650
+data = 0|a
+parent :0x604000000450
+left :0x6040000003d0
+right :0x0
+height :0
+bf :0
+3 Ldeleting 0
+2 Ldeleting Node :0x604000000450
+data = 10|b
+parent :0x604000000490
+left :0x0
+right :0x604000000410
+height :1
+bf :1
+3 Ldeleting 10
