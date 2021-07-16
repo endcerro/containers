@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 15:41:19 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/16 15:41:59 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/16 16:23:32 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,18 +111,6 @@ namespace ft
 				return node;
 			}
 
-			void printnode(Node *node) //TODEL
-			{
-				std::cout << "Node :" << node << std::endl;
-				std::cout << "data = " << node->data.first;
-				std::cout << "|" << node->data.second << std::endl;
-				std::cout << "parent :" << node->parent << std::endl;
-				std::cout << "left :" << node->left << std::endl;
-				std::cout << "right :" << node->right << std::endl;
-				std::cout << "height :" << node->height << std::endl;
-				std::cout << "bf :" << node->balancef << std::endl;
-
-			}
 
 			Node *searchNode(const Key &k)
 			{	return searchNode(_root, k);	}
@@ -148,15 +136,15 @@ namespace ft
 					n = n->parent;
 				return n->parent;               
 			}
-			// static Node *getPrev(Node *n)
-			// {
-			// 	if (n->left != NULL)
-			// 		return getrightmostnode(n->left);
+			static Node *getPrev(Node *n)
+			{
+				if (n->left != NULL)
+					return getrightmostnode(n->left);
 			 
-			// 	while (n->parent != NULL && n == n->parent->left)
-			// 		n = n->parent;
-			// 	return n->parent;
-			// }
+				while (n->parent != NULL && n == n->parent->left)
+					n = n->parent;
+				return n->parent;
+			}
 	
 			Node *rotate_right(Node *A)
 			{
@@ -309,7 +297,8 @@ namespace ft
 
 			explicit map (const Compare& comp = Compare(), const Alloc& alloc = Alloc()) :_root(0), _comp(comp), _size(0), _alloc(alloc)
 			{
-				_end = createNode(value_type());
+				_end = new Node;//createNode(value_type());
+				// _end->data
 				_end->parent = NULL;
 				_end->left = NULL;
 				_end->right = NULL;
@@ -397,6 +386,10 @@ namespace ft
 			{
 				return _root;
 			}
+			Node *gend()
+			{
+				return _end;
+			}
 			pair<iterator, bool> insert (const value_type &v)
 			{
 				pair<iterator, bool> ret;
@@ -465,11 +458,23 @@ namespace ft
 			// 		erase(first++);
 			// 	}
 			// }
+			void printnode(Node *node) //TODEL
+			{
+				std::cout << "Node :" << node << std::endl;
+				std::cout << "data = " << node->data.first;
+				std::cout << "|" << node->data.second << std::endl;
+				std::cout << "parent :" << node->parent << std::endl;
+				std::cout << "left :" << node->left << std::endl;
+				std::cout << "right :" << node->right << std::endl;
+				std::cout << "height :" << node->height << std::endl;
+				std::cout << "bf :" << node->balancef << std::endl;
+
+			}
 
 			iterator begin()
 			{
 				if (_end->left != NULL)
-					return iterator(_end->left);
+					return iterator(_end->left,_end);
 				else
 					return end();
 			}
@@ -479,7 +484,7 @@ namespace ft
 			// }
 			iterator end()
 			{
-				return iterator(_end);
+				return iterator(_end, _end);
 			}
 			// const_iterator end() const
 			// {
@@ -632,15 +637,17 @@ namespace ft
    //          }
 
 			
-			// size_t count(const Key &key)
-			// {
-			// 	for (iterator t = begin(); t != end(); t++)
-			// 		if ((*t).first == key)
-			// 			return 1;
-			// 	return 0;
-			// }
+			size_t count(const Key &key)	//REWORKED
+			{
+				if (_size == 0)
+					return 0;
+				iterator t = begin();
+				while (t->first < key)
+					++t;
+				return (t->first == key);
+			}
 
-			void clear(Node *n)
+			void clear(Node *n)				//REWORKED SHOULD BE PRIVATE
 			{
 				if (n->left != NULL && n->left != _end)
 				{
@@ -655,35 +662,32 @@ namespace ft
 				delete n;
 			}
 
-			void clear()
+			void clear()					//REWORKED
 			{
 				clear(_root);
-				// iterator start = begin();
-				// while (start != end())
-				// 	erase(start++);
 				_root = 0;
 				_end->parent = 0;
 				_end->left = 0;
 				_end->right = 0;
 			}
-			// key_compare key_comp() const
-			// {
-			// 	return _comp;
-			// }
+			key_compare key_comp() const
+			{
+				return _comp;
+			}
 
-			// value_compare value_comp() const
-			// {
-			// 	return value_compare(_comp);
-			// }
+			value_compare value_comp() const
+			{
+				return value_compare();
+			}
 			
-			// bool empty() const
-			// {   return (_size == 0);    }
+			bool empty() const
+			{   return (_size == 0);    }
 			
-			// size_t size() const
-			// {   return (_size); }
+			size_t size() const
+			{   return (_size); }
 			
-			// size_t max_size() const
-			// {   return (_alloc.max_size()); }
+			size_t max_size() const
+			{   return (_alloc.max_size()); }
 
 			class iterator
 			{
@@ -749,14 +753,30 @@ namespace ft
 						return *this;
 					}
 					iterator &operator--()
-					{
-						_ptr = ft::map<Key, T>::getPrev(_ptr);
+					{						
+						if (_ptr == _end)
+						{
+							_ptr = _ptr->right;
+						}
+						else
+						{
+							_ptr = ft::map<Key, T>::getPrev(_ptr);
+						}
+
 						return *this;
 					}
 					iterator operator--(int)
 					{
 						iterator tmp = *this;
-						_ptr = ft::map<Key, T>::getPrev(_ptr);
+
+						if (_ptr == _end)
+						{
+							_ptr = _ptr->right;
+						}
+						else
+						{
+							_ptr = ft::map<Key, T>::getPrev(_ptr);
+						}
 						return tmp;
 					}
 					iterator operator++(int)
