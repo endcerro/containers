@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 15:41:19 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/16 16:23:32 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/16 16:33:18 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -304,16 +304,16 @@ namespace ft
 				_end->right = NULL;
 			}
 			
-			// template <class InputIterator>  
-			// map (InputIterator first, InputIterator last,   const Compare& comp = Compare(), const Alloc& alloc = Alloc()) :_root(0), _comp(comp) , _size(0), _alloc(alloc)
-			// {
-			// 	_end = new Node;
-			// 	_end->parent = NULL;
-			// 	_end->left = NULL;
-			// 	_end->right = NULL;
-			// 	while (first != last)
-			// 		insert(*(first++));
-			// }
+			template <class InputIterator>  
+			map (InputIterator first, InputIterator last, const Compare& comp = Compare(), const Alloc& alloc = Alloc()) :_root(0), _comp(comp) , _size(0), _alloc(alloc)
+			{
+				_end = new Node;
+				_end->parent = NULL;
+				_end->left = NULL;
+				_end->right = NULL;
+				while (first != last)
+					insert(*(first++));
+			}
 			// ~map()
 			// {	
 			// 	clear();
@@ -474,22 +474,25 @@ namespace ft
 			iterator begin()
 			{
 				if (_end->left != NULL)
-					return iterator(_end->left,_end);
+					return iterator(_end->left ,_end);
 				else
 					return end();
 			}
-			// const_iterator begin() const
-			// {
-			// 	return const_iterator  (getleftmostnode(_root));
-			// }
+			const_iterator begin() const
+			{
+				if (_end->left != NULL)
+					return const_iterator(_end->left ,_end);
+				else
+					return end();
+			}
 			iterator end()
 			{
 				return iterator(_end, _end);
 			}
-			// const_iterator end() const
-			// {
-			// 	return const_iterator(NULL);
-			// }
+			const_iterator end() const
+			{
+				return const_iterator(_end, _end);
+			}
 			// reverse_iterator rbegin()
 			// {
 			// 	return reverse_iterator  (getrightmostnode(_root));
@@ -529,94 +532,99 @@ namespace ft
 			// 	}
 			// 	return end();
 			// }
-			// mapped_type& operator[](const key_type& k)
-			// {
-			// 	Node* tmp = searchNode(_root, k);
+			mapped_type& operator[](const key_type& k)
+			{
+				Node* tmp = searchNode(_root, k);
 
-			// 	if (tmp)
-			// 		return tmp->data.second;
-			// 	ninsert(_root, ft::pair<key_type, mapped_type>(k, mapped_type()));
-			// 	return (searchNode(_root, k)->data.second);
-			// }
+				if (tmp)
+					return tmp->data.second;
+				ninsert(_root, ft::pair<key_type, mapped_type>(k, mapped_type()));
+				tmp = searchNode(_root, k);
+				// if (_root != )
+				// update(root);
+				// balance(root);
+				upd_end();
+				return (tmp->data.second);
+			}
 
-			// iterator lower_bound(const key_type &key)
-			// {
-			// 	iterator it = begin();
+			iterator lower_bound(const key_type &key)
+			{
+				iterator it = begin();
 
-			// 	for (; it != end(); ++it)
-			// 		if (!_comp(it->first, key))
-			// 			break;
+				for (; it != end(); ++it)
+					if (!_comp(it->first, key))
+						break;
 				
-			// 	return it;  
-			// }
+				return it;  
+			}
 
-			// const_iterator lower_bound(const key_type &key) const
-			// {
-			// 	const_iterator it = begin();
+			const_iterator lower_bound(const key_type &key) const
+			{
+				const_iterator it = begin();
 
-			// 	for (; it != end(); ++it)
-			// 		if (!_comp(it->first, key))
-			// 			break;
-			// 	return it;  
-			// }
+				for (; it != end(); ++it)
+					if (!_comp(it->first, key))
+						break;
+				return it;  
+			}
 
-			// iterator upper_bound(const key_type &key)
-			// {
-			// 	iterator it = begin();
+			iterator upper_bound(const key_type &key)
+			{
+				iterator it = begin();
 
-			// 	for (; it != end(); ++it)
-			// 		if (_comp(key, it->first))
-			// 			break;
+				for (; it != end(); ++it)
+					if (_comp(key, it->first))
+						break;
 				
-			// 	return it;  
-			// }
+				return it;  
+			}
 
-			// const_iterator upper_bound(const key_type &key) const
-			// {
-			// 	const_iterator it = begin();
+			const_iterator upper_bound(const key_type &key) const
+			{
+				const_iterator it = begin();
 
-			// 	for (; it != end(); ++it)
-			// 		if (_comp(key, it->first))
-			// 			break;
+				for (; it != end(); ++it)
+					if (_comp(key, it->first))
+						break;
 				
-			// 	return it;  
-			// }
-			// pair<iterator,iterator> equal_range(const key_type& k)
-   //          {
-   //              iterator it = upper_bound(k);
+				return it;  
+			}
+			pair<iterator,iterator> equal_range(const key_type& k)
+            {
+                iterator it = upper_bound(k);
 
-   //              if (it != begin())
-   //              {
-   //                  --it;
+                if (it != begin())
+                {
+                    --it;
 
-   //                  if (_comp(it->first, k) || _comp(k, it->first))
-   //                      ++it;
-   //              }
+                    if (_comp(it->first, k) || _comp(k, it->first))
+                        ++it;
+                }
 
-   //              iterator next(it);
-   //              if (it != end())
-   //                  ++next;
+                iterator next(it);
+                if (it != end())
+                    ++next;
                 
-   //              return pair<iterator, iterator>(it, next);
-   //          }
-			// pair<const_iterator,const_iterator> equal_range(const key_type& k) const
-   //          {
-   //              const_iterator it = upper_bound(k);
+                return pair<iterator, iterator>(it, next);
+            }
+			pair<const_iterator,const_iterator> equal_range(const key_type& k) const
+            {
+                const_iterator it = upper_bound(k);
 
-   //              if (it != begin())
-   //              {
-   //                  --it;
+                if (it != begin())
+                {
+                    --it;
 
-   //                  if (_comp(it->first, k) || _comp(k, it->first))
-   //                      ++it;
-   //              }
+                    if (_comp(it->first, k) || _comp(k, it->first))
+                        ++it;
+                }
 
-   //              const_iterator next(it);
-   //              if (it != end())
-   //                  ++next;
+                const_iterator next(it);
+                if (it != end())
+                    ++next;
                 
-   //              return pair<const_iterator, const_iterator>(it, next);
-   //          }
+                return pair<const_iterator, const_iterator>(it, next);
+            }
 			// pair<iterator,iterator> equal_range(const key_type& k)
    //          {
    //              iterator it = upper_bound(k);
@@ -677,7 +685,7 @@ namespace ft
 
 			value_compare value_comp() const
 			{
-				return value_compare();
+				return value_compare(_comp);
 			}
 			
 			bool empty() const
@@ -755,28 +763,18 @@ namespace ft
 					iterator &operator--()
 					{						
 						if (_ptr == _end)
-						{
 							_ptr = _ptr->right;
-						}
 						else
-						{
 							_ptr = ft::map<Key, T>::getPrev(_ptr);
-						}
-
 						return *this;
 					}
 					iterator operator--(int)
 					{
 						iterator tmp = *this;
-
 						if (_ptr == _end)
-						{
 							_ptr = _ptr->right;
-						}
 						else
-						{
 							_ptr = ft::map<Key, T>::getPrev(_ptr);
-						}
 						return tmp;
 					}
 					iterator operator++(int)
@@ -785,7 +783,96 @@ namespace ft
 						_ptr = ft::map<Key, T>::getNext(_ptr);
 						return tmp;
 					}
-	
+			};
+
+			class const_iterator
+			{
+				friend class map<key_type, mapped_type, Compare,Alloc>;
+				private :
+					Node *_ptr;
+					Node *_end;
+
+					typedef Key								key_type;
+					typedef Compare							key_compare;
+					typedef T								mapped_type;
+					
+					typedef ft::pair<key_type, mapped_type>	value_type;
+					typedef long int						difference_type;
+					typedef size_t							size_type;
+					typedef value_type&						reference;
+					typedef Node*							nodePtr;
+					// typedef std::bidirectional_iterator_tag                                     iterator_category;
+					// typedef typename chooseConst<B, value_type&, const value_type&>::type       reference;
+					// typedef typename chooseConst<B, value_type*, const value_type*>::type       pointer;
+				
+				public :
+
+					const_iterator(Node *ptr = 0, Node *end = 0) : _ptr(ptr), _end(end)
+					{ }
+					~const_iterator()
+					{ }
+					const_iterator(iterator it) : _ptr(it._ptr), _end(it._end)
+					{ }
+					const_iterator& operator=(const const_iterator& assign)
+					{
+
+						if (this != &assign)
+						{
+							_ptr = assign._ptr;
+							_end = assign._end;
+						}
+						return (*this);
+					}
+					Node *getNode()
+					{
+						return (_ptr);
+					}
+					reference operator*() const
+					{ 
+						return (_ptr->data);
+					}
+					value_type* operator->() const
+					{ 
+						return &(_ptr->data);
+					}
+					bool operator==(const const_iterator &__x) const
+					{
+						return _ptr == __x._ptr;
+					}
+
+					bool operator!=(const const_iterator &__x) const
+					{
+						return _ptr != __x._ptr;
+					}
+
+					const_iterator &operator++()
+					{
+						_ptr = ft::map<Key, T>::getNext(_ptr);
+						return *this;
+					}
+					const_iterator &operator--()
+					{						
+						if (_ptr == _end)
+							_ptr = _ptr->right;
+						else
+							_ptr = ft::map<Key, T>::getPrev(_ptr);
+						return *this;
+					}
+					const_iterator operator--(int)
+					{
+						const_iterator tmp = *this;
+						if (_ptr == _end)
+							_ptr = _ptr->right;
+						else
+							_ptr = ft::map<Key, T>::getPrev(_ptr);
+						return tmp;
+					}
+					const_iterator operator++(int)
+					{
+						const_iterator tmp = *this;
+						_ptr = ft::map<Key, T>::getNext(_ptr);
+						return tmp;
+					}
 			};
 
 			// class const_iterator
