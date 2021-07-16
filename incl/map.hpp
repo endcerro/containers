@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 15:41:19 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/16 17:23:41 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/16 19:14:49 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,33 +115,33 @@ namespace ft
 			Node *searchNode(const Key &k)
 			{	return searchNode(_root, k);	}
 
-			static Node *getleftmostnode(Node *curr)
+			static Node *getleftmostnode(Node *curr, Node *end)
 			{
-				if (curr->left != NULL && curr->left->left != curr)
-					return getleftmostnode(curr->left);
+				if (curr->left != NULL && curr->left != end)//&& curr->left->left != curr)
+					return getleftmostnode(curr->left, end);
 				return curr;
 			}
-			static Node *getrightmostnode(Node *curr)
+			static Node *getrightmostnode(Node *curr, Node *end)
 			{
-				if (curr->right != NULL && curr->right->right != curr)
-					return getrightmostnode(curr->right);
+				if (curr->right != NULL && curr->right != end)//&& curr->right->right != curr)
+					return getrightmostnode(curr->right, end);
 				return curr;
 			}
-			static Node *getNext(Node *n)
+			static Node *getNext(Node *n, Node *end)
 			{
-				if (n->right != NULL)
-					return getleftmostnode(n->right);
+				if (n->right != NULL && n->right != end)//)
+					return getleftmostnode(n->right, end);
 			 
-				while (n->parent != NULL && n == n->parent->right)
+				while (n->parent != NULL && n->parent != end && n == n->parent->right)
 					n = n->parent;
 				return n->parent;               
 			}
-			static Node *getPrev(Node *n)
+			static Node *getPrev(Node *n, Node *end)
 			{
-				if (n->left != NULL)
-					return getrightmostnode(n->left);
+				if (n->left != NULL && n->left != end)
+					return getrightmostnode(n->left, end);
 			 
-				while (n->parent != NULL && n == n->parent->left)
+				while (n->parent != NULL && n->parent != end && n == n->parent->left)
 					n = n->parent;
 				return n->parent;
 			}
@@ -271,7 +271,7 @@ namespace ft
 					{
 						if (node->left->height > node->right->height)
 						{
-							Node *tmp = getrightmostnode(node->left);
+							Node *tmp = getrightmostnode(node->left, _end);
 							T tmpval = tmp->data.second;
 							Key tmpkey = tmp->data.first;
 							node->data.first = tmpkey;
@@ -280,7 +280,7 @@ namespace ft
 						}
 						else
 						{
-							Node *tmp = getleftmostnode(node->right);
+							Node *tmp = getleftmostnode(node->right, _end);
 							T tmpval = tmp->data.second;
 							Key tmpkey = tmp->data.first;
 							node->data.first = tmpkey;
@@ -395,9 +395,9 @@ namespace ft
 				_end->parent = _root;
 				
 				_end->parent->parent = _end;
-				_end->left = getleftmostnode(_root);
+				_end->left = getleftmostnode(_root,_end);
 				_end->left->left = _end;
-				_end->right = getrightmostnode(_root);
+				_end->right = getrightmostnode(_root,_end);
 				_end->right->right = _end;
 			}
 
@@ -704,6 +704,8 @@ namespace ft
 
 			void clear()					//REWORKED
 			{
+				if (_size == 0)
+					return ;
 				clear(_root);
 				_size = 0;
 				_root = 0;
@@ -790,7 +792,7 @@ namespace ft
 
 					iterator &operator++()
 					{
-						_ptr = ft::map<Key, T>::getNext(_ptr);
+						_ptr = ft::map<Key, T>::getNext(_ptr, _end);
 						return *this;
 					}
 					iterator &operator--()
@@ -798,7 +800,7 @@ namespace ft
 						if (_ptr == _end)
 							_ptr = _ptr->right;
 						else
-							_ptr = ft::map<Key, T>::getPrev(_ptr);
+							_ptr = ft::map<Key, T>::getPrev(_ptr, _end);
 						return *this;
 					}
 					iterator operator--(int)
@@ -807,13 +809,13 @@ namespace ft
 						if (_ptr == _end)
 							_ptr = _ptr->right;
 						else
-							_ptr = ft::map<Key, T>::getPrev(_ptr);
+							_ptr = ft::map<Key, T>::getPrev(_ptr, _end);
 						return tmp;
 					}
 					iterator operator++(int)
 					{
 						iterator tmp = *this;
-						_ptr = ft::map<Key, T>::getNext(_ptr);
+						_ptr = ft::map<Key, T>::getNext(_ptr, _end);
 						return tmp;
 					}
 			};
@@ -889,7 +891,7 @@ namespace ft
 
 					const_iterator &operator++()
 					{
-						_ptr = ft::map<Key, T>::getNext(_ptr);
+						_ptr = ft::map<Key, T>::getNext(_ptr, _end);
 						return *this;
 					}
 					const_iterator &operator--()
@@ -897,7 +899,7 @@ namespace ft
 						if (_ptr == _end)
 							_ptr = _ptr->right;
 						else
-							_ptr = ft::map<Key, T>::getPrev(_ptr);
+							_ptr = ft::map<Key, T>::getPrev(_ptr, _end);
 						return *this;
 					}
 					const_iterator operator--(int)
@@ -906,13 +908,13 @@ namespace ft
 						if (_ptr == _end)
 							_ptr = _ptr->right;
 						else
-							_ptr = ft::map<Key, T>::getPrev(_ptr);
+							_ptr = ft::map<Key, T>::getPrev(_ptr, _end);
 						return tmp;
 					}
 					const_iterator operator++(int)
 					{
 						const_iterator tmp = *this;
-						_ptr = ft::map<Key, T>::getNext(_ptr);
+						_ptr = ft::map<Key, T>::getNext(_ptr, _end);
 						return tmp;
 					}
 			};
