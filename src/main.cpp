@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/16 19:14:26 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/16 19:24:46 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,58 +70,47 @@ void pret(ft::pair<ft::map<int, char>::iterator, bool> ret)
 	std::cout << "ID =" << (ret.first)->first << "|" << ret.second << std::endl;
 }
 
-// #define T1 int
-// #define T2 int
-// typedef _pair<const T1, T2> T3;
-template<class T, class IT>
-void	ft_comp(const T &mp, const IT &it1, const IT &it2, unsigned int &i)
-{
 
-	bool res[2];
 
-	std::cout << "\t-- [" << ++i << "] --" << std::endl;
-	res[0] = mp.key_comp()(it1->first, it2->first);
-	res[1] = mp.value_comp()(*it1, *it2);
-	std::cout << "with [" << it1->first << " and " << it2->first << "]: ";
-	std::cout << "key_comp: " << res[0] << " | " << "value_comp: " << res[1] << std::endl;
-}
-
-template <class T>
-void	is_empty(T const &mp)
-{
-	std::cout << "is_empty: " << mp.empty() << std::endl;
-}
+#define T1 int
+#define T2 std::string
+typedef ft::pair<const T1, T2> T3;
+typedef std::pair<const T1, T2> T4;
 
 void test()
 {
-	std::list<ft::pair<char, int> > lst;
+	std::list<T3> clst;
+	std::list<T4> blst;
+
+
+	unsigned int lst_size = 10;
+	for (unsigned int i = 0; i < lst_size; ++i)
+		clst.push_back(T3(i, std::string((lst_size - i), i + 65)));
+	for (unsigned int i = 0; i < lst_size; ++i)
+		blst.push_back(T3(i, std::string((lst_size - i), i + 65)));
 	
 
-	unsigned int lst_size = 7;
-	for (unsigned int i = 0; i < lst_size; ++i)
-		lst.push_back(ft::pair<char, int>('a' + i, lst_size - i));
+	ft::map<T1, T2> cmp(clst.begin(), clst.end());
+	std::map<T1, T2> bmp(blst.begin(), blst.end());
 
-	ft::map<char, int> mp(lst.begin(), lst.end()), mp2;
-	ft::map<char, int>::iterator it;
+	cmp.erase(++cmp.begin());
+	bmp.erase(++bmp.begin());
 
-	lst.clear();
-	is_empty(mp);
+	cmp.erase(cmp.begin());
+	// cmp.erase(--cmp.end());
+
+	// bmp.erase(bmp.begin());
+	// bmp.erase(--bmp.end());
+
+	for (ft::map<T1, T2>::iterator i = cmp.begin(); i != cmp.end(); i++ )
+		std::cout << i->first << "|";
+	std::cout << std::endl;
+
+	// for (std::map<T1, T2>::iterator i = bmp.begin(); i != bmp.end(); i++ )
+	// 		std::cout << i->first << "|";
+	// std::cout << std::endl;
+
 	// printSize(mp);
-
-	is_empty(mp2);
-	mp2 = mp;
-	is_empty(mp2);
-
-	it = mp.begin();
-	for (unsigned long int i = 3; i < mp.size(); ++i)
-		it++->second = i * 7;
-
-	// printSize(mp);
-	// printSize(mp2);
-
-	mp2.clear();
-	is_empty(mp2);
-	// printSize(mp2);
 }
 
 
@@ -135,6 +124,7 @@ int main()
 	std::map<int, char> base;
 
 	test();
+	return 0;
 	// std::cout << custom.groot() << std::endl;
 	// custom[0] = 'a';
 	// std::cout << custom[0] << std::endl;
