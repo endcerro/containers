@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 15:41:19 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/16 19:14:49 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/16 19:16:17 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -473,7 +473,7 @@ namespace ft
 			void erase (iterator first, iterator last)
 			{
 				while (first != last)
-					erase(first++);
+					remove((first++)->first);
 			}
 			void printnode(Node *node) //TODEL
 			{
