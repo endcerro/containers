@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 15:41:19 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/16 19:26:10 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/17 15:23:03 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,7 @@ namespace ft
 			}
 
 
-			Node *searchNode(const Key &k)
-			{	return searchNode(_root, k);	}
+			
 
 			static Node *getleftmostnode(Node *curr, Node *end)
 			{
@@ -236,33 +235,35 @@ namespace ft
 			Node *remove(Node *node ,Key key)
 			{
 				Node *tmp;
-				if (_comp(node->data.first, key))
+				if (_comp(node->data.first, key))	//If the key is bigger recurs into right tree
 				{
 					// std::cout << "1 Rdeleting ";
 					// printnode(node->right);
 					node->right  = remove(node->right , key);
 				}
-				else if (key != node->data.first)
+				else if (key != node->data.first) //If the key is smaller recurs into left tree
 				{
 					// std::cout << "2 Ldeleting ";
 					// printnode(node->left);
 					node->left = remove(node->left, key);
 				}
-				else
+				else  												//We found the key;
 				{
-					if (node->left == NULL || node->left == _end)
+					if (node->left == NULL || node->left == _end)	//Case where left is empty, just return right
 					{
 						// std::cout << "3 Ldeleting " << node->data.first << std::endl;
 						tmp = node->right;
+						std::cout << "Deleting here1\n";
 						delete node;
 						// printnode(node->left);
 						return tmp;
 					}
-					else if (node->right == NULL || node->right == _end)
+					else if (node->right == NULL || node->right == _end)//Case where rught is empty, just return right
 					{
 
 						// std::cout << "4 Rdeleting "<< node->data.first << std::endl;
 						tmp = node->left;
+						std::cout << "Deleting here2\n";
 						delete node;
 						// printnode(node->left);
 						return tmp; 
@@ -272,10 +273,14 @@ namespace ft
 						if (node->left->height > node->right->height)
 						{
 							Node *tmp = getrightmostnode(node->left, _end);
-							T tmpval = tmp->data.second;
-							Key tmpkey = tmp->data.first;
-							node->data.first = tmpkey;
-							node->data.second = tmpval;
+							
+
+							// T tmpval = tmp->data.second;
+							// Key tmpkey = tmp->data.first;							
+							// node->data.first = tmpkey;
+							// node->data.second = tmpval;
+							node->data = tmp->data;
+							
 							node->left = remove(node->left, tmpkey); 
 						}
 						else
@@ -289,8 +294,9 @@ namespace ft
 						}
 					}
 				}
-				upd_end();
+				
 				update(node);
+				upd_end();	
 				return balance(node);
 			}
 
@@ -331,6 +337,8 @@ namespace ft
 					insert(*t);
 				return *this;
 			}
+			Node *searchNode(const Key &k)
+			{	return searchNode(_root, k);	}
 			// ~map()
 			// {	
 			// 	clear();
@@ -379,20 +387,30 @@ namespace ft
 
 			Node *searchNode(Node *curr, const Key &k)
 			{
+				// if (curr )
+				// 	std::cout << "Looking at " << curr->data.first << std::endl;
 				if (curr == NULL || curr == _end)
+				{
+					if (curr == _end)
+						std::cout << k << " NOT FOUND END\n";
+					else
+						std::cout << k << " NOT FOUND\n";
 					return NULL;
-				
+				}
 				else if (k > curr->data.first)
 					return searchNode(curr->right, k);
 				else if (k < curr->data.first)
 					return searchNode(curr->left, k);       
 				else
+				{
+					// std::cout << "FOUND\n";
 					return curr;
+				}
 			}
 			void upd_end()
 			{
-				// if (_root == 0)
-				// 	return ;
+				if (_root == 0)
+					return ;
 				_end->parent = _root;
 				
 				_end->parent->parent = _end;
@@ -455,14 +473,20 @@ namespace ft
 			{
 				if (searchNode(key))
 				{
+					std::cout << "Looking to remove " << key << std::endl;
 					remove(_root, key);
 					--_size; 
+				}
+				else
+				{
+					std::cout << key<< " not found\n";
 				}
 			}
 
 			
 			void erase (iterator position)
 			{
+				// std::cout << "WE HERE\n";
 				remove(position->first);
 			}
 			// size_t erase (const key_type& k)

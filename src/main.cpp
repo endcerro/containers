@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/16 19:24:46 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/16 19:55:11 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,18 +93,44 @@ void test()
 	ft::map<T1, T2> cmp(clst.begin(), clst.end());
 	std::map<T1, T2> bmp(blst.begin(), blst.end());
 
-	cmp.erase(++cmp.begin());
-	bmp.erase(++bmp.begin());
+	
+	
 
-	cmp.erase(cmp.begin());
-	// cmp.erase(--cmp.end());
+	// cmp.erase(cmp.begin());
+	
+	// for (ft::map<T1, T2>::iterator i = cmp.begin(); i != cmp.end(); i++ )
+	// 	std::cout << i->first << "|";
+	// std::cout << std::endl;
+
+	// bmp.erase(++bmp.begin());
+	cmp.erase(++cmp.begin());
 
 	// bmp.erase(bmp.begin());
+	cmp.erase(cmp.begin());
+	
 	// bmp.erase(--bmp.end());
+	// cmp.erase(--cmp.end());
+
+
+	cmp.searchNode(9);
+	// cmp.erase(++cmp.begin());
+	// cmp.erase(--cmp.end());
 
 	for (ft::map<T1, T2>::iterator i = cmp.begin(); i != cmp.end(); i++ )
 		std::cout << i->first << "|";
 	std::cout << std::endl;
+	 
+
+	
+
+	cmp.printtest(cmp.groot());
+
+	// bmp.erase(bmp.begin());
+	// bmp.erase(--bmp.end());
+
+	// for (ft::map<T1, T2>::iterator i = cmp.begin(); i != cmp.end(); i++ )
+	// 	std::cout << i->first << "|";
+	// std::cout << std::endl;
 
 	// for (std::map<T1, T2>::iterator i = bmp.begin(); i != bmp.end(); i++ )
 	// 		std::cout << i->first << "|";
