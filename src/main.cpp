@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/17 18:30:54 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/17 19:53:34 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,7 @@ int main()
 	
 	std::cout << "----------------\n";
 
-
+	// custom.setdbg(true);
 	ft::map<int, char>::iterator i = custom.begin();
 	while (i != custom.end())
 	{

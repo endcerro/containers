@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 15:41:19 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/17 18:31:33 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/17 20:10:08 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,24 +98,22 @@ namespace ft
 			Node *balance(Node *node) 
 			{
 		    // Left heavy subtree.
-		   //  	if (node->balancef == -2) 
-		   //  	{
-			  //     	if (node->left->balancef <= 0) 
-			  //       	return leftLeftCase(node);
-					// else 
-			  //       	return leftRightCase(node);
-		   //  	} 
-		   //  	else if (node->balancef == +2) 
-		   //  	{
-			  //   	if (node->right->balancef >= 0) 
-			  //   	{
-		   //      		return rightRightCase(node);
-					// } 
-					// else 
-					// {
-		   //      		return rightLeftCase(node);
-		   //    		}
-		   //  	}
+		    	if (node->balancef == -2) 
+		    	{	
+		    		// std::cout << "ROTATION\n";
+			      	if (node->left->balancef <= 0) 
+			        	return leftLeftCase(node);
+					else 
+			        	return leftRightCase(node);
+		    	} 
+		    	else if (node->balancef == 2) 
+		    	{
+		    		// std::cout << "ROTATION\n";
+			    	if (node->right->balancef >= 0) 
+		        		return rightRightCase(node);
+					else 
+		        		return rightLeftCase(node);
+		    	}
 		    	return node;
 		  }
 			// Node *balance(Node *node)
@@ -172,91 +170,89 @@ namespace ft
 			// 		n = n->parent;
 			// 	return n->parent;
 			// }
-			
-			Node *rotate_right(Node *node)
+			Node *rotate_left(Node *node)
 			{
-				Node *newParent = node->left;
-   				node->left = newParent->right;
-   				newParent->right = node;
-   				update(node);
- 				update(newParent);
-    			return newParent;
-			}
-
-			Node *leftRotation(Node *node) 
-			{
-	    		Node *newParent = node->right;
+			    Node *newParent = node->right;
 			    node->right = newParent->left;
 			    newParent->left = node;
 			    update(node);
 			    update(newParent);
 			    return newParent;
-	  		}
+		  	}
 
-			// Node *rotate_right(Node *A)
-			// {
-			// 	if (A == _end)
-			// 	{
-			// 		std::cout << "A IS END !! " << std::endl;
-			// 	}	
-			// 	// Node *P = A->parent;
-			// 	Node *P = A->parent;
-			// 	if (P == _end)
-			// 		P = NULL;
-			// 	Node *B = A->left;
-			// 	if (B == _end)
-			// 		B = NULL;
-			// 	A->left = B->right;
-			// 	if (B->right != NULL && B->right != _end)
-			// 		B->right->parent = A;
-			// 	B->right = A;
-			// 	A->parent = B;
-			// 	B->parent = P;
-			// 	if (P != NULL && P != _end &&  P->left == A)
-			// 		P->left = B;
-			// 	else if (P != NULL && P != _end)
-			// 		P->right = B;
-			// 	update(A);
-			// 	update(B);
-			// 	return B;
-			// }
-	
-			Node *rotate_left(Node *A)
+			Node *rotate_right(Node *node) 
 			{
-				if (A == _end)
-				{
-					std::cout << "A IS END !! " << std::endl;
-				}
-				Node *P = A->parent;
-				if (P == _end)
-					P = NULL;
-				Node *B = A->right;
-				if (B == _end)
-					B = NULL;
-				A->right = B->left;
-				if (B->left !=  NULL && B->left != _end)
-					B->left->parent = A;
-				B->left = A;
-				A->parent = B;
-				B->parent = P;
-				if (P != NULL && P != _end && P->right == A)
-					P->right = B;
-				else if (P != NULL && P != _end)
-					P->left = B;
-				update(A);
-				update(B);
-				return B;
+				Node *newParent = node->left;
+			    node->left = newParent->right;
+			    newParent->right = node;
+			    update(node);
+			    update(newParent);
+			    return newParent;
 			}
+			
+			// Node *rotate_right(Node *curr)
+			// {
+			// 	Node *parent = curr->parent;
+			// 	if (parent == _end)
+			// 		parent = NULL;
+
+			// 	Node *heavy = curr->left;
+
+			// 	curr->left = heavy->right;
+
+			// 	if (heavy->right != NULL && heavy->right != _end)
+			// 	{
+			// 		heavy->right->parent = curr;
+			// 	}
+			// 	heavy->right = curr;
+			// 	curr->parent = heavy;
+			// 	heavy->parent = parent;
+			// 	if (parent != NULL)
+			// 	{
+			// 		if (parent->left == curr)
+			// 			parent->left = heavy;
+			// 		else
+			// 			parent->right = heavy;
+			// 	}
+			// 	return heavy;
+			// }
+
+			// Node *rotate_left(Node *curr) 
+			// {
+			// 	Node *parent = curr->parent;
+			// 	if (parent == _end)
+			// 		parent = NULL;
+
+			// 	Node *heavy = curr->right;
+
+			// 	curr->right = heavy->left;
+
+			// 	if (heavy->left != NULL && heavy->left != _end)
+			// 	{
+			// 		heavy->left->parent = curr;
+			// 	}
+			// 	heavy->left = curr;
+			// 	curr->parent = heavy;
+			// 	heavy->parent = parent;
+			// 	if (parent != NULL)
+			// 	{
+			// 		if (parent->right == curr)
+			// 			parent->right = heavy;
+			// 		else
+			// 			parent->left = heavy;
+			// 	}
+			// 	return heavy;
+	  // 		}
+
+		
 
 			void update(Node *node) 
 			{
-    			int leftNodeHeight = (node->left == NULL) ? -1 : node->left->height;
-    			int rightNodeHeight = (node->right == NULL) ? -1 : node->right->height;
+    			int leftNodeHeight = (node->left == NULL || node->left == _end) ? -1 : node->left->height;
+    			int rightNodeHeight = (node->right == NULL || node->right == _end) ? -1 : node->right->height;
 
     			if (leftNodeHeight > rightNodeHeight)
-    			{
     				node->height = 1 + leftNodeHeight;	
-    			}
     			else
     				node->height = 1 + rightNodeHeight;	
     			node->balancef = rightNodeHeight - leftNodeHeight;
@@ -376,28 +372,28 @@ namespace ft
 				std::cout << "parent :" << node->parent << std::endl;
 				std::cout << "left :" << node->left << std::endl;
 				std::cout << "right :" << node->right << std::endl;
-				// std::cout << "height :" << node->height << std::endl;
-				// std::cout << "bf :" << node->balancef << std::endl;
+				std::cout << "height :" << node->height << std::endl;
+				std::cout << "bf :" << node->balancef << std::endl;
 
 			}
 			Node *ninsert(Node *node, const value_type &val)
 			{
-				if (node == NULL || node == _end)									//Case where we got to empty node, insert time
+				if (node == NULL || node == _end)
 				{
 					node = createNode(val);
 					return node;
 				}
-				else if (_comp(node->data.first, val.first) > 0)	//
+				else if (_comp(node->data.first, val.first) > 0)
 				{
 					node->right = ninsert(node->right, val);
 					node->right->parent = node;     
 				}
 				else
-				{           
+				{
 					node->left = ninsert(node->left, val);
 					node->left->parent  = node;
 				}
-				// update(node);
+				update(node);
 				return balance(node) ;
 			}
 			pair<iterator,bool> insert (const value_type& val)
@@ -416,6 +412,7 @@ namespace ft
 					_root = ninsert(_root, val);
 					tmp = searchNode(_root, val.first);
 					ret.first = iterator(tmp, _end, _comp);
+					++_size;
 				}
 				upd_end();
 				return ret;
@@ -537,40 +534,12 @@ namespace ft
 					iterator &operator++()
 					{
 						_ptr = ft::map<Key, T, Compare, Alloc>::getNext(_ptr, _end);
-						// if (_ptr->right != NULL)
-						// {
-						// 	if (_ptr->right->left == NULL || _ptr->right == _end)
-						// 		_ptr = _ptr->right;
-						// 	else
-						// 		_ptr = ft::map<Key, T, Compare, Alloc>::getleftmostnode(_ptr->right, _end);
-						// }
-						// else if (_ptr->parent != NULL)
-						// {
-						// 	Node *og = _ptr;
-						// 	_ptr = _ptr->parent;
-						// 	while (_comp(og->data.first, _ptr->data.first) == false)
-						// 		_ptr = _ptr->parent;
-						// }
 						return *this;
 					}
 					iterator operator++(int)
 					{
 						iterator tmp = *this;
 						_ptr = ft::map<Key, T, Compare, Alloc>::getNext(_ptr, _end);
-						// if (_ptr->right != NULL)
-						// {
-						// 	if (_ptr->right->left == NULL || _ptr->right == _end)
-						// 		_ptr = _ptr->right;
-						// 	else
-						// 		_ptr = ft::map<Key, T, Compare, Alloc>::getleftmostnode(_ptr->right, _end);
-						// }
-						// else if (_ptr->parent != NULL)
-						// {
-						// 	Node *og = _ptr;
-						// 	_ptr = _ptr->parent;
-						// 	while (_comp(og->data.first, _ptr->data.first) == false)
-						// 		_ptr = _ptr->parent;
-						// }
 						return tmp;
 					}
 			};
