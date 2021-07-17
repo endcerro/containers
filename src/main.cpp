@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/17 19:53:34 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/17 20:58:03 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,7 @@ int main()
 	// custom[1] = 'b';
 	// custom[2] = 'c';
 	// custom[3] = 'd';
+
 	custom.insert(ft::pair<int, char>(1, 'a'));
 	custom.insert(ft::pair<int, char>(2, 'a'));
 	custom.insert(ft::pair<int, char>(3, 'a'));
@@ -172,12 +173,25 @@ int main()
 	custom.insert(ft::pair<int, char>(9, 'a'));
 	custom.insert(ft::pair<int, char>(10, 'a'));
 
+
+	custom.remove(4);
+
 	custom.printtest(custom.groot());
 	
 	std::cout << "----------------\n";
 
 	// custom.setdbg(true);
+	
+	// for(ft::map<int, char>::iterator i = custom.begin(); i != custom.end(); i++)
+	// {
+	// 	std::cout << i->first << "|"<< i->second<< std::endl;
+	// 	// std::cout << (*i).first << std::endl;
+	// }
+
 	ft::map<int, char>::iterator i = custom.begin();
+	// std::cout << i->first << std::endl;
+	// ++i;
+	// std::cout << i->first << std::endl;
 	while (i != custom.end())
 	{
 		std::cout << (i)->first << std::endl;
@@ -273,11 +287,6 @@ int main()
 	// std::cout << (bit)->first << std::endl;
 	// std::cout << bit->first << std::endl;
 
-	// for(ft::map<int, char>::iterator i = custom.begin(); i != custom.end(); i++)
-	// {
-	// 	std::cout << i->first << "|"<< i->second<< std::endl;
-	// 	// std::cout << (*i).first << std::endl;
-	// }
 	// for(ft::map<int, char>::iterator i = custom.begin(); i != custom.end(); i++)
 	// {
 	// 	std::cout << i->first << "|"<< i->second<< std::endl;

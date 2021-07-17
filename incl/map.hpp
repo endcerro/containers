@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 15:41:19 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/17 20:10:08 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/17 20:57:18 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,79 +170,83 @@ namespace ft
 			// 		n = n->parent;
 			// 	return n->parent;
 			// }
-			Node *rotate_left(Node *node)
-			{
-			    Node *newParent = node->right;
-			    node->right = newParent->left;
-			    newParent->left = node;
-			    update(node);
-			    update(newParent);
-			    return newParent;
-		  	}
-
-			Node *rotate_right(Node *node) 
-			{
-				Node *newParent = node->left;
-			    node->left = newParent->right;
-			    newParent->right = node;
-			    update(node);
-			    update(newParent);
-			    return newParent;
-			}
-			
-			// Node *rotate_right(Node *curr)
+			// Node *rotate_left(Node *node)
 			// {
-			// 	Node *parent = curr->parent;
-			// 	if (parent == _end)
-			// 		parent = NULL;
+			//     Node *newParent = node->right;
+			//     if (newParent == _end)
+			//     	newParent = NULL;
+			//     node->right = newParent->left;
+			//     newParent->left = node;
+			//     update(node);
+			//     update(newParent);
+			//     return newParent;
+		 //  	}
 
-			// 	Node *heavy = curr->left;
-
-			// 	curr->left = heavy->right;
-
-			// 	if (heavy->right != NULL && heavy->right != _end)
-			// 	{
-			// 		heavy->right->parent = curr;
-			// 	}
-			// 	heavy->right = curr;
-			// 	curr->parent = heavy;
-			// 	heavy->parent = parent;
-			// 	if (parent != NULL)
-			// 	{
-			// 		if (parent->left == curr)
-			// 			parent->left = heavy;
-			// 		else
-			// 			parent->right = heavy;
-			// 	}
-			// 	return heavy;
+			// Node *rotate_right(Node *node) 
+			// {
+			// 	Node *newParent = node->left;
+			//     if (newParent == _end)
+			//     	newParent = NULL;
+			//     node->left = newParent->right;
+			//     newParent->right = node;
+			//     update(node);
+			//     update(newParent);
+			//     return newParent;
 			// }
+			
+			Node *rotate_right(Node *curr)
+			{
+				Node *parent = curr->parent;
+				if (parent == _end)
+					parent = NULL;
 
-			// Node *rotate_left(Node *curr) 
-			// {
-			// 	Node *parent = curr->parent;
-			// 	if (parent == _end)
-			// 		parent = NULL;
+				Node *heavy = curr->left;
 
-			// 	Node *heavy = curr->right;
+				curr->left = heavy->right;
 
-			// 	curr->right = heavy->left;
+				if (heavy->right != NULL && heavy->right != _end)
+				{
+					heavy->right->parent = curr;
+				}
+				heavy->right = curr;
+				curr->parent = heavy;
+				heavy->parent = parent;
+				if (parent != NULL)
+				{
+					if (parent->left == curr)
+						parent->left = heavy;
+					else
+						parent->right = heavy;
+				}
+				return heavy;
+			}
 
-			// 	if (heavy->left != NULL && heavy->left != _end)
-			// 	{
-			// 		heavy->left->parent = curr;
-			// 	}
-			// 	heavy->left = curr;
-			// 	curr->parent = heavy;
-			// 	heavy->parent = parent;
-			// 	if (parent != NULL)
-			// 	{
-			// 		if (parent->right == curr)
-			// 			parent->right = heavy;
-			// 		else
-			// 			parent->left = heavy;
-			// 	}
-			// 	return heavy;
-	  // 		}
+			Node *rotate_left(Node *curr) 
+			{
+				Node *parent = curr->parent;
+				if (parent == _end)
+					parent = NULL;
+
+				Node *heavy = curr->right;
+
+				curr->right = heavy->left;
+
+				if (heavy->left != NULL && heavy->left != _end)
+				{
+					heavy->left->parent = curr;
+				}
+				heavy->left = curr;
+				curr->parent = heavy;
+				heavy->parent = parent;
+				if (parent != NULL)
+				{
+					if (parent->right == curr)
+						parent->right = heavy;
+					else
+						parent->left = heavy;
+				}
+				return heavy;
+	  		}
 
 		
 
@@ -394,8 +398,9 @@ namespace ft
 					node->left->parent  = node;
 				}
 				update(node);
-				return balance(node) ;
+				return balance(node);
 			}
+
 			pair<iterator,bool> insert (const value_type& val)
 			{
 				pair<iterator, bool> ret;
@@ -417,6 +422,122 @@ namespace ft
 				upd_end();
 				return ret;
 			}
+
+			Node *remove(Node *node, const key_type &key) 
+			{
+			    if (node == NULL) 
+			    	return NULL;
+
+			    int cmp = _comp(key, node->data.first);
+
+			    
+			    if (cmp < 0) 
+			    {
+			    	// Dig into left subtree, the value we're looking
+				    // for is smaller than the current value.
+			    	node->left = remove(node->left, key);	      
+			    } 
+			    else if (key != node->data.first) 
+			    {
+			    	// Dig into right subtree, the value we're looking
+			    	// for is greater than the current value.
+			      	node->right = remove(node->right, key);
+			    } 
+			    else // Found the node we wish to remove. 
+			    {
+
+			      // This is the case with only a right subtree or no subtree at all.
+			      // In this situation just swap the node we wish to remove
+			      // with its right child.
+			      if (node->left == NULL || node->left == _end) 
+			      {
+			        
+			        Node *tmp = node->right;
+			        tmp->parent = NULL;
+			        delete node;
+
+			        return tmp;
+
+			        // This is the case with only a left subtree or
+			        // no subtree at all. In this situation just
+			        // swap the node we wish to remove with its left child.
+			      }
+			      else if (node->right == NULL || node->right == _end) 
+			      {
+			        
+			        Node *tmp = node->left;
+			        tmp->parent = NULL;
+			        delete node;
+
+			        return tmp;
+			        // return node.left;
+
+			        // When removing a node from a binary tree with two links the
+			        // successor of the node being removed can either be the largest
+			        // value in the left subtree or the smallest value in the right
+			        // subtree. As a heuristic, I will remove from the subtree with
+			        // the greatest hieght in hopes that this may help with balancing.
+			      } 
+			      else 
+			      {
+
+			        // Choose to remove from left subtree
+			        // if (node.left.height > node.right.height) 
+			        // {
+
+			        	//BASIC EXPERIMENT
+			          Node *replacement = getrightmostnode(node->left, _end);
+
+			          node->data = replacement->data;
+			          //Might need thing below
+			          //replacement->parent->right = NULL;
+
+
+			          // Swap the value of the successor into the node.			          
+			          //T successorValue = findMax(node.left);
+			          //node.value = successorValue;
+
+			          // Find the largest node in the left subtree.
+			          node->left = remove(node->left, replacement->data.first);
+
+			        } 
+			        // else 
+			        // {
+
+			        //   // Swap the value of the successor into the node.
+			        //   T successorValue = findMin(node.right);
+			        //   node.value = successorValue;
+
+			        //   // Go into the right subtree and remove the leftmost node we
+			        //   // found and swapped data with. This prevents us from having
+			        //   // two nodes in our tree with the same value.
+			        //   node.right = remove(node.right, successorValue);
+			        // }
+			      //}
+			    }
+
+			    // Update balance factor and height values.
+			    update(node);
+
+			    // Re-balance tree.
+			    return balance(node);
+		  	}
+			bool remove(const key_type &k) 
+			{
+ 	  			// if (elem == null) return false;
+				if (searchNode(k)) 
+			    {
+			    	_root = remove(_root, k);
+		    		--_size;
+		      		upd_end();
+		      		return true;
+		    	
+		    	}
+		    	// upd_end();
+			    return false;
+		  	}
+
+
 
 			iterator begin()
 			{
@@ -533,13 +654,19 @@ namespace ft
 
 					iterator &operator++()
 					{
-						_ptr = ft::map<Key, T, Compare, Alloc>::getNext(_ptr, _end);
+						if (_ptr->right == _end || _ptr == _end)
+							_ptr = _end;
+						else
+							_ptr = ft::map<Key, T, Compare, Alloc>::getNext(_ptr, _end);
 						return *this;
 					}
 					iterator operator++(int)
 					{
 						iterator tmp = *this;
-						_ptr = ft::map<Key, T, Compare, Alloc>::getNext(_ptr, _end);
+						if (_ptr->right == _end || _ptr == _end)
+							_ptr = _end;
+						else
+							_ptr = ft::map<Key, T, Compare, Alloc>::getNext(_ptr, _end);
 						return tmp;
 					}
 			};
