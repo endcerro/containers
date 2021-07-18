@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 15:41:19 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/18 16:14:46 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/19 01:40:14 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #define FT_MAP
 
 #include "tools.hpp"
+#include "vector.hpp"
 
 namespace ft
 {
@@ -97,7 +98,7 @@ namespace ft
 			}
 			Node *balance(Node *node) 
 			{
-		    // Left heavy subtree.
+		    	//Left heavy subtree.
 		    	if (node->balancef == -2) 
 		    	{	
 		    		// std::cout << "ROTATION\n";
@@ -152,8 +153,40 @@ namespace ft
 					return getrightmostnode(curr->right, end);
 				return curr;
 			}
+			
+			// static Node *ngetNext(Node *curr, Node *end)
+			// {
+
+			// 	if (curr->right != NULL)		//Something is to the right, it's bigger or end
+			// 	{
+			// 		if (curr->right->left)
+			// 			return getleftmostnode(curr->right, end);
+			// 		else
+			// 			return curr->right;
+			// 	}
+			// 	else if (curr->parent != NULL)	//No right but parent
+			// 	{
+			// 		if (curr->parent->left == curr)	//We are at the left of parent, parent is bigger
+			// 		{
+			// 			return curr->parent;
+			// 		}
+			// 		else  			//We are at right, parent is smaller
+			// 		{
+			// 			if (curr->parent->parent)
+			// 				return curr->parent->parent;
+			// 			else
+			// 			{
+			// 				std::cout << "UH OH\n";
+			// 				return 0;
+			// 			}
+			// 		}
+			// 	}
+			// }
+
 			static Node *getNext(Node *n, Node *end)
 			{
+				if (n->right == end)
+					return end;
 				if (n->right != NULL && n->right != end)//)
 					return getleftmostnode(n->right, end);
 			 
@@ -161,6 +194,7 @@ namespace ft
 					n = n->parent;
 				return n->parent;               
 			}
+
 			static Node *getPrev(Node *n, Node *end)
 			{
 				if (n->left != NULL && n->left != end)
@@ -173,8 +207,8 @@ namespace ft
 			// Node *rotate_left(Node *node)
 			// {
 			//     Node *newParent = node->right;
-			//     if (newParent == _end)
-			//     	newParent = NULL;
+			//     // if (newParent == _end)
+			//     // 	newParent = NULL;
 			//     node->right = newParent->left;
 			//     newParent->left = node;
 			//     update(node);
@@ -185,8 +219,8 @@ namespace ft
 			// Node *rotate_right(Node *node) 
 			// {
 			// 	Node *newParent = node->left;
-			//     if (newParent == _end)
-			//     	newParent = NULL;
+			//     // if (newParent == _end)
+			//     // 	newParent = NULL;
 			//     node->left = newParent->right;
 			//     newParent->right = node;
 			//     update(node);
@@ -370,7 +404,7 @@ namespace ft
 			Node *gend()				//TODEL
 			{	return _end;	}
 
-			void printnode(Node *node) //TODEL
+			static void printnode(Node *node) //TODEL
 			{
 				std::cout << "Node :" << node << std::endl;
 				std::cout << "data = " << node->data.first << std::endl;
@@ -399,10 +433,10 @@ namespace ft
 					node->left = ninsert(node->left, val);
 					node->left->parent  = node;
 				}
-				// update(node);
-				// return balance(node);
+				update(node);
+				return balance(node);
 
-				return node;
+				// return node;
 				}
 
 			pair<iterator,bool> insert (const value_type& val)
@@ -528,12 +562,174 @@ namespace ft
 			    return node;
 
 		  	}
-			bool remove(const key_type &k) 
+		 //  	void rremove(iterator start, iterator end)
+		 //  	{
+		 //  		while (start != end)
+		 //  		{
+		 //  			rremove(start->first);
+		 //  		}
+		 //  	}
+		 //  	void rremove(Key k)
+		 //  	{
+		 //  		rremove(_root ,k);
+		 //  		upd_end();
+		 //  	}
+		 //  	void  rremove(Node* &root, Key k)
+		 //  	{
+		 //  		if (root == NULL) 
+			//     {
+			//         return;
+			//     }
+			 
+			//     // if the given key is less than the root node, recur for the left subtree
+			//     if (_comp(k , root->data.first))
+			//     {
+			//         rremove(root->left, k);
+			//     }   // if the given k is more than the root node, recur for the right subtree
+			//     else if (k != root->data.first) 
+			//     {
+			//         rremove(root->right, k);
+			//     }
+			//     else // k found
+			//     {
+			//         // Case 1: node to be deleted has no children (it is a leaf node)
+			//         if (root->left == NULL && root->right == NULL)
+			//         {
+			//             // deallocate the memory and update root to null
+			//             delete root;
+			//             root = NULL;
+			//         }	// Case 2: node to be deleted has two children
+			//         else if (root->left && root->right)
+			//         {
+			//             // find its inorder predecessor node
+			//             Node* predecessor = getrightmostnode(root->left, _end);
+			 
+			//             // copy value of the predecessor to the current node
+			//             root->data = predecessor->data;
+			 
+			//             // recursively delete the predecessor. Note that the
+			//             // predecessor will have at most one child (left child)
+			//             rremove(root->left, predecessor->data.first);
+			//         }
+			//         else // Case 3: node to be deleted has only one child 
+			//         {
+			//             // choose a child node
+			//             Node* child = (root->left != NULL && root->left != _end) ? root->left: root->right;
+			//             Node* curr = root;
+			 
+			//             root = child;
+			 
+			//             // deallocate the memory
+			//             delete curr;
+			//         }
+			//     }
+			// }
+		  
+
+		  	Node *nremove(Node *node)
+		  	{
+		  		//Case where no childs, ez one
+		  		if ((node->left == NULL || node->left == _end) && (node->right == NULL || node->right == _end))
+		  		{
+		  			// std::cout << "Case 1\n";
+		  			if (node->parent != NULL)
+		  			{
+		  				if (node->parent->left == node)
+		  					node->parent->left = NULL;
+		  				else
+		  					node->parent->right = NULL;
+
+		  				// std::cout << "1deleting " << node << std::endl;
+		  				
+		  				delete node;
+		  				return NULL;
+		  			}
+		  		}	//Two childs, hard one
+		  		else if (node->left != NULL && node->left != _end && node->right != NULL && node->right != _end) 
+		  		{
+		  			// std::cout << "Case 2\n";
+		  			Node *small_successor = getleftmostnode(node->right, _end);
+		  			//Node *big_successor = getleftmostnode(node->right, _end);
+		  			value_type tmp = small_successor->data; //Value copied, now to delete the succ
+		  			nremove(tmp.first);
+		  			node->data = tmp;	
+		  			
+		  		}	//Only one child
+		  		else if (node->left == NULL || node->left == _end)
+		  		{
+		  			// std::cout << "Case 3\n";
+		  			Node tmp;
+		  			
+		  			tmp.left = node->right->left;			//Get the nodes below future removed node
+		  			tmp.right = node->right->right;		
+		  			tmp.data =  node->right->data;
+		  			//TMP IS NOW = node->right
+
+		  			if (tmp.left != NULL)
+		  			{
+		  				// std::cout << "updated ch1\n";
+		  				tmp.left->parent = node;
+		  			}				
+		  			if (tmp.right != NULL)
+		  			{
+		  				// std::cout << "updated ch2\n";
+		  				tmp.right->parent = node;
+		  			}
+		  			
+		  			// std::cout << "2deleting " << (node->right) << std::endl;
+		  			
+		  			delete node->right;
+		  			
+		  			node->right = tmp.right;
+		  			node->left = tmp.left;
+		  			node->data = tmp.data;
+
+		  			// if (node->right != )
+
+		  			// node->left = node->right->left;
+
+		  		}
+		  		else if (node->right == NULL || node->right == _end)
+		  		{
+		  			// std::cout << "Case 4\n";
+		  			Node tmp;
+		  			
+		  			tmp.left = node->left->left;
+		  			tmp.right = node->left->right;			//Get the nodes below future removed node
+		  			tmp.data =  node->left->data;
+		  			//TMP IS NOW = node->left
+
+		  			if (tmp.right != NULL)					
+		  				tmp.right->parent = node;
+		  			if (tmp.left != NULL)
+		  				tmp.left->parent = node;
+
+		  			// std::cout << "3deleting " << (node->left) << std::endl;
+		  			delete node->left;
+
+		  			node->left = tmp.left;
+		  			node->right = tmp.right;
+		  			node->data = tmp.data;
+		  			
+		  			// node->left = node->right->left;
+
+		  		}
+		  		return node;
+		  		// else
+		  		// {
+		  		// 	std::cout << "Case 5??\n";
+		  		// }
+		  	}
+			bool nremove(const key_type &k) 
 			{
  	  			// if (elem == null) return false;
-				if (searchNode(k)) 
+				Node *target = searchNode(k);
+				if (target != NULL) 
 			    {
-			    	_root = remove(_root, k);
+			    	if (target == _root)
+			    		_root = nremove(_root);
+		    		else
+		    			nremove(target);
 		    		--_size;
 		      		upd_end();
 		      		return true;
@@ -541,20 +737,50 @@ namespace ft
 		    	// upd_end();
 			    return false;
 		  	}
+		  	void nremove(iterator start, iterator end) 
+			{
+				// Key next;
+				ft::vector<key_type> fuckyou;
+				int i = 0;
+
+				iterator buff;
+				while (start != end)
+				{
+					fuckyou.push_back((start++)->first);
+					i++;
+				}
+				for (int j = 0; j < i; j++)
+				{
+					nremove(fuckyou[j]);
+				}
+		  	}
+
+			// bool remove(const key_type &k) 
+			// {
+ 	 //  			// if (elem == null) return false;
+			// 	if (searchNode(k)) 
+			//     {
+			//     	_root = nremove(_root, k);
+		 //    		--_size;
+		 //      		upd_end();
+		 //      		return true;
+		 //    	}
+		 //    	// upd_end();
+			//     return false;
+		 //  	}
 		  	void erase(iterator &pos)
 		  	{
-		  		remove(pos->first);
+		  		nremove(pos->first);
 		  	}
-		  	void erase(iterator &first, iterator &last)
+		  	void erase(iterator first, iterator last)
 		  	{
-		  		while (first != last)
-		  		{
-		  			remove((first++)->first);
-		  		}
+		  		nremove(first, last);
+		  		upd_end();
+		  		return;
 		  	}
 		  	size_t erase (const key_type& k)
 		  	{
-		  		if (remove(k))
+		  		if (nremove(k))
 		  			return 1;
 		  		return 0;
 		  	}
@@ -759,37 +985,108 @@ namespace ft
 
 					iterator &operator++()
 					{
-						if (_ptr->right == _end || _ptr == _end)
-							_ptr = _end;
-						else
-							_ptr = ft::map<Key, T, Compare, Alloc>::getNext(_ptr, _end);
+						if (_ptr == _end)
+							return *this;
+
+						// iterator tmp = *this;
+						if (_ptr->right != NULL)
+						{
+							if (_ptr->right->left == NULL || _ptr->right == _end)
+								_ptr = _ptr->right;
+							else
+								_ptr = ft::map<Key, T, Compare, Alloc>::getleftmostnode(_ptr->right, _end);
+						}
+						else if (_ptr->parent != NULL)
+						{
+							Node *og = _ptr;
+							_ptr = _ptr->parent;
+							while (_comp(og->data.first, _ptr->data.first) == false)
+								_ptr = _ptr->parent;
+						}
 						return *this;
 					}
+
 					iterator operator++(int)
 					{
+						// std::cout << "Current ptr is " << _ptr << std::endl;
+						// ft::map<Key, T, Compare, Alloc>::printnode(_ptr);
+						// std::cout << "Right is " << &(_ptr->right) << std::endl;
+						if (_ptr == _end)
+							return *this;
+
 						iterator tmp = *this;
-						if (_ptr->right == _end || _ptr == _end)
-							_ptr = _end;
-						else
-							_ptr = ft::map<Key, T, Compare, Alloc>::getNext(_ptr, _end);
+						if (_ptr->right != NULL)
+						{
+							if (_ptr->right->left == NULL || _ptr->right == _end)
+								_ptr = _ptr->right;
+							else
+								_ptr = ft::map<Key, T, Compare, Alloc>::getleftmostnode(_ptr->right, _end);
+						}
+						else if (_ptr->parent != NULL)
+						{
+							Node *og = _ptr;
+							_ptr = _ptr->parent;
+							while (_comp(og->data.first, _ptr->data.first) == false)
+								_ptr = _ptr->parent;
+						}
 						return tmp;
 					}
 
 					iterator &operator--()
-					{
+					{	
 						if (_ptr == _end)
+						{
 							_ptr = _end->right;
-						else
-							_ptr = ft::map<Key, T, Compare, Alloc>::getPrev(_ptr, _end);
+							// return *this;
+						}
+						else if (_ptr == _end->left)
+						{
+							_ptr = _end;
+							// return *this;
+						}
+						else if (_ptr->left != NULL)
+						{
+							if (_ptr->left->right == NULL)
+								_ptr = _ptr->left;
+							else
+								_ptr = ft::map<Key, T, Compare, Alloc>::getrightmostnode(_ptr->left, _end);
+						}
+						else if (_ptr->parent != NULL)
+						{
+							Node *og = _ptr;
+							_ptr = _ptr->parent;
+							while (_comp(_ptr->data.first, og->data.first) == false)
+								_ptr = _ptr->parent;
+						}
 						return *this;
 					}
 					iterator operator--(int)
 					{
 						iterator tmp = *this;
 						if (_ptr == _end)
+						{
 							_ptr = _end->right;
-						else
-							_ptr = ft::map<Key, T, Compare, Alloc>::getPrev(_ptr, _end);
+							// return *this;
+						}
+						else if (_ptr == _end->left)
+						{
+							_ptr = _end;
+							// return *this;
+						}
+						else if (_ptr->left != NULL)
+						{
+							if (_ptr->left->right == NULL)
+								_ptr = _ptr->left;
+							else
+								_ptr = ft::map<Key, T, Compare, Alloc>::getrightmostnode(_ptr->left, _end);
+						}
+						else if (_ptr->parent != NULL)
+						{
+							Node *og = _ptr;
+							_ptr = _ptr->parent;
+							while (_comp(_ptr->data.first, og->data.first) == false)
+								_ptr = _ptr->parent;
+						}
 						return tmp;
 					}
 
@@ -847,19 +1144,46 @@ namespace ft
 
 					const_iterator &operator++()
 					{
-						if (_ptr->right == _end || _ptr == _end)
-							_ptr = _end;
-						else
-							_ptr = ft::map<Key, T, Compare, Alloc>::getNext(_ptr, _end);
+						if (_ptr == _end)
+							return *this;
+
+						if (_ptr->right != NULL)
+						{
+							if (_ptr->right->left == NULL || _ptr->right == _end)
+								_ptr = _ptr->right;
+							else
+								_ptr = ft::map<Key, T, Compare, Alloc>::getleftmostnode(_ptr->right, _end);
+						}
+						else if (_ptr->parent != NULL)
+						{
+							Node *og = _ptr;
+							_ptr = _ptr->parent;
+							while (_comp(og->data.first, _ptr->data.first) == false)
+								_ptr = _ptr->parent;
+						}
 						return *this;
 					}
+
 					const_iterator operator++(int)
 					{
+						if (_ptr == _end)
+							return *this;
+
 						const_iterator tmp = *this;
-						if (_ptr->right == _end || _ptr == _end)
-							_ptr = _end;
-						else
-							_ptr = ft::map<Key, T, Compare, Alloc>::getNext(_ptr, _end);
+						if (_ptr->right != NULL)
+						{
+							if (_ptr->right->left == NULL || _ptr->right == _end)
+								_ptr = _ptr->right;
+							else
+								_ptr = ft::map<Key, T, Compare, Alloc>::getleftmostnode(_ptr->right, _end);
+						}
+						else if (_ptr->parent != NULL)
+						{
+							Node *og = _ptr;
+							_ptr = _ptr->parent;
+							while (_comp(og->data.first, _ptr->data.first) == false)
+								_ptr = _ptr->parent;
+						}
 						return tmp;
 					}
 			};

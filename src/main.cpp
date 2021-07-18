@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/18 15:54:08 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/19 01:36:18 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,74 +77,54 @@ void pret(ft::pair<ft::map<int, char>::iterator, bool> ret)
 typedef ft::pair<const T1, T2> T3;
 typedef std::pair<const T1, T2> T4;
 
-// void test()
-// {
-// 	std::list<T3> clst;
-// 	std::list<T4> blst;
+void test()
+{
+	std::list<T3> clst;
+	std::list<T4> blst;
 
 
-// 	unsigned int lst_size = 10;
-// 	for (unsigned int i = 0; i < lst_size; ++i)
-// 		clst.push_back(T3(i, std::string((lst_size - i), i + 65)));
-// 	for (unsigned int i = 0; i < lst_size; ++i)
-// 		blst.push_back(T3(i, std::string((lst_size - i), i + 65)));
+	unsigned int lst_size = 10;
+	for (unsigned int i = 0; i < lst_size; ++i)
+		clst.push_back(T3(i, std::string((lst_size - i), i + 65)));
+	for (unsigned int i = 0; i < lst_size; ++i)
+		blst.push_back(T3(i, std::string((lst_size - i), i + 65)));
 	
 
-// 	ft::map<T1, T2> cmp(clst.begin(), clst.end());
-// 	std::map<T1, T2> bmp(blst.begin(), blst.end());
+	ft::map<T1, T2> cmp(clst.begin(), clst.end());
+	std::map<T1, T2> bmp(blst.begin(), blst.end());
 
+	for (ft::map<T1, T2>::iterator i = cmp.begin(); i != cmp.end(); i++)
+		std::cout << i->first << "|";;
+	std::cout<< std::endl;
+
+	cmp.erase((++(cmp.begin()))->first);
+	// cmp.printtest(cmp.groot());
+	cmp.erase(((cmp.begin()))->first);
+
+	cmp.erase((--(cmp.end()))->first);
+	// ft_erase(mp, --mp.end());
+
+	// cmp.printtest(cmp.groot());
+	// for (ft::map<T1, T2>::iterator i = cmp.begin(); i != cmp.end(); i++)
+	// 	std::cout << i->first << "|";
+	// std::cout<< std::endl;
+	// std::cout << "nerase from " << cmp.begin()->first << " to " <<
+	// (++(++(++cmp.begin())))->first <<  std::endl;
+	cmp.erase(cmp.begin(), ++(++(++cmp.begin())));
 	
-	
+	// cmp.nremove(cmp.begin()->first);
+	// cmp.nremove(cmp.begin()->first);
+	// cmp.nremove(cmp.begin()->first);
+	// cmp.nremove(cmp.begin()->first);
 
-// 	// cmp.erase(cmp.begin());
-	
-// 	// for (ft::map<T1, T2>::iterator i = cmp.begin(); i != cmp.end(); i++ )
-// 	// 	std::cout << i->first << "|";
-// 	// std::cout << std::endl;
-
-// 	// bmp.erase(++bmp.begin());
-// 	std::cout << "BEFORE ANY DELETION\n";
-// 	cmp.printtest(cmp.groot());
-// 	cmp.erase(++cmp.begin());
-// 	std::cout << "AFTER DELETING 1\n";
-// 	cmp.printtest(cmp.groot());
-// 	// bmp.erase(bmp.begin());
-
-// 	cmp.erase(cmp.begin());
-	
-// 	std::cout << "AFTER DELETING 0\n";
-// 	cmp.printtest(cmp.groot());
-	
-// 	// bmp.erase(--bmp.end());
-// 	// cmp.erase(--cmp.end());
+	// cmp.nremove(mp, --(--(--mp.end())), --mp.end());
 
 
-// 	// cmp.searchNode(9);
-// 	// cmp.erase(++cmp.begin());
-// 	// cmp.erase(--cmp.end());
+	// for (ft::map<T1, T2>::iterator i = cmp.begin(); i != cmp.end(); i++)
+	// 	std::cout << i->first << "|";;
+	// std::cout<< std::endl;
 
-// 	// for (ft::map<T1, T2>::iterator i = cmp.begin(); i != cmp.end(); i++ )
-// 	// 	std::cout << i->first << "|";
-// 	// std::cout << std::endl;
-	 
-
-	
-
-// 	// cmp.printtest(cmp.groot());
-
-// 	// bmp.erase(bmp.begin());
-// 	// bmp.erase(--bmp.end());
-
-// 	// for (ft::map<T1, T2>::iterator i = cmp.begin(); i != cmp.end(); i++ )
-// 	// 	std::cout << i->first << "|";
-// 	// std::cout << std::endl;
-
-// 	// for (std::map<T1, T2>::iterator i = bmp.begin(); i != bmp.end(); i++ )
-// 	// 		std::cout << i->first << "|";
-// 	// std::cout << std::endl;
-
-// 	// printSize(mp);
-// }
+}
 
 
 int main()
@@ -156,25 +136,32 @@ int main()
 	ft::map<int, char> custom;
 	std::map<int, char> base;
 
-	// test();
+	test();
+	return 0;
 	// custom[0] = 'a';
 	// custom[1] = 'b';
 	// custom[2] = 'c';
 	// custom[3] = 'd';
 
-	custom.insert(ft::pair<int, char>(1, 'a'));
-	custom.insert(ft::pair<int, char>(2, 'a'));
-	custom.insert(ft::pair<int, char>(3, 'a'));
-	custom.insert(ft::pair<int, char>(4, 'a'));
 	custom.insert(ft::pair<int, char>(5, 'a'));
+	custom.insert(ft::pair<int, char>(2, 'a'));
 	custom.insert(ft::pair<int, char>(6, 'a'));
 	custom.insert(ft::pair<int, char>(7, 'a'));
 	custom.insert(ft::pair<int, char>(8, 'a'));
+	custom.insert(ft::pair<int, char>(1, 'a'));
 	custom.insert(ft::pair<int, char>(9, 'a'));
 	custom.insert(ft::pair<int, char>(10, 'a'));
+	custom.insert(ft::pair<int, char>(3, 'a'));
+	custom.insert(ft::pair<int, char>(4, 'a'));
 
 
-	custom.remove(1);
+	// custom.nremove(4);
+	// custom.nremove(5);
+	// custom.nremove(10);
+	// custom.nremove(2);
+
+
+	// custom.nremove(4);
 
 	custom.printtest(custom.groot());
 	
@@ -182,21 +169,75 @@ int main()
 
 	// custom.setdbg(true);
 	
-	// for(ft::map<int, char>::iterator i = custom.begin(); i != custom.end(); i++)
+	// for(ft::map<int, char>::iterator i = custom.end(); i != custom.begin(); i--)
 	// {
 	// 	std::cout << i->first << "|"<< i->second<< std::endl;
 	// 	// std::cout << (*i).first << std::endl;
 	// }
 
-	ft::map<int, char>::iterator i = custom.begin();
+	ft::map<int, char>::iterator i = custom.end();
+	
+
+	// while(--i != custom.end())
+	// {
+	// 	std::cout << i->first << std::endl;	
+	// }
+
+	// --i;
+	
+	
 	// std::cout << i->first << std::endl;
-	// ++i;
+	// --i;
 	// std::cout << i->first << std::endl;
-	while (i != custom.end())
-	{
-		std::cout << (i)->first << std::endl;
-		i++;
-	}
+	// --i;
+	// std::cout << i->first << std::endl;
+	// --i;
+	// std::cout << i->first << std::endl;
+	// --i;
+	// std::cout << i->first << std::endl;
+	// --i;
+	// std::cout << i->first << std::endl;
+	// --i;
+	// std::cout << i->first << std::endl;
+	// --i;
+	// std::cout << i->first << std::endl;
+	// 	--i;
+	// std::cout << i->first << std::endl;
+	// 	--i;
+	// std::cout << i->first << std::endl;
+	// 	--i;
+	// std::cout << i->first << std::endl;
+	// 	--i;
+	// std::cout << i->first << std::endl;
+	
+	// i++;
+	// std::cout << i->first << std::endl;
+	// i++;
+	// std::cout << i->first << std::endl;
+	// i++;
+	// std::cout << i->first << std::endl;
+	// i++;
+	// std::cout << i->first << std::endl;
+	// i++;
+	// 	std::cout << i->first << std::endl;
+	// i++;
+	// 	std::cout << i->first << std::endl;
+	// i++;
+	// 	std::cout << i->first << std::endl;
+	// i++;
+	// 		std::cout << i->first << std::endl;
+	// i++;
+	// 		std::cout << i->first << std::endl;
+	// i++;
+	// 		std::cout << i->first << std::endl;
+	// i++;
+
+	// std::cout << i->first << std::endl;
+	// while (i != custom.end())
+	// {
+	// 	std::cout << (i)->first << std::endl;
+	// 	i++;
+	// }
 
 	// for (; i != custom.end(); i++)
 	// {

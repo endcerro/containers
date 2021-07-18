@@ -1,0 +1,18 @@
+0|1|2|3|4|5|6|7|8|9|
+Case 3
+2deleting 0x606000002df0
+Case 3
+2deleting 0x606000002d90
+Case 1
+1deleting 0x6060000030e0
+2|3|4|5|6|7|8|start points to Node :0x606000002ea0
+data = 3
+parent :0x606000002d80
+left :0x0
+right :0x606000002f00
+height :0
+bf :0
+
+buff points to 0x606000002d80
+Case 3
+2deleting 0x606000002d90
