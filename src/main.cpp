@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/17 20:58:03 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/18 15:54:08 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,7 @@ int main()
 	custom.insert(ft::pair<int, char>(10, 'a'));
 
 
-	custom.remove(4);
+	custom.remove(1);
 
 	custom.printtest(custom.groot());
 	
