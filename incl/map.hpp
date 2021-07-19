@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 15:41:19 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/19 04:43:04 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/19 06:45:14 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,6 +259,9 @@ namespace ft
 
 			void update(Node *node) 
 			{
+    			if (node == NULL)
+    				return;
+    			std::cout << "Node addr is " << node << std::endl;
     			int leftNodeHeight = (node->left == NULL || node->left == _end) ? -1 : node->left->height;
     			int rightNodeHeight = (node->right == NULL || node->right == _end) ? -1 : node->right->height;
 
@@ -298,11 +301,13 @@ namespace ft
 				_comp = m._comp;
 				_alloc = m._alloc;
 				_end = new Node;
+				_root = NULL;
 				_end->parent = NULL;
 				_end->left = NULL;
 				_end->right = NULL;
-				for (const_iterator t = m.begin(); t != m.end(); t++)
-					insert(*t);
+				insert(m.begin(), m.end());
+				// for (const_iterator t = m.begin(); t != m.end(); t++)
+					// insert(*t);
 			}
 			~map()
 			{	
@@ -454,7 +459,7 @@ namespace ft
 				upd_end();
 				return ret;
 			}
-			iterator insert (iterator position, const value_type& val)
+			iterator insert (iterator position, const value_type val)
 			{
 				Node *tmp = searchNode(val.first);
 				iterator ret = position;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/19 04:56:47 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/19 06:45:43 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,10 +172,11 @@ void test()
 int main()
 {
 
-	test();
-	return 0;
+	// test();
+	// return 0;
 
 	ft::map<int, char> custom;
+
 	std::map<int, char> base;
 
 	// test();
@@ -211,14 +212,16 @@ int main()
 	ft::map<int, char>::iterator cit = custom.begin();
 	std::map<int, char>::iterator bit = base.begin();
 
-	std::cout << cit->first << std::endl;
-	std::cout << bit->first << std::endl; 
+	// std::cout << cit->first << std::endl;
+	// std::cout << bit->first << std::endl; 
 
-	ft::map<int, char>::reverse_iterator rcit(++cit);// = cit;
-	std::map<int, char>::reverse_iterator rbit(++bit);// = base.begin();
+	// ft::map<int, char>::reverse_iterator rcit(++cit);// = cit;
+	// std::map<int, char>::reverse_iterator rbit(++bit);// = base.begin();
 
-	std::cout << rcit.base()->first << std::endl;
-	std::cout << rbit.base()->first << std::endl; 
+	// std::cout << rcit.base()->first << std::endl;
+	// std::cout << rbit.base()->first << std::endl; 
+
+	ft::map<int, char> custom2(custom);
 
 	// custom.nremove(4);
 	// custom.nremove(5);
@@ -234,11 +237,11 @@ int main()
 
 	// // custom.setdbg(true);
 	
-	// // for(ft::map<int, char>::iterator i = custom.end(); i != custom.begin(); i--)
-	// // {
-	// // 	std::cout << i->first << "|"<< i->second<< std::endl;
-	// // 	// std::cout << (*i).first << std::endl;
-	// // }
+	for(ft::map<int, char>::iterator i = custom.end(); i != custom.begin(); i--)
+	{
+		std::cout << i->first << "|"<< i->second<< std::endl;
+		// std::cout << (*i).first << std::endl;
+	}
 
 	// ft::map<int, char>::iterator i = custom.end();
 	
