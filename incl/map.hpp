@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 15:41:19 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/19 19:35:26 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/19 19:58:36 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,17 @@ namespace ft
 	{
 		public :
 
-			typedef Key    										key_type;
-			typedef T       									mapped_type;
-			typedef Compare 									key_compare;
-			typedef Alloc 										allocator_type;
+			typedef Key											key_type;
+			typedef T											mapped_type;
+			typedef Compare										key_compare;
+			typedef Alloc										allocator_type;
 			typedef typename allocator_type::value_type			value_type;
 			typedef typename allocator_type::reference			reference;
-			typedef typename allocator_type::const_reference 	const_reference;
-			typedef typename allocator_type::pointer 			pointer;
-			typedef typename allocator_type::const_pointer 		const_pointer;
-			typedef typename std::size_t 						size_type;
-			typedef typename std::ptrdiff_t 					difference_type;
+			typedef typename allocator_type::const_reference	const_reference;
+			typedef typename allocator_type::pointer			pointer;
+			typedef typename allocator_type::const_pointer		const_pointer;
+			typedef typename std::size_t						size_type;
+			typedef typename std::ptrdiff_t						difference_type;
 			
 			class iterator;
 			class const_iterator;
@@ -91,12 +91,8 @@ namespace ft
 			Node* deleteNode(Node *node)
 			{
 				_alloc.destroy(&(node->data));
-				// free(node);
 				delete node;
 				return NULL;
-				// _alloc.deallocate(node->data, 1);
-
-				// return tmp;
 			}
 			Node *leftLeftCase(Node *node)
 			{	return rotate_right(node);	}
@@ -118,24 +114,24 @@ namespace ft
 			}
 			Node *balance(Node *node) 
 			{
-		    	//Left heavy subtree.
-		    	if (node->balancef == -2) 
-		    	{	
-		    		// std::cout << "ROTATION\n";
-			      	if (node->left->balancef <= 0) 
-			        	return leftLeftCase(node);
+				//Left heavy subtree.
+				if (node->balancef == -2) 
+				{	
+					// std::cout << "ROTATION\n";
+					if (node->left->balancef <= 0) 
+						return leftLeftCase(node);
 					else 
-			        	return leftRightCase(node);
-		    	} 
-		    	else if (node->balancef == 2) 
-		    	{
-		    		// std::cout << "ROTATION\n";
-			    	if (node->right->balancef >= 0) 
-		        		return rightRightCase(node);
+						return leftRightCase(node);
+				} 
+				else if (node->balancef == 2) 
+				{
+					// std::cout << "ROTATION\n";
+					if (node->right->balancef >= 0) 
+						return rightRightCase(node);
 					else 
-		        		return rightLeftCase(node);
-		    	}
-		    	return node;
+						return rightLeftCase(node);
+				}
+				return node;
 		  }
 			// Node *balance(Node *node)
 			// {
@@ -227,7 +223,7 @@ namespace ft
 			//     return newParent;
 			// }
 			
-			Node *rotate_right(Node *curr)
+			Node *rotate_right(Node *curr)		//TOREWORK
 			{
 				Node *parent = curr->parent;
 				if (parent == _end)
@@ -260,7 +256,7 @@ namespace ft
 				return heavy;
 			}
 
-			Node *rotate_left(Node *curr) 
+			Node *rotate_left(Node *curr) 		//TOREWORK
 			{
 				Node *parent = curr->parent;
 				if (parent == _end)
@@ -291,31 +287,31 @@ namespace ft
 						parent->left = heavy;
 				}
 				return heavy;
-	  		}
+			}
 
 		
 
 			void update(Node *node) 
 			{
 				static_cast<void>(node);
-    			// if (node == NULL)
-    			// 	return;
-    			// // std::cout << "Node addr is " << node << std::endl;
-    			// int leftNodeHeight = (node->left == NULL || node->left == _end) ? -1 : node->left->height;
-    			// int rightNodeHeight = (node->right == NULL || node->right == _end) ? -1 : node->right->height;
+				// if (node == NULL)
+				// 	return;
+				// // std::cout << "Node addr is " << node << std::endl;
+				// int leftNodeHeight = (node->left == NULL || node->left == _end) ? -1 : node->left->height;
+				// int rightNodeHeight = (node->right == NULL || node->right == _end) ? -1 : node->right->height;
 
-    			// if (leftNodeHeight > rightNodeHeight)
-    			// 	node->height = 1 + leftNodeHeight;	
-    			// else
-    			// 	node->height = 1 + rightNodeHeight;	
-    			// node->balancef = rightNodeHeight - leftNodeHeight;
-  			}
+				// if (leftNodeHeight > rightNodeHeight)
+				// 	node->height = 1 + leftNodeHeight;	
+				// else
+				// 	node->height = 1 + rightNodeHeight;	
+				// node->balancef = rightNodeHeight - leftNodeHeight;
+			}
 
 		public :
 
 			explicit map (const key_compare& comp = key_compare(), const Alloc& alloc = Alloc()) :_root(0), _comp(comp), _size(0), _alloc(alloc)
 			{
-				_end = new Node;//createNode(value_type());
+				_end = new Node;
 				_end->parent = NULL;
 				_end->left = NULL;
 				_end->right = NULL;
@@ -324,7 +320,7 @@ namespace ft
 			template <class InputIterator>  
 			map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const Alloc& alloc = Alloc()) :_root(0), _comp(comp) , _size(0), _alloc(alloc)
 			{
-				_end = new Node;//createNode(value_type());;
+				_end = new Node;
 				_end->parent = NULL;
 				_end->left = NULL;
 				_end->right = NULL;
@@ -335,7 +331,7 @@ namespace ft
 			{
 				_comp = m._comp;
 				_alloc = m._alloc;
-				_end = new Node;//createNode(value_type());
+				_end = new Node;
 				_root = NULL;
 				_end->parent = NULL;
 				_end->left = NULL;
@@ -370,8 +366,7 @@ namespace ft
 			map& operator=(const map &m) //TO CHANGE
 			{
 				clear();
-				for (const_iterator t = m.begin(); t != m.end(); t++)
-					insert(*t);
+				insert(m.begin(), m.end());
 				return *this;
 			}
 			
@@ -419,18 +414,18 @@ namespace ft
 			// Node *gend()				//TODEL
 			// {	return _end;	}
 
-			static void printnode(Node *node) //TODEL
-			{
-				std::cout << "Node :" << node << std::endl;
-				std::cout << "data = " << node->data.first << std::endl;
-				// std::cout << "|" << node->data.second << std::endl;
-				std::cout << "parent :" << node->parent << std::endl;
-				std::cout << "left :" << node->left << std::endl;
-				std::cout << "right :" << node->right << std::endl;
-				std::cout << "height :" << node->height << std::endl;
-				std::cout << "bf :" << node->balancef << std::endl;
+			// static void printnode(Node *node) //TODEL
+			// {
+			// 	std::cout << "Node :" << node << std::endl;
+			// 	std::cout << "data = " << node->data.first << std::endl;
+			// 	// std::cout << "|" << node->data.second << std::endl;
+			// 	std::cout << "parent :" << node->parent << std::endl;
+			// 	std::cout << "left :" << node->left << std::endl;
+			// 	std::cout << "right :" << node->right << std::endl;
+			// 	std::cout << "height :" << node->height << std::endl;
+			// 	std::cout << "bf :" << node->balancef << std::endl;
 
-			}
+			// }
 			Node *ninsert(Node *node, const value_type &val)
 			{
 				if (node == NULL || node == _end)
@@ -450,8 +445,6 @@ namespace ft
 				}
 				update(node);
 				return balance(node);
-
-				// return node;
 			}
 
 
@@ -488,132 +481,101 @@ namespace ft
 				return ret;
 			}
 			template <class InputIterator>
- 	 		void insert (InputIterator first, InputIterator last)
- 	 		{
- 	 			while (first != last)
- 	 				insert(*(first++));
- 	 		}
+			void insert (InputIterator first, InputIterator last)
+			{
+				while (first != last)
+					insert(*(first++));
+			}
 
-		  	Node *nremove(Node *node)
-		  	{
-		  		//Case where no childs, ez one
-		  		if ((node->left == NULL || node->left == _end) && (node->right == NULL || node->right == _end))
-		  		{
-		  			// std::cout << "Case 1\n";
-		  			if (node->parent != NULL)
-		  			{
-		  				if (node->parent->left == node)
-		  					node->parent->left = NULL;
-		  				else
-		  					node->parent->right = NULL;
-		  				
-		  				return deleteNode(node);
-		  				// delete node;
-		  				// return NULL;
+			Node *nremove(Node *node)
+			{
+				//Case where no childs, ez one
+				if ((node->left == NULL || node->left == _end) && (node->right == NULL || node->right == _end))
+				{
+					// std::cout << "Case 1\n";
+					if (node->parent != NULL)
+					{
+						if (node->parent->left == node)
+							node->parent->left = NULL;
+						else
+							node->parent->right = NULL;
+						return deleteNode(node);
+					}
+				}	//Two childs, hard one
+				else if (node->left != NULL && node->left != _end && node->right != NULL && node->right != _end) 
+				{
+					// std::cout << "Case 2\n";
+					Node *small_successor = getleftmostnode(node->right, _end);
+					//Node *big_successor = getleftmostnode(node->right, _end);
+					value_type tmp = small_successor->data; //Value copied, now to delete the succ
+					// _alloc.construct(node->data, tmp);
+					nremove(tmp.first);
+					_alloc.construct(&(node->data), tmp);
 
-		  				
-		  			}
-		  		}	//Two childs, hard one
-		  		else if (node->left != NULL && node->left != _end && node->right != NULL && node->right != _end) 
-		  		{
-		  			// std::cout << "Case 2\n";
-		  			Node *small_successor = getleftmostnode(node->right, _end);
-		  			//Node *big_successor = getleftmostnode(node->right, _end);
-		  			value_type tmp = small_successor->data; //Value copied, now to delete the succ
-		  			// _alloc.construct(node->data, tmp);
-		  			nremove(tmp.first);
-		  			_alloc.construct(&(node->data), tmp);
-		  			// node->data = tmp;
-		  			
-		  		}	//Only one child
-		  		else if (node->left == NULL || node->left == _end)
-		  		{
-		  			// std::cout << "Case 3\n";
-		  			Node tmp;
-		  			
-		  			tmp.left = node->right->left;			//Get the nodes below future removed node
-		  			tmp.right = node->right->right;		
-		  			_alloc.construct(&(tmp.data), node->right->data);
-		  			// tmp.data =  node->right->data;
-		  			//TMP IS NOW = node->right
+				}	//Only one child
+				else if (node->left == NULL || node->left == _end)
+				{
+					// std::cout << "Case 3\n";
+					Node tmp;
+					
+					tmp.left = node->right->left;			//Get the nodes below future removed node
+					tmp.right = node->right->right;		
+					_alloc.construct(&(tmp.data), node->right->data);
+					
+					if (tmp.left != NULL)
+						tmp.left->parent = node;				
+					if (tmp.right != NULL)
+						tmp.right->parent = node;
+					deleteNode(node->right);
+					node->right = tmp.right;
+					node->left = tmp.left;
+					_alloc.construct(&(node->data), tmp.data);
+				}
+				else if (node->right == NULL || node->right == _end)
+				{
+					// std::cout << "Case 4\n";
+					Node tmp;
+					
+					tmp.left = node->left->left;
+					tmp.right = node->left->right;			//Get the nodes below future removed node
+					_alloc.construct(&(tmp.data), node->left->data);
+					if (tmp.right != NULL)					
+						tmp.right->parent = node;
+					if (tmp.left != NULL)
+						tmp.left->parent = node;
 
-		  			if (tmp.left != NULL)
-		  			{
-		  				// std::cout << "updated ch1\n";
-		  				tmp.left->parent = node;
-		  			}				
-		  			if (tmp.right != NULL)
-		  			{
-		  				// std::cout << "updated ch2\n";
-		  				tmp.right->parent = node;
-		  			}
-		  			
-		  			// std::cout << "2deleting " << (node->right) << std::endl;
-		  			
-		  			deleteNode(node->right);
-		  			// delete node->right;
-		  			
-		  			node->right = tmp.right;
-		  			node->left = tmp.left;
-		  			_alloc.construct(&(node->data), tmp.data);
-		  			// node->data = tmp.data;
+					deleteNode(node->left);
 
-		  			// if (node->right != )
+					node->left = tmp.left;
+					node->right = tmp.right;
+					_alloc.construct(&(node->data), tmp.data);
+				}
+				return node;
 
-		  			// node->left = node->right->left;
-
-		  		}
-		  		else if (node->right == NULL || node->right == _end)
-		  		{
-		  			// std::cout << "Case 4\n";
-		  			Node tmp;
-		  			
-		  			tmp.left = node->left->left;
-		  			tmp.right = node->left->right;			//Get the nodes below future removed node
-		  			_alloc.construct(&(tmp.data), node->left->data);
-		  			// tmp.data =  node->left->data;
-		  			//TMP IS NOW = node->left
-
-		  			if (tmp.right != NULL)					
-		  				tmp.right->parent = node;
-		  			if (tmp.left != NULL)
-		  				tmp.left->parent = node;
-
-		  			// std::cout << "3deleting " << (node->left) << std::endl;
-		  			deleteNode(node->left);
-		  			// delete node->left;
-
-		  			node->left = tmp.left;
-		  			node->right = tmp.right;
-		  			// node->data = tmp.data;
-		  			_alloc.construct(&(node->data), tmp.data);
-		  		}
-		  		return node;
-
-		  	}
+			}
 			bool nremove(const key_type &k) 
 			{
 				Node *target = searchNode(k);
 				if (target != NULL) 
-			    {
-			    	if (target == _root)
-			    		_root = nremove(_root);
-		    		else
-		    			nremove(target);
-		      		upd_end();
-		      		return true;
-		    	}
-			    return false;
-		  	}
+				{
+					if (target == _root)
+						_root = nremove(_root);
+					else
+						nremove(target);
+					upd_end();
+					return true;
+				}
+				return false;
+			}
 
-		  	void remove(key_type k)	//THIS IS THE HANDLER
-		  	{
-	  			if (nremove(k))
-	  				--_size;
-		  	}
-		  	void remove(iterator start, iterator end)
-		  	{
-  				ft::vector<key_type> fuckyou;
+			void remove(key_type k)	//THIS IS THE HANDLER
+			{
+				if (nremove(k))
+					--_size;
+			}
+			void remove(iterator start, iterator end)
+			{
+				ft::vector<key_type> fuckyou;
 				int i = 0;
 				key_type tmp;
 				iterator buff;
@@ -626,24 +588,25 @@ namespace ft
 				}
 				for (int j = 0; j < i; j++)
 					remove(fuckyou[j]);
-		  	}
-		  	void erase(iterator pos)
-		  	{	remove(pos->first);		}
-		  	void erase(iterator first, iterator last)
-		  	{
-		  		remove(first, last);
-		  		upd_end();
-		  	}
-		  	size_type erase (const key_type& k)
-		  	{
-		  		size_type ret = (searchNode(k)) ? 1 : 0;
-		  		if (ret)
-		  			remove(k);
-		  		return ret;
-		  	}
+			}
+			void erase(iterator pos)
+			{	remove(pos->first);		}
+			void erase(iterator first, iterator last)
+			{
+				remove(first, last);
+				upd_end();
+			}
+			
+			size_type erase (const key_type& k)
+			{
+				size_type ret = (searchNode(k)) ? 1 : 0;
+				if (ret)
+					remove(k);
+				return ret;
+			}
 
-		  	bool empty() const
-		  	{	return (_size == 0);	}
+			bool empty() const
+			{	return (_size == 0);	}
 
 			iterator begin()
 			{
@@ -701,18 +664,8 @@ namespace ft
 				return (tmp->data.second);
 			}
 
-
-
-
-
-			size_type count(const key_type &key) const	//REWORKED
-			{
-				return (searchNode(key) != NULL);
-				// if (_size == 0 || (searchNode(key) == 0))
-				// 	return 0;
-				// return 1;
-				
-			}
+			size_type count(const key_type &key) const
+			{	return (searchNode(key) != NULL);	}
 
 			size_type size() const
 			{
@@ -723,19 +676,14 @@ namespace ft
 				return _alloc.max_size();
 			}
 
-			void clear(Node *n)				//REWORKED SHOULD BE PRIVATE
+			Node *clear(Node *n)
 			{
 				if (n->left != NULL && n->left != _end)
-				{
-					clear(n->left);
-					n->left = 0;
-				}
+					n->left = clear(n->left);
 				if (n->right != NULL && n->right != _end)
-				{
-					clear(n->right);
-					n->right = 0;
-				}
+					n->right = clear(n->right);
 				delete n;
+				return NULL;
 			}
 
 			void clear()					//REWORKED
@@ -807,21 +755,21 @@ namespace ft
 			{
 				return value_compare(_comp);
 			}
-		    iterator find (const key_type& k)
-		    {
-		    	Node *tmp = searchNode(k);
-		    	if (tmp)
-		    		return iterator(tmp, _end, _comp);
-		    	else
-		    		return end();
-		    }
+			iterator find (const key_type& k)
+			{
+				Node *tmp = searchNode(k);
+				if (tmp)
+					return iterator(tmp, _end, _comp);
+				else
+					return end();
+			}
 			const_iterator find (const key_type& k) const
 			{
-		    	Node *tmp = searchNode(k);
-		    	if (tmp)
-		    		return const_iterator(tmp, _end, _comp);
-		    	else
-		    		return end();
+				Node *tmp = searchNode(k);
+				if (tmp)
+					return const_iterator(tmp, _end, _comp);
+				else
+					return end();
 			}
 			class iterator
 			{
@@ -991,33 +939,15 @@ namespace ft
 				friend class map<key_type, mapped_type, Compare,Alloc>;
 				private :
 					
-
-					// typedef Key								key_type;
-					// typedef Compare							key_compare;
-					// typedef T								mapped_type;
-					
-					// typedef ft::pair<const key_type, mapped_type>	value_type;
-					// typedef long int						difference_type;
-					// typedef size_t							size_type;
-					// typedef const value_type&						reference;
-					// typedef const Node*							nodePtr;
-
-
 					typedef std::bidirectional_iterator_tag iterator_category;
-					typedef typename std::ptrdiff_t difference_type;
-					typedef typename map::value_type value_type;
-					typedef typename map::pointer pointer;
-					typedef typename map::reference reference;
-					typedef typename map::key_compare key_compare;
+					typedef typename std::ptrdiff_t 		difference_type;
+					typedef typename map::value_type 		value_type;
+					typedef typename map::pointer 			pointer;
+					typedef typename map::const_pointer		const_pointer;
+					typedef typename map::reference 		reference;
+					typedef typename map::const_reference 	const_reference;
+					typedef typename map::key_compare 		key_compare;
 
-
-
-
-
-
-					// typedef std::bidirectional_iterator_tag                                     iterator_category;
-					// typedef typename chooseConst<B, value_type&, const value_type&>::type       reference;
-					// typedef typename chooseConst<B, value_type*, const value_type*>::type       pointer;
 					Node 		*_ptr;
 					Node 		*_end;
 					key_compare _comp;
@@ -1040,7 +970,7 @@ namespace ft
 					}
 					Node *getNode()					//TODEL
 					{	return (_ptr);			}
-					reference operator*() const
+					const_reference operator*() const
 					{	return (_ptr->data);	}
 					const_pointer operator->() const
 					{	return &	(_ptr->data);	}
@@ -1159,11 +1089,12 @@ namespace ft
 				private :
 					
 					typedef std::bidirectional_iterator_tag iterator_category;
-					typedef typename std::ptrdiff_t difference_type;
-					typedef typename map::value_type value_type;
-					typedef typename map::pointer pointer;
-					typedef typename map::reference reference;
-					typedef typename map::key_compare key_compare;					
+					typedef typename std::ptrdiff_t 		difference_type;
+					typedef typename map::value_type 		value_type;
+					typedef typename map::pointer 			pointer;
+					typedef typename map::reference 		reference;
+
+					typedef typename map::key_compare 		key_compare;					
 
 					// typedef Key								key_type;
 					// typedef Compare							key_compare;
@@ -1201,7 +1132,7 @@ namespace ft
 					{	return (_ptr);			}
 					reference operator*() const
 					{	return (_ptr->data);	}
-					value_type* operator->() const
+					pointer operator->() const
 					{	return &(_ptr->data);	}
 					bool operator==(const reverse_iterator &__x) const
 					{	return _ptr == __x._ptr;	}
@@ -1333,7 +1264,9 @@ namespace ft
 					typedef typename map::value_type value_type;
 					typedef typename map::pointer pointer;
 					typedef typename map::reference reference;
-					typedef typename map::key_compare key_compare;					
+					typedef typename map::key_compare key_compare;
+					typedef typename map::const_pointer		const_pointer;
+					typedef typename map::const_reference 	const_reference;				
 
 					// typedef Key								key_type;
 					// typedef Compare							key_compare;
@@ -1374,9 +1307,9 @@ namespace ft
 					}
 					Node *getNode()					//TODEL
 					{	return (_ptr);			}
-					reference operator*() const
+					const_reference operator*() const
 					{	return (_ptr->data);	}
-					value_type* operator->() const
+					const_pointer operator->() const
 					{	return &(_ptr->data);	}
 					bool operator==(const const_reverse_iterator &__x) const
 					{	return _ptr == __x._ptr;	}
