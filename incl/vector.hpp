@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 15:43:35 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/04 19:53:15 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/19 07:42:03 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 // https://www.cplusplus.com/reference/vector/vector/
@@ -58,6 +58,7 @@ namespace ft
 			
 			explicit vector(const Alloc &alloc = Alloc()) : _alloc(alloc)
 			{
+				// std::cout << "DEFAULT construct\n";
 				_arr = _alloc.allocate(10);
 				_size = 0;
 				_max_size = 10;
@@ -612,7 +613,16 @@ namespace ft
 			{
 				if (_size + 1 >= _max_size)
 					growarr(_max_size * 2);
-				_arr[_size++] = val;
+
+				// std::cout<<"size is " << _size << std::endl;
+
+				_alloc.construct(&(_arr[_size]), val);
+				// _arr[_size] = val;
+				// _arr[_size] = val;
+				
+
+
+				++_size;
 			}
 
 			void pop_back(void)
