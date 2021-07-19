@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 15:41:19 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/19 03:19:29 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/19 03:31:27 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1365,6 +1365,7 @@ namespace ft
 					}
 					const_iterator base()
 					{
+						const_iterator tmp = *this;
 						return (const_iterator(_ptr, _end, _comp));
 					}
 					const_reverse_iterator operator--(int)

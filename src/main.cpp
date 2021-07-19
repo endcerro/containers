@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/19 03:12:54 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/19 03:29:49 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,11 +173,11 @@ int main()
 	std::cout << cit->first << std::endl;
 	std::cout << bit->first << std::endl; 
 
-	ft::map<int, char>::iterator rcit(cit);// = cit;
-	std::map<int, char>::iterator rbit(bit);// = base.begin();
+	ft::map<int, char>::reverse_iterator rcit(++cit);// = cit;
+	std::map<int, char>::reverse_iterator rbit(++bit);// = base.begin();
 
-	std::cout << rcit->first << std::endl;
-	std::cout << rbit->first << std::endl; 
+	std::cout << rcit.base()->first << std::endl;
+	std::cout << rbit.base()->first << std::endl; 
 
 	// custom.nremove(4);
 	// custom.nremove(5);
