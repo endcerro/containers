@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 15:41:19 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/19 08:47:18 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/19 20:06:53 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,23 @@ namespace ft
 	{
 		public :
 
-			typedef Key     key_type;
-			typedef T       mapped_type;
-			typedef ft::pair<key_type, mapped_type>   value_type;
-			typedef Compare key_compare;
+			typedef Key											key_type;
+			typedef T											mapped_type;
+			typedef Compare										key_compare;
+			typedef Alloc										allocator_type;
+			typedef typename allocator_type::value_type			value_type;
+			typedef typename allocator_type::reference			reference;
+			typedef typename allocator_type::const_reference	const_reference;
+			typedef typename allocator_type::pointer			pointer;
+			typedef typename allocator_type::const_pointer		const_pointer;
+			typedef typename std::size_t						size_type;
+			typedef typename std::ptrdiff_t						difference_type;
+			
 			class iterator;
 			class const_iterator;
 			class reverse_iterator;
 			class const_reverse_iterator;
+			
 			class value_compare : public ft::binary_function<value_type, value_type, bool>
 			{
 				friend class map;
@@ -46,40 +55,44 @@ namespace ft
 					typedef value_type second_argument_type;
 
 					bool operator()(const value_type &x, const value_type &y) const
-					{
-						return comp(x.first, y.first);
-					}
+					{	return comp(x.first, y.first);	}
 			};
 			struct Node
 			{
-				Node *parent;
-				Node *left;
-				Node *right;
-				ft::pair<Key, T> data;
+				Node 		*parent;
+				Node 		*left;
+				Node 		*right;
+				value_type 	data;
 
-				int balancef;
-				int height;
+				int 		balancef;
+				int 		height;
 			};
 		private :
 	
-			Node    *_root;
-			Node    *_end;
-			key_compare _comp;
-			bool	DEBUG;
-			// Alloc    _alloc;
-			size_t  _size;
-			Alloc   _alloc;
+			Node    			*_root;
+			Node    			*_end;
+			key_compare 		_comp;
+			size_type  			_size;
+			allocator_type   	_alloc;
 
 			Node* createNode(const value_type& pair)
 			{
-				Node* tmp = new Node();
+				Node* tmp = new Node;
+				// Node* tmp = _alloc.allocate();
 				tmp->parent = 0;
 				tmp->left = 0;
 				tmp->right = 0;
-				tmp->data = pair;
+				_alloc.construct(&(tmp->data), pair);
+				// tmp->data = pair;
 				tmp->height = 0;
 				tmp->balancef = 0;
 				return tmp;
+			}
+			Node* deleteNode(Node *node)
+			{
+				_alloc.destroy(&(node->data));
+				delete node;
+				return NULL;
 			}
 			Node *leftLeftCase(Node *node)
 			{	return rotate_right(node);	}
@@ -101,24 +114,24 @@ namespace ft
 			}
 			Node *balance(Node *node) 
 			{
-		    	//Left heavy subtree.
-		    	if (node->balancef == -2) 
-		    	{	
-		    		// std::cout << "ROTATION\n";
-			      	if (node->left->balancef <= 0) 
-			        	return leftLeftCase(node);
+				//Left heavy subtree.
+				if (node->balancef == -2) 
+				{	
+					// std::cout << "ROTATION\n";
+					if (node->left->balancef <= 0) 
+						return leftLeftCase(node);
 					else 
-			        	return leftRightCase(node);
-		    	} 
-		    	else if (node->balancef == 2) 
-		    	{
-		    		// std::cout << "ROTATION\n";
-			    	if (node->right->balancef >= 0) 
-		        		return rightRightCase(node);
+						return leftRightCase(node);
+				} 
+				else if (node->balancef == 2) 
+				{
+					// std::cout << "ROTATION\n";
+					if (node->right->balancef >= 0) 
+						return rightRightCase(node);
 					else 
-		        		return rightLeftCase(node);
-		    	}
-		    	return node;
+						return rightLeftCase(node);
+				}
+				return node;
 		  }
 			// Node *balance(Node *node)
 			// {
@@ -157,10 +170,13 @@ namespace ft
 				return curr;
 			}
 
-			void n_lrot(Node *target)
-			{
-				Node *parent = target->parent;
-			}
+			// void n_lrot(Node *target)
+			// {
+				
+			// 	Node *parent = target->parent;
+
+				
+			// }
 
 			// static Node *getNext(Node *n, Node *end)
 			// {
@@ -207,7 +223,7 @@ namespace ft
 			//     return newParent;
 			// }
 			
-			Node *rotate_right(Node *curr)
+			Node *rotate_right(Node *curr)		//TOREWORK
 			{
 				Node *parent = curr->parent;
 				if (parent == _end)
@@ -240,7 +256,7 @@ namespace ft
 				return heavy;
 			}
 
-			Node *rotate_left(Node *curr) 
+			Node *rotate_left(Node *curr) 		//TOREWORK
 			{
 				Node *parent = curr->parent;
 				if (parent == _end)
@@ -249,7 +265,6 @@ namespace ft
 				Node *heavy = curr->right;
 				
 
-				// std::cout << "3heay is " << heavy << std::endl;
 				if (heavy == NULL)
 					return curr;
 				
@@ -271,42 +286,37 @@ namespace ft
 						parent->left = heavy;
 				}
 				return heavy;
-	  		}
-
-		
+			}
 
 			void update(Node *node) 
 			{
 				static_cast<void>(node);
-    			// if (node == NULL)
-    			// 	return;
-    			// // std::cout << "Node addr is " << node << std::endl;
-    			// int leftNodeHeight = (node->left == NULL || node->left == _end) ? -1 : node->left->height;
-    			// int rightNodeHeight = (node->right == NULL || node->right == _end) ? -1 : node->right->height;
+				// if (node == NULL)
+				// 	return;
+				// // std::cout << "Node addr is " << node << std::endl;
+				// int leftNodeHeight = (node->left == NULL || node->left == _end) ? -1 : node->left->height;
+				// int rightNodeHeight = (node->right == NULL || node->right == _end) ? -1 : node->right->height;
 
-    			// if (leftNodeHeight > rightNodeHeight)
-    			// 	node->height = 1 + leftNodeHeight;	
-    			// else
-    			// 	node->height = 1 + rightNodeHeight;	
-    			// node->balancef = rightNodeHeight - leftNodeHeight;
-  			}
+				// if (leftNodeHeight > rightNodeHeight)
+				// 	node->height = 1 + leftNodeHeight;	
+				// else
+				// 	node->height = 1 + rightNodeHeight;	
+				// node->balancef = rightNodeHeight - leftNodeHeight;
+			}
 
 		public :
 
-			explicit map (const Compare& comp = Compare(), const Alloc& alloc = Alloc()) :_root(0), _comp(comp), _size(0), _alloc(alloc)
+			explicit map (const key_compare& comp = key_compare(), const Alloc& alloc = Alloc()) :_root(0), _comp(comp), _size(0), _alloc(alloc)
 			{
-				_end = new Node;//createNode(value_type());
-				// _end->data
-				DEBUG = 0;
+				_end = new Node;
 				_end->parent = NULL;
 				_end->left = NULL;
 				_end->right = NULL;
 			}
 			
 			template <class InputIterator>  
-			map (InputIterator first, InputIterator last, const Compare& comp = Compare(), const Alloc& alloc = Alloc()) :_root(0), _comp(comp) , _size(0), _alloc(alloc)
+			map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const Alloc& alloc = Alloc()) :_root(0), _comp(comp) , _size(0), _alloc(alloc)
 			{
-				DEBUG = 0;
 				_end = new Node;
 				_end->parent = NULL;
 				_end->left = NULL;
@@ -316,18 +326,15 @@ namespace ft
 			}
 			map(const map &m)
 			{
-				DEBUG = 0;
 				_comp = m._comp;
 				_alloc = m._alloc;
-				_size = 0;
 				_end = new Node;
 				_root = NULL;
 				_end->parent = NULL;
 				_end->left = NULL;
 				_end->right = NULL;
+				_size = 0;
 				insert(m.begin(), m.end());
-				// for (const_iterator t = m.begin(); t != m.end(); t++)
-					// insert(*t);
 			}
 			~map()
 			{	
@@ -344,7 +351,7 @@ namespace ft
 				_root = x._root;
 				x._root = tmp_node;
 
-				size_t tmp_size = _size;
+				size_type tmp_size = _size;
 				_size = x._size;
 				x._size = tmp_size;
 
@@ -353,40 +360,30 @@ namespace ft
 				x._comp = tmp_comp;
 			}
 
-			void setdbg(bool set)
-			{	DEBUG = set;	}
-
 			map& operator=(const map &m) //TO CHANGE
 			{
 				clear();
-				for (const_iterator t = m.begin(); t != m.end(); t++)
-					insert(*t);
+				insert(m.begin(), m.end());
 				return *this;
 			}
 			
-			Node *searchNode(const Key &k) const
+			Node *searchNode(const key_type &k) const
 			{	return searchNode(_root, k);	}
 			
-			void printend()
-			{
-				std::cout << "END NODE ";
-				printnode(_end);
-			}
+			// void printtest(Node *curr)	//TODEL
+			// {
+			// 	if (curr == _root)
+			// 		printend();
+			// 	if (curr == NULL || curr == _end)
+			// 		return;
+			// 	std::cout << "\n----\n";
+			// 	printnode(curr);
+			// 	printtest(curr->left);
+			// 	printtest(curr->right);
 
-			void printtest(Node *curr)	//TODEL
-			{
-				if (curr == _root)
-					printend();
-				if (curr == NULL || curr == _end)
-					return;
-				std::cout << "\n----\n";
-				printnode(curr);
-				printtest(curr->left);
-				printtest(curr->right);
+			// }
 
-			}
-
-			Node *searchNode(Node *curr, const Key &k) const
+			Node *searchNode(Node *curr, const key_type &k) const
 			{
 				if (curr == NULL || curr == _end)
 					return NULL;
@@ -399,41 +396,33 @@ namespace ft
 
 			void upd_end()
 			{
-				if (_root == 0)
+				if (_root == NULL)
 					return ;
-				if (DEBUG)
-					std::cout << "Updating end..";
 				_end->parent = _root;
 				_end->parent->parent = _end;
 				_end->left = getleftmostnode(_root, _end);
 				_end->left->left = _end;
 				_end->right = getrightmostnode(_root, _end);
 				_end->right->right = _end;
-				if (DEBUG)
-				{
-					std::cout << "|left_end=" << _end->left->data.first;
-					std::cout << "|right_end=" << _end->right->data.first;
-					std::cout << "|parent_end=" << _end->parent->data.first;
-				}
 			}
 
-			Node *groot()				//TODEL
-			{	return _root;	}
-			Node *gend()				//TODEL
-			{	return _end;	}
+			// Node *groot()				//TODEL
+			// {	return _root;	}
+			// Node *gend()				//TODEL
+			// {	return _end;	}
 
-			static void printnode(Node *node) //TODEL
-			{
-				std::cout << "Node :" << node << std::endl;
-				std::cout << "data = " << node->data.first << std::endl;
-				// std::cout << "|" << node->data.second << std::endl;
-				std::cout << "parent :" << node->parent << std::endl;
-				std::cout << "left :" << node->left << std::endl;
-				std::cout << "right :" << node->right << std::endl;
-				std::cout << "height :" << node->height << std::endl;
-				std::cout << "bf :" << node->balancef << std::endl;
+			// static void printnode(Node *node) //TODEL
+			// {
+			// 	std::cout << "Node :" << node << std::endl;
+			// 	std::cout << "data = " << node->data.first << std::endl;
+			// 	// std::cout << "|" << node->data.second << std::endl;
+			// 	std::cout << "parent :" << node->parent << std::endl;
+			// 	std::cout << "left :" << node->left << std::endl;
+			// 	std::cout << "right :" << node->right << std::endl;
+			// 	std::cout << "height :" << node->height << std::endl;
+			// 	std::cout << "bf :" << node->balancef << std::endl;
 
-			}
+			// }
 			Node *ninsert(Node *node, const value_type &val)
 			{
 				if (node == NULL || node == _end)
@@ -453,8 +442,6 @@ namespace ft
 				}
 				update(node);
 				return balance(node);
-
-				// return node;
 			}
 
 
@@ -485,174 +472,135 @@ namespace ft
 				iterator ret = position;
 
 				if (tmp)
-				{
 					ret = iterator(tmp, _end, _comp);
-					// return ();
-				}
 				else
-				{
 					ret = insert(val).first;
-				}
 				return ret;
 			}
 			template <class InputIterator>
- 	 		void insert (InputIterator first, InputIterator last)
- 	 		{
- 	 			while (first != last)
- 	 			{
- 	 				insert(*(first++));
- 	 			}
- 	 		}
+			void insert (InputIterator first, InputIterator last)
+			{
+				while (first != last)
+					insert(*(first++));
+			}
 
-		  	Node *nremove(Node *node)
-		  	{
-		  		//Case where no childs, ez one
-		  		if ((node->left == NULL || node->left == _end) && (node->right == NULL || node->right == _end))
-		  		{
-		  			// std::cout << "Case 1\n";
-		  			if (node->parent != NULL)
-		  			{
-		  				if (node->parent->left == node)
-		  					node->parent->left = NULL;
-		  				else
-		  					node->parent->right = NULL;
-		  				delete node;
-		  				return NULL;
-		  			}
-		  		}	//Two childs, hard one
-		  		else if (node->left != NULL && node->left != _end && node->right != NULL && node->right != _end) 
-		  		{
-		  			// std::cout << "Case 2\n";
-		  			Node *small_successor = getleftmostnode(node->right, _end);
-		  			//Node *big_successor = getleftmostnode(node->right, _end);
-		  			value_type tmp = small_successor->data; //Value copied, now to delete the succ
-		  			nremove(tmp.first);
-		  			node->data = tmp;	
-		  			
-		  		}	//Only one child
-		  		else if (node->left == NULL || node->left == _end)
-		  		{
-		  			// std::cout << "Case 3\n";
-		  			Node tmp;
-		  			
-		  			tmp.left = node->right->left;			//Get the nodes below future removed node
-		  			tmp.right = node->right->right;		
-		  			tmp.data =  node->right->data;
-		  			//TMP IS NOW = node->right
+			Node *nremove(Node *node)
+			{
+				//Case where no childs, ez one
+				if ((node->left == NULL || node->left == _end) && (node->right == NULL || node->right == _end))
+				{
+					if (node->parent != NULL)
+					{
+						if (node->parent->left == node)
+							node->parent->left = NULL;
+						else
+							node->parent->right = NULL;
+						return deleteNode(node);
+					}
+				}	//Two childs, hard one
+				else if (node->left != NULL && node->left != _end && node->right != NULL && node->right != _end) 
+				{
+					Node *small_successor = getleftmostnode(node->right, _end);
+					//Node *big_successor = getleftmostnode(node->right, _end);
+					value_type tmp = small_successor->data; //Value copied, now to delete the succ
+					// _alloc.construct(node->data, tmp);
+					nremove(tmp.first);
+					_alloc.construct(&(node->data), tmp);
 
-		  			if (tmp.left != NULL)
-		  			{
-		  				// std::cout << "updated ch1\n";
-		  				tmp.left->parent = node;
-		  			}				
-		  			if (tmp.right != NULL)
-		  			{
-		  				// std::cout << "updated ch2\n";
-		  				tmp.right->parent = node;
-		  			}
-		  			
-		  			// std::cout << "2deleting " << (node->right) << std::endl;
-		  			
-		  			delete node->right;
-		  			
-		  			node->right = tmp.right;
-		  			node->left = tmp.left;
-		  			node->data = tmp.data;
+				}	//Only one child
+				else if (node->left == NULL || node->left == _end)
+				{
+					// std::cout << "Case 3\n";
+					Node tmp;
+					
+					tmp.left = node->right->left;			//Get the nodes below future removed node
+					tmp.right = node->right->right;		
+					_alloc.construct(&(tmp.data), node->right->data);
+					
+					if (tmp.left != NULL)
+						tmp.left->parent = node;				
+					if (tmp.right != NULL)
+						tmp.right->parent = node;
+					deleteNode(node->right);
+					node->right = tmp.right;
+					node->left = tmp.left;
+					_alloc.construct(&(node->data), tmp.data);
+				}
+				else if (node->right == NULL || node->right == _end)
+				{
+					Node tmp;
+					
+					tmp.left = node->left->left;
+					tmp.right = node->left->right;			//Get the nodes below future removed node
+					_alloc.construct(&(tmp.data), node->left->data);
+					if (tmp.right != NULL)					
+						tmp.right->parent = node;
+					if (tmp.left != NULL)
+						tmp.left->parent = node;
 
-		  			// if (node->right != )
+					deleteNode(node->left);
 
-		  			// node->left = node->right->left;
+					node->left = tmp.left;
+					node->right = tmp.right;
+					_alloc.construct(&(node->data), tmp.data);
+				}
+				return node;
+			}
 
-		  		}
-		  		else if (node->right == NULL || node->right == _end)
-		  		{
-		  			// std::cout << "Case 4\n";
-		  			Node tmp;
-		  			
-		  			tmp.left = node->left->left;
-		  			tmp.right = node->left->right;			//Get the nodes below future removed node
-		  			tmp.data =  node->left->data;
-		  			//TMP IS NOW = node->left
-
-		  			if (tmp.right != NULL)					
-		  				tmp.right->parent = node;
-		  			if (tmp.left != NULL)
-		  				tmp.left->parent = node;
-
-		  			// std::cout << "3deleting " << (node->left) << std::endl;
-		  			delete node->left;
-
-		  			node->left = tmp.left;
-		  			node->right = tmp.right;
-		  			node->data = tmp.data;
-		  		}
-		  		return node;
-
-		  	}
 			bool nremove(const key_type &k) 
 			{
- 	  			// if (elem == null) return false;
 				Node *target = searchNode(k);
 				if (target != NULL) 
-			    {
-			    	if (target == _root)
-			    		_root = nremove(_root);
-		    		else
-		    			nremove(target);
-		    		// --_size;
-		      		upd_end();
-		      		return true;
-		    	}
-		    	// upd_end();
-			    return false;
-		  	}
+				{
+					if (target == _root)
+						_root = nremove(_root);
+					else
+						nremove(target);
+					upd_end();
+					return true;
+				}
+				return false;
+			}
 
-		  	void remove(key_type k)	//THIS IS THE HANDLER
-		  	{
-		  			if (nremove(k))
-		  				--_size;
-		  	}
-		  	void remove(iterator start, iterator end)
-		  	{
-  				ft::vector<key_type> fuckyou;
+			void remove(key_type k)	//THIS IS THE HANDLER
+			{
+				if (nremove(k))
+					--_size;
+			}
+			void remove(iterator start, iterator end)
+			{
+				ft::vector<key_type> fuckyou;
 				int i = 0;
 				key_type tmp;
-				// std::cout << "FUCKING HERE\n";
 				iterator buff;
 				while (start != end)
 				{
 					tmp = start->first;
 					fuckyou.push_back(tmp);
 					++start;
-					i++;
+					++i;
 				}
-
 				for (int j = 0; j < i; j++)
-				{
 					remove(fuckyou[j]);
-				}
-		  	}
-		  	void erase(iterator pos)
-		  	{
-		  		remove(pos->first);
-		  	}
-		  	void erase(iterator first, iterator last)
-		  	{
-		  		remove(first, last);
-		  		upd_end();
-		  		return;
-		  	}
-		  	size_t erase (const key_type& k)
-		  	{
-		  		bool ret = (searchNode(k)) ? true : false;
-		  		remove(k);
-		  		return ret;
-		  	}
+			}
+			void erase(iterator pos)
+			{	remove(pos->first);		}
+			void erase(iterator first, iterator last)
+			{
+				remove(first, last);
+				upd_end();
+			}
+			
+			size_type erase (const key_type& k)
+			{
+				size_type ret = (searchNode(k)) ? 1 : 0;
+				if (ret)
+					remove(k);
+				return ret;
+			}
 
-		  	bool empty() const
-		  	{
-		  		return (_size == 0);
-		  	}
+			bool empty() const
+			{	return (_size == 0);	}
 
 			iterator begin()
 			{
@@ -671,14 +619,10 @@ namespace ft
 			}
 
 			iterator end()
-			{
-				return iterator(_end, _end, _comp);
-			}
+			{	return iterator(_end, _end, _comp);			}
 
 			const_iterator end() const
-			{
-				return const_iterator(_end, _end, _comp);
-			}
+			{	return const_iterator(_end, _end, _comp);	}
 
 			reverse_iterator rbegin()
 			{
@@ -697,14 +641,10 @@ namespace ft
 			}
 
 			reverse_iterator rend()
-			{
-				return reverse_iterator(_end, _end, _comp);
-			}
+			{	return reverse_iterator(_end, _end, _comp);	}
 
 			const_reverse_iterator rend() const
-			{
-				return const_reverse_iterator(_end, _end, _comp);
-			}
+			{	return const_reverse_iterator(_end, _end, _comp);}
 
 
 			mapped_type& operator[](const key_type& k)
@@ -718,51 +658,28 @@ namespace ft
 				return (tmp->data.second);
 			}
 
+			size_type count(const key_type &key) const
+			{	return (searchNode(key) != NULL);	}
 
+			size_type size() const
+			{	return _size;	}
+			size_type max_size() const
+			{	return _alloc.max_size();	}
 
-
-
-			size_t count(const Key &key) const	//REWORKED
-			{
-				if (_size == 0 || (searchNode(key) == 0))
-					return 0;
-				
-				// const_iterator t = begin();
-				// while (t->first < key)
-				// 	++t;
-				return 1;
-				// return (t->first == key);
-			}
-
-			size_t size() const
-			{
-				return _size;
-			}
-			size_t max_size() const
-			{
-				return _alloc.max_size();
-			}
-
-			void clear(Node *n)				//REWORKED SHOULD BE PRIVATE
+			Node *clear(Node *n)
 			{
 				if (n->left != NULL && n->left != _end)
-				{
-					clear(n->left);
-					n->left = 0;
-				}
+					n->left = clear(n->left);
 				if (n->right != NULL && n->right != _end)
-				{
-					clear(n->right);
-					n->right = 0;
-				}
+					n->right = clear(n->right);
 				delete n;
+				return NULL;
 			}
 
 			void clear()					//REWORKED
 			{
 				if (_size == 0 || _root == 0)
 					return ;
-				// std::cout << "Root is " << _root << std::endl;
 				clear(_root);
 				_size = 0;
 				_root = 0;
@@ -809,58 +726,44 @@ namespace ft
 			}
 
 			ft::pair<const_iterator, const_iterator> equal_range(const key_type &k) const
-			{
-				return ft::pair<const_iterator, const_iterator>(this->lower_bound(k), this->upper_bound(k));
-			}
+			{	return ft::pair<const_iterator, const_iterator>(this->lower_bound(k), this->upper_bound(k));	}
 
 			ft::pair<iterator, iterator> equal_range(const key_type &k)
-			{
-				return ft::pair<iterator, iterator>(this->lower_bound(k), this->upper_bound(k));
-			}
+			{	return ft::pair<iterator, iterator>(this->lower_bound(k), this->upper_bound(k));	}
 		
 			key_compare key_comp() const
-			{
-				return _comp;
-			}
+			{	return _comp;	}
 
 			value_compare value_comp() const
+			{	return value_compare(_comp);	}
+			iterator find (const key_type& k)
 			{
-				return value_compare(_comp);
+				Node *tmp = searchNode(k);
+				if (tmp)
+					return iterator(tmp, _end, _comp);
+				else
+					return end();
 			}
-		    iterator find (const key_type& k)
-		    {
-		    	Node *tmp = searchNode(k);
-		    	if (tmp)
-		    		return iterator(tmp, _end, _comp);
-		    	else
-		    		return end();
-		    }
 			const_iterator find (const key_type& k) const
 			{
-		    	Node *tmp = searchNode(k);
-		    	if (tmp)
-		    		return const_iterator(tmp, _end, _comp);
-		    	else
-		    		return end();
+				Node *tmp = searchNode(k);
+				if (tmp)
+					return const_iterator(tmp, _end, _comp);
+				else
+					return end();
 			}
 			class iterator
 			{
 				friend class map<key_type, mapped_type, Compare,Alloc>;
 				private :
-					
+			
+					typedef std::bidirectional_iterator_tag iterator_category;
+					typedef typename std::ptrdiff_t 		difference_type;
+					typedef typename map::value_type 		value_type;
+					typedef typename map::pointer 			pointer;
+					typedef typename map::reference 		reference;
+					typedef typename map::key_compare 		key_compare;					
 
-					typedef Key								key_type;
-					typedef Compare							key_compare;
-					typedef T								mapped_type;
-					
-					typedef ft::pair<key_type, mapped_type>	value_type;
-					typedef long int						difference_type;
-					typedef size_t							size_type;
-					typedef value_type&						reference;
-					typedef Node*							nodePtr;
-					// typedef std::bidirectional_iterator_tag                                     iterator_category;
-					// typedef typename chooseConst<B, value_type&, const value_type&>::type       reference;
-					// typedef typename chooseConst<B, value_type*, const value_type*>::type       pointer;
 					Node 		*_ptr;
 					Node 		*_end;
 					key_compare _comp;
@@ -879,8 +782,6 @@ namespace ft
 						_comp = assign._comp;
 						return *this;
 					}
-					Node *getNode()					//TODEL
-					{	return (_ptr);			}
 					reference operator*() const
 					{	return (_ptr->data);	}
 					value_type* operator->() const
@@ -896,7 +797,6 @@ namespace ft
 						if (_ptr == _end)
 							return *this;
 
-						// iterator tmp = *this;
 						if (_ptr->right != NULL)
 						{
 							if (_ptr->right->left == NULL || _ptr->right == _end)
@@ -916,9 +816,6 @@ namespace ft
 
 					iterator operator++(int)
 					{
-						// std::cout << "Current ptr is " << _ptr << std::endl;
-						// ft::map<Key, T, Compare, Alloc>::printnode(_ptr);
-						// std::cout << "Right is " << &(_ptr->right) << std::endl;
 						if (_ptr == _end)
 							return *this;
 
@@ -943,15 +840,9 @@ namespace ft
 					iterator &operator--()
 					{	
 						if (_ptr == _end)
-						{
 							_ptr = _end->right;
-							// return *this;
-						}
 						else if (_ptr == _end->left)
-						{
 							_ptr = _end;
-							// return *this;
-						}
 						else if (_ptr->left != NULL)
 						{
 							if (_ptr->left->right == NULL)
@@ -972,15 +863,9 @@ namespace ft
 					{
 						iterator tmp = *this;
 						if (_ptr == _end)
-						{
 							_ptr = _end->right;
-							// return *this;
-						}
 						else if (_ptr == _end->left)
-						{
 							_ptr = _end;
-							// return *this;
-						}
 						else if (_ptr->left != NULL)
 						{
 							if (_ptr->left->right == NULL)
@@ -1005,19 +890,15 @@ namespace ft
 				friend class map<key_type, mapped_type, Compare,Alloc>;
 				private :
 					
+					typedef std::bidirectional_iterator_tag iterator_category;
+					typedef typename std::ptrdiff_t 		difference_type;
+					typedef typename map::value_type 		value_type;
+					typedef typename map::pointer 			pointer;
+					typedef typename map::const_pointer		const_pointer;
+					typedef typename map::reference 		reference;
+					typedef typename map::const_reference 	const_reference;
+					typedef typename map::key_compare 		key_compare;
 
-					typedef Key								key_type;
-					typedef Compare							key_compare;
-					typedef T								mapped_type;
-					
-					typedef const ft::pair<key_type, mapped_type>	value_type;
-					typedef long int						difference_type;
-					typedef size_t							size_type;
-					typedef const value_type&						reference;
-					typedef const Node*							nodePtr;
-					// typedef std::bidirectional_iterator_tag                                     iterator_category;
-					// typedef typename chooseConst<B, value_type&, const value_type&>::type       reference;
-					// typedef typename chooseConst<B, value_type*, const value_type*>::type       pointer;
 					Node 		*_ptr;
 					Node 		*_end;
 					key_compare _comp;
@@ -1038,12 +919,10 @@ namespace ft
 						_comp = assign._comp;
 						return *this;
 					}
-					Node *getNode()					//TODEL
-					{	return (_ptr);			}
-					reference operator*() const
+					const_reference operator*() const
 					{	return (_ptr->data);	}
-					value_type* operator->() const
-					{	return &(_ptr->data);	}
+					const_pointer operator->() const
+					{	return &	(_ptr->data);	}
 					bool operator==(const const_iterator &__x) const
 					{	return _ptr == __x._ptr;	}
 
@@ -1097,15 +976,9 @@ namespace ft
 					const_iterator &operator--()
 					{	
 						if (_ptr == _end)
-						{
 							_ptr = _end->right;
-							// return *this;
-						}
 						else if (_ptr == _end->left)
-						{
 							_ptr = _end;
-							// return *this;
-						}
 						else if (_ptr->left != NULL)
 						{
 							if (_ptr->left->right == NULL)
@@ -1126,15 +999,9 @@ namespace ft
 					{
 						const_iterator tmp = *this;
 						if (_ptr == _end)
-						{
 							_ptr = _end->right;
-							// return *this;
-						}
 						else if (_ptr == _end->left)
-						{
 							_ptr = _end;
-							// return *this;
-						}
 						else if (_ptr->left != NULL)
 						{
 							if (_ptr->left->right == NULL)
@@ -1158,19 +1025,13 @@ namespace ft
 				friend class map<key_type, mapped_type, Compare,Alloc>;
 				private :
 					
+					typedef std::bidirectional_iterator_tag iterator_category;
+					typedef typename std::ptrdiff_t 		difference_type;
+					typedef typename map::value_type 		value_type;
+					typedef typename map::pointer 			pointer;
+					typedef typename map::reference 		reference;
+					typedef typename map::key_compare 		key_compare;					
 
-					typedef Key								key_type;
-					typedef Compare							key_compare;
-					typedef T								mapped_type;
-					
-					typedef ft::pair<key_type, mapped_type>	value_type;
-					typedef long int						difference_type;
-					typedef size_t							size_type;
-					typedef value_type&						reference;
-					typedef Node*							nodePtr;
-					// typedef std::bidirectional_reverse_iterator_tag                                     reverse_iterator_category;
-					// typedef typename chooseConst<B, value_type&, const value_type&>::type       reference;
-					// typedef typename chooseConst<B, value_type*, const value_type*>::type       pointer;
 					Node 		*_ptr;
 					Node 		*_end;
 					key_compare _comp;
@@ -1191,28 +1052,21 @@ namespace ft
 						_comp = assign._comp;
 						return *this;
 					}
-					Node *getNode()					//TODEL
-					{	return (_ptr);			}
 					reference operator*() const
 					{	return (_ptr->data);	}
-					value_type* operator->() const
+					pointer operator->() const
 					{	return &(_ptr->data);	}
 					bool operator==(const reverse_iterator &__x) const
 					{	return _ptr == __x._ptr;	}
-
 					bool operator!=(const reverse_iterator &__x) const
 					{	return _ptr != __x._ptr;	}
-
 					iterator base()
-					{
-						return (iterator(_ptr, _end, _comp));
-					}
+					{	return (iterator(_ptr, _end, _comp));	}
 					reverse_iterator &operator--()
 					{
 						if (_ptr == _end)
 							return *this;
 
-						// reverse_iterator tmp = *this;
 						if (_ptr->right != NULL)
 						{
 							if (_ptr->right->left == NULL || _ptr->right == _end)
@@ -1232,14 +1086,7 @@ namespace ft
 
 					reverse_iterator operator--(int)
 					{
-						// std::cout << "Current ptr is " << _ptr << std::endl;
-						// ft::map<Key, T, Compare, Alloc>::printnode(_ptr);
-						// std::cout << "Right is " << &(_ptr->right) << std::endl;
-					
-
 						reverse_iterator tmp = *this;
-						// if (_ptr == _end)
-						// 	return *this;
 						if (_ptr->right != NULL)
 						{
 							if (_ptr->right->left == NULL || _ptr->right == _end)
@@ -1260,15 +1107,9 @@ namespace ft
 					reverse_iterator &operator++()
 					{	
 						if (_ptr == _end)
-						{
 							_ptr = _end->right;
-							// return *this;
-						}
 						else if (_ptr == _end->left)
-						{
 							_ptr = _end;
-							// return *this;
-						}
 						else if (_ptr->left != NULL)
 						{
 							if (_ptr->left->right == NULL)
@@ -1289,15 +1130,9 @@ namespace ft
 					{
 						reverse_iterator tmp = *this;
 						if (_ptr == _end)
-						{
 							_ptr = _end->right;
-							// return *this;
-						}
 						else if (_ptr == _end->left)
-						{
 							_ptr = _end;
-							// return *this;
-						}
 						else if (_ptr->left != NULL)
 						{
 							if (_ptr->left->right == NULL)
@@ -1322,22 +1157,19 @@ namespace ft
 				friend class map<key_type, mapped_type, Compare,Alloc>;
 				private :
 					
-
-					typedef Key								key_type;
-					typedef Compare							key_compare;
-					typedef T								mapped_type;
+					typedef std::bidirectional_iterator_tag iterator_category;
+					typedef typename std::ptrdiff_t 		difference_type;
+					typedef typename map::value_type 		value_type;
+					typedef typename map::pointer 			pointer;
+					typedef typename map::reference 		reference;
+					typedef typename map::key_compare 		key_compare;
+					typedef typename map::const_pointer		const_pointer;
+					typedef typename map::const_reference 	const_reference;				
 					
-					typedef const ft::pair<key_type, mapped_type>	value_type;
-					typedef long int						difference_type;
-					typedef size_t							size_type;
-					typedef const value_type&						reference;
-					typedef const Node*							nodePtr;
-					// typedef std::bidirectional_iterator_tag                                     iterator_category;
-					// typedef typename chooseConst<B, value_type&, const value_type&>::type       reference;
-					// typedef typename chooseConst<B, value_type*, const value_type*>::type       pointer;
 					Node 		*_ptr;
 					Node 		*_end;
 					key_compare _comp;
+
 				public :
 
 					const_reverse_iterator(Node *ptr = 0, Node *end = 0, key_compare comp = Compare()) : _ptr(ptr), _end(end), _comp(comp)
@@ -1360,11 +1192,9 @@ namespace ft
 						_comp = assign._comp;
 						return *this;
 					}
-					Node *getNode()					//TODEL
-					{	return (_ptr);			}
-					reference operator*() const
+					const_reference operator*() const
 					{	return (_ptr->data);	}
-					value_type* operator->() const
+					const_pointer operator->() const
 					{	return &(_ptr->data);	}
 					bool operator==(const const_reverse_iterator &__x) const
 					{	return _ptr == __x._ptr;	}
@@ -1423,15 +1253,9 @@ namespace ft
 					const_reverse_iterator &operator++()
 					{	
 						if (_ptr == _end)
-						{
 							_ptr = _end->right;
-							// return *this;
-						}
 						else if (_ptr == _end->left)
-						{
 							_ptr = _end;
-							// return *this;
-						}
 						else if (_ptr->left != NULL)
 						{
 							if (_ptr->left->right == NULL)
@@ -1452,15 +1276,9 @@ namespace ft
 					{
 						const_reverse_iterator tmp = *this;
 						if (_ptr == _end)
-						{
 							_ptr = _end->right;
-							// return *this;
-						}
 						else if (_ptr == _end->left)
-						{
 							_ptr = _end;
-							// return *this;
-						}
 						else if (_ptr->left != NULL)
 						{
 							if (_ptr->left->right == NULL)
@@ -1479,17 +1297,6 @@ namespace ft
 					}
 			};
 
-
-
-
-
-
-
-
-
-
-
-
 	};
 	template <class Key, class T, class Compare, class Alloc>
 	bool operator==(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs)
@@ -1502,8 +1309,7 @@ namespace ft
 			{
 				if (*lit != *rit)
 					return false;
-				++lit;
-				++rit;
+				++lit;++rit;
 			}
 			return true;
 		}
@@ -1512,9 +1318,7 @@ namespace ft
 
 	template <class Key, class T, class Compare, class Alloc>
 	bool operator!=(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs)
-	{
-		return !(lhs == rhs);
-	}
+	{	return !(lhs == rhs);	}
 
 	template <class Key, class T, class Compare, class Alloc>
 	bool operator<(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs)
@@ -1528,35 +1332,26 @@ namespace ft
 				return false;
 			else if (*lit < *rit)
 				return true;
-			++lit;
-			++rit;
+			++lit;++rit;
 		}
 		return rit != rhs.end();
 	}
 
 	template <class Key, class T, class Compare, class Alloc>
 	bool operator<=(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs)
-	{
-		return !(rhs < lhs);
-	}
+	{	return !(rhs < lhs);	}
 
 	template <class Key, class T, class Compare, class Alloc>
 	bool operator>(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs)
-	{
-		return rhs < lhs;
-	}
+	{	return rhs < lhs;	}
 
 	template <class Key, class T, class Compare, class Alloc>
 	bool operator>=(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs)
-	{
-		return !(lhs < rhs);
-	}
+	{	return !(lhs < rhs);	}
 
 	template <class Key, class T, class Compare, class Alloc>
 	void swap(map<Key, T, Compare, Alloc> &x, map<Key, T, Compare, Alloc> &y)
-	{
-		x.swap(y);
-	}
+	{	x.swap(y);	}
 }
 
 
