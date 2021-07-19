@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 15:41:19 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/19 06:47:37 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/19 07:24:44 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include "tools.hpp"
 #include "vector.hpp"
+#include <vector>
 
 namespace ft
 {
@@ -300,6 +301,7 @@ namespace ft
 				DEBUG = 0;
 				_comp = m._comp;
 				_alloc = m._alloc;
+				_size = 0;
 				_end = new Node;
 				_root = NULL;
 				_end->parent = NULL;
@@ -596,11 +598,14 @@ namespace ft
 		  	{
   				ft::vector<key_type> fuckyou;
 				int i = 0;
+				key_type tmp;
 				// std::cout << "FUCKING HERE\n";
 				iterator buff;
 				while (start != end)
 				{
-					fuckyou.push_back((start++)->first);
+					tmp = start->first;
+					fuckyou.push_back(tmp);
+					++start;
 					i++;
 				}
 

@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/19 06:45:43 by user42           ###   ########.fr       */
+/*   Updated: 2021/07/19 07:25:14 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,16 @@ void pret(ft::pair<ft::map<int, char>::iterator, bool> ret)
 
 
 
-#define T1 int
-#define T2 std::string
-typedef ft::pair<const T1, T2> T3;
-typedef std::pair<const T1, T2> T4;
+std::string randstr(const size_t n)
+{
+	std::string ret;
+	static const char tab[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
+	ret.reserve(n);
+	for (size_t i = 0; i < n; ++i)
+		ret += tab[rand() % 61];
+	return ret;
+}
 
 void test()
 {
@@ -105,29 +111,26 @@ void test()
 	{
 		std::cout << (*it).first << '	' << (*it).second << std::endl;
 		++it;
+	}	ft::map<std::string, int>::reverse_iterator rit(m.rbegin());
+	while (rit != m.rend())
+	{
+		std::cout << (*rit).first << '	' << (*rit).second << std::endl;
+		++rit;
 	}
-	// std::cout << std::endl;
+	for (ft::map<std::string, int>::const_reverse_iterator crit = m.rbegin(); crit != m.rend(); ++crit)
+		std::cout << (*crit).first << '	' << (*crit).second << std::endl;
+	std::cout << std::endl;
 
-	// std::cout << std::endl;
+	std::cout << "m size == " << m.size() << std::endl;
 
-	// ft::map<std::string, int>::reverse_iterator rit(m.rbegin());
-	// while (rit != m.rend())
-	// {
-	// 	std::cout << (*rit).first << '	' << (*rit).second << std::endl;
-	// 	++rit;
-	// }
-	// for (ft::map<std::string, int>::const_reverse_iterator crit = m.rbegin(); crit != m.rend(); ++crit)
-	// 	std::cout << (*crit).first << '	' << (*crit).second << std::endl;
-	// std::cout << std::endl;
-
-	// std::cout << "m size == " << m.size() << std::endl;
+	mbis.erase(mbis.find("Z"), mbis.end());
 
 	// mbis.erase(mbis.find("D"), mbis.end());
-	// // m.erase(m.find("D"), m.find("Z"));
-	// // m.erase(m.find("B"), m.find("V"));
-	// // m.erase(m.find("A"), m.find("V"));
-	// // m.erase(m.find("Z"));
-	// // m.erase(m.find("A"));
+	// m.erase(m.find("D"), m.find("Z"));
+	// m.erase(m.find("B"), m.find("V"));
+	// m.erase(m.find("A"), m.find("V"));
+	// m.erase(m.find("Z"));
+	// m.erase(m.find("A"));
 	// m.erase(m.find("G"));
 	// m.erase(m.find("D"), m.find("R"));
 
@@ -155,8 +158,9 @@ void test()
 	// std::cout << "m size == " << m.size() << std::endl
 	// 		  << std::endl;
 
-	// for (int i = 0; i < 5000; ++i)
-	// 	m.insert(NS::make_pair<std::string, int>(randstr(rand() % 17 + 1), rand() % 1024));
+
+	// for (int i = 0; i < 1000; ++i)
+	// 	m.insert(ft::make_pair<std::string, int>(randstr(rand() % 17 + 1), rand() % 1024));
 
 	// NS::map<std::string, int>::const_iterator cit(m.begin());
 	// while (cit != m.end())
@@ -168,12 +172,26 @@ void test()
 
 }
 
+void vectest()
+{
+	ft::vector<int> test;
+	test.push_back(5);
+	test.push_back(5);
+	test.push_back(5);
+	test.push_back(5);
+	test.push_back(5);
+	test.push_back(5);
+	test.push_back(5);
+	test.push_back(5);
+}
 
 int main()
 {
 
-	// test();
-	// return 0;
+	// vectest();
+	test();
+
+	return 0;
 
 	ft::map<int, char> custom;
 
