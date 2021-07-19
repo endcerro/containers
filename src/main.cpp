@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/19 02:03:14 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/19 03:12:54 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,24 +137,47 @@ int main()
 	ft::map<int, char> custom;
 	std::map<int, char> base;
 
-	test();
-	return 0;
+	// test();
+	// return 0;
 	// custom[0] = 'a';
 	// custom[1] = 'b';
 	// custom[2] = 'c';
 	// custom[3] = 'd';
 
-	custom.insert(ft::pair<int, char>(5, 'a'));
-	custom.insert(ft::pair<int, char>(2, 'a'));
-	custom.insert(ft::pair<int, char>(6, 'a'));
-	custom.insert(ft::pair<int, char>(7, 'a'));
-	custom.insert(ft::pair<int, char>(8, 'a'));
-	custom.insert(ft::pair<int, char>(1, 'a'));
-	custom.insert(ft::pair<int, char>(9, 'a'));
-	custom.insert(ft::pair<int, char>(10, 'a'));
-	custom.insert(ft::pair<int, char>(3, 'a'));
-	custom.insert(ft::pair<int, char>(4, 'a'));
+	custom.insert(ft::make_pair(5, 'a'));
+	custom.insert(ft::make_pair(2, 'a'));
+	custom.insert(ft::make_pair(6, 'a'));
+	custom.insert(ft::make_pair(7, 'a'));
+	custom.insert(ft::make_pair(8, 'a'));
+	custom.insert(ft::make_pair(1, 'a'));
+	custom.insert(ft::make_pair(9, 'a'));
+	custom.insert(ft::make_pair(10, 'a'));
+	custom.insert(ft::make_pair(3, 'a'));
+	custom.insert(ft::make_pair(4, 'a'));
 
+	base.insert(std::pair<int, char>(5, 'a'));
+	base.insert(std::pair<int, char>(2, 'a'));
+	base.insert(std::pair<int, char>(6, 'a'));
+	base.insert(std::pair<int, char>(7, 'a'));
+	base.insert(std::pair<int, char>(8, 'a'));
+	base.insert(std::pair<int, char>(1, 'a'));
+	base.insert(std::pair<int, char>(9, 'a'));
+	base.insert(std::pair<int, char>(10, 'a'));
+	base.insert(std::pair<int, char>(3, 'a'));
+	base.insert(std::pair<int, char>(4, 'a'));
+
+
+	ft::map<int, char>::iterator cit = custom.begin();
+	std::map<int, char>::iterator bit = base.begin();
+
+	std::cout << cit->first << std::endl;
+	std::cout << bit->first << std::endl; 
+
+	ft::map<int, char>::iterator rcit(cit);// = cit;
+	std::map<int, char>::iterator rbit(bit);// = base.begin();
+
+	std::cout << rcit->first << std::endl;
+	std::cout << rbit->first << std::endl; 
 
 	// custom.nremove(4);
 	// custom.nremove(5);
@@ -164,19 +187,19 @@ int main()
 
 	// custom.nremove(4);
 
-	custom.printtest(custom.groot());
+	// custom.printtest(custom.groot());
 	
-	std::cout << "----------------\n";
+	// std::cout << "----------------\n";
 
-	// custom.setdbg(true);
+	// // custom.setdbg(true);
 	
-	// for(ft::map<int, char>::iterator i = custom.end(); i != custom.begin(); i--)
-	// {
-	// 	std::cout << i->first << "|"<< i->second<< std::endl;
-	// 	// std::cout << (*i).first << std::endl;
-	// }
+	// // for(ft::map<int, char>::iterator i = custom.end(); i != custom.begin(); i--)
+	// // {
+	// // 	std::cout << i->first << "|"<< i->second<< std::endl;
+	// // 	// std::cout << (*i).first << std::endl;
+	// // }
 
-	ft::map<int, char>::iterator i = custom.end();
+	// ft::map<int, char>::iterator i = custom.end();
 	
 
 	// while(--i != custom.end())

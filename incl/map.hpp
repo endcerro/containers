@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 15:41:19 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/19 02:59:34 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/19 03:19:29 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ namespace ft
 			typedef Compare key_compare;
 			class iterator;
 			class const_iterator;
+			class reverse_iterator;
+			class const_reverse_iterator;
 			class value_compare : public ft::binary_function<value_type, value_type, bool>
 			{
 				friend class map;
@@ -429,7 +431,7 @@ namespace ft
 			}
 
 
-			pair<iterator,bool> insert (const value_type& val)
+			pair<iterator,bool> insert (const value_type val)
 			{
 				pair<iterator, bool> ret;
 				Node *tmp = searchNode(_root, val.first);
@@ -646,6 +648,32 @@ namespace ft
 			const_iterator end() const
 			{
 				return const_iterator(_end, _end, _comp);
+			}
+
+			reverse_iterator rbegin()
+			{
+				if (_root != NULL)
+					return reverse_iterator(_end->right ,_end, _comp);
+				else
+					return rend();
+			}
+
+			const_reverse_iterator rbegin() const
+			{
+				if (_root != NULL)
+					return const_reverse_iterator(_end->right ,_end, _comp);
+				else
+					return rend();
+			}
+
+			reverse_iterator rend()
+			{
+				return reverse_iterator(_end, _end, _comp);
+			}
+
+			const_reverse_iterator rend() const
+			{
+				return const_reverse_iterator(_end, _end, _comp);
 			}
 
 
@@ -1145,6 +1173,10 @@ namespace ft
 					bool operator!=(const reverse_iterator &__x) const
 					{	return _ptr != __x._ptr;	}
 
+					iterator base()
+					{
+						return (iterator(_ptr, _end, _comp));
+					}
 					reverse_iterator &operator--()
 					{
 						if (_ptr == _end)
@@ -1173,10 +1205,11 @@ namespace ft
 						// std::cout << "Current ptr is " << _ptr << std::endl;
 						// ft::map<Key, T, Compare, Alloc>::printnode(_ptr);
 						// std::cout << "Right is " << &(_ptr->right) << std::endl;
-						if (_ptr == _end)
-							return *this;
+					
 
 						reverse_iterator tmp = *this;
+						// if (_ptr == _end)
+						// 	return *this;
 						if (_ptr->right != NULL)
 						{
 							if (_ptr->right->left == NULL || _ptr->right == _end)
@@ -1279,7 +1312,7 @@ namespace ft
 
 					const_reverse_iterator(Node *ptr = 0, Node *end = 0, key_compare comp = Compare()) : _ptr(ptr), _end(end), _comp(comp)
 					{ }
-					const_reverse_iterator(reverse_iterator &it) : _ptr(it._ptr), _end(it._end), _comp(it._comp)
+					const_reverse_iterator(reverse_iterator it) : _ptr(it._ptr), _end(it._end), _comp(it._comp)
 					{ }
 					const_reverse_iterator(const_iterator &i) : _ptr(i._ptr), _end(i._end), _comp(i._comp)
 					{ }
@@ -1330,7 +1363,10 @@ namespace ft
 						}
 						return *this;
 					}
-
+					const_iterator base()
+					{
+						return (const_iterator(_ptr, _end, _comp));
+					}
 					const_reverse_iterator operator--(int)
 					{
 						if (_ptr == _end)
