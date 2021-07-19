@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:55:26 by hpottier          #+#    #+#             */
-/*   Updated: 2021/07/04 20:26:52 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/19 03:35:33 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "../incl/vector.hpp"
 #include "../incl/stack.hpp"
 // #include "queue.hpp"
-// #include "map.hpp"
+#include "../incl/map.hpp"
 #include <list>
 #include <vector>
 #include <map>
@@ -208,92 +208,92 @@ void lst_testeur()
 	std::cout << std::endl;
 }
 
-// void map_testeur()
-// {
-// 	NS::map<std::string, int> m;
+void map_testeur()
+{
+	NS::map<std::string, int> m;
 
-// 	m.insert(NS::make_pair<std::string, int>("D", 42));
-// 	m.insert(NS::make_pair<std::string, int>("V", -15));
-// 	m.insert(NS::make_pair<std::string, int>("E", 684));
-// 	m.insert(NS::make_pair<std::string, int>("A", -43518));
-// 	m.insert(NS::make_pair<std::string, int>("B", -4215));
-// 	m.insert(NS::make_pair<std::string, int>("Z", 6871));
-// 	m.insert(NS::make_pair<std::string, int>("G", 0));
-// 	m.insert(NS::make_pair<std::string, int>("R", -15));
-// 	m.insert(NS::make_pair<std::string, int>("T", 68768415));
-// 	m.insert(NS::make_pair<std::string, int>("U", -144));
-// 	m.insert(NS::make_pair<std::string, int>("H", -7852));
+	m.insert(NS::make_pair<std::string, int>("D", 42));
+	m.insert(NS::make_pair<std::string, int>("V", -15));
+	m.insert(NS::make_pair<std::string, int>("E", 684));
+	m.insert(NS::make_pair<std::string, int>("A", -43518));
+	m.insert(NS::make_pair<std::string, int>("B", -4215));
+	m.insert(NS::make_pair<std::string, int>("Z", 6871));
+	m.insert(NS::make_pair<std::string, int>("G", 0));
+	m.insert(NS::make_pair<std::string, int>("R", -15));
+	m.insert(NS::make_pair<std::string, int>("T", 68768415));
+	m.insert(NS::make_pair<std::string, int>("U", -144));
+	m.insert(NS::make_pair<std::string, int>("H", -7852));
 
-// 	NS::map<std::string, int> mbis(m);
+	NS::map<std::string, int> mbis(m);
 
-// 	NS::map<std::string, int>::iterator it(m.insert(NS::make_pair<std::string, int>("E", 123)).first);
-// 	std::cout << (*it).second << std::endl
-// 			  << std::endl;
+	NS::map<std::string, int>::iterator it(m.insert(NS::make_pair<std::string, int>("E", 123)).first);
+	std::cout << (*it).second << std::endl
+			  << std::endl;
 
-// 	it = m.begin();
-// 	while (it != m.end())
-// 	{
-// 		std::cout << (*it).first << '	' << (*it).second << std::endl;
-// 		++it;
-// 	}
-// 	std::cout << std::endl;
+	it = m.begin();
+	while (it != m.end())
+	{
+		std::cout << (*it).first << '	' << (*it).second << std::endl;
+		++it;
+	}
+	std::cout << std::endl;
 
-// 	NS::map<std::string, int>::reverse_iterator rit(m.rbegin());
-// 	while (rit != m.rend())
-// 	{
-// 		std::cout << (*rit).first << '	' << (*rit).second << std::endl;
-// 		++rit;
-// 	}
-// 	for (NS::map<std::string, int>::const_reverse_iterator crit = m.rbegin(); crit != m.rend(); ++crit)
-// 		std::cout << (*crit).first << '	' << (*crit).second << std::endl;
-// 	std::cout << std::endl;
+	NS::map<std::string, int>::reverse_iterator rit(m.rbegin());
+	while (rit != m.rend())
+	{
+		std::cout << (*rit).first << '	' << (*rit).second << std::endl;
+		++rit;
+	}
+	for (NS::map<std::string, int>::const_reverse_iterator crit = m.rbegin(); crit != m.rend(); ++crit)
+		std::cout << (*crit).first << '	' << (*crit).second << std::endl;
+	std::cout << std::endl;
 
-// 	std::cout << "m size == " << m.size() << std::endl;
+	std::cout << "m size == " << m.size() << std::endl;
 
-// 	mbis.erase(mbis.find("D"), mbis.end());
-// 	// m.erase(m.find("D"), m.find("Z"));
-// 	// m.erase(m.find("B"), m.find("V"));
-// 	// m.erase(m.find("A"), m.find("V"));
-// 	// m.erase(m.find("Z"));
-// 	// m.erase(m.find("A"));
-// 	m.erase(m.find("G"));
-// 	m.erase(m.find("D"), m.find("R"));
+	mbis.erase(mbis.find("D"), mbis.end());
+	// m.erase(m.find("D"), m.find("Z"));
+	// m.erase(m.find("B"), m.find("V"));
+	// m.erase(m.find("A"), m.find("V"));
+	// m.erase(m.find("Z"));
+	// m.erase(m.find("A"));
+	m.erase(m.find("G"));
+	m.erase(m.find("D"), m.find("R"));
 
-// 	std::cout << (*m.upper_bound("T")).first << std::endl;
-// 	std::cout << (*m.lower_bound("T")).first << std::endl;
-// 	std::cout << std::endl;
+	std::cout << (*m.upper_bound("T")).first << std::endl;
+	std::cout << (*m.lower_bound("T")).first << std::endl;
+	std::cout << std::endl;
 
-// 	m["N"] = 58;
-// 	m["N"] = 332;
+	m["N"] = 58;
+	m["N"] = 332;
 
-// 	it = m.end();
-// 	while (--it != m.begin())
-// 		std::cout << (*it).first << '	' << (*it).second << std::endl;
-// 	std::cout << (*it).first << '	' << (*it).second << std::endl;
+	it = m.end();
+	while (--it != m.begin())
+		std::cout << (*it).first << '	' << (*it).second << std::endl;
+	std::cout << (*it).first << '	' << (*it).second << std::endl;
 
-// 	it = mbis.end();
-// 	while (--it != mbis.begin())
-// 		std::cout << (*it).first << '	' << (*it).second << std::endl;
-// 	std::cout << (*it).first << '	' << (*it).second << std::endl;
+	it = mbis.end();
+	while (--it != mbis.begin())
+		std::cout << (*it).first << '	' << (*it).second << std::endl;
+	std::cout << (*it).first << '	' << (*it).second << std::endl;
 
-// 	std::cout << "m size == " << m.size() << std::endl;
+	std::cout << "m size == " << m.size() << std::endl;
 
-// 	// m.clear();
-// 	m.erase(m.begin(), m.end());
-// 	std::cout << "m size == " << m.size() << std::endl
-// 			  << std::endl;
+	// m.clear();
+	m.erase(m.begin(), m.end());
+	std::cout << "m size == " << m.size() << std::endl
+			  << std::endl;
 
-// 	for (int i = 0; i < 5000; ++i)
-// 		m.insert(NS::make_pair<std::string, int>(randstr(rand() % 17 + 1), rand() % 1024));
+	for (int i = 0; i < 5000; ++i)
+		m.insert(NS::make_pair<std::string, int>(randstr(rand() % 17 + 1), rand() % 1024));
 
-// 	NS::map<std::string, int>::const_iterator cit(m.begin());
-// 	while (cit != m.end())
-// 	{
-// 		std::cout << (*cit).first << '	' << (*cit).second << std::endl;
-// 		++cit;
-// 	}
-// 	std::cout << std::endl;
-// }
+	NS::map<std::string, int>::const_iterator cit(m.begin());
+	while (cit != m.end())
+	{
+		std::cout << (*cit).first << '	' << (*cit).second << std::endl;
+		++cit;
+	}
+	std::cout << std::endl;
+}
 
 void vector_testeur()
 {
@@ -488,10 +488,10 @@ void stack_testeur()
 int main()
 {
 	// srand(clock());
-	lst_testeur();
-	// map_testeur();
-	vector_testeur();
-	stack_testeur();
+	// lst_testeur();
+	map_testeur();
+	// vector_testeur();
+	// stack_testeur();
 	// queue_testeur();
 	std::cout << std::endl;
 }
