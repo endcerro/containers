@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 15:41:19 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/19 02:44:27 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/19 02:59:34 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -304,6 +304,24 @@ namespace ft
 			{	
 				clear();
 				delete _end;
+			}
+			void swap(map &x)
+			{
+				Node *tmp_node = _end;
+				_end = x._end;
+				x._end = tmp_node;
+
+				tmp_node = _root;
+				_root = x._root;
+				x._root = tmp_node;
+
+				size_t tmp_size = _size;
+				_size = x._size;
+				x._size = tmp_size;
+
+				key_compare tmp_comp = _comp;
+				_comp = x._comp;
+				x._comp = tmp_comp;
 			}
 
 			void setdbg(bool set)
@@ -1077,7 +1095,401 @@ namespace ft
 					}
 			};
 
+			class reverse_iterator
+			{
+				friend class map<key_type, mapped_type, Compare,Alloc>;
+				private :
+					
+
+					typedef Key								key_type;
+					typedef Compare							key_compare;
+					typedef T								mapped_type;
+					
+					typedef ft::pair<key_type, mapped_type>	value_type;
+					typedef long int						difference_type;
+					typedef size_t							size_type;
+					typedef value_type&						reference;
+					typedef Node*							nodePtr;
+					// typedef std::bidirectional_reverse_iterator_tag                                     reverse_iterator_category;
+					// typedef typename chooseConst<B, value_type&, const value_type&>::type       reference;
+					// typedef typename chooseConst<B, value_type*, const value_type*>::type       pointer;
+					Node 		*_ptr;
+					Node 		*_end;
+					key_compare _comp;
+				public :
+
+					reverse_iterator(Node *ptr = 0, Node *end = 0, key_compare comp = Compare()) : _ptr(ptr), _end(end), _comp(comp)
+					{ }
+					reverse_iterator(iterator &it) : _ptr(it._ptr), _end(it._end), _comp(it._comp)
+					{ }
+					~reverse_iterator()
+					{ }
+					reverse_iterator& operator=(const reverse_iterator& assign)
+					{
+						if (this == &assign)
+							return *this;
+						_ptr = assign._ptr;
+						_end = assign._end;
+						_comp = assign._comp;
+						return *this;
+					}
+					Node *getNode()					//TODEL
+					{	return (_ptr);			}
+					reference operator*() const
+					{	return (_ptr->data);	}
+					value_type* operator->() const
+					{	return &(_ptr->data);	}
+					bool operator==(const reverse_iterator &__x) const
+					{	return _ptr == __x._ptr;	}
+
+					bool operator!=(const reverse_iterator &__x) const
+					{	return _ptr != __x._ptr;	}
+
+					reverse_iterator &operator--()
+					{
+						if (_ptr == _end)
+							return *this;
+
+						// reverse_iterator tmp = *this;
+						if (_ptr->right != NULL)
+						{
+							if (_ptr->right->left == NULL || _ptr->right == _end)
+								_ptr = _ptr->right;
+							else
+								_ptr = ft::map<Key, T, Compare, Alloc>::getleftmostnode(_ptr->right, _end);
+						}
+						else if (_ptr->parent != NULL)
+						{
+							Node *og = _ptr;
+							_ptr = _ptr->parent;
+							while (_comp(og->data.first, _ptr->data.first) == false)
+								_ptr = _ptr->parent;
+						}
+						return *this;
+					}
+
+					reverse_iterator operator--(int)
+					{
+						// std::cout << "Current ptr is " << _ptr << std::endl;
+						// ft::map<Key, T, Compare, Alloc>::printnode(_ptr);
+						// std::cout << "Right is " << &(_ptr->right) << std::endl;
+						if (_ptr == _end)
+							return *this;
+
+						reverse_iterator tmp = *this;
+						if (_ptr->right != NULL)
+						{
+							if (_ptr->right->left == NULL || _ptr->right == _end)
+								_ptr = _ptr->right;
+							else
+								_ptr = ft::map<Key, T, Compare, Alloc>::getleftmostnode(_ptr->right, _end);
+						}
+						else if (_ptr->parent != NULL)
+						{
+							Node *og = _ptr;
+							_ptr = _ptr->parent;
+							while (_comp(og->data.first, _ptr->data.first) == false)
+								_ptr = _ptr->parent;
+						}
+						return tmp;
+					}
+
+					reverse_iterator &operator++()
+					{	
+						if (_ptr == _end)
+						{
+							_ptr = _end->right;
+							// return *this;
+						}
+						else if (_ptr == _end->left)
+						{
+							_ptr = _end;
+							// return *this;
+						}
+						else if (_ptr->left != NULL)
+						{
+							if (_ptr->left->right == NULL)
+								_ptr = _ptr->left;
+							else
+								_ptr = ft::map<Key, T, Compare, Alloc>::getrightmostnode(_ptr->left, _end);
+						}
+						else if (_ptr->parent != NULL)
+						{
+							Node *og = _ptr;
+							_ptr = _ptr->parent;
+							while (_comp(_ptr->data.first, og->data.first) == false)
+								_ptr = _ptr->parent;
+						}
+						return *this;
+					}
+					reverse_iterator operator++(int)
+					{
+						reverse_iterator tmp = *this;
+						if (_ptr == _end)
+						{
+							_ptr = _end->right;
+							// return *this;
+						}
+						else if (_ptr == _end->left)
+						{
+							_ptr = _end;
+							// return *this;
+						}
+						else if (_ptr->left != NULL)
+						{
+							if (_ptr->left->right == NULL)
+								_ptr = _ptr->left;
+							else
+								_ptr = ft::map<Key, T, Compare, Alloc>::getrightmostnode(_ptr->left, _end);
+						}
+						else if (_ptr->parent != NULL)
+						{
+							Node *og = _ptr;
+							_ptr = _ptr->parent;
+							while (_comp(_ptr->data.first, og->data.first) == false)
+								_ptr = _ptr->parent;
+						}
+						return tmp;
+					}
+
+
+			};
+			class const_reverse_iterator
+			{
+				friend class map<key_type, mapped_type, Compare,Alloc>;
+				private :
+					
+
+					typedef Key								key_type;
+					typedef Compare							key_compare;
+					typedef T								mapped_type;
+					
+					typedef const ft::pair<key_type, mapped_type>	value_type;
+					typedef long int						difference_type;
+					typedef size_t							size_type;
+					typedef const value_type&						reference;
+					typedef const Node*							nodePtr;
+					// typedef std::bidirectional_iterator_tag                                     iterator_category;
+					// typedef typename chooseConst<B, value_type&, const value_type&>::type       reference;
+					// typedef typename chooseConst<B, value_type*, const value_type*>::type       pointer;
+					Node 		*_ptr;
+					Node 		*_end;
+					key_compare _comp;
+				public :
+
+					const_reverse_iterator(Node *ptr = 0, Node *end = 0, key_compare comp = Compare()) : _ptr(ptr), _end(end), _comp(comp)
+					{ }
+					const_reverse_iterator(reverse_iterator &it) : _ptr(it._ptr), _end(it._end), _comp(it._comp)
+					{ }
+					const_reverse_iterator(const_iterator &i) : _ptr(i._ptr), _end(i._end), _comp(i._comp)
+					{ }
+					const_reverse_iterator(iterator &i) : _ptr(i._ptr), _end(i._end), _comp(i._comp)
+					{ }
+					
+					~const_reverse_iterator()
+					{ }
+					const_reverse_iterator& operator=(const const_reverse_iterator& assign)
+					{
+						if (this == &assign)
+							return *this;
+						_ptr = assign._ptr;
+						_end = assign._end;
+						_comp = assign._comp;
+						return *this;
+					}
+					Node *getNode()					//TODEL
+					{	return (_ptr);			}
+					reference operator*() const
+					{	return (_ptr->data);	}
+					value_type* operator->() const
+					{	return &(_ptr->data);	}
+					bool operator==(const const_reverse_iterator &__x) const
+					{	return _ptr == __x._ptr;	}
+
+					bool operator!=(const const_reverse_iterator &__x) const
+					{	return _ptr != __x._ptr;	}
+
+					const_reverse_iterator &operator--()
+					{
+						if (_ptr == _end)
+							return *this;
+
+						if (_ptr->right != NULL)
+						{
+							if (_ptr->right->left == NULL || _ptr->right == _end)
+								_ptr = _ptr->right;
+							else
+								_ptr = ft::map<Key, T, Compare, Alloc>::getleftmostnode(_ptr->right, _end);
+						}
+						else if (_ptr->parent != NULL)
+						{
+							Node *og = _ptr;
+							_ptr = _ptr->parent;
+							while (_comp(og->data.first, _ptr->data.first) == false)
+								_ptr = _ptr->parent;
+						}
+						return *this;
+					}
+
+					const_reverse_iterator operator--(int)
+					{
+						if (_ptr == _end)
+							return *this;
+
+						const_reverse_iterator tmp = *this;
+						if (_ptr->right != NULL)
+						{
+							if (_ptr->right->left == NULL || _ptr->right == _end)
+								_ptr = _ptr->right;
+							else
+								_ptr = ft::map<Key, T, Compare, Alloc>::getleftmostnode(_ptr->right, _end);
+						}
+						else if (_ptr->parent != NULL)
+						{
+							Node *og = _ptr;
+							_ptr = _ptr->parent;
+							while (_comp(og->data.first, _ptr->data.first) == false)
+								_ptr = _ptr->parent;
+						}
+						return tmp;
+					}
+					const_reverse_iterator &operator++()
+					{	
+						if (_ptr == _end)
+						{
+							_ptr = _end->right;
+							// return *this;
+						}
+						else if (_ptr == _end->left)
+						{
+							_ptr = _end;
+							// return *this;
+						}
+						else if (_ptr->left != NULL)
+						{
+							if (_ptr->left->right == NULL)
+								_ptr = _ptr->left;
+							else
+								_ptr = ft::map<Key, T, Compare, Alloc>::getrightmostnode(_ptr->left, _end);
+						}
+						else if (_ptr->parent != NULL)
+						{
+							Node *og = _ptr;
+							_ptr = _ptr->parent;
+							while (_comp(_ptr->data.first, og->data.first) == false)
+								_ptr = _ptr->parent;
+						}
+						return *this;
+					}
+					const_reverse_iterator operator++(int)
+					{
+						const_reverse_iterator tmp = *this;
+						if (_ptr == _end)
+						{
+							_ptr = _end->right;
+							// return *this;
+						}
+						else if (_ptr == _end->left)
+						{
+							_ptr = _end;
+							// return *this;
+						}
+						else if (_ptr->left != NULL)
+						{
+							if (_ptr->left->right == NULL)
+								_ptr = _ptr->left;
+							else
+								_ptr = ft::map<Key, T, Compare, Alloc>::getrightmostnode(_ptr->left, _end);
+						}
+						else if (_ptr->parent != NULL)
+						{
+							Node *og = _ptr;
+							_ptr = _ptr->parent;
+							while (_comp(_ptr->data.first, og->data.first) == false)
+								_ptr = _ptr->parent;
+						}
+						return tmp;
+					}
+			};
+
+
+
+
+
+
+
+
+
+
+
+
 	};
+	template <class Key, class T, class Compare, class Alloc>
+	bool operator==(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs)
+	{
+		if (lhs.size() == rhs.size())
+		{
+			typename map<Key, T, Compare, Alloc>::const_iterator lit(lhs.begin());
+			typename map<Key, T, Compare, Alloc>::const_iterator rit(rhs.begin());
+			while (lit != lhs.end())
+			{
+				if (*lit != *rit)
+					return false;
+				++lit;
+				++rit;
+			}
+			return true;
+		}
+		return false;
+	}
+
+	template <class Key, class T, class Compare, class Alloc>
+	bool operator!=(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs)
+	{
+		return !(lhs == rhs);
+	}
+
+	template <class Key, class T, class Compare, class Alloc>
+	bool operator<(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs)
+	{
+		typename map<Key, T, Compare, Alloc>::const_iterator lit = lhs.begin();
+		typename map<Key, T, Compare, Alloc>::const_iterator rit = rhs.begin();
+
+		while (lit != lhs.end())
+		{
+			if (rit == rhs.end() || *rit < *lit)
+				return false;
+			else if (*lit < *rit)
+				return true;
+			++lit;
+			++rit;
+		}
+		return rit != rhs.end();
+	}
+
+	template <class Key, class T, class Compare, class Alloc>
+	bool operator<=(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs)
+	{
+		return !(rhs < lhs);
+	}
+
+	template <class Key, class T, class Compare, class Alloc>
+	bool operator>(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs)
+	{
+		return rhs < lhs;
+	}
+
+	template <class Key, class T, class Compare, class Alloc>
+	bool operator>=(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs)
+	{
+		return !(lhs < rhs);
+	}
+
+	template <class Key, class T, class Compare, class Alloc>
+	void swap(map<Key, T, Compare, Alloc> &x, map<Key, T, Compare, Alloc> &y)
+	{
+		x.swap(y);
+	}
 }
 
 
