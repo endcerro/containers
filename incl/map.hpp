@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 15:41:19 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/19 07:41:47 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/19 08:47:18 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,27 +157,32 @@ namespace ft
 				return curr;
 			}
 
-			static Node *getNext(Node *n, Node *end)
+			void n_lrot(Node *target)
 			{
-				if (n->right == end)
-					return end;
-				if (n->right != NULL && n->right != end)//)
-					return getleftmostnode(n->right, end);
-			 
-				while (n->parent != NULL && n->parent != end && n == n->parent->right)
-					n = n->parent;
-				return n->parent;               
+				Node *parent = target->parent;
 			}
 
-			static Node *getPrev(Node *n, Node *end)
-			{
-				if (n->left != NULL && n->left != end)
-					return getrightmostnode(n->left, end);
+			// static Node *getNext(Node *n, Node *end)
+			// {
+			// 	if (n->right == end)
+			// 		return end;
+			// 	if (n->right != NULL && n->right != end)//)
+			// 		return getleftmostnode(n->right, end);
 			 
-				while (n->parent != NULL && n->parent != end && n == n->parent->left)
-					n = n->parent;
-				return n->parent;
-			}
+			// 	while (n->parent != NULL && n->parent != end && n == n->parent->right)
+			// 		n = n->parent;
+			// 	return n->parent;               
+			// }
+
+			// static Node *getPrev(Node *n, Node *end)
+			// {
+			// 	if (n->left != NULL && n->left != end)
+			// 		return getrightmostnode(n->left, end);
+			 
+			// 	while (n->parent != NULL && n->parent != end && n == n->parent->left)
+			// 		n = n->parent;
+			// 	return n->parent;
+			// }
 			// Node *rotate_left(Node *node)
 			// {
 			//     Node *newParent = node->right;
@@ -272,6 +277,7 @@ namespace ft
 
 			void update(Node *node) 
 			{
+				static_cast<void>(node);
     			// if (node == NULL)
     			// 	return;
     			// // std::cout << "Node addr is " << node << std::endl;
