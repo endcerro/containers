@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 15:41:19 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/19 06:45:14 by user42           ###   ########.fr       */
+/*   Updated: 2021/07/19 06:47:37 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -261,7 +261,7 @@ namespace ft
 			{
     			if (node == NULL)
     				return;
-    			std::cout << "Node addr is " << node << std::endl;
+    			// std::cout << "Node addr is " << node << std::endl;
     			int leftNodeHeight = (node->left == NULL || node->left == _end) ? -1 : node->left->height;
     			int rightNodeHeight = (node->right == NULL || node->right == _end) ? -1 : node->right->height;
 
