@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/19 07:25:14 by user42           ###   ########.fr       */
+/*   Updated: 2021/07/19 07:36:03 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,42 +125,42 @@ void test()
 
 	mbis.erase(mbis.find("Z"), mbis.end());
 
-	// mbis.erase(mbis.find("D"), mbis.end());
-	// m.erase(m.find("D"), m.find("Z"));
-	// m.erase(m.find("B"), m.find("V"));
-	// m.erase(m.find("A"), m.find("V"));
-	// m.erase(m.find("Z"));
-	// m.erase(m.find("A"));
-	// m.erase(m.find("G"));
-	// m.erase(m.find("D"), m.find("R"));
+	mbis.erase(mbis.find("D"), mbis.end());
+	m.erase(m.find("D"), m.find("Z"));
+	m.erase(m.find("B"), m.find("V"));
+	m.erase(m.find("A"), m.find("V"));
+	m.erase(m.find("Z"));
+	m.erase(m.find("A"));
+	m.erase(m.find("G"));
+	m.erase(m.find("D"), m.find("R"));
 
-	// std::cout << (*m.upper_bound("T")).first << std::endl;
-	// std::cout << (*m.lower_bound("T")).first << std::endl;
-	// std::cout << std::endl;
+	std::cout << (*m.upper_bound("T")).first << std::endl;
+	std::cout << (*m.lower_bound("T")).first << std::endl;
+	std::cout << std::endl;
 
-	// m["N"] = 58;
-	// m["N"] = 332;
+	m["N"] = 58;
+	m["N"] = 332;
 
-	// it = m.end();
-	// while (--it != m.begin())
-	// 	std::cout << (*it).first << '	' << (*it).second << std::endl;
-	// std::cout << (*it).first << '	' << (*it).second << std::endl;
+	it = m.end();
+	while (--it != m.begin())
+		std::cout << (*it).first << '	' << (*it).second << std::endl;
+	std::cout << (*it).first << '	' << (*it).second << std::endl;
 
-	// it = mbis.end();
-	// while (--it != mbis.begin())
-	// 	std::cout << (*it).first << '	' << (*it).second << std::endl;
-	// std::cout << (*it).first << '	' << (*it).second << std::endl;
+	it = mbis.end();
+	while (--it != mbis.begin())
+		std::cout << (*it).first << '	' << (*it).second << std::endl;
+	std::cout << (*it).first << '	' << (*it).second << std::endl;
 
-	// std::cout << "m size == " << m.size() << std::endl;
+	std::cout << "m size == " << m.size() << std::endl;
 
-	// // m.clear();
-	// m.erase(m.begin(), m.end());
-	// std::cout << "m size == " << m.size() << std::endl
-	// 		  << std::endl;
+	// m.clear();
+	m.erase(m.begin(), m.end());
+	std::cout << "m size == " << m.size() << std::endl
+			  << std::endl;
 
 
-	// for (int i = 0; i < 1000; ++i)
-	// 	m.insert(ft::make_pair<std::string, int>(randstr(rand() % 17 + 1), rand() % 1024));
+	for (int i = 0; i < 1000; ++i)
+		m.insert(ft::make_pair<std::string, int>(randstr(rand() % 17 + 1), rand() % 1024));
 
 	// NS::map<std::string, int>::const_iterator cit(m.begin());
 	// while (cit != m.end())

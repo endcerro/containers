@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:55:26 by hpottier          #+#    #+#             */
-/*   Updated: 2021/07/19 06:49:56 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/19 07:42:22 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -283,16 +283,16 @@ void map_testeur()
 	std::cout << "m size == " << m.size() << std::endl
 			  << std::endl;
 
-	// for (int i = 0; i < 100; ++i)
-		// m.insert(NS::make_pair<std::string, int>(randstr(rand() % 17 + 1), rand() % 1024));
+	for (int i = 0; i < 100; ++i)
+		m.insert(NS::make_pair<std::string, int>(randstr(rand() % 17 + 1), rand() % 1024));
 
-	// NS::map<std::string, int>::const_iterator cit(m.begin());
-	// while (cit != m.end())
-	// {
-	// 	std::cout << (*cit).first << '	' << (*cit).second << std::endl;
-	// 	++cit;
-	// }
-	// std::cout << std::endl;
+	NS::map<std::string, int>::const_iterator cit(m.begin());
+	while (cit != m.end())
+	{
+		std::cout << (*cit).first << '	' << (*cit).second << std::endl;
+		++cit;
+	}
+	std::cout << std::endl;
 }
 
 // void vector_testeur()

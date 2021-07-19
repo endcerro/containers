@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 15:41:19 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/19 07:24:44 by user42           ###   ########.fr       */
+/*   Updated: 2021/07/19 07:41:47 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,8 +209,14 @@ namespace ft
 					parent = NULL;
 
 				Node *heavy = curr->left;
-
+				// printnode(curr);
+				// std::cout << "2heay is " << heavy << std::endl;
+				
 				curr->left = heavy->right;
+
+				if (heavy == NULL)
+					return curr;
+				
 
 				if (heavy->right != NULL && heavy->right != _end)
 				{
@@ -234,8 +240,14 @@ namespace ft
 				Node *parent = curr->parent;
 				if (parent == _end)
 					parent = NULL;
-
+				// printnode(curr);
 				Node *heavy = curr->right;
+				
+
+				// std::cout << "3heay is " << heavy << std::endl;
+				if (heavy == NULL)
+					return curr;
+				
 
 				curr->right = heavy->left;
 
@@ -260,17 +272,17 @@ namespace ft
 
 			void update(Node *node) 
 			{
-    			if (node == NULL)
-    				return;
-    			// std::cout << "Node addr is " << node << std::endl;
-    			int leftNodeHeight = (node->left == NULL || node->left == _end) ? -1 : node->left->height;
-    			int rightNodeHeight = (node->right == NULL || node->right == _end) ? -1 : node->right->height;
+    			// if (node == NULL)
+    			// 	return;
+    			// // std::cout << "Node addr is " << node << std::endl;
+    			// int leftNodeHeight = (node->left == NULL || node->left == _end) ? -1 : node->left->height;
+    			// int rightNodeHeight = (node->right == NULL || node->right == _end) ? -1 : node->right->height;
 
-    			if (leftNodeHeight > rightNodeHeight)
-    				node->height = 1 + leftNodeHeight;	
-    			else
-    				node->height = 1 + rightNodeHeight;	
-    			node->balancef = rightNodeHeight - leftNodeHeight;
+    			// if (leftNodeHeight > rightNodeHeight)
+    			// 	node->height = 1 + leftNodeHeight;	
+    			// else
+    			// 	node->height = 1 + rightNodeHeight;	
+    			// node->balancef = rightNodeHeight - leftNodeHeight;
   			}
 
 		public :
