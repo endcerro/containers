@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 15:41:19 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/19 19:20:33 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/19 19:23:45 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ namespace ft
 				int			balancef;
 				int			height;
 			};
+		
 		private :
 	
 			Node				*_root;
@@ -655,7 +656,10 @@ namespace ft
 				clear(_root);
 				_size = 0;
 				_root = NULL;
-				upd_end();
+				_end->parent = NULL;
+				_end->left = NULL;
+				_end->right = NULL;
+				// upd_end();
 			}
 			iterator lower_bound(const key_type &k)
 			{
