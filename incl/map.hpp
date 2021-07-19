@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 15:41:19 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/19 01:40:14 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/19 02:29:14 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,35 +153,6 @@ namespace ft
 					return getrightmostnode(curr->right, end);
 				return curr;
 			}
-			
-			// static Node *ngetNext(Node *curr, Node *end)
-			// {
-
-			// 	if (curr->right != NULL)		//Something is to the right, it's bigger or end
-			// 	{
-			// 		if (curr->right->left)
-			// 			return getleftmostnode(curr->right, end);
-			// 		else
-			// 			return curr->right;
-			// 	}
-			// 	else if (curr->parent != NULL)	//No right but parent
-			// 	{
-			// 		if (curr->parent->left == curr)	//We are at the left of parent, parent is bigger
-			// 		{
-			// 			return curr->parent;
-			// 		}
-			// 		else  			//We are at right, parent is smaller
-			// 		{
-			// 			if (curr->parent->parent)
-			// 				return curr->parent->parent;
-			// 			else
-			// 			{
-			// 				std::cout << "UH OH\n";
-			// 				return 0;
-			// 			}
-			// 		}
-			// 	}
-			// }
 
 			static Node *getNext(Node *n, Node *end)
 			{
@@ -461,171 +432,6 @@ namespace ft
 				return ret;
 			}
 
-			Node *remove(Node *node, const key_type &key) 
-			{
-			    if (node == NULL) 
-			    	return NULL;
-
-			    // int cmp = ;
-
-			    
-			    if (_comp(key, node->data.first)) 
-			    {
-			    	// Dig into left subtree, the value we're looking
-				    // for is smaller than the current value.
-			    	node->left = remove(node->left, key);	      
-			    } 
-			    else if (key != node->data.first) 
-			    {
-			    	// Dig into right subtree, the value we're looking
-			    	// for is greater than the current value.
-			      	node->right = remove(node->right, key);
-			    } 
-			    else // Found the node we wish to remove. 
-			    {
-
-			      // This is the case with only a right subtree or no subtree at all.
-			      // In this situation just swap the node we wish to remove
-			      // with its right child.
-			      if (node->left == NULL || node->left == _end) 
-			      {
-			        
-			        Node *tmp = node->right;
-			        tmp->parent = NULL;
-			        delete node;
-
-			        return tmp;
-
-			        // This is the case with only a left subtree or
-			        // no subtree at all. In this situation just
-			        // swap the node we wish to remove with its left child.
-			      }
-			      else if (node->right == NULL || node->right == _end) 
-			      {
-			        
-			        Node *tmp = node->left;
-			        tmp->parent = NULL;
-			        delete node;
-
-			        return tmp;
-			        // return node.left;
-
-			        // When removing a node from a binary tree with two links the
-			        // successor of the node being removed can either be the largest
-			        // value in the left subtree or the smallest value in the right
-			        // subtree. As a heuristic, I will remove from the subtree with
-			        // the greatest hieght in hopes that this may help with balancing.
-			      } 
-			      else 
-			      {
-
-			        // Choose to remove from left subtree
-			        // if (node.left.height > node.right.height) 
-			        // {
-
-			        	//BASIC EXPERIMENT
-			          Node *replacement = getrightmostnode(node->left, _end);
-
-			          node->data = replacement->data;
-			          //Might need thing below
-			          //replacement->parent->right = NULL;
-
-
-			          // Swap the value of the successor into the node.			          
-			          //T successorValue = findMax(node.left);
-			          //node.value = successorValue;
-
-			          // Find the largest node in the left subtree.
-			          node->left = remove(node->left, replacement->data.first);
-
-			        } 
-			        // else 
-			        // {
-
-			        //   // Swap the value of the successor into the node.
-			        //   T successorValue = findMin(node.right);
-			        //   node.value = successorValue;
-
-			        //   // Go into the right subtree and remove the leftmost node we
-			        //   // found and swapped data with. This prevents us from having
-			        //   // two nodes in our tree with the same value.
-			        //   node.right = remove(node.right, successorValue);
-			        // }
-			      //}
-			    }
-
-			    // Update balance factor and height values.
-			    // update(node);
-
-			    // Re-balance tree.
-			    // return balance(node);
-			    return node;
-
-		  	}
-		 //  	void rremove(iterator start, iterator end)
-		 //  	{
-		 //  		while (start != end)
-		 //  		{
-		 //  			rremove(start->first);
-		 //  		}
-		 //  	}
-		 //  	void rremove(Key k)
-		 //  	{
-		 //  		rremove(_root ,k);
-		 //  		upd_end();
-		 //  	}
-		 //  	void  rremove(Node* &root, Key k)
-		 //  	{
-		 //  		if (root == NULL) 
-			//     {
-			//         return;
-			//     }
-			 
-			//     // if the given key is less than the root node, recur for the left subtree
-			//     if (_comp(k , root->data.first))
-			//     {
-			//         rremove(root->left, k);
-			//     }   // if the given k is more than the root node, recur for the right subtree
-			//     else if (k != root->data.first) 
-			//     {
-			//         rremove(root->right, k);
-			//     }
-			//     else // k found
-			//     {
-			//         // Case 1: node to be deleted has no children (it is a leaf node)
-			//         if (root->left == NULL && root->right == NULL)
-			//         {
-			//             // deallocate the memory and update root to null
-			//             delete root;
-			//             root = NULL;
-			//         }	// Case 2: node to be deleted has two children
-			//         else if (root->left && root->right)
-			//         {
-			//             // find its inorder predecessor node
-			//             Node* predecessor = getrightmostnode(root->left, _end);
-			 
-			//             // copy value of the predecessor to the current node
-			//             root->data = predecessor->data;
-			 
-			//             // recursively delete the predecessor. Note that the
-			//             // predecessor will have at most one child (left child)
-			//             rremove(root->left, predecessor->data.first);
-			//         }
-			//         else // Case 3: node to be deleted has only one child 
-			//         {
-			//             // choose a child node
-			//             Node* child = (root->left != NULL && root->left != _end) ? root->left: root->right;
-			//             Node* curr = root;
-			 
-			//             root = child;
-			 
-			//             // deallocate the memory
-			//             delete curr;
-			//         }
-			//     }
-			// }
-		  
-
 		  	Node *nremove(Node *node)
 		  	{
 		  		//Case where no childs, ez one
@@ -638,9 +444,6 @@ namespace ft
 		  					node->parent->left = NULL;
 		  				else
 		  					node->parent->right = NULL;
-
-		  				// std::cout << "1deleting " << node << std::endl;
-		  				
 		  				delete node;
 		  				return NULL;
 		  			}
@@ -710,15 +513,9 @@ namespace ft
 		  			node->left = tmp.left;
 		  			node->right = tmp.right;
 		  			node->data = tmp.data;
-		  			
-		  			// node->left = node->right->left;
-
 		  		}
 		  		return node;
-		  		// else
-		  		// {
-		  		// 	std::cout << "Case 5??\n";
-		  		// }
+
 		  	}
 			bool nremove(const key_type &k) 
 			{
@@ -730,59 +527,51 @@ namespace ft
 			    		_root = nremove(_root);
 		    		else
 		    			nremove(target);
-		    		--_size;
+		    		// --_size;
 		      		upd_end();
 		      		return true;
 		    	}
 		    	// upd_end();
 			    return false;
 		  	}
-		  	void nremove(iterator start, iterator end) 
-			{
-				// Key next;
-				ft::vector<key_type> fuckyou;
-				int i = 0;
 
+		  	void remove(key_type k)	//THIS IS THE HANDLER
+		  	{
+		  			if (nremove(k))
+		  				--_size;
+		  	}
+		  	void remove(iterator start, iterator end)
+		  	{
+  				ft::vector<key_type> fuckyou;
+				int i = 0;
+				// std::cout << "FUCKING HERE\n";
 				iterator buff;
 				while (start != end)
 				{
 					fuckyou.push_back((start++)->first);
 					i++;
 				}
+
 				for (int j = 0; j < i; j++)
 				{
-					nremove(fuckyou[j]);
+					remove(fuckyou[j]);
 				}
 		  	}
-
-			// bool remove(const key_type &k) 
-			// {
- 	 //  			// if (elem == null) return false;
-			// 	if (searchNode(k)) 
-			//     {
-			//     	_root = nremove(_root, k);
-		 //    		--_size;
-		 //      		upd_end();
-		 //      		return true;
-		 //    	}
-		 //    	// upd_end();
-			//     return false;
-		 //  	}
-		  	void erase(iterator &pos)
+		  	void erase(iterator pos)
 		  	{
-		  		nremove(pos->first);
+		  		remove(pos->first);
 		  	}
 		  	void erase(iterator first, iterator last)
 		  	{
-		  		nremove(first, last);
+		  		remove(first, last);
 		  		upd_end();
 		  		return;
 		  	}
 		  	size_t erase (const key_type& k)
 		  	{
-		  		if (nremove(k))
-		  			return 1;
-		  		return 0;
+		  		bool ret = (searchNode(k)) ? true : false;
+		  		remove(k);
+		  		return ret;
 		  	}
 
 		  	bool empty() const
@@ -868,8 +657,9 @@ namespace ft
 
 			void clear()					//REWORKED
 			{
-				if (_size == 0)
+				if (_size == 0 || _root == 0)
 					return ;
+				// std::cout << "Root is " << _root << std::endl;
 				clear(_root);
 				_size = 0;
 				_root = 0;

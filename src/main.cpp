@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/19 01:36:18 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/19 02:03:14 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,17 +93,18 @@ void test()
 	ft::map<T1, T2> cmp(clst.begin(), clst.end());
 	std::map<T1, T2> bmp(blst.begin(), blst.end());
 
-	for (ft::map<T1, T2>::iterator i = cmp.begin(); i != cmp.end(); i++)
-		std::cout << i->first << "|";;
+
 	std::cout<< std::endl;
 
-	cmp.erase((++(cmp.begin()))->first);
+	cmp.erase(++(cmp.begin()));
 	// cmp.printtest(cmp.groot());
-	cmp.erase(((cmp.begin()))->first);
+	cmp.erase(cmp.begin());
 
-	cmp.erase((--(cmp.end()))->first);
+	cmp.erase(--cmp.end());
 	// ft_erase(mp, --mp.end());
 
+	for (ft::map<T1, T2>::iterator i = cmp.begin(); i != cmp.end(); i++)
+		std::cout << i->first << "|";;
 	// cmp.printtest(cmp.groot());
 	// for (ft::map<T1, T2>::iterator i = cmp.begin(); i != cmp.end(); i++)
 	// 	std::cout << i->first << "|";
