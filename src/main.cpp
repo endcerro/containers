@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/19 03:29:49 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/19 04:56:47 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <vector>
 #include <stack>
 #include <list>
+#include <string>
 
 
 // void print2(std::vector<int> &base, ft::vector<int> &custom)
@@ -79,51 +80,91 @@ typedef std::pair<const T1, T2> T4;
 
 void test()
 {
-	std::list<T3> clst;
-	std::list<T4> blst;
+	ft::map<std::string, int> m;
 
+	m.insert(ft::make_pair<std::string, int>("D", 42));
+	m.insert(ft::make_pair<std::string, int>("V", -15));
+	m.insert(ft::make_pair<std::string, int>("E", 684));
+	m.insert(ft::make_pair<std::string, int>("A", -43518));
+	m.insert(ft::make_pair<std::string, int>("B", -4215));
+	m.insert(ft::make_pair<std::string, int>("Z", 6871));
+	m.insert(ft::make_pair<std::string, int>("G", 0));
+	m.insert(ft::make_pair<std::string, int>("R", -15));
+	m.insert(ft::make_pair<std::string, int>("T", 68768415));
+	m.insert(ft::make_pair<std::string, int>("U", -144));
+	m.insert(ft::make_pair<std::string, int>("H", -7852));
 
-	unsigned int lst_size = 10;
-	for (unsigned int i = 0; i < lst_size; ++i)
-		clst.push_back(T3(i, std::string((lst_size - i), i + 65)));
-	for (unsigned int i = 0; i < lst_size; ++i)
-		blst.push_back(T3(i, std::string((lst_size - i), i + 65)));
-	
+	ft::map<std::string, int> mbis(m);
 
-	ft::map<T1, T2> cmp(clst.begin(), clst.end());
-	std::map<T1, T2> bmp(blst.begin(), blst.end());
+	ft::map<std::string, int>::iterator it(m.insert(ft::make_pair<std::string, int>("E", 123)).first);
+	std::cout << (*it).second << std::endl
+			  << std::endl;
 
+	it = m.begin();
+	while (it != m.end())
+	{
+		std::cout << (*it).first << '	' << (*it).second << std::endl;
+		++it;
+	}
+	// std::cout << std::endl;
 
-	std::cout<< std::endl;
+	// std::cout << std::endl;
 
-	cmp.erase(++(cmp.begin()));
-	// cmp.printtest(cmp.groot());
-	cmp.erase(cmp.begin());
+	// ft::map<std::string, int>::reverse_iterator rit(m.rbegin());
+	// while (rit != m.rend())
+	// {
+	// 	std::cout << (*rit).first << '	' << (*rit).second << std::endl;
+	// 	++rit;
+	// }
+	// for (ft::map<std::string, int>::const_reverse_iterator crit = m.rbegin(); crit != m.rend(); ++crit)
+	// 	std::cout << (*crit).first << '	' << (*crit).second << std::endl;
+	// std::cout << std::endl;
 
-	cmp.erase(--cmp.end());
-	// ft_erase(mp, --mp.end());
+	// std::cout << "m size == " << m.size() << std::endl;
 
-	for (ft::map<T1, T2>::iterator i = cmp.begin(); i != cmp.end(); i++)
-		std::cout << i->first << "|";;
-	// cmp.printtest(cmp.groot());
-	// for (ft::map<T1, T2>::iterator i = cmp.begin(); i != cmp.end(); i++)
-	// 	std::cout << i->first << "|";
-	// std::cout<< std::endl;
-	// std::cout << "nerase from " << cmp.begin()->first << " to " <<
-	// (++(++(++cmp.begin())))->first <<  std::endl;
-	cmp.erase(cmp.begin(), ++(++(++cmp.begin())));
-	
-	// cmp.nremove(cmp.begin()->first);
-	// cmp.nremove(cmp.begin()->first);
-	// cmp.nremove(cmp.begin()->first);
-	// cmp.nremove(cmp.begin()->first);
+	// mbis.erase(mbis.find("D"), mbis.end());
+	// // m.erase(m.find("D"), m.find("Z"));
+	// // m.erase(m.find("B"), m.find("V"));
+	// // m.erase(m.find("A"), m.find("V"));
+	// // m.erase(m.find("Z"));
+	// // m.erase(m.find("A"));
+	// m.erase(m.find("G"));
+	// m.erase(m.find("D"), m.find("R"));
 
-	// cmp.nremove(mp, --(--(--mp.end())), --mp.end());
+	// std::cout << (*m.upper_bound("T")).first << std::endl;
+	// std::cout << (*m.lower_bound("T")).first << std::endl;
+	// std::cout << std::endl;
 
+	// m["N"] = 58;
+	// m["N"] = 332;
 
-	// for (ft::map<T1, T2>::iterator i = cmp.begin(); i != cmp.end(); i++)
-	// 	std::cout << i->first << "|";;
-	// std::cout<< std::endl;
+	// it = m.end();
+	// while (--it != m.begin())
+	// 	std::cout << (*it).first << '	' << (*it).second << std::endl;
+	// std::cout << (*it).first << '	' << (*it).second << std::endl;
+
+	// it = mbis.end();
+	// while (--it != mbis.begin())
+	// 	std::cout << (*it).first << '	' << (*it).second << std::endl;
+	// std::cout << (*it).first << '	' << (*it).second << std::endl;
+
+	// std::cout << "m size == " << m.size() << std::endl;
+
+	// // m.clear();
+	// m.erase(m.begin(), m.end());
+	// std::cout << "m size == " << m.size() << std::endl
+	// 		  << std::endl;
+
+	// for (int i = 0; i < 5000; ++i)
+	// 	m.insert(NS::make_pair<std::string, int>(randstr(rand() % 17 + 1), rand() % 1024));
+
+	// NS::map<std::string, int>::const_iterator cit(m.begin());
+	// while (cit != m.end())
+	// {
+	// 	std::cout << (*cit).first << '	' << (*cit).second << std::endl;
+	// 	++cit;
+	// }
+	// std::cout << std::endl;
 
 }
 
@@ -131,8 +172,8 @@ void test()
 int main()
 {
 
-	// bug();
-	// return 0;
+	test();
+	return 0;
 
 	ft::map<int, char> custom;
 	std::map<int, char> base;

@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 15:41:19 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/19 03:31:27 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/19 04:43:04 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -295,6 +295,8 @@ namespace ft
 			map(const map &m)
 			{
 				DEBUG = 0;
+				_comp = m._comp;
+				_alloc = m._alloc;
 				_end = new Node;
 				_end->parent = NULL;
 				_end->left = NULL;
