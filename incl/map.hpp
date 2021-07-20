@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 15:41:19 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/19 20:06:53 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/20 23:43:18 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,10 @@ namespace ft
 			Node* createNode(const value_type& pair)
 			{
 				Node* tmp = new Node;
-				// Node* tmp = _alloc.allocate();
 				tmp->parent = 0;
 				tmp->left = 0;
 				tmp->right = 0;
 				_alloc.construct(&(tmp->data), pair);
-				// tmp->data = pair;
 				tmp->height = 0;
 				tmp->balancef = 0;
 				return tmp;
@@ -114,10 +112,8 @@ namespace ft
 			}
 			Node *balance(Node *node) 
 			{
-				//Left heavy subtree.
 				if (node->balancef == -2) 
 				{	
-					// std::cout << "ROTATION\n";
 					if (node->left->balancef <= 0) 
 						return leftLeftCase(node);
 					else 
@@ -125,7 +121,6 @@ namespace ft
 				} 
 				else if (node->balancef == 2) 
 				{
-					// std::cout << "ROTATION\n";
 					if (node->right->balancef >= 0) 
 						return rightRightCase(node);
 					else 
@@ -1039,8 +1034,11 @@ namespace ft
 
 					reverse_iterator(Node *ptr = 0, Node *end = 0, key_compare comp = Compare()) : _ptr(ptr), _end(end), _comp(comp)
 					{ }
-					reverse_iterator(iterator &it) : _ptr(it._ptr), _end(it._end), _comp(it._comp)
-					{ }
+					reverse_iterator(iterator it) : _ptr(it._ptr), _end(it._end), _comp(it._comp)
+					{ 
+						// ++it;
+						_ptr = it._ptr;
+					}
 					~reverse_iterator()
 					{ }
 					reverse_iterator& operator=(const reverse_iterator& assign)
@@ -1175,7 +1173,10 @@ namespace ft
 					const_reverse_iterator(Node *ptr = 0, Node *end = 0, key_compare comp = Compare()) : _ptr(ptr), _end(end), _comp(comp)
 					{ }
 					const_reverse_iterator(reverse_iterator it) : _ptr(it._ptr), _end(it._end), _comp(it._comp)
-					{ }
+					{ 
+						++it;
+						_ptr = it._ptr;
+					}
 					const_reverse_iterator(const_iterator &i) : _ptr(i._ptr), _end(i._end), _comp(i._comp)
 					{ }
 					const_reverse_iterator(iterator &i) : _ptr(i._ptr), _end(i._end), _comp(i._comp)
@@ -1225,8 +1226,7 @@ namespace ft
 					}
 					const_iterator base()
 					{
-						const_iterator tmp = *this;
-						return (const_iterator(_ptr, _end, _comp));
+						return (--const_iterator(_ptr, _end, _comp));
 					}
 					const_reverse_iterator operator--(int)
 					{

@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 15:43:35 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/19 07:42:03 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/21 00:00:54 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 // https://www.cplusplus.com/reference/vector/vector/
@@ -25,16 +25,31 @@ namespace ft
 	template <class T, class Alloc = std::allocator<T> >
 	class vector
 	{
-		private :
-			T* _arr;
-			size_t _max_size;
-			size_t _size;
-			Alloc _alloc;
+		public :
+			class iterator;
+			class const_iterator;
+			class reverse_iterator;
+			class const_reverse_iterator;
+			
+			typedef T 											value_type;
+			typedef Alloc 										allocator_type;
+			typedef typename allocator_type::reference 			reference;
+			typedef typename allocator_type::const_reference 	const_reference;
+			typedef typename allocator_type::pointer 			pointer;
+			typedef typename allocator_type::const_pointer 		const_pointer;
+			typedef typename std::size_t 						size_type;
+			typedef typename std::ptrdiff_t 					difference_type;
 
-			void growarr(size_t n)
+		private :
+			pointer 		_arr;
+			size_type 		_max_size;
+			size_type 		_size;
+			allocator_type 	_alloc;
+
+			void growarr(size_type n)
 			{
-				T* tmp = _alloc.allocate(n);
-				for (size_t i = 0; i < _size; i++)
+				pointer tmp = _alloc.allocate(n);
+				for (size_type i = 0; i < _size; i++)
 				{		
 					_alloc.construct(&(tmp[i]), _arr[i]);
 					_alloc.destroy(&(_arr[i]));
@@ -45,37 +60,26 @@ namespace ft
 			}
 
 		public :
-			class iterator;
-			class const_iterator;
-			class reverse_iterator;
-			class const_reverse_iterator;
-			typedef T value_type;
-			typedef T&			reference;
-			typedef const T&	const_reference;
-			typedef T*			pointer;
-			typedef const T*	const_pointer;
-			// typename Alloc::value_type value_type;
 			
-			explicit vector(const Alloc &alloc = Alloc()) : _alloc(alloc)
+			explicit vector(const allocator_type &alloc = allocator_type()) : _alloc(alloc)
 			{
-				// std::cout << "DEFAULT construct\n";
 				_arr = _alloc.allocate(10);
 				_size = 0;
 				_max_size = 10;
 			};
-			explicit vector(size_t n, const T& val = T(), const Alloc &alloc = Alloc()) : _alloc(alloc)
+			explicit vector(size_type n, const value_type& val = value_type(), const allocator_type &alloc = allocator_type()) : _alloc(alloc)
 			{
 				_arr = _alloc.allocate(n + 1);
 				_max_size = n + 1;
 				_size = n;
-				for (size_t i = 0; i < n; i++)
+				for (size_type i = 0; i < n; i++)
 					_alloc.construct(&(_arr[i]), val);
 			};
 
 			template <class InputIterator>
-			vector(InputIterator first, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last, const Alloc &alloc = Alloc()) : _size(0), _alloc(alloc)
+			vector(InputIterator first, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last, const allocator_type &alloc = allocator_type()) : _size(0), _alloc(alloc)
 			{
-				size_t i = 0;
+				size_type i = 0;
 				InputIterator firstC = first;
 				InputIterator lastC = last;				
 				while (firstC != lastC && ++i)
@@ -92,7 +96,7 @@ namespace ft
 				_max_size = v._max_size;
 				_size = v._size;
 				_arr = _alloc.allocate(_max_size);
-				for (size_t i = 0; i < _size; i++)
+				for (size_type i = 0; i < _size; i++)
 					_arr[i] = v._arr[i];
 			}
 
@@ -113,10 +117,16 @@ namespace ft
 				friend class vector<T, Alloc>;
 				
 				private :
-					T *_ptr;
+					typedef typename std::ptrdiff_t 			difference_type;
+					typedef typename vector::value_type 		value_type;
+					typedef typename vector::pointer 			pointer;
+					typedef typename vector::const_pointer		const_pointer;
+					typedef typename vector::reference 			reference;
+					typedef typename vector::const_reference 	const_reference;
+					pointer _ptr;
 
 				public :
-					explicit iterator(T *ptr = 0) : _ptr(ptr) 
+					explicit iterator(pointer ptr = 0) : _ptr(ptr) 
 					{	}
 					iterator operator++(int)
 					{
@@ -198,25 +208,15 @@ namespace ft
 					}
 
 					friend iterator operator+(int t ,iterator n)
-					{
-						return (n + t);
-					}
+					{	return (n + t);	}
 					friend iterator operator-(int t ,iterator n)
-					{
-						return (n - t);
-					}
+					{	return (n - t);	}
 					friend iterator operator+=(int t ,iterator n)
-					{
-						return (n += t);
-					}
+					{	return (n += t);	}
 					friend iterator operator-=(int t ,iterator n)
-					{
-						return (n -= t);
-					}
+					{	return (n -= t);	}
 					friend bool operator!=(const const_iterator b, const iterator& it)
-					{
-						return (b._ptr != it._ptr); 
-					}
+					{	return (b._ptr != it._ptr); 	}
 					friend bool operator==(const const_iterator b, const iterator& it)
 					{
 						return (b._ptr == it._ptr); 
@@ -244,10 +244,16 @@ namespace ft
 				friend class vector<T, Alloc>;
 				
 				private :
-					T *_ptr;
+					typedef typename std::ptrdiff_t 			difference_type;
+					typedef typename vector::value_type 		value_type;
+					typedef typename vector::pointer 			pointer;
+					typedef typename vector::const_pointer		const_pointer;
+					typedef typename vector::reference 			reference;
+					typedef typename vector::const_reference 	const_reference;
+					pointer _ptr;
 				public :
 
-					const_iterator(T *ptr) : _ptr(ptr) 
+					const_iterator(pointer ptr) : _ptr(ptr) 
 					{	}
 					const_iterator() : _ptr(0) 
 					{	};
@@ -309,7 +315,10 @@ namespace ft
 						_ptr = _ptr - n;
 						return *this;
 					}
-					
+					const_reference operator[](int n) const
+					{
+						return _ptr[n];
+					}
 					bool operator>(const_iterator t) const
 					{	return (_ptr > t._ptr);	}
 					
@@ -361,10 +370,17 @@ namespace ft
 				friend class vector<T, Alloc>;
 
 				private :
-					T *_ptr;
+					typedef typename std::ptrdiff_t 			difference_type;
+					typedef typename vector::value_type 		value_type;
+					typedef typename vector::pointer 			pointer;
+					typedef typename vector::const_pointer		const_pointer;
+					typedef typename vector::reference 			reference;
+					typedef typename vector::const_reference 	const_reference;
+	
+					pointer _ptr;
 
 				public :
-					reverse_iterator(T *ptr) : _ptr(ptr) 
+					reverse_iterator(pointer ptr) : _ptr(ptr) 
 					{	}
 					reverse_iterator(iterator t) : _ptr(t._ptr - 1) 
 					{	}
@@ -396,7 +412,7 @@ namespace ft
 					iterator base() const
 					{	return iterator(_ptr + 1);	}
 					
-					T& operator*() const
+					const_reference operator*() const
 					{	return *(_ptr);	}
 					
 					pointer operator->() const
@@ -426,7 +442,7 @@ namespace ft
 						return *this;
 					}
 					
-					reference operator[](int n) const
+					const_reference operator[](int n) const
 					{	return _ptr[-n];	}
 					
 					bool operator>(reverse_iterator t) const
@@ -476,7 +492,14 @@ namespace ft
 				friend class vector<T, Alloc>;
 				
 				private :
-					T *_ptr;
+
+					typedef typename std::ptrdiff_t 			difference_type;
+					typedef typename vector::value_type 		value_type;
+					typedef typename vector::pointer 			pointer;
+					typedef typename vector::const_pointer		const_pointer;
+					typedef typename vector::reference 			reference;
+					typedef typename vector::const_reference 	const_reference;
+					pointer _ptr;
 				
 				public :
 
@@ -546,7 +569,10 @@ namespace ft
 						_ptr = _ptr + n;
 						return *this;
 					}
-					
+					const_reference operator[](int n) const
+					{
+						return _ptr[-n];
+					}
 					long int operator-(const_reverse_iterator t) const
 					{	return (t._ptr - _ptr);	}
 					
@@ -589,15 +615,15 @@ namespace ft
 
 			void clear(void)
 			{
-				for (size_t i = 0; i < _size; i++)
+				for (size_type i = 0; i < _size; i++)
 					_alloc.destroy(&(_arr[i]));
 				_size = 0;
 			}
 
-			void assign (size_t n, const T& val)
+			void assign (size_type n, const value_type& val)
 			{
 				clear();
-				for (size_t i = 0; i < n; i++)
+				for (size_type i = 0; i < n; i++)
 					push_back(val);
 			}
 			
@@ -609,19 +635,12 @@ namespace ft
 					push_back(*(start++));
 			}
 
-			void push_back (const T& val)
+			void push_back (const value_type& val)
 			{
 				if (_size + 1 >= _max_size)
 					growarr(_max_size * 2);
-
-				// std::cout<<"size is " << _size << std::endl;
-
 				_alloc.construct(&(_arr[_size]), val);
 				// _arr[_size] = val;
-				// _arr[_size] = val;
-				
-
-
 				++_size;
 			}
 
@@ -631,7 +650,7 @@ namespace ft
 					_alloc.destroy(&(_arr[_size--]));
 			}
 
-			void resize (size_t n, T val = T())
+			void resize (size_type n, value_type val = value_type())
 			{
 				while (n < _size)
 					pop_back();
@@ -639,7 +658,7 @@ namespace ft
 					push_back(val);
 			}
 
-			void reserve(size_t n)
+			void reserve(size_type n)
 			{
 				if (n <= _max_size)
 					return;
@@ -672,13 +691,13 @@ namespace ft
 				return _arr[a];
 			}
 
-			size_t size(void) const
+			size_type size(void) const
 			{	return _size;	}
 
-			size_t capacity(void) const
+			size_type capacity(void) const
 			{	return _max_size;	}
 
-			size_t max_size(void) const
+			size_type max_size(void) const
 			{	return _alloc.max_size();	}
 
 			bool empty(void) const
@@ -686,8 +705,8 @@ namespace ft
 
 			void swap (vector& x)
 			{
-				T* ptr = _arr;
-				Alloc a = _alloc;
+				pointer ptr = _arr;
+				allocator_type a = _alloc;
 				size_t tmp = _max_size;
 				_arr = x._arr;
 				x._arr = ptr;
@@ -700,22 +719,22 @@ namespace ft
 				x._alloc = a;
 			}
 
-			reference operator[](size_t n)
+			reference operator[](size_type n)
 			{	return _arr[n];	}
 
-			const_reference operator[](size_t n) const
+			const_reference operator[](size_type n) const
 			{	return _arr[n];	}
 			
 			template<class IT>
-			IT insert (IT position, const T& val)
+			IT insert (IT position, const value_type& val)
 			{
-				size_t delta = position._ptr - _arr;
+				size_type delta = position._ptr - _arr;
 				if(_size + 1 >= _max_size)
 				{
 					growarr(_max_size * 2);
 					position = IT(_arr + delta);
 				}
-				for (size_t i = _size; i > delta ; i--)
+				for (size_type i = _size; i > delta ; i--)
 					_arr[i] = _arr[i - 1];
 				*position = val;
 				++_size;
@@ -723,9 +742,9 @@ namespace ft
 			}
 
 			template<class IT>
-			void insert (IT position, size_t n, const T& val)
+			void insert (IT position, size_type n, const value_type& val)
 			{
-				for (size_t i = 0; i < n; i++)
+				for (size_type i = 0; i < n; i++)
 					position = insert(position, val);
 			}
 
@@ -753,7 +772,7 @@ namespace ft
 			IT erase (IT start, IT end)
 			{
 				IT tmp;
-				size_t delta = &(*end) - &(*start);
+				size_type delta = &(*end) - &(*start);
 				if (delta < 0)
 				{
 					tmp = end;
@@ -761,11 +780,12 @@ namespace ft
 					start = tmp;
 				}
 				tmp = start;
-				for(size_t i = 0; i < delta; i++)
+				for(size_type i = 0; i < delta; i++)
 					start = erase(start);
 				return tmp;
 			}
 	};
+
 	template <class T>
 	void swap(vector<T> &x, vector<T> &y)
 	{	x.swap(y);	};
@@ -820,7 +840,6 @@ namespace ft
 	template <class T>
 	bool operator>=(const vector<T> &lhs, const vector<T> &rhs)
 	{	return !(lhs < rhs);	};
-
 }
 
 #endif
