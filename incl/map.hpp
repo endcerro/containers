@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 15:41:19 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/21 15:59:30 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/21 16:01:26 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -318,10 +318,6 @@ namespace ft
 				return heavy;
 			}
 
-
-
-		
-
 			void update(Node *node) 
 			{
 				// static_cast<void>(node);
@@ -519,41 +515,13 @@ namespace ft
 				x._comp = tmp_comp;
 			}
 
-			map& operator=(const map &m) //TO CHANGE
+			map& operator=(const map &m)
 			{
 				clear();
 				insert(m.begin(), m.end());
 				return *this;
 			}
 			
-
-			
-			// void printtest(Node *curr)	//TODEL
-			// {
-			// 	if (curr == _root)
-			// 		printend();
-			// 	if (curr == NULL || curr == _end)
-			// 		return;
-			// 	std::cout << "\n----\n";
-			// 	printnode(curr);
-			// 	printtest(curr->left);
-			// 	printtest(curr->right);
-
-			// }
-
-			// static void printnode(Node *node) //TODEL
-			// {
-			// 	std::cout << "Node :" << node << std::endl;
-			// 	std::cout << "data = " << node->data.first << std::endl;
-			// 	// std::cout << "|" << node->data.second << std::endl;
-			// 	std::cout << "parent :" << node->parent << std::endl;
-			// 	std::cout << "left :" << node->left << std::endl;
-			// 	std::cout << "right :" << node->right << std::endl;
-			// 	std::cout << "height :" << node->height << std::endl;
-			// 	std::cout << "bf :" << node->balancef << std::endl;
-
-			// }
-
 			pair<iterator,bool> insert (const value_type val)
 			{
 				pair<iterator, bool> ret;
@@ -1172,11 +1140,11 @@ namespace ft
 				private :
 					
 					typedef std::bidirectional_iterator_tag iterator_category;
-					typedef typename std::ptrdiff_t difference_type;
-					typedef typename map::value_type value_type;
-					typedef typename map::pointer pointer;
-					typedef typename map::reference reference;
-					typedef typename map::key_compare key_compare;
+					typedef typename std::ptrdiff_t 		difference_type;
+					typedef typename map::value_type 		value_type;
+					typedef typename map::pointer 			pointer;
+					typedef typename map::reference 		reference;
+					typedef typename map::key_compare 		key_compare;
 					typedef typename map::const_pointer		const_pointer;
 					typedef typename map::const_reference 	const_reference;				
 

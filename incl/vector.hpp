@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 15:43:35 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/21 00:00:54 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/21 16:03:17 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 // https://www.cplusplus.com/reference/vector/vector/
@@ -262,24 +262,24 @@ namespace ft
 
 					}
 
-					const_iterator operator++(int) //i++
+					const_iterator operator++(int)
 					{
 						const_iterator i = *this;
 						++_ptr;
 						return i;
 					}
-					const_iterator &operator++() //i++
+					const_iterator &operator++()
 					{		
 						++_ptr;
 						return *this;
 					}
-					const_iterator operator--(int) //i++
+					const_iterator operator--(int)
 					{
 						const_iterator i = *this;
 						--_ptr;
 						return i;
 					}
-					const_iterator &operator--() //i++
+					const_iterator &operator--()
 					{ 
 						--_ptr; 
 						return *this;
@@ -386,26 +386,26 @@ namespace ft
 					{	}
 					reverse_iterator() : _ptr(0) 
 					{	};
-					reverse_iterator operator++(int) //i++
+					reverse_iterator operator++(int)
 					{
 						reverse_iterator i(*this);
 						--_ptr;
 						return i;
 					}
-					reverse_iterator &operator++() //i++
-					{		
+					reverse_iterator &operator++() 
+					{
 						--_ptr;
 						return *this;
 					}
-					reverse_iterator operator--(int) //i++
+					reverse_iterator operator--(int)
 					{
 						reverse_iterator i = *this;
 						++_ptr;
 						return i;
 					}
-					reverse_iterator &operator--() //i++
-					{ 
-						++_ptr; 
+					reverse_iterator &operator--()
+					{
+						++_ptr;
 						return *this;
 					}
 					
@@ -513,24 +513,24 @@ namespace ft
 					{	}
 					const_reverse_iterator(iterator n) : _ptr(n._ptr - 1)
 					{	}
-					const_reverse_iterator operator++(int) //i++
+					const_reverse_iterator operator++(int)
 					{
 						const_reverse_iterator i(*this);
 						--_ptr;
 						return i;
 					}
-					const_reverse_iterator &operator++() //i++
+					const_reverse_iterator &operator++()
 					{		
 						--_ptr;
 						return *this;
 					}
-					const_reverse_iterator operator--(int) //i++
+					const_reverse_iterator operator--(int)
 					{
 						const_reverse_iterator i = *this;
 						++_ptr;
 						return i;
 					}
-					const_reverse_iterator &operator--() //i++
+					const_reverse_iterator &operator--()
 					{ 
 						++_ptr; 
 						return *this;
