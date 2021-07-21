@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 15:41:19 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/21 16:01:26 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/21 16:37:50 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,8 +264,8 @@ namespace ft
 				
 				curr->left = heavy->right;
 
-				if (heavy == NULL)
-					return curr;
+				// if (heavy == NULL)
+				// 	return curr;
 				
 
 				if (heavy->right != NULL && heavy->right != _end)
@@ -295,8 +295,8 @@ namespace ft
 				
 
 				// std::cout << "3heay is " << heavy << std::endl;
-				if (heavy == NULL)
-					return curr;
+				// if (heavy == NULL)
+				// 	return curr;
 				
 
 				curr->right = heavy->left;
@@ -321,7 +321,7 @@ namespace ft
 			void update(Node *node) 
 			{
 				// static_cast<void>(node);
-				return;
+				// return;
 				if (node == NULL)
 					return;
 				// std::cout << "Node addr is " << node << std::endl;
@@ -521,7 +521,36 @@ namespace ft
 				insert(m.begin(), m.end());
 				return *this;
 			}
-			
+			void pnode(Node *node)
+			{
+				std::cout << "--------------\n";
+				std::cout << "Ptr = " << node <<" : ";
+				std::cout << node->data.first << std::endl;
+
+				std::cout << "Left = " << node->left << std::endl;
+				// std::cout << node->first << std::endl;
+
+				std::cout << "Right = " << node->right << std::endl;
+				// std::cout << node->first << std::endl;
+				
+				std::cout << "height = " << node->height << std::endl;
+				// std::cout << node->first << std::endl;
+				std::cout << "Balancef = " << node->balancef << std::endl;
+				
+				if (node->right && node->right != _end)
+					pnode(node->right);
+				if (node->left && node->left != _end)
+					pnode(node->left);
+
+			}
+	
+			void ptree()
+			{
+				pnode(_root);
+				// if(nod)
+				// pnode()
+
+			}
 			pair<iterator,bool> insert (const value_type val)
 			{
 				pair<iterator, bool> ret;
