@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 15:41:19 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/21 16:37:50 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/22 16:55:24 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,111 +228,132 @@ namespace ft
 			// 		n = n->parent;
 			// 	return n->parent;
 			// }
-			// Node *rotate_left(Node *node)
-			// {
-			//     Node *newParent = node->right;
-			//     // if (newParent == _end)
-			//     // 	newParent = NULL;
-			//     node->right = newParent->left;
-			//     newParent->left = node;
-			//     update(node);
-			//     update(newParent);
-			//     return newParent;
-		 //  	}
+			Node *rotate_left(Node *node)
+			{
+			    Node *newParent = node->right;
+			    
+			    if (newParent == _end)
+			    	newParent = NULL;
 
-			// Node *rotate_right(Node *node) 
-			// {
-			// 	Node *newParent = node->left;
-			//     // if (newParent == _end)
-			//     // 	newParent = NULL;
-			//     node->left = newParent->right;
-			//     newParent->right = node;
-			//     update(node);
-			//     update(newParent);
-			//     return newParent;
-			// }
+			    node->right = newParent->left;
+			    if (newParent->left)
+			    	newParent->left->parent = node;
+
+
+
+			    newParent->left = node;
+			    node->parent = newParent;
+			    update(node);
+			    update(newParent);
+			    return newParent;
+		  	}
+
+			Node *rotate_right(Node *node) 
+			{
+				Node *newParent = node->left;
+			    
+			    if (newParent == _end)
+			    	newParent = NULL;
+			    
+			    node->left = newParent->right;
+			    
+			    if (newParent->right)
+			    	newParent->right->parent = node;
+
+			    newParent->right = node;
+			    node->parent = newParent;
+			    update(node);
+			    update(newParent);
+			    return newParent;
+			}
 			
-			Node *rotate_right(Node *curr)		//TOREWORK
-			{
-				Node *parent = curr->parent;
-				if (parent == _end)
-					parent = NULL;
+			// Node *rotate_right(Node *curr)		//TOREWORK
+			// {
+			// 	Node *parent = curr->parent;
+			// 	if (parent == _end)
+			// 		parent = NULL;
 
-				Node *heavy = curr->left;
-				// printnode(curr);
-				// std::cout << "2heay is " << heavy << std::endl;
+			// 	Node *heavy = curr->left;
+			// 	// printnode(curr);
+			// 	// std::cout << "2heay is " << heavy << std::endl;
 				
-				curr->left = heavy->right;
+			// 	curr->left = heavy->right;
 
-				// if (heavy == NULL)
-				// 	return curr;
-				
-
-				if (heavy->right != NULL && heavy->right != _end)
-				{
-					heavy->right->parent = curr;
-				}
-				heavy->right = curr;
-				curr->parent = heavy;
-				heavy->parent = parent;
-				if (parent != NULL)
-				{
-					if (parent->left == curr)
-						parent->left = heavy;
-					else
-						parent->right = heavy;
-				}
-				return heavy;
-			}
-
-			Node *rotate_left(Node *curr) 		//TOREWORK
-			{
-				Node *parent = curr->parent;
-				if (parent == _end)
-					parent = NULL;
-				// printnode(curr);
-				Node *heavy = curr->right;
+			// 	// if (heavy == NULL)
+			// 	// 	return curr;
 				
 
-				// std::cout << "3heay is " << heavy << std::endl;
-				// if (heavy == NULL)
-				// 	return curr;
+			// 	if (heavy->right != NULL && heavy->right != _end)
+			// 	{
+			// 		heavy->right->parent = curr;
+			// 	}
+			// 	heavy->right = curr;
+			// 	curr->parent = heavy;
+			// 	heavy->parent = parent;
+			// 	if (parent != NULL)
+			// 	{
+			// 		if (parent->left == curr)
+			// 			parent->left = heavy;
+			// 		else
+			// 			parent->right = heavy;
+			// 	}
+			// 	// update(heavy);
+			// 	return heavy;
+			// }
+
+			// Node *rotate_left(Node *curr) 		//TOREWORK
+			// {
+			// 	Node *parent = curr->parent;
+			// 	if (parent == _end)
+			// 		parent = NULL;
+			// 	// printnode(curr);
+			// 	Node *heavy = curr->right;
 				
 
-				curr->right = heavy->left;
+			// 	// std::cout << "3heay is " << heavy << std::endl;
+			// 	// if (heavy == NULL)
+			// 	// 	return curr;
+				
 
-				if (heavy->left != NULL && heavy->left != _end)
-				{
-					heavy->left->parent = curr;
-				}
-				heavy->left = curr;
-				curr->parent = heavy;
-				heavy->parent = parent;
-				if (parent != NULL)
-				{
-					if (parent->right == curr)
-						parent->right = heavy;
-					else
-						parent->left = heavy;
-				}
-				return heavy;
-			}
+			// 	curr->right = heavy->left;
+
+			// 	if (heavy->left != NULL && heavy->left != _end)
+			// 	{
+			// 		heavy->left->parent = curr;
+			// 	}
+			// 	heavy->left = curr;
+			// 	curr->parent = heavy;
+			// 	heavy->parent = parent;
+			// 	if (parent != NULL)
+			// 	{
+			// 		if (parent->right == curr)
+			// 			parent->right = heavy;
+			// 		else
+			// 			parent->left = heavy;
+			// 	}
+			// 	// update(heavy);
+			// 	return heavy;
+			// }
 
 			void update(Node *node) 
 			{
-				// static_cast<void>(node);
-				// return;
-				if (node == NULL)
-					return;
-				// std::cout << "Node addr is " << node << std::endl;
-				int leftNodeHeight = (node->left == NULL || node->left == _end) ? -1 : node->left->height;
-				int rightNodeHeight = (node->right == NULL || node->right == _end) ? -1 : node->right->height;
+				int leftHeight = -1;
+				int rightHeight = -1;
 
-				if (leftNodeHeight > rightNodeHeight)
-					node->height = 1 + leftNodeHeight;	
+				if (node->left != NULL && node->left != _end)
+					leftHeight = node->left->height;
+				if (node->right != NULL && node->right != _end)
+					rightHeight = node->right->height;
+
+				if (leftHeight > rightHeight)
+					node->height = leftHeight + 1;
+				else if (leftHeight < rightHeight)
+					node->height = rightHeight + 1;
 				else
-					node->height = 1 + rightNodeHeight;	
-				node->balancef = rightNodeHeight - leftNodeHeight;
+					node->height = leftHeight + 1;
+
+				node->balancef = rightHeight - leftHeight;
+
 			}
 
 			Node *ninsert(Node *node, const value_type &val)
@@ -419,6 +440,8 @@ namespace ft
 					node->right = tmp.right;
 					_alloc.construct(&(node->data), tmp.data);
 				}
+				// update(node);
+				// balance(node);
 				return node;
 
 			}
@@ -526,17 +549,30 @@ namespace ft
 				std::cout << "--------------\n";
 				std::cout << "Ptr = " << node <<" : ";
 				std::cout << node->data.first << std::endl;
-
-				std::cout << "Left = " << node->left << std::endl;
+				std::cout << "parent = " << node->parent;// <<"\n";
+				if (node->parent)
+					std::cout << " " << node->parent->data.first;
+				std::cout << std::endl;
+				// std::cout << node->data.first << std::endl;
+				std::cout << "Left = " << node->left ;
+				if (node->left)
+					std::cout << " " << node->left->data.first;
+				std::cout << std::endl;
 				// std::cout << node->first << std::endl;
 
-				std::cout << "Right = " << node->right << std::endl;
-				// std::cout << node->first << std::endl;
+				std::cout << "Right = " << node->right;
+				
+				if (node->right)
+					std::cout << " " << node->right->data.first;
+				std::cout << std::endl;// std::cout << node->first << std::endl;
 				
 				std::cout << "height = " << node->height << std::endl;
 				// std::cout << node->first << std::endl;
 				std::cout << "Balancef = " << node->balancef << std::endl;
 				
+				if (node == _end)
+					return;
+
 				if (node->right && node->right != _end)
 					pnode(node->right);
 				if (node->left && node->left != _end)
@@ -546,6 +582,7 @@ namespace ft
 	
 			void ptree()
 			{
+				pnode(_end);
 				pnode(_root);
 				// if(nod)
 				// pnode()
@@ -822,9 +859,37 @@ namespace ft
 						}
 						return *this;
 					}
+		         	// iterator operator++(int)
+		          //   {
+		          //       // Same logic than in ++operator
+		          //       iterator res(*this);
 
+		          //       if (_ptr == _end)
+		          //       {
+		          //           _ptr = _end->right;
+		          //           return (res);
+		          //       }
+		                
+		          //       while (_ptr != _end && !_comp(res->first, _ptr->data.first))
+		          //       {
+		          //           if (_ptr->right && (_ptr->right == _end || 
+		          //                   _comp(res->first, _ptr->right->data.first)))
+		          //           {
+		          //               _ptr = _ptr->right;
+		                        
+		          //               Node* tmp = 0;
+		          //               if (_ptr != _end && (tmp = getleftmostnode(_ptr, _end)))
+		          //                   _ptr = tmp;
+		          //           }
+		          //           else
+		          //               _ptr = _ptr->parent;
+		          //       }
+		                
+		          //       return (res);
+		          //   }
 					iterator operator++(int)
 					{
+						// _end->parent->parent = NULL;
 						if (_ptr == _end)
 							return *this;
 						iterator tmp = *this;
@@ -835,13 +900,20 @@ namespace ft
 							else
 								_ptr = ft::map<Key, T, Compare, Alloc>::getleftmostnode(_ptr->right, _end);
 						}
-						else if (_ptr->parent != NULL)
+						else if (_ptr->parent != NULL && _ptr->parent != _end)
 						{
 							Node *og = _ptr;
+							// std::cout << "parent is " << _ptr->parent->data.first << std::endl;
 							_ptr = _ptr->parent;
 							while (_comp(og->data.first, _ptr->data.first) == false)
+							{
+								// std::cout << "data = " << _ptr->data.first;
+								// std::cout << "\nog = " << og->data.first << std::endl;
 								_ptr = _ptr->parent;
+								// std::cout << "ndata = " << _ptr->data.first << std::endl;
+							}
 						}
+						// _end->parent->parent = _end;
 						return tmp;
 					}
 
@@ -1160,8 +1232,6 @@ namespace ft
 						}
 						return tmp;
 					}
-
-
 			};
 			class const_reverse_iterator
 			{

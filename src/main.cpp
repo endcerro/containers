@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/21 16:34:28 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/22 16:53:05 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,8 +205,10 @@ int main()
 	// custom[3] = 'd';
 
 	custom.insert(ft::make_pair(5, 'a'));
+	
 	custom.insert(ft::make_pair(2, 'a'));
-	custom.insert(ft::make_pair(6, 'a'));
+	
+	custom.insert(ft::make_pair(1, 'a'));
 	custom.insert(ft::make_pair(7, 'a'));
 	custom.insert(ft::make_pair(8, 'a'));
 	custom.insert(ft::make_pair(1, 'a'));
@@ -225,15 +227,24 @@ int main()
 	// base.insert(std::pair<int, char>(10, 'a'));
 	// base.insert(std::pair<int, char>(3, 'a'));
 	// base.insert(std::pair<int, char>(4, 'a'));
-
-	for (ft::map<int, char>::iterator i = custom.begin(); i != custom.end(); i++)
-	{
-		std::cout<< i->first << "|";
-	}
-	std::cout << std::endl;
-
-
+	// custom.erase(8);
 	custom.ptree();
+	ft::map<int, char>::iterator i = custom.begin();
+	ft::map<int, char>::iterator i2 = custom.end();
+
+	while (i != i2)
+	{
+		std::cout<< i->first << "\n";
+		i++;
+	}
+	// for (ft::map<int, char>::iterator i = custom.begin(); i != custom.end(); i++)
+	// {
+	// 	std::cout<< i->first << "|";
+	// }
+	// std::cout << std::endl;
+
+
+	// custom.ptree();
 
 	// for (ft::map<int, char>::iterator i = custom.begin(); i != custom.end(); i++)
 	// {
