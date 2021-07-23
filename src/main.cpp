@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/08 15:34:50 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/23 18:51:20 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/23 19:53:41 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,24 +47,35 @@ int main()
 	}
 	std::cout << std::endl;
 
+	bit = base.begin();
+	cit = custom.begin();
+
+	++cit;++cit;
+	++bit;++bit;
+
+	ft::map<int, char>::reverse_iterator rcit(cit);// = custom.begin();
+	std::map<int, char>::reverse_iterator rbit(bit);// = base.begin();
 
 
-	ft::map<int, char>::reverse_iterator rcit(custom.end());// = custom.begin();
-	std::map<int, char>::reverse_iterator rbit(base.end());// = base.begin();
+
+
 
 	std::cout << (rcit)->first << std::endl;
 	std::cout << (rbit)->first << std::endl;
 
+	std::cout << (cit2)->first << std::endl;
+	std::cout << (bit2)->first << std::endl;
+
 
 	// std::cout << (rcit.base())->first << std::endl;
-	if (rcit.base() == custom.end())
-	{
-		std::cout << "based\n";
-	}
-	if (rbit.base() == base.end())
-	{
-		std::cout << "based\n";
-	}
+	// if (rcit.base() == custom.end())
+	// {
+	// 	std::cout << "based\n";
+	// }
+	// if (rbit.base() == base.end())
+	// {
+	// 	std::cout << "based\n";
+	// }
 	// std::cout << (rbit.base())->first << std::endl;
 
 	return 0;

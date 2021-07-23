@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 15:43:35 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/21 16:03:17 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/23 20:03:17 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 // https://www.cplusplus.com/reference/vector/vector/
@@ -412,7 +412,7 @@ namespace ft
 					iterator base() const
 					{	return iterator(_ptr + 1);	}
 					
-					const_reference operator*() const
+					reference operator*() const
 					{	return *(_ptr);	}
 					
 					pointer operator->() const
@@ -442,7 +442,7 @@ namespace ft
 						return *this;
 					}
 					
-					const_reference operator[](int n) const
+					reference operator[](int n) const
 					{	return _ptr[-n];	}
 					
 					bool operator>(reverse_iterator t) const
@@ -680,14 +680,14 @@ namespace ft
 			reference at(int a)
 			{
 				if (a >= static_cast<int>(_size) || a < 0)
-					throw std::out_of_range("at is fucked up yoo");
+					throw std::out_of_range("out of range");
 				return _arr[a];
 			}
 
 			const_reference at(int a) const
 			{	
 				if (a >= static_cast<int>(_size) || a < 0)
-					throw std::out_of_range("at is fucked up yoo");
+					throw std::out_of_range("out of range");
 				return _arr[a];
 			}
 

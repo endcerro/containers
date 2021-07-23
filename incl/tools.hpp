@@ -6,19 +6,17 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 08:35:17 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/19 03:11:17 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/23 20:04:02 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TOOLS_HPP
 #define TOOLS_HPP
 
-// #include <cstdlib>
 #include <new>
 #include <string>
 #include <iostream>
-// #include <cstddef>
-// #include <utility>
+
 namespace ft
 {
 
@@ -47,8 +45,7 @@ namespace ft
 
 		pair &operator=(const pair &pr)
 		{
-			// *this = pair(pr);
-			// first = 
+
 			first = pr.first;
 			second = pr.second;
 			return *this;

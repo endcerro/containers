@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 15:41:19 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/23 19:11:16 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/23 19:52:31 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -619,15 +619,10 @@ namespace ft
 
 					iterator(Node *ptr = 0, Node *end = 0, key_compare comp = Compare()) : _ptr(ptr), _end(end), _comp(comp)
 					{ }
-					~iterator()
-					{ }
 					iterator(const iterator &it) : _ptr(it._ptr), _end(it._end), _comp(it._comp)
 					{}
-					iterator(reverse_iterator it) : _ptr(it._ptr), _end(it._end), _comp(it._comp)
-					{
-						--it;
-						_ptr = it._ptr;
-					}
+					~iterator()
+					{ }
 					iterator& operator=(const iterator& assign)
 					{
 						if (this == &assign)
@@ -758,6 +753,8 @@ namespace ft
 				public :
 
 					const_iterator(Node *ptr = 0, Node *end = 0, key_compare comp = Compare()) : _ptr(ptr), _end(end), _comp(comp)
+					{ }
+					const_iterator(const const_iterator &i) : _ptr(i._ptr), _end(i._end), _comp(i._comp)
 					{ }
 					const_iterator(const iterator &i) : _ptr(i._ptr), _end(i._end), _comp(i._comp)
 					{ }
@@ -958,7 +955,6 @@ namespace ft
 						{
 							_ptr = _ptr->left;
 							return tmp;
-							// std::cout << "end fallback\n";
 						}
 						if (_ptr->right != NULL)
 						{

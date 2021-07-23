@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 15:41:19 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/04 20:17:26 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/23 20:03:41 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,7 @@ namespace ft
 	class stack
 	{
 		public :
-			typedef Container container_type;
-			// class iterator;
-			// class const_iterator;
-			// class reverse_iterator;
-			// class const_reverse_iterator;
+			typedef Container 	container_type;
 			typedef T 			value_type;
 			typedef T&			reference;
 			typedef const T&	const_reference;
