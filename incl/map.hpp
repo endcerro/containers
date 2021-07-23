@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 15:41:19 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/23 15:55:37 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/23 16:16:22 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,6 @@ namespace ft
 				tmp->balancef = 0;
 				return tmp;
 			}
-			Node* deleteNode(Node *node)
-			{
-				_alloc.destroy(&(node->data));
-				delete node;
-				return NULL;
-			}
 			Node *clear(Node *n)
 			{
 				if (n->left != NULL && n->left != _end)
@@ -121,10 +115,8 @@ namespace ft
 			}
 			Node *balance(Node *node) 
 			{
-				//Left heavy subtree.
 				if (node->balancef == -2) 
 				{	
-					// std::cout << "ROTATION\n";
 					if (node->left->balancef <= 0) 
 						return leftLeftCase(node);
 					else 
@@ -132,34 +124,14 @@ namespace ft
 				} 
 				else if (node->balancef == 2) 
 				{
-					// std::cout << "ROTATION\n";
 					if (node->right->balancef >= 0) 
 						return rightRightCase(node);
 					else 
 						return rightLeftCase(node);
 				}
 				return node;
-		  }
-			// Node *balance(Node *node)
-			// {
-			// 	// if (node == _end)
-			// 	// 	std::cout << "BALANCING END" << std::endl;
-			// 	// if (node->balancef == -2)
-			// 	// {
-			// 	// 	if (node->left->balancef <= 0)
-			// 	// 		return leftLeftCase(node);
-			// 	// 	else
-			// 	// 		return leftRightCase(node);
-			// 	// }
-			// 	// else if (node->balancef == 2)
-			// 	// {
-			// 	// 	if (node->right->balancef >= 0)
-			// 	// 		return rightRightCase(node);
-			// 	// 	else
-			// 	// 		return rightLeftCase(node); 
-			// 	// }
-			// 	return node;
-			// }
+			}
+			
 			void upd_end()
 			{
 				if (_root == NULL || _size == 0)
@@ -177,7 +149,6 @@ namespace ft
 				_end->right->right = _end;
 			}
 
-
 			Node *searchNode(Node *curr, const key_type &k) const
 			{
 				if (curr == NULL || curr == _end)
@@ -188,6 +159,7 @@ namespace ft
 					return searchNode(curr->right, k);       
 				return curr;
 			}
+			
 			Node *searchNode(const key_type &k) const
 			{	return searchNode(_root, k);	}
 
@@ -204,35 +176,6 @@ namespace ft
 				return curr;
 			}
 
-			// void n_lrot(Node *target)
-			// {
-				
-			// 	Node *parent = target->parent;
-
-				
-			// }
-
-			// static Node *getNext(Node *n, Node *end)
-			// {
-			// 	if (n->right == end)
-			// 		return end;
-			// 	if (n->right != NULL && n->right != end)//)
-			// 		return getleftmostnode(n->right, end);
-			 
-			// 	while (n->parent != NULL && n->parent != end && n == n->parent->right)
-			// 		n = n->parent;
-			// 	return n->parent;               
-			// }
-
-			// static Node *getPrev(Node *n, Node *end)
-			// {
-			// 	if (n->left != NULL && n->left != end)
-			// 		return getrightmostnode(n->left, end);
-			 
-			// 	while (n->parent != NULL && n->parent != end && n == n->parent->left)
-			// 		n = n->parent;
-			// 	return n->parent;
-			// }
 			Node *rotate_left(Node *node)
 			{
 				Node *newParent = node->right;
@@ -243,8 +186,6 @@ namespace ft
 				node->right = newParent->left;
 				if (newParent->left)
 					newParent->left->parent = node;
-
-
 
 				newParent->left = node;
 				node->parent = newParent;
@@ -259,9 +200,7 @@ namespace ft
 				
 				if (newParent == _end)
 					newParent = NULL;
-				
-				node->left = newParent->right;
-				
+				node->left = newParent->right;				
 				if (newParent->right)
 					newParent->right->parent = node;
 
@@ -272,74 +211,6 @@ namespace ft
 				return newParent;
 			}
 			
-			// Node *rotate_right(Node *curr)		//TOREWORK
-			// {
-			// 	Node *parent = curr->parent;
-			// 	if (parent == _end)
-			// 		parent = NULL;
-
-			// 	Node *heavy = curr->left;
-			// 	// printnode(curr);
-			// 	// std::cout << "2heay is " << heavy << std::endl;
-				
-			// 	curr->left = heavy->right;
-
-			// 	// if (heavy == NULL)
-			// 	// 	return curr;
-				
-
-			// 	if (heavy->right != NULL && heavy->right != _end)
-			// 	{
-			// 		heavy->right->parent = curr;
-			// 	}
-			// 	heavy->right = curr;
-			// 	curr->parent = heavy;
-			// 	heavy->parent = parent;
-			// 	if (parent != NULL)
-			// 	{
-			// 		if (parent->left == curr)
-			// 			parent->left = heavy;
-			// 		else
-			// 			parent->right = heavy;
-			// 	}
-			// 	// update(heavy);
-			// 	return heavy;
-			// }
-
-			// Node *rotate_left(Node *curr) 		//TOREWORK
-			// {
-			// 	Node *parent = curr->parent;
-			// 	if (parent == _end)
-			// 		parent = NULL;
-			// 	// printnode(curr);
-			// 	Node *heavy = curr->right;
-				
-
-			// 	// std::cout << "3heay is " << heavy << std::endl;
-			// 	// if (heavy == NULL)
-			// 	// 	return curr;
-				
-
-			// 	curr->right = heavy->left;
-
-			// 	if (heavy->left != NULL && heavy->left != _end)
-			// 	{
-			// 		heavy->left->parent = curr;
-			// 	}
-			// 	heavy->left = curr;
-			// 	curr->parent = heavy;
-			// 	heavy->parent = parent;
-			// 	if (parent != NULL)
-			// 	{
-			// 		if (parent->right == curr)
-			// 			parent->right = heavy;
-			// 		else
-			// 			parent->left = heavy;
-			// 	}
-			// 	// update(heavy);
-			// 	return heavy;
-			// }
-
 			void update(Node *node) 
 			{
 				int leftHeight = -1;
@@ -356,9 +227,7 @@ namespace ft
 					node->height = rightHeight + 1;
 				else
 					node->height = leftHeight + 1;
-
 				node->balancef = rightHeight - leftHeight;
-
 			}
 
 			Node *ninsert(Node *node, const value_type &val)
@@ -387,63 +256,47 @@ namespace ft
 				if (node == NULL || node == _end) 
 					return NULL;
 
-				int cmp = _comp(key, node->data.first);
-
-				if (cmp) //Case where key is smaller, gt left
+				if (_comp(key, node->data.first)) //Case where key is smaller, gt left
 				{
-					// std::cout<<"Z1\n";
 					node->left = kremove(node->left, key);
 					if (node->left)
 						node->left->parent = node;
-				}	//Case where key is bigger, gt right 
-				else if (key != node->data.first) 
+				}
+				else if (key != node->data.first) //Case where key is bigger, gt right 
 				{
-					// std::cout<<"Z2\n";
 					node->right = kremove(node->right, key);
 					if (node->right)
 						node->right->parent = node;
 				} 
 				else //We found the key
 				{
-
-					if (node->left == NULL || node->left == _end) 
-					{	//We only have right or no child
-						// std::cout<<"Z3\n";
+					if (node->left == NULL || node->left == _end) //We only have right or no child
+					{	
 						Node *ret = node->right;
-						// if (node->left)
-						// 	node->left->parent = ret;
-
 						delete node;
 						return ret;
 					} 
-				 	else if (node->right == NULL || node->right == _end)  
-				  	{	//We only have left child
-						// std::cout<<"Z4\n";
+				 	else if (node->right == NULL || node->right == _end)  //We only have left child
+				  	{
 						Node *ret = node->left;
 						delete node;
 						return ret;
 				  	}
-				  	else 
-				  	{	//We have two childs, it gets funky
+				  	else //We have two childs, it gets funky
+				  	{	
 						if (node->left->height > node->right->height) 
 						{
-							// std::cout<<"Z5\n";
 							Node *tmp = getrightmostnode(node->left, _end);
-							value_type successorValue = tmp->data;//findMax(node->left);
-					  		_alloc.construct(&(node->data), successorValue);
-					  		// node->data = successorValue;
-							node->left = kremove(node->left, successorValue.first);
+					  		_alloc.construct(&(node->data), tmp->data);
+					  		node->left = kremove(node->left, node->data.first);
 							if (node->left)
 								node->left->parent = node;
 						}
 						else 
 						{
-							// std::cout<<"Z6\n";
 							Node *tmp = getleftmostnode(node->right, _end);
-					  		value_type successorValue = tmp->data;
-					  		_alloc.construct(&(node->data), successorValue);
-					  		// node->data = successorValue;
-					  		node->right = kremove(node->right, successorValue.first);
+					  		_alloc.construct(&(node->data), tmp->data);
+					  		node->right = kremove(node->right, node->data.first);
 							if (node->right)
 								node->right->parent = node;
 						}
@@ -451,120 +304,28 @@ namespace ft
 				}
 				update(node);
 				return balance(node);
-		  	}
-
-
-			Node *nremove(Node *node)
-			{
-				//Case where no childs, ez one
-				if ((node->left == NULL || node->left == _end) && (node->right == NULL || node->right == _end))
-				{
-					// std::cout << "Case 1\n";
-					if (node->parent != NULL)
-					{
-						if (node->parent->left == node)
-							node->parent->left = NULL;
-						else
-							node->parent->right = NULL;
-						return deleteNode(node);
-					}
-				}	//Two childs, hard one
-				else if (node->left != NULL && node->left != _end && node->right != NULL && node->right != _end) 
-				{
-					// std::cout << "Case 2\n";
-					Node *small_successor = getleftmostnode(node->right, _end);
-					//Node *big_successor = getleftmostnode(node->right, _end);
-					value_type tmp = small_successor->data; //Value copied, now to delete the succ
-					nremove(tmp.first);
-					
-					_alloc.construct(&(node->data), tmp);
-					// update(node);
-				}	//Only one child
-				else if (node->left == NULL || node->left == _end)
-				{
-					// std::cout << "Case 3\n";
-					Node tmp;
-					
-					tmp.left = node->right->left;			//Get the nodes below future removed node
-					tmp.right = node->right->right;		
-					_alloc.construct(&(tmp.data), node->right->data);
-					
-					if (tmp.left != NULL)
-						tmp.left->parent = node;				
-					if (tmp.right != NULL)
-						tmp.right->parent = node;
-					deleteNode(node->right);
-					node->right = tmp.right;
-					node->left = tmp.left;
-					_alloc.construct(&(node->data), tmp.data);
-				}
-				else if (node->right == NULL || node->right == _end)
-				{
-					// std::cout << "Case 4\n";
-					Node tmp;
-					
-					tmp.left = node->left->left;
-					tmp.right = node->left->right;			//Get the nodes below future removed node
-					_alloc.construct(&(tmp.data), node->left->data);
-					if (tmp.right != NULL)					
-						tmp.right->parent = node;
-					if (tmp.left != NULL)
-						tmp.left->parent = node;
-
-					deleteNode(node->left);
-
-					node->left = tmp.left;
-					node->right = tmp.right;
-					_alloc.construct(&(node->data), tmp.data);
-				}
-				// update(node);
-				// balance(node);
-				return node;
-
-			}
-			bool nremove(const key_type &k) 
-			{
-				Node *target = searchNode(k);
-				if (target != NULL) 
-				{
-					if (target == _root)
-						_root = nremove(_root);
-					else
-						nremove(target);
-					// upd_end();
-					return true;
-				}
-				return false;
 			}
 
 			void remove(key_type k)	//THIS IS THE HANDLER
 			{
-				// std::cout << "Removing " << k << std::endl;
 				if (_size == 0)
 					return ;
 				_end->parent = _root = kremove(_root, k);
-				// std::cout<<"REMOVED, ROOT IS " << _root << std::endl;
-				// std::cout << "size is " << _size << std::endl;
 				--_size;
-				upd_end();
-				// if (nremove(k))
-				
+				upd_end();				
 			}
+
 			void remove(iterator start, iterator end)
 			{
-				ft::vector<key_type> fuckyou;
+				ft::vector<key_type> fthis;
 				int i = 0;
-				key_type tmp;
-				iterator buff;
 				while (start != end)
 				{
-					tmp = start->first;
-					fuckyou.push_back(tmp);
-					++start;
+					fthis.push_back((start++)->first);
 					++i;
 				}
 				for (int j = 0; j < i; j++)
-					remove(fuckyou[j]);
+					remove(fthis[j]);
 			}
 
 		public :
@@ -599,6 +360,7 @@ namespace ft
 				_size = 0;
 				insert(m.begin(), m.end());
 			}
+			
 			~map()
 			{	
 				clear();
@@ -629,50 +391,7 @@ namespace ft
 				insert(m.begin(), m.end());
 				return *this;
 			}
-			void pnode(Node *node)
-			{
-				std::cout << "--------------\n";
-				std::cout << "Ptr = " << node <<" : ";
-				std::cout << node->data.first << std::endl;
-				std::cout << "parent = " << node->parent;// <<"\n";
-				if (node->parent)
-					std::cout << " " << node->parent->data.first;
-				std::cout << std::endl;
-				// std::cout << node->data.first << std::endl;
-				std::cout << "Left = " << node->left ;
-				if (node->left)
-					std::cout << " " << node->left->data.first;
-				std::cout << std::endl;
-				// std::cout << node->first << std::endl;
 
-				std::cout << "Right = " << node->right;
-				
-				if (node->right)
-					std::cout << " " << node->right->data.first;
-				std::cout << std::endl;// std::cout << node->first << std::endl;
-				
-				std::cout << "height = " << node->height << std::endl;
-				// std::cout << node->first << std::endl;
-				std::cout << "Balancef = " << node->balancef << std::endl;
-				
-				if (node == _end)
-					return;
-
-				if (node->right && node->right != _end)
-					pnode(node->right);
-				if (node->left && node->left != _end)
-					pnode(node->left);
-
-			}
-	
-			void ptree()
-			{
-				pnode(_end);
-				pnode(_root);
-				// if(nod)
-				// pnode()
-
-			}
 			pair<iterator,bool> insert (const value_type val)
 			{
 				pair<iterator, bool> ret;
@@ -694,6 +413,7 @@ namespace ft
 				upd_end();
 				return ret;
 			}
+
 			iterator insert (iterator position, const value_type val)
 			{
 				Node *tmp = searchNode(val.first);
@@ -717,10 +437,7 @@ namespace ft
 			{	remove(pos->first);		}
 
 			void erase(iterator first, iterator last)
-			{
-				remove(first, last);
-				// upd_end();
-			}
+			{	remove(first, last);	}
 			
 			size_type erase (const key_type& k)
 			{
@@ -793,13 +510,10 @@ namespace ft
 			{	return (searchNode(key) != NULL);	}
 
 			size_type size() const
-			{
-				return _size;
-			}
+			{	return _size;	}
+
 			size_type max_size() const
-			{
-				return _alloc.max_size();
-			}
+			{	return _alloc.max_size();	}
 
 			void clear()
 			{
@@ -810,6 +524,7 @@ namespace ft
 				_root = 0;
 				upd_end();
 			}
+
 			iterator lower_bound(const key_type &k)
 			{
 				if (_size == 0)
@@ -865,6 +580,7 @@ namespace ft
 
 			value_compare value_comp() const
 			{	return value_compare(_comp);	}
+			
 			iterator find (const key_type& k)
 			{
 				Node *tmp = searchNode(k);
@@ -873,6 +589,7 @@ namespace ft
 				else
 					return end();
 			}
+
 			const_iterator find (const key_type& k) const
 			{
 				Node *tmp = searchNode(k);
@@ -881,6 +598,7 @@ namespace ft
 				else
 					return end();
 			}
+
 			class iterator
 			{
 				friend class map<key_type, mapped_type, Compare,Alloc>;
@@ -944,37 +662,9 @@ namespace ft
 						}
 						return *this;
 					}
-					// iterator operator++(int)
-				  //   {
-				  //       // Same logic than in ++operator
-				  //       iterator res(*this);
-
-				  //       if (_ptr == _end)
-				  //       {
-				  //           _ptr = _end->right;
-				  //           return (res);
-				  //       }
-						
-				  //       while (_ptr != _end && !_comp(res->first, _ptr->data.first))
-				  //       {
-				  //           if (_ptr->right && (_ptr->right == _end || 
-				  //                   _comp(res->first, _ptr->right->data.first)))
-				  //           {
-				  //               _ptr = _ptr->right;
-								
-				  //               Node* tmp = 0;
-				  //               if (_ptr != _end && (tmp = getleftmostnode(_ptr, _end)))
-				  //                   _ptr = tmp;
-				  //           }
-				  //           else
-				  //               _ptr = _ptr->parent;
-				  //       }
-						
-				  //       return (res);
-				  //   }
+		
 					iterator operator++(int)
 					{
-						// _end->parent->parent = NULL;
 						if (_ptr == _end)
 							return *this;
 						iterator tmp = *this;
@@ -988,17 +678,10 @@ namespace ft
 						else if (_ptr->parent != NULL && _ptr->parent != _end)
 						{
 							Node *og = _ptr;
-							// std::cout << "parent is " << _ptr->parent->data.first << std::endl;
 							_ptr = _ptr->parent;
 							while (_comp(og->data.first, _ptr->data.first) == false)
-							{
-								// std::cout << "data = " << _ptr->data.first;
-								// std::cout << "\nog = " << og->data.first << std::endl;
 								_ptr = _ptr->parent;
-								// std::cout << "ndata = " << _ptr->data.first << std::endl;
-							}
 						}
-						// _end->parent->parent = _end;
 						return tmp;
 					}
 
@@ -1085,7 +768,7 @@ namespace ft
 					const_reference operator*() const
 					{	return (_ptr->data);	}
 					const_pointer operator->() const
-					{	return &	(_ptr->data);	}
+					{	return &(_ptr->data);	}
 					bool operator==(const const_iterator &__x) const
 					{	return _ptr == __x._ptr;	}
 
