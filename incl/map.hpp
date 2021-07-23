@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 15:41:19 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/22 16:55:24 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/23 15:55:37 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,10 +160,15 @@ namespace ft
 			// 	// }
 			// 	return node;
 			// }
-		  	void upd_end()
+			void upd_end()
 			{
-				if (_root == NULL)
+				if (_root == NULL || _size == 0)
+				{
+					_end->parent = NULL;
+					_end->left = NULL;
+					_end->right = NULL;
 					return ;
+				}
 				_end->parent = _root;
 				_end->parent->parent = _end;
 				_end->left = getleftmostnode(_root, _end);
@@ -230,41 +235,41 @@ namespace ft
 			// }
 			Node *rotate_left(Node *node)
 			{
-			    Node *newParent = node->right;
-			    
-			    if (newParent == _end)
-			    	newParent = NULL;
+				Node *newParent = node->right;
+				
+				if (newParent == _end)
+					newParent = NULL;
 
-			    node->right = newParent->left;
-			    if (newParent->left)
-			    	newParent->left->parent = node;
+				node->right = newParent->left;
+				if (newParent->left)
+					newParent->left->parent = node;
 
 
 
-			    newParent->left = node;
-			    node->parent = newParent;
-			    update(node);
-			    update(newParent);
-			    return newParent;
-		  	}
+				newParent->left = node;
+				node->parent = newParent;
+				update(node);
+				update(newParent);
+				return newParent;
+			}
 
 			Node *rotate_right(Node *node) 
 			{
 				Node *newParent = node->left;
-			    
-			    if (newParent == _end)
-			    	newParent = NULL;
-			    
-			    node->left = newParent->right;
-			    
-			    if (newParent->right)
-			    	newParent->right->parent = node;
+				
+				if (newParent == _end)
+					newParent = NULL;
+				
+				node->left = newParent->right;
+				
+				if (newParent->right)
+					newParent->right->parent = node;
 
-			    newParent->right = node;
-			    node->parent = newParent;
-			    update(node);
-			    update(newParent);
-			    return newParent;
+				newParent->right = node;
+				node->parent = newParent;
+				update(node);
+				update(newParent);
+				return newParent;
 			}
 			
 			// Node *rotate_right(Node *curr)		//TOREWORK
@@ -377,6 +382,78 @@ namespace ft
 				return balance(node);
 			}
 
+			Node *kremove(Node *node, key_type key) 
+			{
+				if (node == NULL || node == _end) 
+					return NULL;
+
+				int cmp = _comp(key, node->data.first);
+
+				if (cmp) //Case where key is smaller, gt left
+				{
+					// std::cout<<"Z1\n";
+					node->left = kremove(node->left, key);
+					if (node->left)
+						node->left->parent = node;
+				}	//Case where key is bigger, gt right 
+				else if (key != node->data.first) 
+				{
+					// std::cout<<"Z2\n";
+					node->right = kremove(node->right, key);
+					if (node->right)
+						node->right->parent = node;
+				} 
+				else //We found the key
+				{
+
+					if (node->left == NULL || node->left == _end) 
+					{	//We only have right or no child
+						// std::cout<<"Z3\n";
+						Node *ret = node->right;
+						// if (node->left)
+						// 	node->left->parent = ret;
+
+						delete node;
+						return ret;
+					} 
+				 	else if (node->right == NULL || node->right == _end)  
+				  	{	//We only have left child
+						// std::cout<<"Z4\n";
+						Node *ret = node->left;
+						delete node;
+						return ret;
+				  	}
+				  	else 
+				  	{	//We have two childs, it gets funky
+						if (node->left->height > node->right->height) 
+						{
+							// std::cout<<"Z5\n";
+							Node *tmp = getrightmostnode(node->left, _end);
+							value_type successorValue = tmp->data;//findMax(node->left);
+					  		_alloc.construct(&(node->data), successorValue);
+					  		// node->data = successorValue;
+							node->left = kremove(node->left, successorValue.first);
+							if (node->left)
+								node->left->parent = node;
+						}
+						else 
+						{
+							// std::cout<<"Z6\n";
+							Node *tmp = getleftmostnode(node->right, _end);
+					  		value_type successorValue = tmp->data;
+					  		_alloc.construct(&(node->data), successorValue);
+					  		// node->data = successorValue;
+					  		node->right = kremove(node->right, successorValue.first);
+							if (node->right)
+								node->right->parent = node;
+						}
+					}
+				}
+				update(node);
+				return balance(node);
+		  	}
+
+
 			Node *nremove(Node *node)
 			{
 				//Case where no childs, ez one
@@ -454,7 +531,7 @@ namespace ft
 						_root = nremove(_root);
 					else
 						nremove(target);
-					upd_end();
+					// upd_end();
 					return true;
 				}
 				return false;
@@ -462,8 +539,16 @@ namespace ft
 
 			void remove(key_type k)	//THIS IS THE HANDLER
 			{
-				if (nremove(k))
-					--_size;
+				// std::cout << "Removing " << k << std::endl;
+				if (_size == 0)
+					return ;
+				_end->parent = _root = kremove(_root, k);
+				// std::cout<<"REMOVED, ROOT IS " << _root << std::endl;
+				// std::cout << "size is " << _size << std::endl;
+				--_size;
+				upd_end();
+				// if (nremove(k))
+				
 			}
 			void remove(iterator start, iterator end)
 			{
@@ -634,7 +719,7 @@ namespace ft
 			void erase(iterator first, iterator last)
 			{
 				remove(first, last);
-				upd_end();
+				// upd_end();
 			}
 			
 			size_type erase (const key_type& k)
@@ -650,7 +735,7 @@ namespace ft
 
 			iterator begin()
 			{
-				if (_root != NULL)
+				if (_root != NULL && _size != 0 )
 					return iterator(_end->left ,_end, _comp);
 				else
 					return end();
@@ -658,7 +743,7 @@ namespace ft
 
 			const_iterator begin() const
 			{
-				if (_root != NULL)
+				if (_root != NULL&& _size != 0)
 					return const_iterator(_end->left ,_end, _comp);
 				else
 					return end();
@@ -672,7 +757,7 @@ namespace ft
 
 			reverse_iterator rbegin()
 			{
-				if (_root != NULL)
+				if (_root != NULL && _size != 0)
 					return reverse_iterator(_end->right ,_end, _comp);
 				else
 					return rend();
@@ -680,7 +765,7 @@ namespace ft
 
 			const_reverse_iterator rbegin() const
 			{
-				if (_root != NULL)
+				if (_root != NULL && _size != 0)
 					return const_reverse_iterator(_end->right ,_end, _comp);
 				else
 					return rend();
@@ -859,34 +944,34 @@ namespace ft
 						}
 						return *this;
 					}
-		         	// iterator operator++(int)
-		          //   {
-		          //       // Same logic than in ++operator
-		          //       iterator res(*this);
+					// iterator operator++(int)
+				  //   {
+				  //       // Same logic than in ++operator
+				  //       iterator res(*this);
 
-		          //       if (_ptr == _end)
-		          //       {
-		          //           _ptr = _end->right;
-		          //           return (res);
-		          //       }
-		                
-		          //       while (_ptr != _end && !_comp(res->first, _ptr->data.first))
-		          //       {
-		          //           if (_ptr->right && (_ptr->right == _end || 
-		          //                   _comp(res->first, _ptr->right->data.first)))
-		          //           {
-		          //               _ptr = _ptr->right;
-		                        
-		          //               Node* tmp = 0;
-		          //               if (_ptr != _end && (tmp = getleftmostnode(_ptr, _end)))
-		          //                   _ptr = tmp;
-		          //           }
-		          //           else
-		          //               _ptr = _ptr->parent;
-		          //       }
-		                
-		          //       return (res);
-		          //   }
+				  //       if (_ptr == _end)
+				  //       {
+				  //           _ptr = _end->right;
+				  //           return (res);
+				  //       }
+						
+				  //       while (_ptr != _end && !_comp(res->first, _ptr->data.first))
+				  //       {
+				  //           if (_ptr->right && (_ptr->right == _end || 
+				  //                   _comp(res->first, _ptr->right->data.first)))
+				  //           {
+				  //               _ptr = _ptr->right;
+								
+				  //               Node* tmp = 0;
+				  //               if (_ptr != _end && (tmp = getleftmostnode(_ptr, _end)))
+				  //                   _ptr = tmp;
+				  //           }
+				  //           else
+				  //               _ptr = _ptr->parent;
+				  //       }
+						
+				  //       return (res);
+				  //   }
 					iterator operator++(int)
 					{
 						// _end->parent->parent = NULL;
