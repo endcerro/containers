@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 15:41:19 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/23 16:16:22 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/23 19:11:16 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -621,6 +621,13 @@ namespace ft
 					{ }
 					~iterator()
 					{ }
+					iterator(const iterator &it) : _ptr(it._ptr), _end(it._end), _comp(it._comp)
+					{}
+					iterator(reverse_iterator it) : _ptr(it._ptr), _end(it._end), _comp(it._comp)
+					{
+						--it;
+						_ptr = it._ptr;
+					}
 					iterator& operator=(const iterator& assign)
 					{
 						if (this == &assign)
@@ -885,8 +892,13 @@ namespace ft
 
 					reverse_iterator(Node *ptr = 0, Node *end = 0, key_compare comp = Compare()) : _ptr(ptr), _end(end), _comp(comp)
 					{ }
-					reverse_iterator(iterator &it) : _ptr(it._ptr), _end(it._end), _comp(it._comp)
-					{ }
+					reverse_iterator(const reverse_iterator &it) : _ptr(it._ptr), _end(it._end), _comp(it._comp)
+					{}
+					reverse_iterator(iterator it) : _ptr(it._ptr), _end(it._end), _comp(it._comp)
+					{ 
+						--it;
+						_ptr = it._ptr;
+					}
 					~reverse_iterator()
 					{ }
 					reverse_iterator& operator=(const reverse_iterator& assign)
@@ -910,12 +922,17 @@ namespace ft
 
 					iterator base()
 					{
-						return (iterator(_ptr, _end, _comp));
+						reverse_iterator cpy = *this;
+						--cpy;
+						return ((iterator(cpy._ptr, _end, _comp)));
 					}
 					reverse_iterator &operator--()
 					{
 						if (_ptr == _end)
+						{
+							_ptr = _ptr->left;
 							return *this;
+						}
 
 						if (_ptr->right != NULL)
 						{
@@ -937,7 +954,12 @@ namespace ft
 					reverse_iterator operator--(int)
 					{
 						reverse_iterator tmp = *this;
-
+						if (_ptr == _end)
+						{
+							_ptr = _ptr->left;
+							return tmp;
+							// std::cout << "end fallback\n";
+						}
 						if (_ptr->right != NULL)
 						{
 							if (_ptr->right->left == NULL || _ptr->right == _end)
@@ -1022,11 +1044,16 @@ namespace ft
 
 					const_reverse_iterator(Node *ptr = 0, Node *end = 0, key_compare comp = Compare()) : _ptr(ptr), _end(end), _comp(comp)
 					{ }
+					const_reverse_iterator(const const_reverse_iterator &it) : _ptr(it._ptr), _end(it._end), _comp(it._comp)
+					{ }
 					const_reverse_iterator(reverse_iterator it) : _ptr(it._ptr), _end(it._end), _comp(it._comp)
 					{ }
-					const_reverse_iterator(const_iterator &i) : _ptr(i._ptr), _end(i._end), _comp(i._comp)
-					{ }
-					const_reverse_iterator(iterator &i) : _ptr(i._ptr), _end(i._end), _comp(i._comp)
+					const_reverse_iterator(const_iterator i) : _ptr(i._ptr), _end(i._end), _comp(i._comp)
+					{ 
+						--i;
+						_ptr = i._ptr;
+					}
+					const_reverse_iterator(iterator i) : _ptr(i._ptr), _end(i._end), _comp(i._comp)
 					{ }
 					
 					~const_reverse_iterator()
@@ -1050,10 +1077,20 @@ namespace ft
 					bool operator!=(const const_reverse_iterator &__x) const
 					{	return _ptr != __x._ptr;	}
 
+					const_iterator base()
+					{
+						const_reverse_iterator cpy = *this;
+						--cpy;
+						return ((const_iterator(cpy._ptr, _end, _comp)));
+					}
+
 					const_reverse_iterator &operator--()
 					{
 						if (_ptr == _end)
+						{
+							_ptr = _ptr->left;
 							return *this;
+						}
 
 						if (_ptr->right != NULL)
 						{
@@ -1071,15 +1108,13 @@ namespace ft
 						}
 						return *this;
 					}
-					const_iterator base()
-					{
-						const_iterator tmp = *this;
-						return (const_iterator(_ptr, _end, _comp));
-					}
 					const_reverse_iterator operator--(int)
 					{
 						if (_ptr == _end)
+						{
+							_ptr = _ptr->left;
 							return *this;
+						}
 
 						const_reverse_iterator tmp = *this;
 						if (_ptr->right != NULL)
