@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 15:41:19 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/23 19:52:31 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/24 17:56:32 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -273,12 +273,14 @@ namespace ft
 					if (node->left == NULL || node->left == _end) //We only have right or no child
 					{	
 						Node *ret = node->right;
+						// _alloc.destroy(&(node->data));
 						delete node;
 						return ret;
 					} 
 				 	else if (node->right == NULL || node->right == _end)  //We only have left child
 				  	{
 						Node *ret = node->left;
+						// _alloc.destroy(&(node->data));	
 						delete node;
 						return ret;
 				  	}
@@ -287,6 +289,7 @@ namespace ft
 						if (node->left->height > node->right->height) 
 						{
 							Node *tmp = getrightmostnode(node->left, _end);
+					  		_alloc.destroy(&(node->data));
 					  		_alloc.construct(&(node->data), tmp->data);
 					  		node->left = kremove(node->left, node->data.first);
 							if (node->left)
@@ -295,6 +298,7 @@ namespace ft
 						else 
 						{
 							Node *tmp = getleftmostnode(node->right, _end);
+							_alloc.destroy(&(node->data));
 					  		_alloc.construct(&(node->data), tmp->data);
 					  		node->right = kremove(node->right, node->data.first);
 							if (node->right)
