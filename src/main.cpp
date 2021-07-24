@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/04 15:55:26 by hpottier          #+#    #+#             */
-/*   Updated: 2021/07/24 13:03:37 by edal--ce         ###   ########.fr       */
+/*   Created: 2021/07/24 12:10:26 by edal--ce          #+#    #+#             */
+/*   Updated: 2021/07/24 13:14:31 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -440,11 +440,9 @@ void stack_testeur()
 
 int main()
 {
-	// srand(clock());
 	// lst_testeur();
 	map_testeur();
 	vector_testeur();
 	stack_testeur();
-	// queue_testeur();
-	// std::cout << std::endl;
+	std::cout << std::endl;
 }
