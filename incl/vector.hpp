@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 15:43:35 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/23 20:03:17 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/24 17:29:58 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 // https://www.cplusplus.com/reference/vector/vector/
@@ -97,7 +97,10 @@ namespace ft
 				_size = v._size;
 				_arr = _alloc.allocate(_max_size);
 				for (size_type i = 0; i < _size; i++)
-					_arr[i] = v._arr[i];
+				{
+					_alloc.construct(&(_arr[i]), v._arr[i]);
+					// _arr[i] = v._arr[i];
+				}
 			}
 
 			~vector(void)
@@ -647,7 +650,7 @@ namespace ft
 			void pop_back(void)
 			{
 				if (_size)
-					_alloc.destroy(&(_arr[_size--]));
+					_alloc.destroy(&(_arr[--_size]));
 			}
 
 			void resize (size_type n, value_type val = value_type())
@@ -735,8 +738,13 @@ namespace ft
 					position = IT(_arr + delta);
 				}
 				for (size_type i = _size; i > delta ; i--)
-					_arr[i] = _arr[i - 1];
-				*position = val;
+				{
+					_alloc.construct(&(_arr[i]), _arr[i - 1]);
+					_alloc.destroy(&(_arr[i - 1]));
+					// _arr[i] = _arr[i - 1];
+				}
+				_alloc.construct(&(*position), val);
+				// *position = val;
 				++_size;
 				return IT(position);
 			}
@@ -763,7 +771,12 @@ namespace ft
 			{
 				IT cp = position;
 				while (++position != end())
-					*(position - 1) = *(position);
+				{
+					_alloc.destroy(&(*(position - 1)));
+					_alloc.construct(&(*(position - 1)), *position);
+					// _alloc.destroy(&(*position));
+					// *(position - 1) = *(position);
+				}
 				--_size;
 				return cp;
 			}
