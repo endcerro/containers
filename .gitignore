@@ -38,6 +38,6 @@ a.out.dSYM*
 *.o
 obj
 containers
-results/*
+results
 
 /incl/containers_test
