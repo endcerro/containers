@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 15:43:35 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/24 17:29:58 by user42           ###   ########.fr       */
+/*   Updated: 2021/07/24 17:51:16 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 // https://www.cplusplus.com/reference/vector/vector/
@@ -770,10 +770,14 @@ namespace ft
 			IT erase (IT position)
 			{
 				IT cp = position;
-				while (++position != end())
+				IT cp1; //= position;
+				while (position != end())
 				{
-					_alloc.destroy(&(*(position - 1)));
-					_alloc.construct(&(*(position - 1)), *position);
+					cp1 = position++;
+					_alloc.destroy(&(*cp1));
+					if (position != end())
+						_alloc.construct(&(*cp1), *(position));
+					// ++position;
 					// _alloc.destroy(&(*position));
 					// *(position - 1) = *(position);
 				}
@@ -784,14 +788,20 @@ namespace ft
 			template<class IT>
 			IT erase (IT start, IT end)
 			{
-				IT tmp;
-				size_type delta = &(*end) - &(*start);
-				if (delta < 0)
+				IT tmp = start;
+				size_type i = 0;
+				while (tmp != end)
 				{
-					tmp = end;
-					end = start;
-					start = tmp;
+					++i;
+					++tmp;
 				}
+				size_type delta = i;//&(*end) - &(*start);
+				// if (delta < 0)
+				// {
+				// 	tmp = end;
+				// 	end = start;
+				// 	start = tmp;
+				// }
 				tmp = start;
 				for(size_type i = 0; i < delta; i++)
 					start = erase(start);
