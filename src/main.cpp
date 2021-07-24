@@ -6,7 +6,7 @@
 /*   By: edal--ce <edal--ce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/24 12:10:26 by edal--ce          #+#    #+#             */
-/*   Updated: 2021/07/24 13:14:31 by edal--ce         ###   ########.fr       */
+/*   Updated: 2021/07/24 13:28:08 by edal--ce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void lst_testeur()
 	}
 	std::cout << std::endl;
 	lst.clear();
-	for (int i = 0; i < 1000; ++i)
+	for (int i = 0; i < 100; ++i)
 	{
 		lst.push_back(rand() % 42845);
 		lst.push_front(rand() % 41134);
