@@ -38,10 +38,6 @@ a.out.dSYM*
 *.o
 obj
 containers
-/testing/*.dSYM
-/testing/*.diff
-/testing/*.results
-/testing/tft
-/testing/tstd
+results/*
 
 /incl/containers_test
