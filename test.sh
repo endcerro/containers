@@ -4,6 +4,9 @@ echo "==========================================================================
 echo "============================== FT_CONTAINERS TEST =============================="
 echo "================================================================================"
 
+mkdir -p obj
+mkdir -p results
+
 clang++ -Wall -Wextra -Werror -std=c++98 -g3 -fsanitize=address src/main.cpp -o ./obj/test_std
 if [[ $? -ne 0 ]]; then
 	echo -e "\033[31mCOMPILATION ERROR\033[0m"

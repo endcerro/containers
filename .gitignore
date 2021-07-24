@@ -37,6 +37,7 @@ a.out
 a.out.dSYM*
 *.o
 obj
+results
 containers
 
 /incl/containers_test
